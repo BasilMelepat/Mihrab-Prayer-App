@@ -1,0 +1,1761 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A1022">
+<meta name="description" content="Mihrab – a prayer companion: prayer times, Qibla, calendar, guides and reminders. Works offline.">
+<meta name="application-name" content="Mihrab">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mihrab">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<title>Mihrab – prayer companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600&family=Noto+Sans+Malayalam:wght@400;500;600&family=Noto+Serif+Malayalam:wght@500;600&family=Noto+Sans+Arabic:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --display:"Cormorant Garamond","Noto Serif Malayalam","Amiri","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --body:"Hanken Grotesk","Noto Sans Malayalam","Noto Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ar:"Amiri","Noto Naskh Arabic","Traditional Arabic",serif;
+  --ml:"Hanken Grotesk","Noto Sans Malayalam","Manjari","Kartika",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+
+/* ---- registered colour tokens: lets the theme cross-fade smoothly ---- */
+@property --midnight{syntax:"<color>";inherits:true;initial-value:#0A1022}
+@property --night{syntax:"<color>";inherits:true;initial-value:#0F1830}
+@property --dusk{syntax:"<color>";inherits:true;initial-value:#16213F}
+@property --dusk2{syntax:"<color>";inherits:true;initial-value:#1E2B50}
+@property --gold{syntax:"<color>";inherits:true;initial-value:#D6B26E}
+@property --goldhi{syntax:"<color>";inherits:true;initial-value:#F1DCA8}
+@property --goldlo{syntax:"<color>";inherits:true;initial-value:#8F7340}
+@property --ivory{syntax:"<color>";inherits:true;initial-value:#EFE8D6}
+@property --mist{syntax:"<color>";inherits:true;initial-value:#9AA3BF}
+@property --mist2{syntax:"<color>";inherits:true;initial-value:#6B759A}
+@property --line{syntax:"<color>";inherits:true;initial-value:rgba(214,178,110,.2)}
+@property --line-soft{syntax:"<color>";inherits:true;initial-value:rgba(214,178,110,.1)}
+@property --on-gold{syntax:"<color>";inherits:true;initial-value:#241a07}
+@property --btn-a{syntax:"<color>";inherits:true;initial-value:#E3C27F}
+@property --btn-b{syntax:"<color>";inherits:true;initial-value:#C99F55}
+@property --bg-glow{syntax:"<color>";inherits:true;initial-value:#1D2D5C}
+@property --card-a{syntax:"<color>";inherits:true;initial-value:rgba(30,43,80,.55)}
+@property --card-b{syntax:"<color>";inherits:true;initial-value:rgba(22,33,63,.55)}
+@property --chip-bg{syntax:"<color>";inherits:true;initial-value:rgba(22,33,63,.55)}
+@property --tabbar{syntax:"<color>";inherits:true;initial-value:rgba(10,16,34,.92)}
+@property --sheet-bg{syntax:"<color>";inherits:true;initial-value:#0F1830}
+@property --toast-bg{syntax:"<color>";inherits:true;initial-value:#1E2B50}
+@property --sw-off{syntax:"<color>";inherits:true;initial-value:#27345F}
+@property --gold-a18{syntax:"<color>";inherits:true;initial-value:rgba(214,178,110,.18)}
+@property --nxt-a{syntax:"<color>";inherits:true;initial-value:rgba(214,178,110,.16)}
+@property --nxt-b{syntax:"<color>";inherits:true;initial-value:rgba(214,178,110,.04)}
+@property --pose-bg{syntax:"<color>";inherits:true;initial-value:rgba(10,16,34,.5)}
+@property --shade{syntax:"<color>";inherits:true;initial-value:rgba(3,6,16,.62)}
+@property --arch-a{syntax:"<color>";inherits:true;initial-value:#22336B}
+@property --arch-b{syntax:"<color>";inherits:true;initial-value:#0D1630}
+@property --arch-prog{syntax:"<color>";inherits:true;initial-value:#F1DCA8}
+@property --arch-dot{syntax:"<color>";inherits:true;initial-value:#FFF3CF}
+@property --dial-a{syntax:"<color>";inherits:true;initial-value:#16244B}
+@property --dial-b{syntax:"<color>";inherits:true;initial-value:#0B1330}
+html{transition:--midnight 1.6s cubic-bezier(.4,0,.2,1),--night 1.6s cubic-bezier(.4,0,.2,1),--dusk 1.6s cubic-bezier(.4,0,.2,1),--dusk2 1.6s cubic-bezier(.4,0,.2,1),--gold 1.6s cubic-bezier(.4,0,.2,1),--goldhi 1.6s cubic-bezier(.4,0,.2,1),--goldlo 1.6s cubic-bezier(.4,0,.2,1),--ivory 1.6s cubic-bezier(.4,0,.2,1),--mist 1.6s cubic-bezier(.4,0,.2,1),--mist2 1.6s cubic-bezier(.4,0,.2,1),--line 1.6s cubic-bezier(.4,0,.2,1),--line-soft 1.6s cubic-bezier(.4,0,.2,1),--on-gold 1.6s cubic-bezier(.4,0,.2,1),--btn-a 1.6s cubic-bezier(.4,0,.2,1),--btn-b 1.6s cubic-bezier(.4,0,.2,1),--bg-glow 1.6s cubic-bezier(.4,0,.2,1),--card-a 1.6s cubic-bezier(.4,0,.2,1),--card-b 1.6s cubic-bezier(.4,0,.2,1),--chip-bg 1.6s cubic-bezier(.4,0,.2,1),--tabbar 1.6s cubic-bezier(.4,0,.2,1),--sheet-bg 1.6s cubic-bezier(.4,0,.2,1),--toast-bg 1.6s cubic-bezier(.4,0,.2,1),--sw-off 1.6s cubic-bezier(.4,0,.2,1),--gold-a18 1.6s cubic-bezier(.4,0,.2,1),--nxt-a 1.6s cubic-bezier(.4,0,.2,1),--nxt-b 1.6s cubic-bezier(.4,0,.2,1),--pose-bg 1.6s cubic-bezier(.4,0,.2,1),--shade 1.6s cubic-bezier(.4,0,.2,1),--arch-a 1.6s cubic-bezier(.4,0,.2,1),--arch-b 1.6s cubic-bezier(.4,0,.2,1),--arch-prog 1.6s cubic-bezier(.4,0,.2,1),--arch-dot 1.6s cubic-bezier(.4,0,.2,1),--dial-a 1.6s cubic-bezier(.4,0,.2,1),--dial-b 1.6s cubic-bezier(.4,0,.2,1)}
+html.no-anim,html.no-anim *{transition:none!important}
+
+/* ---- themes: midnight (default, also used inside device mock-ups) and dawn ---- */
+:root,.dev{
+  --midnight:#0A1022; --night:#0F1830; --dusk:#16213F; --dusk2:#1E2B50;
+  --gold:#D6B26E; --goldhi:#F1DCA8; --goldlo:#8F7340;
+  --ivory:#EFE8D6; --mist:#9AA3BF; --mist2:#6B759A;
+  --line:rgba(214,178,110,.2); --line-soft:rgba(214,178,110,.1);
+  --on-gold:var(--on-gold); --btn-a:#E3C27F; --btn-b:#C99F55;
+  --bg-glow:#1D2D5C; --card-a:var(--card-a); --card-b:var(--card-b);
+  --chip-bg:var(--card-b); --tabbar:rgba(10,16,34,.92); --sheet-bg:#0F1830; --toast-bg:#1E2B50;
+  --sw-off:#27345F; --gold-a18:rgba(214,178,110,.18); --nxt-a:rgba(214,178,110,.16); --nxt-b:rgba(214,178,110,.04);
+  --pose-bg:rgba(10,16,34,.5); --shade:rgba(3,6,16,.62);
+  --arch-a:#22336B; --arch-b:#0D1630; --arch-prog:#F1DCA8; --arch-dot:#FFF3CF;
+  --dial-a:#16244B; --dial-b:#0B1330;
+  color-scheme:dark;
+}
+.dev{color:var(--ivory)}
+html[data-theme="day"]{
+  --midnight:#EEF1F6; --night:#F7F8FB; --dusk:#E4E9F2; --dusk2:#DCE3EF;
+  --gold:#9A6C15; --goldhi:#7D5410; --goldlo:#B39254;
+  --ivory:#14203F; --mist:#55607E; --mist2:#7A84A2;
+  --line:rgba(122,84,16,.24); --line-soft:rgba(122,84,16,.13);
+  --on-gold:#FFF8E6; --btn-a:#B8862A; --btn-b:#946913;
+  --bg-glow:#FBE0AE; --card-a:rgba(255,255,255,.88); --card-b:rgba(255,255,255,.62);
+  --chip-bg:rgba(255,255,255,.7); --tabbar:rgba(244,246,250,.93); --sheet-bg:#F7F8FB; --toast-bg:#FFFFFF;
+  --sw-off:#C9D1E2; --gold-a18:rgba(154,108,21,.2); --nxt-a:rgba(154,108,21,.17); --nxt-b:rgba(154,108,21,.04);
+  --pose-bg:rgba(255,255,255,.65); --shade:rgba(20,32,63,.4);
+  --arch-a:#FFF6DE; --arch-b:#F3D399; --arch-prog:#9A6C15; --arch-dot:#6E4A0C;
+  --dial-a:#FFFFFF; --dial-b:#E3E9F3;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);background:var(--midnight)}
+body{margin:0;height:100%;background:var(--midnight);color:var(--ivory);font-family:var(--body);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--goldhi);outline-offset:2px;border-radius:8px}
+.ml{font-family:var(--ml)}
+.ar{font-family:var(--ar)}
+.num{font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum","tnum"}
+
+/* stage + phone */
+.stage{height:100%;display:grid;place-items:center;padding:16px}
+.phone{--sb:52px;position:relative;width:390px;height:min(844px,calc(100dvh - 32px));min-height:600px;overflow:hidden;border-radius:46px;border:1px solid rgba(214,178,110,.3);box-shadow:0 0 0 8px #060a17,0 40px 90px rgba(0,0,0,.55);
+  background:radial-gradient(130% 55% at 50% -5%,var(--bg-glow) 0%,transparent 62%),var(--midnight)}
+.sbar{position:absolute;top:0;left:0;right:0;height:44px;display:flex;justify-content:space-between;align-items:center;padding:6px 30px 0;font-size:13px;font-weight:600;z-index:5;pointer-events:none}
+.sbar svg{width:18px;height:18px;fill:var(--ivory)}
+@media (max-width:520px){
+  .stage{padding:0;display:block}
+  .phone{width:100%;height:100%;min-height:0;border-radius:0;border:0;box-shadow:none;--sb:20px}
+  .sbar{display:none}
+}
+.screen{position:absolute;inset:0 0 72px 0;overflow-y:auto;overflow-x:hidden;padding:var(--sb) 20px 32px;display:none;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.screen.on{display:block}
+
+/* tabs */
+.tabs{position:absolute;left:0;right:0;bottom:0;height:72px;display:grid;grid-template-columns:repeat(5,1fr);background:var(--tabbar);backdrop-filter:blur(14px);border-top:1px solid var(--line);z-index:4}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;color:var(--mist2);position:relative}
+.tab svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.tab[aria-selected=true]{color:var(--gold)}
+.tab[aria-selected=true]::before{content:"";position:absolute;top:-1px;width:26px;height:2px;background:var(--gold);border-radius:2px}
+
+/* type */
+h1{font-family:var(--display);font-weight:500;font-size:36px;line-height:1.05;margin:0;letter-spacing:.2px}
+h2{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15;margin:0}
+.sub{color:var(--mist);font-size:14px;margin:4px 0 0}
+.fine{color:var(--mist2);font-size:12px;line-height:1.55}
+
+/* today header */
+.th{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.hij{font-family:var(--display);font-size:30px;font-weight:500;line-height:1.05}
+.greg{color:var(--mist);font-size:13.5px;margin-top:4px}
+.loc{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 11px 7px 9px;font-size:13px;color:var(--goldhi);background:var(--chip-bg);white-space:nowrap}
+.loc svg{width:15px;height:15px;fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* hero arch */
+.hero{position:relative;width:min(100%,318px);aspect-ratio:300/340;margin:18px auto 6px}
+.hero .arch{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hero-in{position:absolute;left:14%;right:14%;top:27%;bottom:7%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.hero .nx{color:var(--mist);font-size:13px}
+.hero .arn{font-family:var(--ar);font-size:54px;line-height:1.25;color:var(--goldhi);margin-top:2px}
+.hero .enn{font-family:var(--display);font-size:24px;line-height:1.1;margin-top:-2px}
+.hero .mln{font-family:var(--ml);font-size:13px;color:var(--mist);margin-top:2px}
+.hero .cd{font-family:var(--display);font-size:42px;line-height:1;margin-top:14px;color:var(--ivory);font-weight:500}
+.hero .at{font-size:13px;color:var(--mist);margin-top:6px}
+
+/* prayer list */
+.list{margin-top:14px;display:flex;flex-direction:column;gap:2px}
+.row{display:grid;grid-template-columns:28px 1fr auto auto 38px;align-items:center;gap:10px;padding:11px 8px 11px 10px;border-radius:16px}
+.row .dt{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--mist2)}
+.row .nm b{font-weight:500;font-size:16px;display:block;line-height:1.2}
+.row .nm span{font-family:var(--ml);font-size:12px;color:var(--mist)}
+.row .a{font-family:var(--ar);font-size:20px;color:var(--goldlo)}
+.row time{font-family:var(--display);font-size:22px;font-weight:500;min-width:76px;text-align:end}
+.row.past .nm,.row.past .a,.row.past time{opacity:.6}
+.row.past .dt{background:var(--goldlo);border-color:var(--goldlo)}
+.row.cur .dt{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-a18)}
+.row.nxt{background:linear-gradient(90deg,var(--nxt-a),var(--nxt-b));outline:1px solid var(--line)}
+.row.nxt .dt{border-color:var(--gold)}
+.row.nxt .a,.row.nxt time{color:var(--goldhi)}
+.row.sun{opacity:.75}
+.row.sun .dt{border-style:dashed}
+.bell{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;color:var(--mist2)}
+.bell svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.bell.on{color:var(--gold)}
+.bell.on svg path:first-child{fill:var(--gold-a18)}
+.row .nob{width:36px}
+
+/* chips / buttons */
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:2px 20px}
+.chips.scroll::-webkit-scrollbar{display:none}
+.chip{border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13.5px;color:var(--mist);white-space:nowrap;background:var(--chip-bg)}
+.chip[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:var(--on-gold);font-weight:600}
+.chip small{opacity:.75;margin-left:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:13px 22px;font-weight:600;font-size:15px}
+.btn.gold{background:linear-gradient(180deg,var(--btn-a),var(--btn-b));color:var(--on-gold)}
+.btn.ghost{border:1px solid var(--line);color:var(--goldhi);background:var(--chip-bg)}
+.btn[disabled]{opacity:.4;pointer-events:none}
+
+/* cards */
+.card{background:linear-gradient(180deg,var(--card-a),var(--card-b));border:1px solid var(--line);border-radius:22px;padding:16px}
+.sec{margin-top:22px}
+.sec>h3{margin:0 0 10px;font-family:var(--display);font-weight:500;font-size:21px}
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
+.setrow+.setrow{border-top:1px solid var(--line-soft)}
+.setrow .t b{display:block;font-weight:500;font-size:15.5px}
+.setrow .t span{font-size:12.5px;color:var(--mist)}
+.sw{flex:none;width:48px;height:28px;border-radius:99px;background:var(--sw-off);position:relative;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:var(--mist);transition:left .2s,background .2s}
+.sw[aria-checked=true]{background:var(--gold)}
+.sw[aria-checked=true]::after{left:23px;background:var(--on-gold)}
+
+/* guide */
+.pbar{height:3px;border-radius:3px;background:var(--line);overflow:hidden}
+.pbar i{display:block;height:100%;background:linear-gradient(90deg,var(--goldlo),var(--goldhi));border-radius:3px;transition:width .35s}
+.reader{margin-top:16px;padding:18px 18px 22px}
+.rmeta{display:flex;justify-content:space-between;align-items:center;margin:12px 0 16px;font-size:13px;color:var(--gold)}
+.rmeta button{color:var(--mist);text-decoration:underline;text-underline-offset:3px;font-size:13px}
+.thead{display:flex;gap:14px;align-items:center}
+.pose{flex:none;width:84px;height:92px;border:1px solid var(--line);border-radius:42px 42px 14px 14px;display:grid;place-items:center;background:var(--pose-bg)}
+.pose svg{width:68px;height:60px;fill:none;stroke:var(--gold);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+.thead .t2{color:var(--mist);font-size:13.5px;margin-top:3px}
+.lines{margin-top:18px;display:flex;flex-direction:column;gap:18px}
+.ln{text-align:center}
+.ln .ar{direction:rtl;font-size:29px;line-height:2.05;color:var(--goldhi)}
+.ln .tr{font-style:italic;color:var(--mist);font-size:14px;line-height:1.55;margin-top:2px}
+.ln .mn{margin-top:6px;font-size:15.5px;line-height:1.75;color:var(--ivory)}
+.ln .mn.ml{font-size:15px;line-height:1.9}
+.rep{display:inline-block;margin-top:14px;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:12.5px;color:var(--goldhi)}
+.note{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);font-size:13px;color:var(--mist);line-height:1.6}
+.gnav{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+.gnav .cnt{color:var(--mist);font-size:13px}
+.gopts{margin-top:18px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--chip-bg)}
+.seg button{padding:6px 14px;border-radius:999px;font-size:13.5px;color:var(--mist)}
+.seg button[aria-pressed=true]{background:var(--gold);color:var(--on-gold);font-weight:600}
+
+/* qibla */
+.qwrap{position:relative;width:min(100%,318px);aspect-ratio:1;margin:22px auto 0;touch-action:none;cursor:grab;user-select:none}
+.qwrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.qwrap .glow{opacity:0;transition:opacity .3s}
+.qwrap.al .glow{opacity:1}
+.qwrap.al .rim{stroke:var(--goldhi)}
+.qc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;text-align:center}
+.qc .deg{font-family:var(--display);font-size:50px;font-weight:500;line-height:1}
+.qc .dir{color:var(--mist);font-size:13px;margin-top:6px}
+.qinfo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.qinfo .card{padding:14px}
+.qinfo b{display:block;font-family:var(--display);font-size:26px;font-weight:500}
+.qinfo span{font-size:12.5px;color:var(--mist)}
+.qstatus{text-align:center;margin-top:16px;min-height:24px;font-size:14px;color:var(--mist)}
+.qstatus.al{color:var(--goldhi)}
+
+/* lock preview + widgets */
+.lock{border-radius:28px;padding:22px 16px 16px;background:linear-gradient(170deg,#25386F 0%,#0F1830 70%);border:1px solid var(--line);text-align:center}
+.lock .lt{font-family:var(--display);font-size:62px;line-height:1;font-weight:500}
+.lock .ld{font-size:13px;color:var(--mist);margin:2px 0 18px}
+.ntf{display:flex;gap:11px;text-align:start;background:rgba(10,16,34,.72);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:12px 14px;backdrop-filter:blur(8px)}
+.ntf+.ntf{margin-top:8px;opacity:.7;transform:scale(.97)}
+.ntf .ic{flex:none;width:34px;height:34px;border-radius:10px;background:linear-gradient(160deg,#16244B,#0A1022);border:1px solid var(--line);display:grid;place-items:center}
+.ntf .ic svg{width:18px;height:18px;fill:none;stroke:var(--gold);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ntf .hd{display:flex;justify-content:space-between;font-size:11.5px;color:var(--mist)}
+.ntf b{display:block;font-weight:600;font-size:14.5px;margin-top:1px}
+.ntf p{margin:1px 0 0;font-size:13px;color:var(--mist)}
+.wall{border-radius:30px;padding:20px 16px 16px;background:radial-gradient(90% 50% at 70% 0%,#3A4F94 0%,rgba(58,79,148,0) 70%),linear-gradient(180deg,#14204A,#0B1228);border:1px solid var(--line)}
+.wall .wt{font-family:var(--display);font-size:54px;font-weight:500;line-height:1;text-align:center}
+.wall .wd{text-align:center;color:var(--mist);font-size:13px;margin:2px 0 16px}
+.wg{background:rgba(10,16,34,.74);border:1px solid rgba(214,178,110,.28);border-radius:26px;backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.w22{aspect-ratio:1;padding:14px;position:relative;display:flex;flex-direction:column;justify-content:space-between}
+.w22 .arch{width:44px;height:50px;overflow:visible}
+.w22 .an{position:absolute;right:14px;top:10px;font-family:var(--ar);font-size:28px;color:var(--goldhi);line-height:1.4}
+.w22 .tm{font-family:var(--display);font-size:30px;line-height:1;font-weight:500}
+.w22 .in{font-size:12px;color:var(--mist);margin-top:3px}
+.wcap{font-size:12px;color:var(--mist2);text-align:center;margin-top:7px}
+.w42{margin-top:12px;padding:14px 14px 12px}
+.w42 .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.w42 .top b{font-family:var(--display);font-size:19px;font-weight:500}
+.w42 .top span{font-size:11.5px;color:var(--mist)}
+.w42 .cols{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:10px}
+.w42 .c{text-align:center;padding:7px 0 6px;border-radius:14px}
+.w42 .c i{display:block;font-style:normal;font-size:11.5px;color:var(--mist)}
+.w42 .c b{display:block;font-family:var(--display);font-size:16.5px;font-weight:600;margin-top:1px}
+.w42 .c.n{background:var(--gold)}
+.w42 .c.n i,.w42 .c.n b{color:var(--on-gold)}
+.w42 .c.p{opacity:.45}
+.w41{margin-top:12px;padding:11px 16px 12px}
+.w41 .r{display:flex;justify-content:space-between;align-items:baseline}
+.w41 b{font-family:var(--display);font-size:20px;font-weight:500}
+.w41 span{font-size:13px;color:var(--goldhi)}
+.mbar{height:3px;border-radius:3px;background:rgba(214,178,110,.18);margin-top:8px;overflow:hidden}
+.mbar i{display:block;height:100%;background:var(--gold)}
+.dock{display:flex;justify-content:space-around;margin-top:18px}
+.dock i{width:46px;height:46px;border-radius:15px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.06)}
+
+/* sheet + banner + toast */
+.shade{position:absolute;inset:0;background:var(--shade);opacity:0;pointer-events:none;transition:opacity .25s;z-index:8}
+.shade.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;max-height:84%;overflow-y:auto;background:var(--sheet-bg);border-top:1px solid var(--line);border-radius:28px 28px 0 0;padding:10px 20px 28px;transform:translateY(102%);transition:transform .32s cubic-bezier(.2,.8,.2,1);z-index:9}
+.sheet.on{transform:none}
+.grab{width:40px;height:4px;border-radius:4px;background:var(--mist2);opacity:.5;margin:0 auto 14px}
+.sheet h2{margin-bottom:6px}
+.opt{display:flex;align-items:center;justify-content:space-between;width:100%;padding:13px 4px;text-align:start;border-top:1px solid var(--line-soft);font-size:15.5px}
+.opt small{display:block;color:var(--mist);font-size:12.5px}
+.opt .rd{flex:none;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--mist2)}
+.opt[aria-checked=true] .rd{border-color:var(--gold);background:radial-gradient(circle,var(--gold) 0 45%,transparent 50%)}
+.banner{position:absolute;left:12px;right:12px;top:calc(var(--sb) - 10px);z-index:12;transform:translateY(-160%);transition:transform .45s cubic-bezier(.2,.9,.2,1);pointer-events:none}
+.banner.on{transform:none;pointer-events:auto}
+.toast{position:absolute;left:50%;bottom:90px;transform:translate(-50%,20px);background:var(--toast-bg);border:1px solid var(--line);color:var(--ivory);padding:10px 16px;border-radius:999px;font-size:13.5px;opacity:0;transition:.3s;z-index:13;white-space:nowrap;max-width:92%;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+
+
+/* ---- about ---- */
+.verlink{display:inline-block;margin-top:10px;color:var(--goldhi);font-size:12.5px;text-decoration:underline;text-underline-offset:3px}
+.about{text-align:center}
+.about .logo{display:block;width:58px;height:66px;color:var(--gold);margin:8px auto 12px}
+.about h2{font-size:36px}
+.about .mlname{font-family:var(--ml);color:var(--mist);font-size:14px;margin-top:2px}
+.vpill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:5px 14px;font-size:13px;color:var(--goldhi);margin-top:12px}
+.about h3{font-family:var(--display);font-weight:500;font-size:21px;text-align:start;margin:26px 0 4px}
+.crow{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:11px 0;border-top:1px solid var(--line-soft);text-align:start;font-size:14.5px}
+.crow span{color:var(--mist);font-size:13px;text-align:end}
+.crow.todo span{color:var(--goldhi)}
+.about .priv{margin-top:22px;text-align:start;font-size:13.5px;line-height:1.6;color:var(--mist)}
+.about .copy{margin-top:20px}
+button.brand{background:none;border:0;padding:0;cursor:pointer}
+
+
+/* ---- manual adjustment ---- */
+.adjb{font-style:normal;color:var(--goldhi);margin-inline-start:6px;font-size:11.5px}
+.arow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line-soft)}
+.arow .t b{display:block;font-weight:500;font-size:15.5px}
+.arow .t span{display:block;font-size:12.5px;color:var(--mist);margin-top:1px}
+.arow .t span em{font-style:normal;color:var(--goldhi)}
+.stp{display:flex;align-items:center;gap:6px}
+.stp button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--chip-bg);color:var(--goldhi);font-size:22px;line-height:1;display:grid;place-items:center}
+.stp button[disabled]{opacity:.3;pointer-events:none}
+.stp b{min-width:98px;text-align:center;font-weight:500;font-size:14px}
+.stp b.z{color:var(--mist)}
+
+
+/* ---- calendar ---- */
+.datebtn{text-align:start;display:block}
+.c-side{margin-top:6px}
+.calbar{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.mbar2{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 12px}
+.mbar2 .mt{text-align:center;min-width:0}
+.mbar2 .mt h2{font-size:28px}
+.mbar2 .mt span{font-size:13px;color:var(--goldhi)}
+.navb{flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--chip-bg);color:var(--goldhi);font-size:26px;line-height:1;display:grid;place-items:center;padding-bottom:3px}
+.wdr{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:12px;color:var(--mist);margin-bottom:4px}
+.wdr .fri{color:var(--goldhi);font-weight:600}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.dcell{position:relative;aspect-ratio:1/1.12;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border:1.5px solid transparent;min-width:0}
+.dcell .g{font-family:var(--display);font-size:21px;font-weight:600;line-height:1}
+.dcell .s{font-size:10.5px;color:var(--goldhi);line-height:1.1;opacity:.9}
+.dcell .s.mo{font-weight:600}
+.dcell.out{opacity:.38}
+.dcell.fri{background:var(--nxt-b)}
+.dcell.sel{border-color:var(--gold)}
+.dcell.today{background:linear-gradient(180deg,var(--btn-a),var(--btn-b));color:var(--on-gold)}
+.dcell.today .s{color:var(--on-gold);opacity:.85}
+.dcell i{position:absolute;bottom:4px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.dcell.today i{background:var(--on-gold)}
+.lg{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin-inline-end:7px;vertical-align:middle}
+.seld{margin-top:22px}
+.seld .l1{font-size:14px;color:var(--mist)}
+.seld .l2{font-family:var(--display);font-size:32px;font-weight:500;line-height:1.1;margin-top:4px;color:var(--goldhi)}
+.seld .l3{font-size:13.5px;color:var(--mist);margin-top:2px}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tag{border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:12.5px;color:var(--goldhi)}
+.w42x{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft)}
+.w42x .c{text-align:center}
+.w42x .c i{display:block;font-style:normal;font-size:11.5px;color:var(--mist)}
+.w42x .c b{display:block;font-family:var(--display);font-size:18px;font-weight:600;margin-top:1px}
+.up{display:flex;justify-content:space-between;align-items:center;gap:12px;width:100%;text-align:start;padding:12px 0}
+.up+.up{border-top:1px solid var(--line-soft)}
+.up b{display:block;font-weight:500;font-size:15px}
+.up .ml{display:block;font-size:12.5px;color:var(--mist)}
+.up em{display:block;font-style:normal;font-size:12px;color:var(--mist2);margin-top:2px}
+.up .when{flex:none;font-size:12.5px;color:var(--goldhi);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+
+
+/* ---- qibla button, location row, settings ---- */
+.qbtn{flex:none;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--chip-bg);color:var(--gold);display:grid;place-items:center}
+.qbtn svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.locrow{display:flex;justify-content:flex-start;margin:14px 0 0}
+.backb{display:inline-flex;align-items:center;color:var(--goldhi);font-size:14px;margin-bottom:12px}
+.card.lc{padding:0 16px}
+.card.lc .opt:first-child{border-top:0}
+.slab{font-size:13px;color:var(--mist);margin:18px 4px 8px}
+.st-b{margin-top:0}
+
+
+/* ---- greeting, checkboxes, streak, welcome ---- */
+.greet{min-width:0;flex:1}
+.hi-h{font-family:var(--display);font-size:27px;font-weight:500;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hi-m{font-size:14px;color:var(--ivory);margin:6px 0 0;line-height:1.4}
+.hi-ml{font-family:var(--ml);font-size:12.5px;color:var(--mist);margin:3px 0 0;line-height:1.65}
+.ck{flex:none;width:26px;height:26px;border-radius:9px;border:1.8px solid var(--mist2);display:grid;place-items:center;color:transparent;justify-self:center;transition:background .2s,border-color .2s,color .2s}
+.ck svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ck.on{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
+.ck.due{border-color:var(--gold)}
+.ck.wait{opacity:.4;border-style:dashed}
+.row.cur .ck:not(.on):not(.wait){box-shadow:0 0 0 4px var(--gold-a18)}
+.row .dt{justify-self:center}
+.stk{margin-top:22px;padding:18px 16px 16px}
+.stk-top{display:flex;align-items:center;gap:14px}
+.stk-flame{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:var(--gold-a18);color:var(--gold)}
+.stk-flame svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.stk-flame.on svg{fill:var(--gold-a18)}
+.stk-big b{font-family:var(--display);font-size:40px;font-weight:600;line-height:1;display:block}
+.stk-big span{font-size:13px;color:var(--mist)}
+.stk-mini{margin-inline-start:auto;display:flex;gap:16px;text-align:center}
+.stk-mini b{display:block;font-family:var(--display);font-size:24px;font-weight:600;line-height:1.1}
+.stk-mini span{font-size:11.5px;color:var(--mist)}
+.stk-mo{font-family:var(--display);font-size:21px;margin:18px 0 8px}
+.skg{display:grid;grid-template-columns:repeat(7,1fr);gap:6px 2px}
+.skd{position:relative;aspect-ratio:1;display:grid;place-items:center;border-radius:50%;min-width:0}
+.skd svg{position:absolute;inset:0;width:100%;height:100%}
+.skd .num{position:relative;font-size:12px;font-weight:500}
+.skd.full{background:var(--gold-a18)}
+.skd.full .num{color:var(--goldhi);font-weight:700}
+.skd.today .num{color:var(--goldhi);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.skd.future{opacity:.35}
+.welcome{position:absolute;inset:0;z-index:30;display:none;overflow-y:auto;padding:var(--sb) 24px 28px;background:radial-gradient(120% 50% at 50% -5%,var(--bg-glow) 0%,transparent 62%),var(--midnight)}
+.welcome.on{display:flex}
+.wlc{margin:auto;width:100%;max-width:420px;text-align:center}
+.wlc .logo{width:58px;height:66px;color:var(--gold);display:block;margin:0 auto 14px}
+.wlc h1{font-size:38px}
+.wlc .mlh{font-family:var(--ml);color:var(--mist);margin-top:6px;font-size:15px}
+.wlc p.lead{color:var(--mist);margin:16px 0 24px;font-size:15px;line-height:1.55}
+.wlc .fld{text-align:start;margin-bottom:18px}
+.wlc label,.wlc .lbl{display:block;font-size:13px;color:var(--mist);margin:0 4px 8px}
+.wlc input{width:100%;border:1px solid var(--line);background:var(--chip-bg);color:var(--ivory);border-radius:16px;padding:15px 16px;font:inherit;font-size:16px}
+.wlc input::placeholder{color:var(--mist2)}
+.wlc .gq{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gbtn{border:1px solid var(--line);background:var(--chip-bg);border-radius:18px;padding:14px 10px;display:flex;flex-direction:column;gap:2px;align-items:center}
+.gbtn b{font-weight:500;font-size:16px}
+.gbtn span{font-family:var(--ml);font-size:12.5px;color:var(--mist)}
+.gbtn[aria-checked=true]{border-color:var(--gold);background:var(--gold-a18)}
+.gbtn[aria-checked=true] b{color:var(--goldhi)}
+.wlc .go{width:100%;margin-top:6px}
+.wlc .skip{margin-top:14px;color:var(--mist);font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.q-head{position:relative}
+.locrow.qloc{position:absolute;top:-4px;right:0;margin:0}
+
+/* ---- layout helpers (phone defaults) ---- */
+.chips.scroll.g-chips{margin-top:16px}
+.q-btn{text-align:center;margin-top:18px}
+.q-hint{text-align:center;margin:14px 8px 0}
+button.brand,.brand{display:none}
+/* hero scales with its own width so it looks right on every screen */
+.hero{container-type:inline-size}
+.hero .nx{font-size:4.1cqw}
+.hero .arn{font-size:17cqw}
+.hero .enn{font-size:7.5cqw}
+.hero .mln{font-size:4.1cqw}
+.hero .cd{font-size:13.2cqw;margin-top:4.4cqw}
+.hero .at{font-size:4.1cqw}
+
+/* ---- tablet and up: side rail, no phone frame ---- */
+@media (min-width:700px) and (max-height:700px){.tabs{grid-auto-rows:62px}}
+@media (min-width:700px){
+  .stage{padding:0;display:block}
+  .phone{width:100%;height:100%;min-height:0;border-radius:0;border:0;box-shadow:none;--sb:32px}
+  .sbar{display:none}
+  .tabs{top:0;right:auto;width:104px;height:auto;grid-template-columns:1fr;grid-auto-rows:78px;align-content:center;border-top:0;border-right:1px solid var(--line)}
+  .tab{font-size:11.5px}
+  .tab[aria-selected=true]::before{top:50%;left:-1px;width:3px;height:30px;margin-top:-15px;border-radius:0 3px 3px 0}
+  button.brand,.brand{display:block;position:absolute;top:34px;left:50%;transform:translateX(-50%);width:30px;height:34px;color:var(--gold)}
+  .brand svg{width:100%;height:100%;display:block}
+  .screen{inset:0 0 0 104px;padding:var(--sb) max(36px,calc((100% - 680px)/2)) 56px}
+  h1{font-size:40px}
+  .hero{width:min(100%,380px)}
+  .row{padding:13px 12px 13px 16px}
+  .row time{font-size:24px}
+  .reader{padding:24px 28px 28px}
+  .ln .ar{font-size:34px}
+  .ln .mn{font-size:16.5px}
+  #s-widgets{padding-inline:max(36px,calc((100% - 600px)/2))}
+  /* sheet becomes a centred dialog */
+  .sheet{left:50%;right:auto;bottom:auto;top:50%;width:min(520px,92%);max-height:82%;border:1px solid var(--line);border-radius:28px;transform:translate(-50%,-46%) scale(.97);opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s}
+  .sheet.on{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}
+  .grab{display:none}
+  .banner{left:auto;right:24px;top:24px;width:400px;max-width:calc(100% - 48px)}
+  .toast{bottom:32px;left:calc(50% + 52px)}
+}
+/* ---- wide tablet / landscape: two columns ---- */
+@media (min-width:860px){
+  .screen{padding-inline:max(44px,calc((100% - 1040px)/2))}
+  h1{font-size:44px}
+  #s-today.on{display:grid;grid-template-columns:minmax(300px,420px) minmax(340px,1fr);column-gap:64px;align-content:start}
+  #s-today .th{grid-column:1/-1}
+  #s-today .hero{grid-column:1;grid-row:2;width:100%;margin:18px 0 0;align-self:start}
+  #s-today .list{grid-column:2;grid-row:2;margin-top:12px}
+  #s-today .fine{grid-column:2;grid-row:3}
+  #s-today .stk{grid-column:1;grid-row:3;margin-top:22px}
+
+  #s-guide.on,#s-qibla.on,#s-rem.on,#s-cal.on,#s-set.on{bottom:auto;max-height:100%}
+  #s-set.on{display:grid;grid-template-columns:1fr 1fr;column-gap:56px;align-items:start;align-content:start}
+  .st-head{grid-column:1/-1}
+  #s-cal.on{display:grid;grid-template-columns:minmax(0,560px) minmax(300px,1fr);column-gap:56px;align-items:start;align-content:start}
+  .c-head{grid-column:1/-1}
+  .c-main{grid-column:1}
+  .c-side{grid-column:2;margin-top:0}
+  .seld{margin-top:18px}
+  #s-guide.on{display:grid;grid-template-columns:minmax(260px,320px) minmax(0,1fr);grid-template-rows:auto auto auto auto 1fr auto;grid-template-areas:"head main" "chips main" "trans main" "opts main" "fine main" ". nav";column-gap:56px;align-items:start}
+  .g-head{grid-area:head}
+  .chips.scroll.g-chips{grid-area:chips;flex-wrap:wrap;overflow:visible;margin:16px 0 0;padding:0}
+  #reader{grid-area:main;margin-top:0}
+  .g-trans{grid-area:trans;margin-top:16px}
+  .g-opts{grid-area:opts;margin-top:18px}
+  .g-fine{grid-area:fine}
+  .gnav{grid-area:nav}
+
+  #s-qibla.on{display:grid;grid-template-columns:minmax(0,440px) minmax(280px,1fr);grid-template-rows:auto auto auto auto 1fr;grid-template-areas:"head head" "dial stat" "dial info" "dial btn" "dial hint";column-gap:64px;align-items:start}
+  .q-head{grid-area:head}
+  #qwrap{grid-area:dial;width:100%;margin:40px 0 0}
+  .qstatus{grid-area:stat;text-align:start;margin-top:34px;font-size:16px}
+  .qinfo{grid-area:info;margin-top:12px}
+  .q-btn{grid-area:btn;text-align:start}
+  .q-hint{grid-area:hint;text-align:start;margin:14px 0 0}
+
+  #s-rem.on{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,400px);grid-template-rows:auto auto auto auto 1fr;grid-template-areas:"head head" "perm lock" "rem lock" "lead lock" "sound lock";column-gap:64px;align-items:start}
+  .r-head{grid-area:head}
+  .r-perm{grid-area:perm}
+  .r-rem{grid-area:rem}
+  .r-lead{grid-area:lead}
+  .r-sound{grid-area:sound}
+  .r-lock{grid-area:lock;margin-top:22px}
+}
+
+
+/* ---- right-to-left (Arabic) ---- */
+.hi-m,.hi-ml,.seld .l3,.up em,.up .ml,.ln .mn,.ln .tr,.t2,.row .nm span{unicode-bidi:plaintext}
+html[dir="rtl"] .hi-ml{text-align:end}
+html[dir="rtl"] .locrow.qloc{right:auto;left:0}
+html[dir="rtl"] .opt>svg{transform:scaleX(-1)}
+html[dir="rtl"] .ln .tr{direction:ltr}
+html[dir="rtl"] .sw::after{left:auto;right:3px}
+html[dir="rtl"] .sw[aria-checked=true]::after{left:auto;right:23px}
+html[dir="rtl"] .brand svg{transform:none}
+.wlc .chips{justify-content:center;margin-bottom:22px}
+@media (min-width:700px){
+  html[dir="rtl"] .tabs{left:auto;right:0;border-right:0;border-left:1px solid var(--line)}
+  html[dir="rtl"] .screen{inset:0 104px 0 0}
+  html[dir="rtl"] .tab[aria-selected=true]::before{left:auto;right:-1px;border-radius:3px 0 0 3px}
+  html[dir="rtl"] .banner{right:auto;left:24px}
+  html[dir="rtl"] .toast{left:calc(50% - 52px)}
+}
+
+/* ---- Malayalam: the script runs larger than Latin at the same size, so type is scaled down ---- */
+.tw{font-family:var(--body);font-size:11px;font-weight:500;opacity:.75;margin-inline-end:4px}
+html[lang="ml"] h1{font-size:28px;line-height:1.3}
+html[lang="ml"] h2{font-size:20px;line-height:1.35}
+html[lang="ml"] .sec>h3,html[lang="ml"] .about h3{font-size:17px;line-height:1.4}
+html[lang="ml"] .hi-h{font-size:20px;line-height:1.35;white-space:normal}
+html[lang="ml"] .hi-m{font-size:13.5px;line-height:1.65}
+html[lang="ml"] .sub{font-size:13px;line-height:1.6}
+html[lang="ml"] .fine{font-size:11.5px;line-height:1.7}
+html[lang="ml"] .hero .nx,html[lang="ml"] .hero .at{font-size:3.6cqw}
+html[lang="ml"] .hero .enn{font-size:5.4cqw;line-height:1.35}
+html[lang="ml"] .row .nm b{font-size:14px;line-height:1.4}
+html[lang="ml"] .row time{white-space:nowrap;min-width:0;font-size:20px}
+html[lang="ml"] .opt{font-size:14px;line-height:1.5}
+html[lang="ml"] .opt small,html[lang="ml"] .setrow .t span{font-size:12px;line-height:1.55}
+html[lang="ml"] .setrow .t b,html[lang="ml"] .arow .t b{font-size:14px}
+html[lang="ml"] .mbar2 .mt h2{font-size:20px}
+html[lang="ml"] .mbar2 .mt span{font-size:12px}
+html[lang="ml"] .seld .l1{font-size:13px}
+html[lang="ml"] .seld .l2{font-size:22px;line-height:1.35}
+html[lang="ml"] .stk-mo{font-size:17px}
+html[lang="ml"] .stk-big span,html[lang="ml"] .stk-mini span,html[lang="ml"] .w42x .c i{font-size:11px}
+html[lang="ml"] .about h2,html[lang="ml"] .wlc h1{font-size:26px}
+html[lang="ml"] .chip,html[lang="ml"] .seg button{font-size:12.5px}
+html[lang="ml"] .btn{font-size:14px}
+html[lang="ml"] .up b{font-size:14px}
+html[lang="ml"] .ln .mn.ml{font-size:14px;line-height:1.85}
+html[lang="ml"] .note{font-size:12.5px}
+html[lang="ml"] .tab{font-size:10px}
+html[lang="ml"] .qstatus{font-size:13.5px}
+@media (min-width:700px){html[lang="ml"] h1{font-size:32px}html[lang="ml"] .hi-h{font-size:22px}}
+
+/* ---- minimal strip widget + background modes ---- */
+.wall{position:relative;overflow:hidden}
+.wall::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(112deg,transparent 22%,rgba(255,255,255,.07) 22% 40%,transparent 40% 52%,rgba(255,196,120,.12) 52% 66%,transparent 66% 78%,rgba(120,170,255,.12) 78%)}
+.wall>*{position:relative}
+.wall.wb-b .wg{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.24);backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);box-shadow:0 8px 28px rgba(0,0,0,.18)}
+.wall.wb-t .wg{background:none;border:1px solid transparent;backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:none;text-shadow:0 1px 8px rgba(0,0,0,.65)}
+.ws{padding:16px 16px 14px;color:#fff;margin-bottom:6px}
+.ws-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.ws-p{font-size:14.5px;font-weight:500;white-space:nowrap}
+.ws-p b{font-weight:500}
+.ws-cd{font-family:"Barlow Condensed","Oswald","Arial Narrow",var(--body);font-weight:600;font-size:30px;line-height:1;letter-spacing:.4px;white-space:nowrap}
+.ws-cd sup{font-size:.5em;vertical-align:top;position:relative;top:.12em;margin-inline:1px 3px}
+.ws-bar{height:6px;border-radius:6px;background:rgba(255,255,255,.9);margin:11px 0 9px;overflow:hidden}
+.ws-bar i{display:block;height:100%;border-radius:6px;transition:background .8s}
+.ws-date{font-size:12.5px;text-align:center;opacity:.96}
+
+/* ---- install / update ---- */
+.updbar{position:absolute;left:12px;right:12px;bottom:84px;z-index:14;display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--toast-bg);border:1px solid var(--line);border-radius:18px;padding:12px 14px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.updbar.on{display:flex}
+.inst{list-style:none;margin:14px 0 20px;padding:0;display:grid;gap:12px}
+.inst li{display:flex;gap:12px;align-items:center;font-size:15px}
+.inst li b{flex:none;width:28px;height:28px;border-radius:50%;background:var(--gold-a18);color:var(--goldhi);display:grid;place-items:center;font-size:13px;font-weight:600}
+@media (min-width:700px){.updbar{bottom:24px;left:128px;right:24px;max-width:460px;margin-inline:auto}html[dir="rtl"] .updbar{left:24px;right:128px}}
+
+.g-trans{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--mist)}
+.stk-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.spill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-size:12.5px;color:var(--mist);background:var(--chip-bg)}
+.spill b{font-weight:600;color:var(--mist)}
+.spill.on{border-color:var(--gold);color:var(--goldhi)}
+.spill.on b{color:var(--goldhi)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="phone" id="phone">
+    <div class="sbar"><span id="sbtime">9:41</span><svg viewBox="0 0 24 24"><path d="M2 18h3v3H2zm5-4h3v7H7zm5-4h3v11h-3zm5-5h3v16h-3z"/></svg></div>
+
+    <section class="screen on" id="s-today" aria-label="Today"></section>
+    <section class="screen" id="s-cal" aria-label="Calendar"></section>
+    <section class="screen" id="s-guide" aria-label="Prayer guide"></section>
+    <section class="screen" id="s-qibla" aria-label="Qibla"></section>
+    <section class="screen" id="s-rem" aria-label="Reminders"></section>
+    <section class="screen" id="s-widgets" aria-label="Widgets"></section>
+    <section class="screen" id="s-set" aria-label="Settings"></section>
+
+    <nav class="tabs" role="tablist" id="tabs"></nav>
+
+    <div class="banner dev" id="banner" role="status" aria-live="polite"></div>
+    <div class="toast" id="toast" role="status"></div>
+    <div class="updbar" id="upd" role="status"></div>
+    <div class="shade" id="shade" data-act="close"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true"></div>
+    <div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="wtitle"></div>
+  </div>
+</div>
+
+<svg width="1" height="1" style="position:absolute;visibility:hidden" aria-hidden="true"><path id="measure" d="M24 330V168C24 98 110 82 150 12C190 82 276 98 276 168V330" fill="none"/></svg>
+
+<script>
+(function(){
+"use strict";
+/* ---------- helpers ---------- */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const D2R=Math.PI/180;
+const sin=d=>Math.sin(d*D2R),cos=d=>Math.cos(d*D2R),tan=d=>Math.tan(d*D2R);
+const asin=x=>Math.asin(x)/D2R,acos=x=>Math.acos(Math.max(-1,Math.min(1,x)))/D2R,atan2=(y,x)=>Math.atan2(y,x)/D2R,acot=x=>Math.atan(1/x)/D2R;
+const fix=(a,b)=>{a=a-b*Math.floor(a/b);return a<0?a+b:a};
+
+/* ---------- data ---------- */
+const P=["fajr","dhuhr","asr","maghrib","isha"];
+const NAMES={
+  fajr:{en:"Fajr",ar:"الفجر",ml:"സുബ്ഹി"},
+  dhuhr:{en:"Dhuhr",ar:"الظهر",ml:"ളുഹ്ർ"},
+  asr:{en:"Asr",ar:"العصر",ml:"അസ്ർ"},
+  maghrib:{en:"Maghrib",ar:"المغرب",ml:"മഗ്‌രിബ്"},
+  isha:{en:"Isha",ar:"العشاء",ml:"ഇശാ"},
+  sunrise:{en:"Sunrise",ar:"الشروق",ml:"സൂര്യോദയം"}
+};
+const RAK={fajr:2,dhuhr:4,asr:4,maghrib:3,isha:4};
+const CITIES=[
+  {name:"Kozhikode",ml:"കോഴിക്കോട്",ar:"كوزيكود",lat:11.2588,lon:75.7804,tz:5.5},
+  {name:"Kochi",ml:"കൊച്ചി",ar:"كوتشي",lat:9.9312,lon:76.2673,tz:5.5},
+  {name:"Thiruvananthapuram",ml:"തിരുവനന്തപുരം",ar:"ثيروفانانثابورام",lat:8.5241,lon:76.9366,tz:5.5},
+  {name:"Palakkad",ml:"പാലക്കാട്",ar:"بالاكاد",lat:10.7867,lon:76.6548,tz:5.5},
+  {name:"Malappuram",ml:"മലപ്പുറം",ar:"مالابورام",lat:11.0510,lon:76.0711,tz:5.5},
+  {name:"Kannur",ml:"കണ്ണൂർ",ar:"كانور",lat:11.8745,lon:75.3704,tz:5.5},
+  {name:"Dubai",ml:"ദുബായ്",ar:"دبي",lat:25.2048,lon:55.2708,tz:4},
+  {name:"Riyadh",ml:"റിയാദ്",ar:"الرياض",lat:24.7136,lon:46.6753,tz:3}
+];
+const METHODS={
+  mwl:{n:"Muslim World League",fajr:18,isha:17},
+  karachi:{n:"Karachi, University of Islamic Sciences",fajr:18,isha:18},
+  egypt:{n:"Egyptian General Authority",fajr:19.5,isha:17.5},
+  makkah:{n:"Umm al-Qura, Makkah",fajr:18.5,ishaMin:90}
+};
+const KAABA={lat:21.4225,lon:39.8262};
+/* edit these before release */
+const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.9.0",build:"2026.10.11.13",year:2026};
+const CREDITS=[
+  ["Design and development","Mihrab team"],
+  ["Religious content review","To be added before release"],
+  ["Prayer times","PrayTimes.org method (MIT)"],
+  ["Hijri date","Umm al-Qura calendar"],
+  ["Qibla bearing","Great-circle path to the Kaaba"]
+];
+const FONTS=[["Amiri","SIL Open Font License"],["Cormorant Garamond","SIL Open Font License"],["Hanken Grotesk","SIL Open Font License"],["Noto Sans Malayalam","SIL Open Font License"]];
+
+/* ---------- state ---------- */
+const DEF={city:0,custom:null,method:"mwl",asr:"shafii",rem:{fajr:1,dhuhr:1,asr:1,maghrib:1,isha:1},lead:10,sound:"chime",glang:"ml",translit:true,prayer:"fajr",theme:"auto",lang:"en",wbg:"blur",gmean:null,profile:null,log:{},hadj:0,cmode:"g",adj:{fajr:0,sunrise:0,dhuhr:0,asr:0,maghrib:0,isha:0}};
+let S=Object.assign({},DEF);
+try{const raw=localStorage.getItem("mihrab-v1");if(raw)S=Object.assign({},DEF,JSON.parse(raw))}catch(e){}
+S.adj=Object.assign({},DEF.adj,S.adj||{});
+const save=()=>{try{localStorage.setItem("mihrab-v1",JSON.stringify(S))}catch(e){}};
+const loc=()=>S.city>=0?CITIES[S.city]||CITIES[0]:(S.custom||CITIES[0]);
+/* ---------- language ---------- */
+const LANGS={en:{dir:"ltr",name:"English"},ml:{dir:"ltr",name:"മലയാളം"},ar:{dir:"rtl",name:"العربية"}};
+let LANG=LANGS[S.lang]?S.lang:"en";
+const APPNAME={en:"Mihrab",ml:"മിഹ്റാബ്",ar:"محراب"};
+const TR={
+ml:{
+"Today":"ഇന്ന്","Widget background":"വിജറ്റ് പശ്ചാത്തലം","Week streak":"ആഴ്ച തുടർച്ച","Month streak":"മാസ തുടർച്ച","Each ring has five parts, one for each prayer.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്.","Translation":"പരിഭാഷ","Off":"ഓഫ്", "Install app":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക","Add it to your home screen for full-screen use and offline access.":"ഫുൾ സ്ക്രീനിലും ഓഫ്‌ലൈനിലും ഉപയോഗിക്കാൻ ഹോം സ്ക്രീനിൽ ചേർക്കുക.","Install {0}":"{0} ഇൻസ്റ്റാൾ ചെയ്യുക","Tap the Share button in Safari":"സഫാരിയിലെ ഷെയർ ബട്ടൺ തൊടുക","Choose Add to Home Screen":"“ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","Tap Add":"“ചേർക്കുക” തൊടുക","Open your browser menu":"ബ്രൗസർ മെനു തുറക്കുക","Choose Install app or Add to Home screen":"“ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക” അല്ലെങ്കിൽ “ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","App installed":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തു","A new version is ready.":"പുതിയ പതിപ്പ് തയ്യാറാണ്.","Refresh":"റിഫ്രഷ്","You\u2019re offline. Everything still works.":"നിങ്ങൾ ഓഫ്‌ലൈനാണ്. എല്ലാം പ്രവർത്തിക്കും.","Back online":"വീണ്ടും ഓൺലൈൻ","Transparent":"സുതാര്യം","Blur":"ബ്ലർ","Bar color shifts from green to red as the next prayer gets closer.":"അടുത്ത നമസ്കാരം അടുക്കുന്തോറും ബാർ പച്ചയിൽ നിന്ന് ചുവപ്പിലേക്ക് മാറുന്നു.","minimal":"മിനിമൽ","H":"മ","M":"മി","S":"സെ","Calendar":"കലണ്ടർ","Guide":"വഴികാട്ടി","Reminders":"റിമൈൻഡർ","Settings":"ക്രമീകരണം","Widgets":"വിജറ്റുകൾ","Qibla":"ഖിബ്‌ല",
+"Next prayer":"അടുത്ത നമസ്കാരം","{0} at {1}":"{0} {1}-ന്","day streak":"ദിവസ തുടർച്ച","Best":"മികച്ചത്","Full days":"പൂർണ ദിനങ്ങൾ",
+"Each ring has five parts, one for each prayer. Tap a day to update it.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്. പുതുക്കാൻ ഒരു ദിവസം തൊടുക.",
+"Tap the bell to set a reminder.":"റിമൈൻഡർ സജ്ജമാക്കാൻ മണി തൊടുക.","Asr: {0}":"അസ്ർ: {0}","{0} adjusted":"{0} ക്രമീകരിച്ചു","{0} prayed":"{0} നമസ്കരിച്ചു",
+"Qibla direction":"ഖിബ്‌ല ദിശ","Turn off reminder for {0}":"{0} റിമൈൻഡർ ഓഫ് ചെയ്യുക","Turn on reminder for {0}":"{0} റിമൈൻഡർ ഓൺ ചെയ്യുക","min":"മിനിറ്റ്",
+"{0}h {1}m":"{0} മണി {1} മി","{0}m":"{0} മി","{0}s":"{0} സെ","km":"കി.മീ","AH":"ഹി.","now":"ഇപ്പോൾ","later":"പിന്നീട്",
+"Shafi\u2019i":"ശാഫിഈ","Hanafi":"ഹനഫി","Shafi\u2019i, Maliki, Hanbali":"ശാഫിഈ, മാലികി, ഹമ്പലി",
+"Shadow equals object height":"നിഴൽ വസ്തുവിന്റെ ഉയരത്തിന് തുല്യം","Shadow equals twice the object height":"നിഴൽ വസ്തുവിന്റെ ഉയരത്തിന്റെ ഇരട്ടി",
+"Muslim World League":"മുസ്ലിം വേൾഡ് ലീഗ്","Karachi, University of Islamic Sciences":"കറാച്ചി, ഇസ്ലാമിക് സയൻസസ് സർവകലാശാല","Egyptian General Authority":"ഈജിപ്ഷ്യൻ ജനറൽ അതോറിറ്റി","Umm al-Qura, Makkah":"ഉമ്മുൽ ഖുറാ, മക്ക",
+"Fajr {0}° · Isha {1}°":"സുബ്ഹി {0}° · ഇശാ {1}°","Fajr {0}° · Isha {1} min after Maghrib":"സുബ്ഹി {0}° · ഇശാ മഗ്‌രിബിന് {1} മിനിറ്റ് ശേഷം",
+"My location":"എന്റെ സ്ഥലം",
+"{0} can be ticked once its time begins":"{0}-ന്റെ സമയമായാൽ ടിക്ക് ചെയ്യാം","All five done. Alhamdulillah!":"അഞ്ചും പൂർത്തിയായി. അൽഹംദുലില്ലാഹ്!","{0} marked":"{0} രേഖപ്പെടുത്തി","{0} unmarked":"{0} ഒഴിവാക്കി",
+"{0} reminder on":"{0} റിമൈൻഡർ ഓൺ","{0} reminder off":"{0} റിമൈൻഡർ ഓഫ്",
+"Notifications allowed":"അറിയിപ്പുകൾ അനുവദിച്ചു","Notifications not allowed":"അറിയിപ്പുകൾ അനുവദിച്ചിട്ടില്ല","Notifications are not available here":"ഇവിടെ അറിയിപ്പുകൾ ലഭ്യമല്ല",
+"Location is unavailable here. Pick a city.":"ഇവിടെ ലൊക്കേഷൻ ലഭ്യമല്ല. ഒരു നഗരം തിരഞ്ഞെടുക്കുക.","Location updated":"സ്ഥലം പുതുക്കി",
+"Prayer complete. May Allah accept it.":"നമസ്കാരം പൂർത്തിയായി. അല്ലാഹു സ്വീകരിക്കട്ടെ.","Prayer log cleared":"നമസ്കാര രേഖ മായ്ച്ചു",
+"Hijri dates shifted later by a day":"ഹിജ്റി തീയതികൾ ഒരു ദിവസം പിന്നോട്ട് മാറ്റി","Hijri dates shifted earlier by a day":"ഹിജ്റി തീയതികൾ ഒരു ദിവസം മുന്നോട്ട് മാറ്റി","Hijri dates as calculated":"ഹിജ്റി തീയതികൾ കണക്കാക്കിയതുപോലെ",
+"Times reset to calculated":"സമയങ്ങൾ കണക്കാക്കിയതിലേക്ക് മടക്കി","App info copied":"ആപ്പ് വിവരം പകർത്തി",
+"Compass access was declined":"കോമ്പസ് അനുമതി നിരസിച്ചു","Compass is unavailable":"കോമ്പസ് ലഭ്യമല്ല","Profile updated":"പ്രൊഫൈൽ പുതുക്കി","Welcome, {0}":"സ്വാഗതം, {0}",
+"{0} of 5 prayers marked. Tap to update.":"5-ൽ {0} നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തി. പുതുക്കാൻ തൊടുക.","{0} {1}: {2} of 5 prayers":"{0} {1}: 5-ൽ {2} നമസ്കാരം",
+"Welcome to Mihrab":"മിഹ്റാബിലേക്ക് സ്വാഗതം","Your profile":"നിങ്ങളുടെ പ്രൊഫൈൽ","Update how we address you.":"ഞങ്ങൾ താങ്കളെ എങ്ങനെ അഭിസംബോധന ചെയ്യണമെന്ന് മാറ്റാം.",
+"Tell us a little about you, so we can cheer you on with every prayer.":"ഓരോ നമസ്കാരത്തിനും പ്രോത്സാഹനം നൽകാൻ താങ്കളെ കുറിച്ച് അൽപം പറയൂ.",
+"Your name":"പേര്","Enter your name":"പേര് നൽകുക","Gender":"ലിംഗം","Male":"പുരുഷൻ","Female":"സ്ത്രീ","Continue":"തുടരുക","Save":"സേവ് ചെയ്യുക","Cancel":"റദ്ദാക്കുക",
+"Stored only on this device.":"ഈ ഉപകരണത്തിൽ മാത്രം സൂക്ഷിക്കുന്നു.","Language":"ഭാഷ","Choose the app language":"ആപ്പിന്റെ ഭാഷ തിരഞ്ഞെടുക്കുക",
+"Hijri and Gregorian, side by side.":"ഹിജ്റി, ഗ്രിഗോറിയൻ കലണ്ടറുകൾ ഒരുമിച്ച്.","Gregorian":"ഗ്രിഗോറിയൻ","Hijri":"ഹിജ്റി","Calendar type":"കലണ്ടർ തരം","Previous month":"മുൻ മാസം","Next month":"അടുത്ത മാസം",
+"Islamic occasion. Small numbers show the Hijri date.":"ഇസ്ലാമിക ദിനം. ചെറിയ അക്കങ്ങൾ ഹിജ്റി തീയതി കാണിക്കുന്നു.","Islamic occasion. Small numbers show the Gregorian date.":"ഇസ്ലാമിക ദിനം. ചെറിയ അക്കങ്ങൾ ഗ്രിഗോറിയൻ തീയതി കാണിക്കുന്നു.",
+"Jumu\u2019ah":"ജുമുഅ","Coming up":"വരാനിരിക്കുന്നവ","Tomorrow":"നാളെ","In {0} days":"{0} ദിവസത്തിൽ",
+"Dates can move by a day with moon sighting.":"ചന്ദ്രദർശനം അനുസരിച്ച് തീയതികൾ ഒരു ദിവസം മാറാം.","Adjust in Settings":"ക്രമീകരണത്തിൽ മാറ്റുക",
+"Prayer guide":"നമസ്കാര വഴികാട്ടി","Choose a prayer":"ഒരു നമസ്കാരം തിരഞ്ഞെടുക്കുക","Rak\u2019ah {0} of {1}":"റക്അത്ത് {0} / {1}","All steps":"എല്ലാ ഘട്ടങ്ങളും","Say 3 times":"മൂന്ന് തവണ",
+"Back":"പിന്നോട്ട്","Next":"അടുത്തത്","Finish":"പൂർത്തിയാക്കുക","{0} of {1}":"{0} / {1}","Meaning":"അർഥം","Meaning language":"അർഥത്തിന്റെ ഭാഷ","Transliteration":"ലിപ്യന്തരീകരണം","Read along in Latin letters":"ലാറ്റിൻ അക്ഷരങ്ങളിൽ വായിക്കാം",
+"Wording follows common Shafi\u2019i practice. Please confirm details with your ustad.":"പദപ്രയോഗം സാധാരണ ശാഫിഈ രീതിയനുസരിച്ചാണ്. വിശദാംശങ്ങൾ ഉസ്താദിനോട് ഉറപ്പാക്കുക.",
+"First tashahhud. Stand up for the next rak\u2019ah afterwards.":"ആദ്യ തശഹ്ഹുദ്. ഇതിനു ശേഷം അടുത്ത റക്അത്തിനായി എഴുന്നേൽക്കുക.","{0}, {1} rak\u2019ahs":"{0}, {1} റക്അത്ത്","Rak\u2019ah {0}":"റക്അത്ത് {0}",
+"Change location":"സ്ഥലം മാറ്റുക","Compass dial. Drag to rotate if your device has no compass sensor.":"കോമ്പസ് ഡയൽ. ഉപകരണത്തിൽ കോമ്പസ് സെൻസർ ഇല്ലെങ്കിൽ വലിച്ച് തിരിക്കുക.",
+"Qibla bearing from north":"വടക്കിൽ നിന്നുള്ള ഖിബ്‌ല ദിശ","Distance to Makkah":"മക്കയിലേക്കുള്ള ദൂരം","Use device compass":"ഉപകരണത്തിലെ കോമ്പസ് ഉപയോഗിക്കുക",
+"No sensor in this preview? Drag the dial to turn it yourself.":"ഈ പ്രിവ്യൂവിൽ സെൻസർ ഇല്ലേ? ഡയൽ വലിച്ച് സ്വയം തിരിക്കുക.","Live compass on. Hold your phone flat.":"ലൈവ് കോമ്പസ് ഓണാണ്. ഫോൺ നിരപ്പായി പിടിക്കുക.",
+"No compass signal here. Drag the dial to try it.":"ഇവിടെ കോമ്പസ് സിഗ്നൽ ഇല്ല. ഡയൽ വലിച്ച് ശ്രമിക്കുക.","You are facing the Qibla":"നിങ്ങൾ ഖിബ്‌ലക്ക് അഭിമുഖമായിരിക്കുന്നു",
+"Turn right {0}°":"{0}° വലത്തോട്ട് തിരിയുക","Turn left {0}°":"{0}° ഇടത്തോട്ട് തിരിയുക","Face {0} ({1}°) from your location":"നിങ്ങളുടെ സ്ഥലത്തു നിന്ന് {0} ({1}°) ദിശയിലേക്ക് തിരിയുക","{0} km":"{0} കി.മീ",
+"Never miss a prayer, even with the app closed.":"ആപ്പ് അടച്ചിരുന്നാലും ഒരു നമസ്കാരവും നഷ്ടപ്പെടരുത്.","Notifications":"അറിയിപ്പുകൾ",
+"Allowed on this device":"ഈ ഉപകരണത്തിൽ അനുവദിച്ചു","Blocked in browser settings":"ബ്രൗസർ ക്രമീകരണത്തിൽ തടഞ്ഞിരിക്കുന്നു","Not available in this preview":"ഈ പ്രിവ്യൂവിൽ ലഭ്യമല്ല","Not allowed yet":"ഇതുവരെ അനുവദിച്ചിട്ടില്ല","Allow":"അനുവദിക്കുക",
+"Remind me for":"ഇവയ്ക്ക് ഓർമ്മിപ്പിക്കുക","Remind for {0}":"{0}-ന് ഓർമ്മിപ്പിക്കുക","How early":"എത്ര മുമ്പ്","{0} min before":"{0} മിനിറ്റ് മുമ്പ്","At prayer time":"നമസ്കാര സമയത്ത്","Lead time":"മുൻകൂർ സമയം",
+"Sound":"ശബ്ദം","Soft chime":"മൃദു മണിനാദം","Silent":"നിശബ്ദം","On your lock screen":"നിങ്ങളുടെ ലോക്ക് സ്ക്രീനിൽ",
+"{0} in {1} minutes":"{0} {1} മിനിറ്റിൽ","It\u2019s time for {0}":"{0}-ന്റെ സമയമായി","{0} reminder":"{0} റിമൈൻഡർ","Set for {0}":"{0} സജ്ജമാക്കി","{0} minutes before":"{0} മിനിറ്റ് മുമ്പ്","prayer time":"നമസ്കാര സമയം","Send a test reminder":"ഒരു ടെസ്റ്റ് റിമൈൻഡർ അയയ്ക്കുക",
+"The next prayer, right on your home screen.":"അടുത്ത നമസ്കാരം, നിങ്ങളുടെ ഹോം സ്ക്രീനിൽ തന്നെ.","{0} in {1}":"{0} {1} കഴിഞ്ഞ്","in {0}":"{0} കഴിഞ്ഞ്","2 \u00d7 2 \u00b7 date":"2 \u00d7 2 \u00b7 തീയതി",
+"Widgets refresh every minute and keep working when the app is closed.":"വിജറ്റുകൾ ഓരോ മിനിറ്റിലും പുതുക്കുന്നു, ആപ്പ് അടച്ചാലും പ്രവർത്തിക്കും.",
+"Adjust prayer times":"നമസ്കാര സമയം ക്രമീകരിക്കുക","Match your local mosque timetable. Reminders and widgets use the adjusted times.":"നിങ്ങളുടെ പ്രാദേശിക പള്ളിയിലെ സമയപ്പട്ടികയുമായി ഒത്തുനോക്കുക. റിമൈൻഡറുകളും വിജറ്റുകളും ക്രമീകരിച്ച സമയം ഉപയോഗിക്കുന്നു.",
+"Earlier by one minute for {0}":"{0}: ഒരു മിനിറ്റ് മുമ്പ്","Later by one minute for {0}":"{0}: ഒരു മിനിറ്റ് വൈകി","As calculated":"കണക്കാക്കിയത്","Each time can move up to {0} minutes either way.":"ഓരോ സമയവും ഇരുവശത്തേക്കും പരമാവധി {0} മിനിറ്റ് മാറ്റാം.","Reset all":"എല്ലാം റീസെറ്റ് ചെയ്യുക","Done":"പൂർത്തിയായി",
+"Version {0} \u00b7 build {1}":"പതിപ്പ് {0} \u00b7 ബിൽഡ് {1}","Credits":"ക്രെഡിറ്റുകൾ","Design and development":"ഡിസൈനും വികസനവും","Mihrab team":"മിഹ്റാബ് ടീം","Religious content review":"മതപരമായ ഉള്ളടക്ക പരിശോധന","To be added before release":"പുറത്തിറക്കുന്നതിന് മുമ്പ് ചേർക്കും",
+"Prayer times":"നമസ്കാര സമയങ്ങൾ","PrayTimes.org method (MIT)":"PrayTimes.org രീതി (MIT)","Hijri date":"ഹിജ്റി തീയതി","Umm al-Qura calendar":"ഉമ്മുൽ ഖുറാ കലണ്ടർ","Qibla bearing":"ഖിബ്‌ല ദിശ","Great-circle path to the Kaaba":"കഅ്ബയിലേക്കുള്ള ഗ്രേറ്റ്-സർക്കിൾ പാത","Fonts":"ഫോണ്ടുകൾ",
+"Prayer times are calculated on your device. Your location is never sent anywhere.":"നമസ്കാര സമയങ്ങൾ നിങ്ങളുടെ ഉപകരണത്തിൽ തന്നെ കണക്കാക്കുന്നു. നിങ്ങളുടെ ലൊക്കേഷൻ ഒരിടത്തും അയയ്ക്കില്ല.","Copy app info":"ആപ്പ് വിവരം പകർത്തുക","\u00a9 {0} {1}. All rights reserved.":"\u00a9 {0} {1}. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.",
+"About {0}":"{0}-നെ കുറിച്ച്","Version {0}, credits and licences":"പതിപ്പ് {0}, ക്രെഡിറ്റുകളും ലൈസൻസുകളും",
+"Location":"സ്ഥലം","Prayer times are calculated on your device.":"നമസ്കാര സമയങ്ങൾ നിങ്ങളുടെ ഉപകരണത്തിൽ തന്നെ കണക്കാക്കുന്നു.","Use my current location":"എന്റെ നിലവിലെ സ്ഥലം ഉപയോഗിക്കുക",
+"You":"നിങ്ങൾ","Profile":"പ്രൊഫൈൽ","Not set":"സജ്ജമാക്കിയിട്ടില്ല","Reset prayer log":"നമസ്കാര രേഖ റീസെറ്റ് ചെയ്യുക","Clears ticks and streak":"ടിക്കുകളും തുടർച്ചയും മായ്ക്കുന്നു","Match your local mosque timetable":"നിങ്ങളുടെ പ്രാദേശിക പള്ളിയിലെ സമയപ്പട്ടികയുമായി ഒത്തുനോക്കുക",
+"Calculation method":"കണക്കാക്കൽ രീതി","Asr calculation":"അസ്ർ കണക്കാക്കൽ","Appearance":"രൂപഭാവം","Follow the sun":"സൂര്യനെ പിന്തുടരുക","Light from sunrise to Maghrib, midnight after":"സൂര്യോദയം മുതൽ മഗ്‌രിബ് വരെ ലൈറ്റ്, പിന്നീട് മിഡ്നൈറ്റ്",
+"Dawn":"പ്രഭാതം","Always light":"എപ്പോഴും ലൈറ്റ്","Midnight":"അർധരാത്രി","Always dark":"എപ്പോഴും ഡാർക്ക്","1 day earlier":"1 ദിവസം മുമ്പ്","Your community sights the moon earlier":"നിങ്ങളുടെ സമൂഹം ചന്ദ്രനെ നേരത്തെ കാണുന്നു","1 day later":"1 ദിവസം പിന്നീട്","Your community sights the moon later":"നിങ്ങളുടെ സമൂഹം ചന്ദ്രനെ വൈകി കാണുന്നു",
+"More":"കൂടുതൽ","Home screen widgets":"ഹോം സ്ക്രീൻ വിജറ്റുകൾ","Preview the widgets":"വിജറ്റുകൾ പ്രിവ്യൂ ചെയ്യുക",
+"Reset prayer log?":"നമസ്കാര രേഖ റീസെറ്റ് ചെയ്യണോ?","This clears every tick and your streak on this device. It can't be undone.":"ഈ ഉപകരണത്തിലെ എല്ലാ ടിക്കുകളും തുടർച്ചയും മായ്ക്കപ്പെടും. ഇത് തിരിച്ചെടുക്കാനാവില്ല.","Reset":"റീസെറ്റ്"
+},
+ar:{
+"Today":"اليوم","Widget background":"خلفية الودجة","Week streak":"سلسلة أسبوعية","Month streak":"سلسلة شهرية","Each ring has five parts, one for each prayer.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة.","Translation":"الترجمة","Off":"إيقاف", "Install app":"تثبيت التطبيق","Add it to your home screen for full-screen use and offline access.":"أضِفه إلى شاشتك الرئيسية للاستخدام بملء الشاشة ودون اتصال.","Install {0}":"تثبيت {0}","Tap the Share button in Safari":"اضغط على زر المشاركة في سفاري","Choose Add to Home Screen":"اختر «إضافة إلى الشاشة الرئيسية»","Tap Add":"اضغط «إضافة»","Open your browser menu":"افتح قائمة المتصفح","Choose Install app or Add to Home screen":"اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»","App installed":"تم تثبيت التطبيق","A new version is ready.":"إصدار جديد جاهز.","Refresh":"تحديث","You\u2019re offline. Everything still works.":"أنت غير متصل. كل شيء يعمل.","Back online":"عدنا متصلين","Transparent":"شفاف","Blur":"ضبابي","Bar color shifts from green to red as the next prayer gets closer.":"يتحول لون الشريط من الأخضر إلى الأحمر كلما اقتربت الصلاة القادمة.","minimal":"مبسّط","H":"س","M":"د","S":"ث","Calendar":"التقويم","Guide":"الدليل","Reminders":"التذكيرات","Settings":"الإعدادات","Widgets":"الودجات","Qibla":"القبلة",
+"Next prayer":"الصلاة القادمة","{0} at {1}":"{0} عند {1}","day streak":"أيام متتالية","Best":"الأفضل","Full days":"أيام كاملة",
+"Each ring has five parts, one for each prayer. Tap a day to update it.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة. اضغط على يوم لتحديثه.",
+"Tap the bell to set a reminder.":"اضغط على الجرس لضبط تذكير.","Asr: {0}":"العصر: {0}","{0} adjusted":"{0} معدّلة","{0} prayed":"تمت صلاة {0}",
+"Qibla direction":"اتجاه القبلة","Turn off reminder for {0}":"إيقاف تذكير {0}","Turn on reminder for {0}":"تفعيل تذكير {0}","min":"د",
+"{0}h {1}m":"{0}س {1}د","{0}m":"{0}د","{0}s":"{0}ث","km":"كم","AH":"هـ","now":"الآن","later":"لاحقًا",
+"Shafi\u2019i":"الشافعي","Hanafi":"الحنفي","Shafi\u2019i, Maliki, Hanbali":"الشافعي والمالكي والحنبلي",
+"Shadow equals object height":"الظل يساوي طول الجسم","Shadow equals twice the object height":"الظل يساوي ضعف طول الجسم",
+"Muslim World League":"رابطة العالم الإسلامي","Karachi, University of Islamic Sciences":"كراتشي، جامعة العلوم الإسلامية","Egyptian General Authority":"الهيئة المصرية العامة للمساحة","Umm al-Qura, Makkah":"أم القرى، مكة المكرمة",
+"Fajr {0}° · Isha {1}°":"الفجر {0}° · العشاء {1}°","Fajr {0}° · Isha {1} min after Maghrib":"الفجر {0}° · العشاء بعد المغرب بـ{1} دقيقة",
+"My location":"موقعي",
+"{0} can be ticked once its time begins":"يمكن تحديد {0} عند دخول وقتها","All five done. Alhamdulillah!":"تمّت الصلوات الخمس. الحمد لله!","{0} marked":"تم تسجيل {0}","{0} unmarked":"أُلغي تسجيل {0}",
+"{0} reminder on":"تذكير {0} مفعّل","{0} reminder off":"تذكير {0} متوقف",
+"Notifications allowed":"تم السماح بالإشعارات","Notifications not allowed":"لم يُسمح بالإشعارات","Notifications are not available here":"الإشعارات غير متاحة هنا",
+"Location is unavailable here. Pick a city.":"الموقع غير متاح هنا. اختر مدينة.","Location updated":"تم تحديث الموقع",
+"Prayer complete. May Allah accept it.":"تمّت الصلاة. تقبّل الله.","Prayer log cleared":"تم مسح سجل الصلاة",
+"Hijri dates shifted later by a day":"أُخّرت التواريخ الهجرية بيوم","Hijri dates shifted earlier by a day":"قُدّمت التواريخ الهجرية بيوم","Hijri dates as calculated":"التواريخ الهجرية كما هي محسوبة",
+"Times reset to calculated":"أُعيدت الأوقات إلى المحسوبة","App info copied":"تم نسخ معلومات التطبيق",
+"Compass access was declined":"تم رفض الوصول إلى البوصلة","Compass is unavailable":"البوصلة غير متاحة","Profile updated":"تم تحديث الملف الشخصي","Welcome, {0}":"أهلًا بك، {0}",
+"{0} of 5 prayers marked. Tap to update.":"تم تسجيل {0} من 5 صلوات. اضغط للتحديث.","{0} {1}: {2} of 5 prayers":"{0} {1}: {2} من 5 صلوات",
+"Welcome to Mihrab":"مرحبًا بك في محراب","Your profile":"ملفك الشخصي","Update how we address you.":"عدّل طريقة مخاطبتنا لك.",
+"Tell us a little about you, so we can cheer you on with every prayer.":"أخبرنا قليلًا عنك لنشجّعك مع كل صلاة.",
+"Your name":"اسمك","Enter your name":"أدخل اسمك","Gender":"الجنس","Male":"ذكر","Female":"أنثى","Continue":"متابعة","Save":"حفظ","Cancel":"إلغاء",
+"Stored only on this device.":"يُحفظ على هذا الجهاز فقط.","Language":"اللغة","Choose the app language":"اختر لغة التطبيق",
+"Hijri and Gregorian, side by side.":"الهجري والميلادي جنبًا إلى جنب.","Gregorian":"ميلادي","Hijri":"هجري","Calendar type":"نوع التقويم","Previous month":"الشهر السابق","Next month":"الشهر التالي",
+"Islamic occasion. Small numbers show the Hijri date.":"مناسبة إسلامية. الأرقام الصغيرة تُظهر التاريخ الهجري.","Islamic occasion. Small numbers show the Gregorian date.":"مناسبة إسلامية. الأرقام الصغيرة تُظهر التاريخ الميلادي.",
+"Jumu\u2019ah":"صلاة الجمعة","Coming up":"قادمًا","Tomorrow":"غدًا","In {0} days":"بعد {0} أيام",
+"Dates can move by a day with moon sighting.":"قد تتغير التواريخ بيوم حسب رؤية الهلال.","Adjust in Settings":"عدّل من الإعدادات",
+"Prayer guide":"دليل الصلاة","Choose a prayer":"اختر صلاة","Rak\u2019ah {0} of {1}":"الركعة {0} من {1}","All steps":"كل الخطوات","Say 3 times":"ثلاث مرات",
+"Back":"السابق","Next":"التالي","Finish":"إنهاء","{0} of {1}":"{0} من {1}","Meaning":"المعنى","Meaning language":"لغة المعنى","Transliteration":"النطق بحروف لاتينية","Read along in Latin letters":"اقرأ بالحروف اللاتينية",
+"Wording follows common Shafi\u2019i practice. Please confirm details with your ustad.":"الصياغة وفق المتّبع في المذهب الشافعي. يُرجى التأكد من التفاصيل مع معلّمك.",
+"First tashahhud. Stand up for the next rak\u2019ah afterwards.":"التشهد الأول. ثم قم للركعة التالية.","{0}, {1} rak\u2019ahs":"{0}، {1} ركعات","Rak\u2019ah {0}":"الركعة {0}",
+"Change location":"تغيير الموقع","Compass dial. Drag to rotate if your device has no compass sensor.":"قرص البوصلة. اسحبه لتدويره إن لم يكن في جهازك حسّاس بوصلة.",
+"Qibla bearing from north":"اتجاه القبلة من الشمال","Distance to Makkah":"المسافة إلى مكة","Use device compass":"استخدم بوصلة الجهاز",
+"No sensor in this preview? Drag the dial to turn it yourself.":"لا يوجد حسّاس في هذه المعاينة؟ اسحب القرص لتديره بنفسك.","Live compass on. Hold your phone flat.":"البوصلة الحية تعمل. أمسك هاتفك بشكل أفقي.",
+"No compass signal here. Drag the dial to try it.":"لا توجد إشارة بوصلة هنا. اسحب القرص للتجربة.","You are facing the Qibla":"أنت تواجه القبلة",
+"Turn right {0}°":"إلى اليمين {0}°","Turn left {0}°":"إلى اليسار {0}°","Face {0} ({1}°) from your location":"الاتجاه {0} ({1}°) من موقعك","{0} km":"{0} كم",
+"Never miss a prayer, even with the app closed.":"لا تفوّت أي صلاة، حتى والتطبيق مغلق.","Notifications":"الإشعارات",
+"Allowed on this device":"مسموح على هذا الجهاز","Blocked in browser settings":"محظور في إعدادات المتصفح","Not available in this preview":"غير متاح في هذه المعاينة","Not allowed yet":"لم يُسمح بعد","Allow":"السماح",
+"Remind me for":"ذكّرني بـ","Remind for {0}":"ذكّرني بـ{0}","How early":"قبل كم","{0} min before":"قبل {0} دقيقة","At prayer time":"عند وقت الصلاة","Lead time":"وقت التنبيه المسبق",
+"Sound":"الصوت","Soft chime":"رنين هادئ","Silent":"صامت","On your lock screen":"على شاشة القفل",
+"{0} in {1} minutes":"{0} بعد {1} دقيقة","It\u2019s time for {0}":"حان وقت {0}","{0} reminder":"تذكير {0}","Set for {0}":"مضبوط {0}","{0} minutes before":"قبل {0} دقيقة","prayer time":"وقت الصلاة","Send a test reminder":"أرسل تذكيرًا تجريبيًا",
+"The next prayer, right on your home screen.":"الصلاة القادمة على شاشتك الرئيسية مباشرة.","{0} in {1}":"{0} بعد {1}","in {0}":"بعد {0}","2 \u00d7 2 \u00b7 date":"2 \u00d7 2 \u00b7 التاريخ",
+"Widgets refresh every minute and keep working when the app is closed.":"تتحدّث الودجات كل دقيقة وتعمل حتى عند إغلاق التطبيق.",
+"Adjust prayer times":"ضبط أوقات الصلاة","Match your local mosque timetable. Reminders and widgets use the adjusted times.":"طابِق جدول مسجدك المحلي. تستخدم التذكيرات والودجات الأوقات المعدّلة.",
+"Earlier by one minute for {0}":"{0}: أبكر بدقيقة","Later by one minute for {0}":"{0}: أبطأ بدقيقة","As calculated":"كما هو محسوب","Each time can move up to {0} minutes either way.":"يمكن تحريك كل وقت حتى {0} دقيقة في أي اتجاه.","Reset all":"إعادة تعيين الكل","Done":"تم",
+"Version {0} \u00b7 build {1}":"الإصدار {0} \u00b7 البناء {1}","Credits":"الشكر والتقدير","Design and development":"التصميم والتطوير","Mihrab team":"فريق محراب","Religious content review":"مراجعة المحتوى الديني","To be added before release":"سيُضاف قبل الإصدار",
+"Prayer times":"أوقات الصلاة","PrayTimes.org method (MIT)":"طريقة PrayTimes.org (MIT)","Hijri date":"التاريخ الهجري","Umm al-Qura calendar":"تقويم أم القرى","Qibla bearing":"اتجاه القبلة","Great-circle path to the Kaaba":"المسار الدائري الأعظم إلى الكعبة","Fonts":"الخطوط",
+"Prayer times are calculated on your device. Your location is never sent anywhere.":"تُحسب أوقات الصلاة على جهازك. لا يُرسل موقعك إلى أي مكان.","Copy app info":"نسخ معلومات التطبيق","\u00a9 {0} {1}. All rights reserved.":"\u00a9 {0} {1}. جميع الحقوق محفوظة.",
+"About {0}":"عن {0}","Version {0}, credits and licences":"الإصدار {0}، الشكر والتراخيص",
+"Location":"الموقع","Prayer times are calculated on your device.":"تُحسب أوقات الصلاة على جهازك.","Use my current location":"استخدم موقعي الحالي",
+"You":"أنت","Profile":"الملف الشخصي","Not set":"غير محدد","Reset prayer log":"إعادة تعيين سجل الصلاة","Clears ticks and streak":"يمسح العلامات والسلسلة","Match your local mosque timetable":"طابِق جدول مسجدك المحلي",
+"Calculation method":"طريقة الحساب","Asr calculation":"حساب العصر","Appearance":"المظهر","Follow the sun":"حسب الشمس","Light from sunrise to Maghrib, midnight after":"فاتح من الشروق حتى المغرب، وداكن بعده",
+"Dawn":"الصباح","Always light":"فاتح دائمًا","Midnight":"منتصف الليل","Always dark":"داكن دائمًا","1 day earlier":"يوم أبكر","Your community sights the moon earlier":"مجتمعك يرى الهلال مبكرًا","1 day later":"يوم أبطأ","Your community sights the moon later":"مجتمعك يرى الهلال متأخرًا",
+"More":"المزيد","Home screen widgets":"ودجات الشاشة الرئيسية","Preview the widgets":"معاينة الودجات",
+"Reset prayer log?":"إعادة تعيين سجل الصلاة؟","This clears every tick and your streak on this device. It can't be undone.":"سيمسح هذا كل العلامات وسلسلتك على هذا الجهاز. لا يمكن التراجع عن ذلك.","Reset":"إعادة تعيين"
+}
+};
+function tx(k){let s=(TR[LANG]&&TR[LANG][k])||k;for(let i=1;i<arguments.length;i++)s=s.split("{"+(i-1)+"}").join(arguments[i]);return s}
+const appn=()=>APPNAME[LANG];
+/* Arabic day-count grammar */
+const arDays=n=>n===1?"يوم واحد":n===2?"يومان":n<=10?n+" أيام":n+" يومًا";
+const arDaysAfter=n=>n===1?"يوم":n===2?"يومين":n<=10?n+" أيام":n+" يومًا";
+/* prayer-name helpers: primary follows the app language, secondary is the other script */
+for(const k in NAMES){const o=NAMES[k];Object.defineProperty(o,"p",{get:()=>o[LANG]});Object.defineProperty(o,"s",{get:()=>LANG==="en"?o.ml:o.en})}
+const NP=k=>NAMES[k].p,NS=k=>NAMES[k].s;
+const cn=c=>(c.name==="My location")?tx("My location"):(LANG==="en"?c.name:(c[LANG]||c.name));
+const SEC=()=>LANG==="en"?"ml":"en";
+const ARR=()=>LANG==="ar"?"\u203A":"\u2039";
+
+
+/* ---------- prayer time calculation ---------- */
+function julian(y,m,d){if(m<=2){y-=1;m+=12}const A=Math.floor(y/100),B=2-A+Math.floor(A/4);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5}
+function sunPos(jd){
+  const D=jd-2451545.0,g=fix(357.529+0.98560028*D,360),q=fix(280.459+0.98564736*D,360);
+  const L=fix(q+1.915*sin(g)+0.020*sin(2*g),360),e=23.439-0.00000036*D;
+  const RA=fix(atan2(cos(e)*sin(L),cos(L))/15,24);
+  return {decl:asin(sin(e)*sin(L)),eq:fix(q/15-RA+12,24)-12};
+}
+function calc(y,m,d,lat,lng,tz,mt,asrF){
+  const jd=julian(y,m,d)-lng/(15*24);
+  const mid=t=>fix(12-sunPos(jd+t).eq,24);
+  const ang=(a,t,ccw)=>{const dc=sunPos(jd+t).decl;const h=acos((-sin(a)-sin(dc)*sin(lat))/(cos(dc)*cos(lat)))/15;return mid(t)+(ccw?-h:h)};
+  const asr=(f,t)=>{const dc=sunPos(jd+t).decl;return ang(-acot(f+tan(Math.abs(lat-dc))),t,false)};
+  const adj=h=>h+tz-lng/15;
+  const sunset=adj(ang(0.833,18/24,false));
+  return {
+    fajr:adj(ang(mt.fajr,5/24,true)),
+    sunrise:adj(ang(0.833,6/24,true)),
+    dhuhr:adj(mid(12/24)),
+    asr:adj(asr(asrF,13/24)),
+    maghrib:sunset,
+    isha:mt.ishaMin?sunset+mt.ishaMin/60:adj(ang(mt.isha,18/24,false))
+  };
+}
+const cache={};
+function baseTimes(y,m,d,L){
+  const k=[y,m,d,L.lat,L.lon,L.tz,S.method,S.asr].join();
+  if(cache[k])return cache[k];
+  const h=calc(y,m,d,L.lat,L.lon,L.tz,METHODS[S.method]||METHODS.mwl,S.asr==="hanafi"?2:1);
+  const base=Date.UTC(y,m-1,d)-L.tz*3600e3,o={};
+  for(const key in h)o[key]=Math.round((base+h[key]*3600e3)/60000)*60000;
+  return cache[k]=o;
+}
+function dayTimes(y,m,d,L){
+  const b=baseTimes(y,m,d,L),o={};
+  for(const k in b)o[k]=b[k]+(S.adj[k]||0)*60000;
+  return o;
+}
+const ADJ_MAX=30;
+const adjCount=()=>Object.values(S.adj).filter(v=>v).length;
+const adjTxt=v=>(v>0?"+":v<0?"\u2212":"")+Math.abs(v)+" "+tx("min");
+function getEvents(now){
+  const L=loc(),lt=new Date(now+L.tz*3600e3);
+  const Y=lt.getUTCFullYear(),M=lt.getUTCMonth()+1,Dd=lt.getUTCDate();
+  const days=[-1,0,1].map(o=>{const t=new Date(Date.UTC(Y,M-1,Dd+o));return {o,t:dayTimes(t.getUTCFullYear(),t.getUTCMonth()+1,t.getUTCDate(),L)}});
+  const list=[];
+  days.forEach(({o,t})=>P.forEach(k=>list.push({key:k,ms:t[k],o})));
+  list.sort((a,b)=>a.ms-b.ms);
+  const ni=list.findIndex(e=>e.ms>now);
+  return {list,next:list[ni],prev:list[ni-1],today:days[1].t,Y,M,Dd,L};
+}
+function fmt(ms,withSuffix=true){
+  const L=loc(),d=new Date(ms+L.tz*3600e3),H=d.getUTCHours(),m=d.getUTCMinutes();
+  const hh=(H%12||12)+":"+String(m).padStart(2,"0");
+  if(!withSuffix)return hh;
+  if(LANG==="ml")return (H<4?"രാത്രി":H<12?"രാവിലെ":H<16?"ഉച്ചയ്ക്ക്":H<20?"വൈകിട്ട്":"രാത്രി")+" "+hh;
+  return hh+" "+(LANG==="ar"?(H>=12?"م":"ص"):(H>=12?"pm":"am"));
+}
+const fmtP=ms=>fmt(ms,false).replace(/^(\d):/,"0$1:");
+function fmtH(ms){const t=fmt(ms);if(LANG!=="ml")return t;const i=t.lastIndexOf(" ");return `<span class="tw">${t.slice(0,i)}</span> ${t.slice(i+1)}`}
+function cdHTML(rem){
+  const s=Math.max(0,Math.floor(rem/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60),sec=s%60;
+  return h>0?`${h}<sup>${tx("H")}</sup> ${m}<sup>${tx("M")}</sup>`:`${m}<sup>${tx("M")}</sup> ${sec}<sup>${tx("S")}</sup>`;
+}
+/* green (90+ min away) -> yellow -> orange -> red (about to start) */
+function urgency(ms){const m=Math.max(0,ms)/60000,t=Math.min(1,m/90);return `hsl(${Math.round(150*t)} 72% 52%)`}
+const hms=ms=>{ms=Math.max(0,ms);const s=Math.floor(ms/1000);return [Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(n=>String(n).padStart(2,"0")).join(":")};
+const short=ms=>{const s=Math.max(0,Math.floor(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h>0?tx("{0}h {1}m",h,m):m>0?tx("{0}m",m):tx("{0}s",s)};
+const HMX={
+  en:["Muharram","Safar","Rabi\u02BB I","Rabi\u02BB II","Jumada I","Jumada II","Rajab","Shaban","Ramadan","Shawwal","Dhu\u02BBl-Qi\u02BBdah","Dhu\u02BBl-Hijjah"],
+  ml:["മുഹർറം","സഫർ","റബീഉൽ അവ്വൽ","റബീഉൽ ആഖിർ","ജുമാദുൽ ഊല","ജുമാദുൽ ആഖിറ","റജബ്","ശഅ്ബാൻ","റമദാൻ","ശവ്വാൽ","ദുൽഖഅ്ദ","ദുൽഹിജ്ജ"],
+  ar:["محرم","صفر","ربيع الأول","ربيع الآخر","جمادى الأولى","جمادى الآخرة","رجب","شعبان","رمضان","شوال","ذو القعدة","ذو الحجة"]};
+const HMSX={
+  en:["Muh","Saf","Rab I","Rab II","Jum I","Jum II","Raj","Sha","Ram","Shaw","Qid","Hij"],
+  ml:["മുഹ","സഫ","റബി 1","റബി 2","ജുമ 1","ജുമ 2","റജ","ശഅ","റമ","ശവ്വ","ദുഖ","ദുഹി"],
+  ar:["محرم","صفر","ربيع 1","ربيع 2","جمادى 1","جمادى 2","رجب","شعبان","رمضان","شوال","القعدة","الحجة"]};
+const GMX={
+  en:["January","February","March","April","May","June","July","August","September","October","November","December"],
+  ml:["ജനുവരി","ഫെബ്രുവരി","മാർച്ച്","ഏപ്രിൽ","മേയ്","ജൂൺ","ജൂലൈ","ഓഗസ്റ്റ്","സെപ്റ്റംബർ","ഒക്ടോബർ","നവംബർ","ഡിസംബർ"],
+  ar:["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"]};
+const GMSX={
+  en:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
+  ml:["ജനു","ഫെബ്രു","മാർ","ഏപ്രി","മേയ്","ജൂൺ","ജൂലൈ","ഓഗ","സെപ്","ഒക്ടോ","നവം","ഡിസം"],
+  ar:["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"]};
+const WDX={en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],ml:["ഞാ","തി","ചൊ","ബു","വ്യാ","വെ","ശ"],ar:["أحد","اثنين","ثلاثاء","أربعاء","خميس","جمعة","سبت"]};
+const WDFX={en:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],ml:["ഞായർ","തിങ്കൾ","ചൊവ്വ","ബുധൻ","വ്യാഴം","വെള്ളി","ശനി"],ar:["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"]};
+const WDLX={en:["S","M","T","W","T","F","S"],ml:["ഞ","തി","ചൊ","ബു","വ്യാ","വെ","ശ"],ar:["ح","ن","ث","ر","خ","ج","س"]};
+let HM=HMX.en,HMS=HMSX.en,GM=GMX.en,GMS=GMSX.en,WD=WDX.en,WDF=WDFX.en,WDL=WDLX.en;
+function setLists(){HM=HMX[LANG];HMS=HMSX[LANG];GM=GMX[LANG];GMS=GMSX[LANG];WD=WDX[LANG];WDF=WDFX[LANG];WDL=WDLX[LANG]}
+const OCC=[
+  {m:1,d:1,en:"Islamic New Year",ml:"ഹിജ്റ പുതുവർഷം",ar:"رأس السنة الهجرية"},
+  {m:1,d:10,en:"Ashura",ml:"ആശൂറാ",ar:"عاشوراء"},
+  {m:7,d:27,en:"Isra and Mi\u2019raj",ml:"ഇസ്റാഅ് മിഅ്റാജ്",ar:"الإسراء والمعراج"},
+  {m:9,d:1,en:"Ramadan begins",ml:"റമദാൻ ആരംഭം",ar:"بداية رمضان"},
+  {m:9,d:27,en:"Laylat al-Qadr (commonly observed)",ml:"ലൈലത്തുൽ ഖദ്ർ",ar:"ليلة القدر (يُحتفى بها عادةً)"},
+  {m:10,d:1,en:"Eid al-Fitr",ml:"ഈദുൽ ഫിത്ർ (ചെറിയ പെരുന്നാൾ)",ar:"عيد الفطر"},
+  {m:12,d:9,en:"Day of Arafah",ml:"അറഫാ ദിനം",ar:"يوم عرفة"},
+  {m:12,d:10,en:"Eid al-Adha",ml:"ഈദുൽ അദ്ഹാ (ബലിപെരുന്നാൾ)",ar:"عيد الأضحى"}
+];
+const fH=new Intl.DateTimeFormat("en-u-ca-islamic-umalqura",{day:"numeric",month:"numeric",year:"numeric",timeZone:"UTC"});
+const hc=new Map();
+/* n = whole days since 1970-01-01 (local calendar day). Returns Hijri {d,m,y} with the user's day correction. */
+function hij(n){
+  const k=n+"|"+(S.hadj||0);let r=hc.get(k);if(r)return r;
+  const parts=fH.formatToParts(new Date((n+(S.hadj||0))*864e5+432e5));
+  const get=t=>{const x=parts.find(p=>p.type===t);return x?parseInt(x.value.replace(/\D/g,""),10):NaN};
+  const yp=parts.find(p=>p.type==="year"||p.type==="relatedYear");
+  r={d:get("day"),m:get("month"),y:yp?parseInt(yp.value.replace(/\D/g,""),10):NaN};
+  hc.set(k,r);return r;
+}
+function dateLines(now,E){
+  const shift=E.today.maghrib<=now?1:0;
+  const n=Math.floor(Date.UTC(E.Y,E.M-1,E.Dd)/864e5),h=hij(n+shift);
+  const gd=new Date(Date.UTC(E.Y,E.M-1,E.Dd,12));
+  const gr=WDF[gd.getUTCDay()]+" "+gd.getUTCDate()+" "+GM[gd.getUTCMonth()];
+  return {hj:h.d+" "+HM[h.m-1]+" "+h.y,gr,hd:h.d,hm:HM[h.m-1],hy:h.y};
+}
+
+/* ---------- icons ---------- */
+const IC={
+  today:'<svg viewBox="0 0 24 24"><path d="M5 21V11c0-4 5-5 7-9 2 4 7 5 7 9v10z"/><circle cx="12" cy="14.5" r="1.6"/></svg>',
+  guide:'<svg viewBox="0 0 24 24"><path d="M3.5 5.5c3-1 6-.8 8.5 1 2.5-1.800 5.500-2 8.500-1v13c-3-1-6-.8-8.500 1-2.500-1.800-5.500-2-8.500-1z"/><path d="M12 6.500v13"/></svg>',
+  qibla:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.600 8.400l-2.100 5.100-5.100 2.100 2.100-5.100z"/></svg>',
+  bell:'<svg viewBox="0 0 24 24"><path d="M6 9.500a6 6 0 1 1 12 0c0 4.500 2 5.800 2 6.800H4c0-1 2-2.300 2-6.800z"/><path d="M10 19.500a2 2 0 0 0 4 0"/></svg>',
+  bellOff:'<svg viewBox="0 0 24 24"><path d="M6 9.500a6 6 0 1 1 12 0c0 4.500 2 5.800 2 6.800H4c0-1 2-2.300 2-6.800z"/><path d="M10 19.500a2 2 0 0 0 4 0"/></svg>',
+  widgets:'<svg viewBox="0 0 24 24"><rect x="3.500" y="3.500" width="7.500" height="7.500" rx="2"/><rect x="13" y="3.500" width="7.500" height="7.500" rx="2"/><rect x="3.500" y="13" width="7.500" height="7.500" rx="2"/><rect x="13" y="13" width="7.500" height="7.500" rx="2"/></svg>',
+  pin:'<svg viewBox="0 0 24 24"><path d="M12 21s-6.500-5.800-6.500-11a6.500 6.500 0 0 1 13 0c0 5.200-6.500 11-6.500 11z"/><circle cx="12" cy="10" r="2.300"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" style="width:13px;height:13px"><path d="M6 9l6 6 6-6"/></svg>'
+};
+const TABS=[["today","Today"],["cal","Calendar"],["guide","Guide"],["rem","Reminders"],["set","Settings"]];
+const TABICON={set:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.400 15a1.700 1.700 0 0 0 .3 1.800l.1.1a2 2 0 1 1-2.800 2.800l-.1-.1a1.700 1.700 0 0 0-1.800-.3 1.700 1.700 0 0 0-1 1.500V21a2 2 0 1 1-4 0v-.1a1.700 1.700 0 0 0-1.100-1.500 1.700 1.700 0 0 0-1.800.3l-.1.1a2 2 0 1 1-2.800-2.800l.1-.1a1.700 1.700 0 0 0 .3-1.800 1.700 1.700 0 0 0-1.500-1H3a2 2 0 1 1 0-4h.1a1.700 1.700 0 0 0 1.500-1.100 1.700 1.700 0 0 0-.3-1.800l-.1-.1a2 2 0 1 1 2.800-2.800l.1.1a1.700 1.700 0 0 0 1.800.3H9a1.700 1.700 0 0 0 1-1.500V3a2 2 0 1 1 4 0v.1a1.700 1.700 0 0 0 1 1.500 1.700 1.700 0 0 0 1.800-.3l.1-.1a2 2 0 1 1 2.800 2.800l-.1.1a1.700 1.700 0 0 0-.3 1.800V9a1.700 1.700 0 0 0 1.500 1H21a2 2 0 1 1 0 4h-.1a1.700 1.700 0 0 0-1.500 1z"/></svg>',cal:'<svg viewBox="0 0 24 24"><rect x="3.500" y="5" width="17" height="15.500" rx="3"/><path d="M3.500 10h17M8 3v4M16 3v4"/></svg>',today:IC.today,guide:IC.guide,qibla:IC.qibla,rem:IC.bell,widgets:IC.widgets};
+
+/* ---------- mihrab arch (the signature element) ---------- */
+const ARCH="M24 330V168C24 98 110 82 150 12C190 82 276 98 276 168V330";
+const MEASURE=$("#measure"),ARCH_LEN=MEASURE.getTotalLength();
+let uid=0;
+function archSVG(o={}){
+  const id=++uid,sw=o.sw||3;
+  return `<svg class="arch" data-arch viewBox="0 0 300 340" aria-hidden="true">
+  <defs>
+    <linearGradient id="ag${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--arch-a)"/><stop offset="1" style="stop-color:var(--arch-b)"/></linearGradient>
+    <pattern id="ap${id}" width="38" height="38" patternUnits="userSpaceOnUse">
+      <rect x="9.500" y="9.500" width="19" height="19" fill="none" style="stroke:var(--gold)" stroke-width=".7"/>
+      <rect x="9.500" y="9.500" width="19" height="19" fill="none" style="stroke:var(--gold)" stroke-width=".7" transform="rotate(45 19 19)"/>
+    </pattern>
+    <filter id="af${id}" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="4"/></filter>
+  </defs>
+  <path d="${ARCH}" fill="url(#ag${id})"/>
+  ${o.pattern===false?"":`<path d="${ARCH}" fill="url(#ap${id})" opacity=".13"/>`}
+  <path d="${ARCH}" fill="none" style="stroke:var(--gold)" stroke-opacity=".28" stroke-width="${sw*.55}"/>
+  ${o.inner===false?"":`<path d="${ARCH}" transform="translate(150 330) scale(.9 .93) translate(-150 -330)" fill="none" style="stroke:var(--gold)" stroke-opacity=".16" stroke-width="1.2"/>`}
+  <path class="prog-glow" d="${ARCH}" fill="none" style="stroke:var(--gold)" stroke-width="${sw*2}" stroke-linecap="round" opacity=".35" filter="url(#af${id})"/>
+  <path class="prog" d="${ARCH}" fill="none" style="stroke:var(--arch-prog)" stroke-width="${sw}" stroke-linecap="round"/>
+  <circle class="dot-glow" r="${sw*3}" style="fill:var(--arch-prog)" opacity=".22"/>
+  <circle class="dot" r="${sw*1.5}" style="fill:var(--arch-dot)"/>
+</svg>`;
+}
+function setArch(svg,p){
+  const a=ARCH_LEN*p,pt=MEASURE.getPointAtLength(a);
+  const d=`${a} ${ARCH_LEN*2}`;
+  $$(".prog,.prog-glow",svg).forEach(el=>el.style.strokeDasharray=d);
+  $$(".dot,.dot-glow",svg).forEach(el=>{el.setAttribute("cx",pt.x);el.setAttribute("cy",pt.y)});
+}
+
+/* ---------- today ---------- */
+function bellBtn(k){
+  const on=S.rem[k];
+  return `<button class="bell ${on?"on":""}" data-act="bell" data-v="${k}" aria-label="${on?tx("Turn off reminder for {0}",NP(k)):tx("Turn on reminder for {0}",NP(k))}" aria-pressed="${!!on}">${on?IC.bell:IC.bellOff}</button>`;
+}
+function renderToday(E,now){
+  const N=NAMES[E.next.key],mask=maskOf(localDay()),msg=encourage(now,E);
+  const rows=[["fajr"],["sunrise"],["dhuhr"],["asr"],["maghrib"],["isha"]].map(([k])=>{
+    const ms=E.today[k],past=ms<=now;
+    const isNext=k===E.next.key&&E.next.o===0;
+    const isCur=E.prev.o===0&&E.prev.key===k||(k==="isha"&&E.prev.o===-1&&E.prev.key==="isha");
+    const cls=["row",k==="sunrise"?"sun":"",past&&!isCur?"past":"",isCur?"cur":"",isNext?"nxt":""].join(" ");
+    return `<div class="${cls}">${k==="sunrise"?'<span class="dt"></span>':ckBtn(k,ms<=now,!!(mask&BIT[k]))}<div class="nm"><b>${NAMES[k].p}</b><span>${S.adj[k]?` <em class="adjb">${adjTxt(S.adj[k])}</em>`:""}</span></div><span class="a">${LANG==="ar"?"":NAMES[k].ar}</span><time class="num">${fmtH(ms)}</time>${k==="sunrise"?'<span class="nob"></span>':bellBtn(k)}</div>`;
+  }).join("");
+  $("#s-today").innerHTML=`
+  <header class="th">
+    <div class="greet"><div class="hi-h">${esc(msg.h[LANG])}</div><p class="hi-m" dir="auto">${msg[LANG]}</p></div>
+    <button class="qbtn" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}</button>
+  </header>
+  <div class="hero">
+    ${archSVG({})}
+    <div class="hero-in">
+      <div class="nx">${tx("Next prayer")}</div>
+      <div class="arn">${N.ar}</div>
+      ${LANG==="ar"?"":`<div class="enn">${NAMES[E.next.key][LANG]}</div>`}
+      <div class="cd num b-cd">${hms(E.next.ms-now)}</div>
+      <div class="at num">${tx("{0} at {1}",N.p,fmt(E.next.ms))}</div>
+    </div>
+  </div>
+  <div class="list">${rows}</div>
+  ${streakHTML(now)}
+  <p class="fine" style="margin:14px 8px 0">${cn(E.L)} · ${tx(METHODS[S.method].n)} · ${tx("Asr: {0}",tx(S.asr==="hanafi"?"Hanafi":"Shafi\u2019i"))}${adjCount()?` · ${tx("{0} adjusted",adjCount())}`:""}. ${tx("Tap the bell to set a reminder.")}</p>`;
+}
+
+/* ---------- guide ---------- */
+const ARN={fajr:"الصُّبْحِ",dhuhr:"الظُّهْرِ",asr:"الْعَصْرِ",maghrib:"الْمَغْرِبِ",isha:"الْعِشَاءِ"};
+const ARC={2:"رَكْعَتَيْنِ",3:"ثَلَاثَ رَكَعَاتٍ",4:"أَرْبَعَ رَكَعَاتٍ"};
+const NTR={
+  fajr:"Usallee fardas-subhi rak\u2019ataini",dhuhr:"Usallee fardaz-zuhri arba\u2019a raka\u2019aatin",asr:"Usallee fardal-asri arba\u2019a raka\u2019aatin",
+  maghrib:"Usallee fardal-maghribi thalaatha raka\u2019aatin",isha:"Usallee fardal-ishaa\u2019i arba\u2019a raka\u2019aatin"
+};
+const MLC={2:"രണ്ട്",3:"മൂന്ന്",4:"നാല്"},ENC={2:"two",3:"three",4:"four"};
+const L1=(ar,tr,ml,en)=>({ar,tr,ml,en});
+const BASE={
+  takbir:{tEn:"Opening takbir",tMl:"തക്ബീറത്തുൽ ഇഹ്റാം",tAr:"تكبيرة الإحرام",pose:"stand",lines:[L1("اللَّهُ أَكْبَرُ","Allaahu akbar","അല്ലാഹു ഏറ്റവും വലിയവനാണ്.","Allah is the Greatest.")],
+    nEn:"Raise both hands to your shoulders as you say it, then fold them over your chest.",nMl:"ഇരു കൈകളും ചുമൽ വരെ ഉയർത്തി, പിന്നീട് നെഞ്ചിനു മുകളിൽ കെട്ടുക.",nAr:"ارفع يديك حذو منكبيك عند التكبير، ثم ضعهما على صدرك."},
+  iftitah:{tEn:"Opening supplication",tMl:"ഇഫ്തിതാഹ് ദുആ",tAr:"دعاء الاستفتاح",pose:"stand",lines:[
+    L1("وَجَّهْتُ وَجْهِيَ لِلَّذِي فَطَرَ السَّمَاوَاتِ وَالْأَرْضَ حَنِيفًا مُسْلِمًا وَمَا أَنَا مِنَ الْمُشْرِكِينَ","Wajjahtu wajhiya lillathee fataras-samaawaati wal-arda haneefan muslimaa, wa maa ana minal-mushrikeen.","ആകാശങ്ങളെയും ഭൂമിയെയും സൃഷ്ടിച്ചവന്റെ നേരെ, നേർമാർഗത്തിൽ നിലകൊണ്ടും കീഴടങ്ങിയവനായും ഞാൻ എന്റെ മുഖം തിരിച്ചിരിക്കുന്നു; ഞാൻ ബഹുദൈവാരാധകരിൽ പെട്ടവനല്ല.","I have turned my face toward the One who created the heavens and the earth, upright and in submission. I am not among those who associate partners with Him."),
+    L1("إِنَّ صَلَاتِي وَنُسُكِي وَمَحْيَايَ وَمَمَاتِي لِلَّهِ رَبِّ الْعَالَمِينَ","Inna salaatee wa nusukee wa mahyaaya wa mamaatee lillaahi rabbil-aalameen.","തീർച്ചയായും എന്റെ നമസ്കാരവും ആരാധനാകർമങ്ങളും എന്റെ ജീവിതവും മരണവും ലോകരക്ഷിതാവായ അല്ലാഹുവിനുള്ളതാണ്.","My prayer, my acts of worship, my living and my dying are for Allah, Lord of all the worlds."),
+    L1("لَا شَرِيكَ لَهُ وَبِذَلِكَ أُمِرْتُ وَأَنَا مِنَ الْمُسْلِمِينَ","Laa shareeka lahu, wa bithaalika umirtu wa ana minal-muslimeen.","അവന് പങ്കാളികളില്ല. അതാണ് എന്നോട് കൽപ്പിക്കപ്പെട്ടത്; ഞാൻ മുസ്ലിംകളിൽ ഒരാളാണ്.","He has no partner. This I was commanded, and I am among those who submit.")]},
+  fatiha:{tEn:"Al-Fatiha",tMl:"സൂറത്തുൽ ഫാതിഹ",tAr:"سورة الفاتحة",pose:"stand",lines:[
+    L1("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ","Bismillaahir-rahmaanir-raheem","പരമകാരുണികനും കരുണാനിധിയുമായ അല്ലാഹുവിന്റെ നാമത്തിൽ.","In the name of Allah, the Most Gracious, the Most Merciful."),
+    L1("الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ","Alhamdu lillaahi rabbil-aalameen","സർവലോകങ്ങളുടെയും രക്ഷിതാവായ അല്ലാഹുവിന് സർവസ്തുതിയും.","All praise is for Allah, Lord of all the worlds."),
+    L1("الرَّحْمَٰنِ الرَّحِيمِ","Ar-rahmaanir-raheem","പരമകാരുണികനും കരുണാനിധിയും.","The Most Gracious, the Most Merciful."),
+    L1("مَالِكِ يَوْمِ الدِّينِ","Maaliki yawmid-deen","പ്രതിഫലദിനത്തിന്റെ ഉടമ.","Master of the Day of Judgement."),
+    L1("إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ","Iyyaaka na\u2019budu wa iyyaaka nasta\u2019een","നിന്നെ മാത്രം ഞങ്ങൾ ആരാധിക്കുന്നു; നിന്നോട് മാത്രം ഞങ്ങൾ സഹായം തേടുന്നു.","You alone we worship, and You alone we ask for help."),
+    L1("اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ","Ihdinas-siraatal-mustaqeem","ഞങ്ങളെ നീ നേരായ പാതയിൽ നയിക്കേണമേ.","Guide us to the straight path."),
+    L1("صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ","Siraatal-lazeena an\u2019amta alayhim, ghayril-maghdoobi alayhim wa lad-daalleen","നീ അനുഗ്രഹിച്ചവരുടെ പാത; കോപത്തിന് ഇരയായവരുടെയോ വഴിതെറ്റിയവരുടെയോ പാതയല്ല.","The path of those You have blessed, not of those who earned anger, nor of those who went astray.")],
+    nEn:"Every rak\u2019ah begins with Al-Fatiha.",nMl:"എല്ലാ റക്അത്തിലും ഫാതിഹ ഓതണം.",nAr:"تبدأ كل ركعة بالفاتحة."},
+  surah:{tEn:"A surah",tMl:"സൂറത്ത്",tAr:"سورة",pose:"stand",lines:[
+    L1("قُلْ هُوَ اللَّهُ أَحَدٌ","Qul huwa allaahu ahad","പറയുക: അവനാണ് അല്ലാഹു; ഏകനായവൻ.","Say: He is Allah, the One."),
+    L1("اللَّهُ الصَّمَدُ","Allaahus-samad","അല്ലാഹു എല്ലാവർക്കും ആശ്രയമായവനാണ്.","Allah, the Eternal Refuge."),
+    L1("لَمْ يَلِدْ وَلَمْ يُولَدْ","Lam yalid wa lam yoolad","അവൻ ജനിപ്പിച്ചിട്ടില്ല, ജനിപ്പിക്കപ്പെട്ടിട്ടുമില്ല.","He neither begets nor was born."),
+    L1("وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ","Wa lam yakul-lahu kufuwan ahad","അവന് തുല്യനായി ആരുമില്ല.","And there is none comparable to Him.")],
+    nEn:"Any surah may be recited. Al-Ikhlas is shown as an example.",nMl:"ഏതു സൂറത്തും ഓതാം. ഉദാഹരണമായി സൂറത്തുൽ ഇഖ്ലാസ് കാണിച്ചിരിക്കുന്നു.",nAr:"يجوز قراءة أي سورة. سورة الإخلاص مثال."},
+  ruku:{tEn:"Bowing",tMl:"റുകൂഅ്",tAr:"الركوع",pose:"ruku",rep:3,lines:[L1("سُبْحَانَ رَبِّيَ الْعَظِيمِ وَبِحَمْدِهِ","Subhaana rabbiyal-azeemi wa bihamdih","മഹാനായ എന്റെ രക്ഷിതാവ് പരിശുദ്ധനാണ്; അവനെ ഞാൻ സ്തുതിക്കുന്നു.","Glory be to my Lord, the Magnificent, and praise be to Him.")],
+    nEn:"Keep your back level and rest your hands on your knees.",nMl:"മുതുക് നേരെ പിടിച്ച് കൈകൾ മുട്ടിൽ വെച്ച് കുനിയുക.",nAr:"اجعل ظهرك مستويًا وضع يديك على ركبتيك."},
+  itidal:{tEn:"Standing up",tMl:"ഇഅ്തിദാൽ",tAr:"الاعتدال",pose:"stand2",lines:[
+    L1("سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ","Sami\u2019allaahu liman hamidah","തന്നെ സ്തുതിച്ചവരുടെ സ്തുതി അല്ലാഹു കേട്ടിരിക്കുന്നു.","Allah hears whoever praises Him."),
+    L1("رَبَّنَا لَكَ الْحَمْدُ","Rabbanaa lakal-hamd","ഞങ്ങളുടെ രക്ഷിതാവേ, നിനക്കാണ് സർവസ്തുതിയും.","Our Lord, all praise is Yours.")],
+    nEn:"Rise fully and stand straight before going down.",nMl:"പൂർണമായി നിവർന്നുനിന്ന ശേഷം സുജൂദിലേക്ക് പോകുക.",nAr:"قم منتصبًا تمامًا قبل أن تهوي للسجود."},
+  sujud:{tEn:"Prostration",tMl:"സുജൂദ്",tAr:"السجود",pose:"sujood",rep:3,lines:[L1("سُبْحَانَ رَبِّيَ الْأَعْلَى وَبِحَمْدِهِ","Subhaana rabbiyal-a\u2019laa wa bihamdih","അത്യുന്നതനായ എന്റെ രക്ഷിതാവ് പരിശുദ്ധനാണ്; അവനെ ഞാൻ സ്തുതിക്കുന്നു.","Glory be to my Lord, the Most High, and praise be to Him.")],
+    nEn:"Forehead, nose, both palms, knees and toes touch the ground.",nMl:"നെറ്റി, മൂക്ക്, ഇരു കൈപ്പത്തികൾ, മുട്ടുകൾ, കാൽവിരലുകൾ എന്നിവ നിലത്തു തൊടണം.",nAr:"تلامس الجبهة والأنف والكفان والركبتان وأطراف القدمين الأرض."},
+  sit:{tEn:"Sitting between prostrations",tMl:"സുജൂദുകൾക്കിടയിലെ ഇരുത്തം",tAr:"الجلسة بين السجدتين",pose:"sit",lines:[L1("رَبِّ اغْفِرْ لِي وَارْحَمْنِي وَاجْبُرْنِي وَارْفَعْنِي وَارْزُقْنِي وَاهْدِنِي وَعَافِنِي وَاعْفُ عَنِّي","Rabbigh-fir lee warhamnee wajburnee warfa\u2019nee warzuqnee wahdinee wa aafinee wa\u2019fu annee","എന്റെ രക്ഷിതാവേ, എനിക്ക് പൊറുത്തുതരേണമേ, കരുണ കാണിക്കേണമേ, എന്റെ പോരായ്മകൾ നികത്തേണമേ, എന്നെ ഉയർത്തേണമേ, ഉപജീവനം നൽകേണമേ, നേർവഴി കാണിക്കേണമേ, ആരോഗ്യം നൽകേണമേ, എനിക്ക് മാപ്പ് നൽകേണമേ.","My Lord, forgive me, have mercy on me, make up my shortcomings, raise me, provide for me, guide me, grant me well-being, and pardon me.")]},
+  tashahhud:{tEn:"Tashahhud",tMl:"തശഹ്ഹുദ്",tAr:"التشهد",pose:"sit",lines:[
+    L1("التَّحِيَّاتُ الْمُبَارَكَاتُ الصَّلَوَاتُ الطَّيِّبَاتُ لِلَّهِ","At-tahiyyaatul-mubaarakaatus-salawaatut-tayyibaatu lillaah","എല്ലാ അഭിവാദ്യങ്ങളും അനുഗ്രഹീത വചനങ്ങളും നമസ്കാരങ്ങളും ശുദ്ധമായ സൽക്കർമങ്ങളും അല്ലാഹുവിനുള്ളതാണ്.","All greetings, blessings, prayers and good deeds belong to Allah."),
+    L1("السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ","As-salaamu alayka ayyuhan-nabiyyu wa rahmatullaahi wa barakaatuh, as-salaamu alaynaa wa alaa ibaadillaahis-saaliheen","നബിയേ, അങ്ങയുടെ മേൽ സമാധാനവും അല്ലാഹുവിന്റെ കാരുണ്യവും അനുഗ്രഹങ്ങളും ഉണ്ടാകട്ടെ. ഞങ്ങളുടെ മേലും അല്ലാഹുവിന്റെ സജ്ജനങ്ങളായ ദാസന്മാരുടെ മേലും സമാധാനം ഉണ്ടാകട്ടെ.","Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah."),
+    L1("أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا رَسُولُ اللَّهِ","Ash-hadu al-laa ilaaha illallaah, wa ash-hadu anna muhammadan rasoolullaah","അല്ലാഹുവല്ലാതെ ആരാധനയ്ക്ക് അർഹനായി ആരുമില്ലെന്നും മുഹമ്മദ് നബി അല്ലാഹുവിന്റെ ദൂതനാണെന്നും ഞാൻ സാക്ഷ്യം വഹിക്കുന്നു.","I bear witness that there is no god but Allah, and I bear witness that Muhammad is the Messenger of Allah.")],
+    nEn:"Raise your right index finger when you say \u201Cillallah\u201D.",nMl:"\u2018ഇല്ലല്ലാഹ്\u2019 എന്ന് പറയുമ്പോൾ വലതു ചൂണ്ടുവിരൽ ഉയർത്തുക.",nAr:"ارفع سبابة اليمنى عند قول «إلا الله»."},
+  salawat:{tEn:"Blessings on the Prophet",tMl:"സ്വലാത്ത്",tAr:"الصلاة على النبي",pose:"sit",lines:[
+    L1("اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ","Allaahumma salli alaa muhammadin wa alaa aali muhammad, kamaa sallayta alaa ibraaheema wa alaa aali ibraaheem","അല്ലാഹുവേ, ഇബ്രാഹീം നബിയുടെയും കുടുംബത്തിന്റെയും മേൽ നീ അനുഗ്രഹം ചൊരിഞ്ഞതുപോലെ, മുഹമ്മദ് നബിയുടെയും കുടുംബത്തിന്റെയും മേൽ നീ അനുഗ്രഹം ചൊരിയേണമേ.","O Allah, send blessings upon Muhammad and his family as You sent blessings upon Ibrahim and his family."),
+    L1("وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، فِي الْعَالَمِينَ إِنَّكَ حَمِيدٌ مَجِيدٌ","Wa baarik alaa muhammadin wa alaa aali muhammad, kamaa baarakta alaa ibraaheema wa alaa aali ibraaheem, fil-aalameena innaka hameedun majeed","ഇബ്രാഹീം നബിയുടെയും കുടുംബത്തിന്റെയും മേൽ നീ അഭിവൃദ്ധി നൽകിയതുപോലെ, മുഹമ്മദ് നബിയുടെയും കുടുംബത്തിന്റെയും മേൽ അഭിവൃദ്ധി നൽകേണമേ. തീർച്ചയായും നീ സ്തുത്യർഹനും മഹത്വമുള്ളവനുമാകുന്നു.","And bestow Your favour upon Muhammad and his family as You did upon Ibrahim and his family, in all the worlds. You are indeed Praiseworthy and Glorious.")]},
+  salam:{tEn:"Salam",tMl:"സലാം",tAr:"التسليم",pose:"sit",lines:[L1("السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ","As-salaamu alaykum wa rahmatullaah","നിങ്ങളുടെ മേൽ സമാധാനവും അല്ലാഹുവിന്റെ കാരുണ്യവും ഉണ്ടാകട്ടെ.","Peace and the mercy of Allah be upon you.")],
+    nEn:"Turn your head to the right, then to the left.",nMl:"ആദ്യം വലത്തോട്ടും പിന്നെ ഇടത്തോട്ടും മുഖം തിരിക്കുക.",nAr:"التفت برأسك إلى اليمين ثم إلى اليسار."}
+};
+function content(k,p){
+  if(k==="niyyah"){
+    const n=RAK[p],nm=NAMES[p];
+    return {tEn:"Intention",tMl:"നിയ്യത്ത്",tAr:"النية",pose:"stand",lines:[L1(
+      "أُصَلِّي فَرْضَ "+ARN[p]+" "+ARC[n]+" مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى",
+      NTR[p]+" mustaqbilal-qiblati adaa\u2019an lillaahi ta\u2019aalaa",
+      "ഖിബ്ലക്ക് അഭിമുഖമായി, അല്ലാഹുവിനു വേണ്ടി, "+nm.ml+" ഫർള് നമസ്കാരത്തിലെ "+MLC[n]+" റക്അത്ത് ഞാൻ നിർവഹിക്കുന്നു.",
+      "I intend to pray the "+ENC[n]+" rak\u2019ahs of obligatory "+nm.en+", facing the Qibla, for the sake of Allah.")],
+      nEn:"The intention is made in the heart. Saying it quietly is also customary.",nMl:"നിയ്യത്ത് മനസ്സിലാണ് ഉറപ്പിക്കേണ്ടത്; പതുക്കെ ഉച്ചരിക്കുന്നതും സുന്നത്താണ്.",nAr:"تكون النية بالقلب، ويُستحب النطق بها سرًّا."};
+  }
+  if(k==="sujud1"||k==="sujud2"){const c=Object.assign({},BASE.sujud);if(k==="sujud2"){c.tEn="Second prostration";c.tMl="രണ്ടാം സുജൂദ്";c.tAr="السجدة الثانية"}return c}
+  return BASE[k];
+}
+function buildSteps(p){
+  const n=RAK[p],out=[],add=(k,r,x)=>out.push(Object.assign({k,r},x||{}));
+  for(let r=1;r<=n;r++){
+    if(r===1){add("niyyah",1);add("takbir",1);add("iftitah",1)}
+    add("fatiha",r);if(r<=2)add("surah",r);
+    add("ruku",r);add("itidal",r);add("sujud1",r);add("sit",r);add("sujud2",r);
+    if(r===2&&n>2)add("tashahhud",r,{first:true});
+    if(r===n){add("tashahhud",r);add("salawat",r);add("salam",r)}
+  }
+  return out;
+}
+const POSE={
+  stand:'<circle cx="50" cy="12" r="7"/><path d="M50 21V50M50 50L44 76M50 50L56 76M50 28L60 37L46 37"/>',
+  stand2:'<circle cx="50" cy="12" r="7"/><path d="M50 21V50M50 50L44 76M50 50L56 76M50 27L47 49"/>',
+  ruku:'<circle cx="74" cy="34" r="7"/><path d="M24 40L66 38M24 40L22 76M58 39L26 58"/>',
+  sujood:'<circle cx="76" cy="68" r="7"/><path d="M8 76L26 70L34 46L64 60M64 60L68 76"/>',
+  sit:'<circle cx="38" cy="14" r="7"/><path d="M38 22V58L68 62L36 74M38 32L58 56"/>'
+};
+let G={i:0};
+const meanLang=()=>S.gmean||(LANG==="ml"?"ml":LANG==="en"?"en":"off");
+function renderGuide(){
+  const p=S.prayer,steps=buildSteps(p),n=RAK[p];
+  G.i=Math.max(0,Math.min(G.i,steps.length-1));
+  const st=steps[G.i],c=content(st.k,p),mean=meanLang();
+  const lines=c.lines.map(l=>`<div class="ln"><div class="ar" lang="ar" dir="rtl">${l.ar}</div>${S.translit?`<div class="tr">${l.tr}</div>`:""}${mean==="off"?"":`<div class="mn ${mean==="ml"?"ml":""}" lang="${mean}">${mean==="ml"?l.ml:l.en}</div>`}</div>`).join("");
+  let note=LANG==="ml"?c.nMl:LANG==="ar"?c.nAr:c.nEn;
+  if(st.first)note=tx("First tashahhud. Stand up for the next rak\u2019ah afterwards.");
+  const t1=LANG==="ml"?c.tMl:LANG==="ar"?c.tAr:c.tEn,t2=LANG==="en"?c.tMl:c.tEn;
+  $("#s-guide").innerHTML=`
+  <header class="g-head"><h1>${tx("Prayer guide")}</h1></header>
+  <div class="chips scroll g-chips" role="group" aria-label="${tx("Choose a prayer")}">${P.map(k=>`<button class="chip" aria-pressed="${k===p}" data-act="gprayer" data-v="${k}">${NAMES[k].p}<small>${RAK[k]}</small></button>`).join("")}</div>
+  <div class="g-trans"><span>${tx("Translation")}</span><div class="seg" role="group" aria-label="${tx("Translation")}"><button aria-pressed="${mean==="en"}" data-act="gmean" data-v="en">English</button><button aria-pressed="${mean==="ml"}" data-act="gmean" data-v="ml">മലയാളം</button><button aria-pressed="${mean==="off"}" data-act="gmean" data-v="off">${tx("Off")}</button></div></div>
+  <article class="card reader" id="reader" aria-live="polite">
+    <div class="pbar" role="progressbar" aria-valuemin="1" aria-valuemax="${steps.length}" aria-valuenow="${G.i+1}"><i style="width:${(G.i+1)/steps.length*100}%"></i></div>
+    <div class="rmeta"><span>${tx("Rak\u2019ah {0} of {1}",st.r,n)}</span><button data-act="gsteps">${tx("All steps")}</button></div>
+    <div class="thead"><div class="pose"><svg viewBox="0 0 100 80" aria-hidden="true">${POSE[c.pose]}</svg></div><div><h2 style="${LANG==="ml"?"font-size:18px;font-weight:600;line-height:1.5":""}">${t1}</h2></div></div>
+    <div class="lines">${lines}</div>
+    ${c.rep?`<div style="text-align:center"><span class="rep">${tx("Say 3 times")}</span></div>`:""}
+    ${note?`<div class="note">${note}</div>`:""}
+  </article>
+  <div class="gnav">
+    <button class="btn ghost" data-act="gprev" ${G.i===0?"disabled":""}>${tx("Back")}</button>
+    <span class="cnt num">${tx("{0} of {1}",G.i+1,steps.length)}</span>
+    <button class="btn gold" data-act="gnext">${G.i===steps.length-1?tx("Finish"):tx("Next")}</button>
+  </div>
+  <div class="gopts card g-opts" style="padding:6px 16px">
+    <div class="setrow"><div class="t"><b>${tx("Transliteration")}</b><span>${tx("Read along in Latin letters")}</span></div><button class="sw" role="switch" aria-checked="${S.translit}" aria-label="${tx("Transliteration")}" data-act="gtr"></button></div>
+  </div>
+  <p class="fine g-fine" style="margin:14px 4px 0">${tx("Wording follows common Shafi\u2019i practice. Please confirm details with your ustad.")}</p>`;
+}
+function openSteps(){
+  const steps=buildSteps(S.prayer),ml=S.glang==="ml";
+  openSheet(`<h2>${tx("All steps")}</h2><p class="sub" style="margin-bottom:8px">${tx("{0}, {1} rak\u2019ahs",NAMES[S.prayer].p,RAK[S.prayer])}</p>`+
+    steps.map((s,i)=>{const c=content(s.k,S.prayer);return `<button class="opt" role="radio" aria-checked="${i===G.i}" data-act="gjump" data-v="${i}"><span><small>${tx("Rak\u2019ah {0}",s.r)}</small>${LANG==="ml"?c.tMl:LANG==="ar"?c.tAr:c.tEn}</span><span class="rd"></span></button>`}).join(""));
+}
+
+/* ---------- qibla ---------- */
+let heading=0,sensorLive=false,sensorOn=false;
+const bearingTo=(lat,lon)=>{const p1=lat*D2R,p2=KAABA.lat*D2R,dl=(KAABA.lon-lon)*D2R;const y=Math.sin(dl)*Math.cos(p2),x=Math.cos(p1)*Math.sin(p2)-Math.sin(p1)*Math.cos(p2)*Math.cos(dl);return (atan2(y,x)+360)%360};
+const distKm=(lat,lon)=>{const R=6371,dp=(KAABA.lat-lat)*D2R,dl=(KAABA.lon-lon)*D2R;const a=Math.sin(dp/2)**2+Math.cos(lat*D2R)*Math.cos(KAABA.lat*D2R)*Math.sin(dl/2)**2;return 2*R*Math.asin(Math.sqrt(a))};
+const CARD=["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+const ARC8={ar:["شمال","شمال شرق","شرق","جنوب شرق","جنوب","جنوب غرب","غرب","شمال غرب"],ml:["വടക്ക്","വടക്കുകിഴക്ക്","കിഴക്ക്","തെക്കുകിഴക്ക്","തെക്ക്","തെക്കുപടിഞ്ഞാറ്","പടിഞ്ഞാറ്","വടക്കുപടിഞ്ഞാറ്"]};
+const cardinal=d=>LANG==="en"?CARD[Math.round(d/22.5)%16]:ARC8[LANG][Math.round(d/45)%8];
+function buildQibla(){
+  let ticks="";
+  for(let a=0;a<360;a+=5){
+    const big=a%30===0,mid=a%10===0,r1=128,r2=big?112:mid?118:122;
+    ticks+=`<line x1="0" y1="${-r1}" x2="0" y2="${-r2}" transform="rotate(${a})" style="stroke:var(--gold)" stroke-opacity="${big?.9:mid?.5:.28}" stroke-width="${big?2:1}"/>`;
+  }
+  const lab=[["N",0],["E",90],["S",180],["W",270]].map(([t,a])=>`<text transform="rotate(${a}) translate(0 -92) rotate(${-a})" text-anchor="middle" dominant-baseline="central" font-family="${LANG==="ar"?"Amiri,Noto Naskh Arabic,serif":LANG==="ml"?"Noto Sans Malayalam,sans-serif":"Cormorant Garamond,Georgia,serif"}" font-size="${LANG==="ar"?(t==="N"?32:26):LANG==="ml"?(t==="N"?24:19):(t==="N"?26:20)}" font-weight="600" fill="${t==="N"?"var(--goldhi)":"var(--mist)"}"><tspan>${LANG==="ar"?({N:"ش",E:"ق",S:"ج",W:"غ"})[t]:LANG==="ml"?({N:"വ",E:"കി",S:"തെ",W:"പ"})[t]:t}</tspan></text>`).join("");
+  $("#s-qibla").innerHTML=`
+  <header class="q-head"><button class="backb" data-act="tab" data-v="today">${ARR()} ${tx("Today")}</button><h1>${tx("Qibla")}</h1><p class="sub" id="qsub"></p><div class="locrow qloc"><button class="loc" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span id="qloc"></span>${IC.chev}</button></div></header>
+  <div class="qwrap" id="qwrap" aria-label="${tx("Compass dial. Drag to rotate if your device has no compass sensor.")}">
+    <svg viewBox="-150 -150 300 300" aria-hidden="true">
+      <defs><radialGradient id="qg" cx="50%" cy="50%" r="50%"><stop offset="0" style="stop-color:var(--dial-a)"/><stop offset="1" style="stop-color:var(--dial-b)"/></radialGradient><filter id="qf" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter></defs>
+      <circle class="glow" r="136" fill="none" style="stroke:var(--gold)" stroke-width="10" opacity=".55" filter="url(#qf)"/>
+      <circle r="140" fill="url(#qg)"/>
+      <circle class="rim" r="138" fill="none" style="stroke:var(--gold)" stroke-opacity=".5" stroke-width="1.5"/>
+      <g id="dial">${ticks}${lab}
+        <g id="qmark"><line x1="0" y1="-60" x2="0" y2="-96" style="stroke:var(--gold)" stroke-width="1.2" stroke-dasharray="3 4" opacity=".7"/>
+          <g transform="translate(0 -74)"><rect x="-12" y="-12" width="24" height="24" rx="3.500" fill="#07090F" style="stroke:var(--gold)" stroke-width="1.500"/><rect x="-12" y="-5" width="24" height="3.500" style="fill:var(--gold)"/></g></g>
+      </g>
+      <path d="M-10 -158C-10 -146 -3 -144 0 -130C3 -144 10 -146 10 -158Z" style="fill:var(--goldhi)"/>
+      <circle r="52" fill="none" style="stroke:var(--gold)" stroke-opacity=".14"/>
+    </svg>
+    <div class="qc"><div class="deg num" id="qdeg">0°</div><div class="dir" id="qdir">N</div></div>
+  </div>
+  <div class="qstatus" id="qstat"></div>
+  <div class="qinfo">
+    <div class="card"><b class="num" id="qbear">–</b><span>${tx("Qibla bearing from north")}</span></div>
+    <div class="card"><b class="num" id="qdist">–</b><span>${tx("Distance to Makkah")}</span></div>
+  </div>
+  <div class="q-btn"><button class="btn ghost" data-act="compass" id="qbtn">${tx("Use device compass")}</button></div>
+  <p class="fine q-hint" id="qhint">${tx("No sensor in this preview? Drag the dial to turn it yourself.")}</p>`;
+  updateQibla();
+  const w=$("#qwrap");let drag=null;
+  const ang=e=>{const r=w.getBoundingClientRect();return atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))};
+  w.addEventListener("pointerdown",e=>{drag={a:ang(e),h:heading};w.setPointerCapture(e.pointerId);w.style.cursor="grabbing"});
+  w.addEventListener("pointermove",e=>{if(!drag)return;setHeading(drag.h-(ang(e)-drag.a))});
+  const end=()=>{drag=null;w.style.cursor="grab"};
+  w.addEventListener("pointerup",end);w.addEventListener("pointercancel",end);
+  w.addEventListener("keydown",e=>{if(e.key==="ArrowLeft")setHeading(heading-5);if(e.key==="ArrowRight")setHeading(heading+5)});
+  w.tabIndex=0;
+}
+let aligned=false;
+function setHeading(h){
+  heading=(h%360+360)%360;
+  const dial=$("#dial");if(!dial)return;
+  dial.setAttribute("transform",`rotate(${-heading})`);
+  $("#qdeg").textContent=Math.round(heading)+"°";$("#qdir").textContent=cardinal(heading);
+  const L=loc(),b=bearingTo(L.lat,L.lon),diff=Math.abs(((heading-b+540)%360)-180);
+  const al=diff<4;
+  $("#qwrap").classList.toggle("al",al);
+  const st=$("#qstat");st.classList.toggle("al",al);
+  st.textContent=al?tx("You are facing the Qibla"):tx(((b-heading+360)%360)<180?"Turn right {0}°":"Turn left {0}°",Math.round(diff));
+  if(al&&!aligned&&navigator.vibrate){try{navigator.vibrate(30)}catch(e){}}
+  aligned=al;
+}
+function updateQibla(){
+  if(!$("#qmark"))return;
+  const L=loc(),b=bearingTo(L.lat,L.lon);
+  $("#qmark").setAttribute("transform",`rotate(${b})`);
+  $("#qbear").textContent=b.toFixed(1)+"°";
+  $("#qdist").textContent=tx("{0} km",Math.round(distKm(L.lat,L.lon)).toLocaleString("en-IN"));
+  $("#qsub").textContent=tx("Face {0} ({1}°) from your location",cardinal(b),Math.round(b));
+  $("#qloc").textContent=cn(L);
+  setHeading(heading);
+}
+function startSensor(){
+  if(sensorOn)return;sensorOn=true;
+  const h=e=>{
+    let v=null;
+    if(typeof e.webkitCompassHeading==="number")v=e.webkitCompassHeading;
+    else if(e.alpha!=null&&(e.absolute||e.type==="deviceorientationabsolute"))v=360-e.alpha;
+    if(v==null)return;
+    sensorLive=true;
+    const d=((v-heading+540)%360)-180;setHeading(heading+d*.25);
+    const t=$("#qhint");if(t)t.textContent=tx("Live compass on. Hold your phone flat.");
+  };
+  window.addEventListener("deviceorientationabsolute",h,true);
+  window.addEventListener("deviceorientation",h,true);
+  setTimeout(()=>{if(!sensorLive){const t=$("#qhint");if(t)t.textContent=tx("No compass signal here. Drag the dial to try it.")}},2200);
+}
+function enableCompass(){
+  try{
+    if(typeof DeviceOrientationEvent!=="undefined"&&typeof DeviceOrientationEvent.requestPermission==="function"){
+      DeviceOrientationEvent.requestPermission().then(r=>{if(r==="granted")startSensor();else toast(tx("Compass access was declined"))}).catch(()=>toast(tx("Compass is unavailable")));
+    }else startSensor();
+  }catch(e){toast(tx("Compass is unavailable"))}
+}
+
+/* ---------- reminders ---------- */
+let permState=()=>{try{return "Notification" in window?Notification.permission:"unsupported"}catch(e){return "unsupported"}};
+function renderReminders(E){
+  const ps=permState();
+  const permTxt=tx(ps==="granted"?"Allowed on this device":ps==="denied"?"Blocked in browser settings":ps==="unsupported"?"Not available in this preview":"Not allowed yet");
+  const nk=P.includes(E.next.key)?E.next.key:"fajr",N=NAMES[nk],lead=S.lead;
+  const title=lead?tx("{0} in {1} minutes",N.p,lead):tx("It\u2019s time for {0}",N.p);
+  const after=P[(P.indexOf(nk)+1)%5],A=NAMES[after];
+  $("#s-rem").innerHTML=`
+  <header class="r-head"><h1>${tx("Reminders")}</h1><p class="sub">${tx("Never miss a prayer, even with the app closed.")}</p></header>
+  <div class="card sec r-perm" style="margin-top:18px">
+    <div class="setrow"><div class="t"><b>${tx("Notifications")}</b><span>${permTxt}</span></div><button class="btn gold" style="padding:9px 16px;font-size:13.5px" data-act="perm" ${ps==="granted"||ps==="unsupported"?"disabled":""}>${tx("Allow")}</button></div>
+  </div>
+  <div class="sec r-rem"><h3>${tx("Remind me for")}</h3>
+    <div class="card" style="padding:4px 16px">${P.map(k=>`<div class="setrow"><div class="t"><b>${NAMES[k].p}</b></div><button class="sw" role="switch" aria-checked="${!!S.rem[k]}" aria-label="${tx("Remind for {0}",NP(k))}" data-act="bell" data-v="${k}"></button></div>`).join("")}</div>
+  </div>
+  <div class="sec r-lead"><h3>${tx("How early")}</h3>
+    <div class="chips" role="group" aria-label="${tx("Lead time")}">${[0,5,10,15,30].map(m=>`<button class="chip" aria-pressed="${S.lead===m}" data-act="lead" data-v="${m}">${m?tx("{0} min before",m):tx("At prayer time")}</button>`).join("")}</div>
+  </div>
+  <div class="sec r-sound"><h3>${tx("Sound")}</h3>
+    <div class="chips" role="group" aria-label="${tx("Sound")}">${[["chime","Soft chime"],["silent","Silent"]].map(([v,t])=>`<button class="chip" aria-pressed="${S.sound===v}" data-act="sound" data-v="${v}">${tx(t)}</button>`).join("")}</div>
+  </div>
+  <div class="sec r-lock"><h3>${tx("On your lock screen")}</h3>
+    <div class="lock dev"><div class="lt num">${fmt(Date.now(),false)}</div><div class="ld">${dateLines(Date.now(),E).gr}</div>
+      <div class="ntf"><div class="ic">${IC.today.replace("<svg","<svg")}</div><div style="flex:1;min-width:0"><div class="hd"><span>${appn()}</span><span>${tx("now")}</span></div><b>${title}</b><p><span class="num">${fmt(E.next.ms)}</span></p></div></div>
+      <div class="ntf"><div class="ic">${IC.today}</div><div style="flex:1;min-width:0"><div class="hd"><span>${appn()}</span><span>${tx("later")}</span></div><b>${tx("{0} reminder",A.p)}</b><p>${tx("Set for {0}",lead?tx("{0} minutes before",lead):tx("prayer time"))}</p></div></div>
+    </div>
+    <div style="text-align:center;margin-top:16px"><button class="btn gold" data-act="test">${tx("Send a test reminder")}</button></div>
+  </div>`;
+}
+const fired=new Set();
+function checkReminders(E,now){
+  E.list.forEach(ev=>{
+    if(!S.rem[ev.key])return;
+    const at=ev.ms-S.lead*60000,id=ev.key+ev.ms;
+    if(now>=at&&now-at<60000&&!fired.has(id)){fired.add(id);fire(ev.key,ev.ms,S.lead)}
+  });
+}
+function fire(k,ms,lead){
+  const N=NAMES[k],title=lead?tx("{0} in {1} minutes",N.p,lead):tx("It\u2019s time for {0}",N.p),body=fmt(ms);
+  showBanner(title,body,N.s);chime();
+  try{if("Notification" in window&&Notification.permission==="granted"){const o={body,icon:"icons/icon-192.png",badge:"icons/icon-192.png",tag:"mihrab-"+k};if(swReg&&swReg.showNotification)swReg.showNotification(title,o);else new Notification(title,o)}}catch(e){}
+}
+let actx=null;
+function chime(){
+  if(S.sound!=="chime")return;
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    const t0=actx.currentTime;
+    [[659.25,0],[880,.28],[1318.5,.56]].forEach(([f,d])=>{
+      const o=actx.createOscillator(),g=actx.createGain();
+      o.type="sine";o.frequency.value=f;
+      g.gain.setValueAtTime(0,t0+d);g.gain.linearRampToValueAtTime(.16,t0+d+.02);g.gain.exponentialRampToValueAtTime(.0001,t0+d+1.6);
+      o.connect(g).connect(actx.destination);o.start(t0+d);o.stop(t0+d+1.7);
+    });
+  }catch(e){}
+}
+let bt=null;
+function showBanner(title,body){
+  const b=$("#banner");
+  b.innerHTML=`<div class="ntf" style="background:rgba(15,24,48,.96);border-color:rgba(214,178,110,.35);box-shadow:0 14px 40px rgba(0,0,0,.45)"><div class="ic">${IC.today}</div><div style="flex:1;min-width:0"><div class="hd"><span>${appn()}</span><span>${tx("now")}</span></div><b>${title}</b><p>${body}</p></div></div>`;
+  b.classList.add("on");clearTimeout(bt);bt=setTimeout(()=>b.classList.remove("on"),6500);
+}
+let tt=null;
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2600)}
+
+/* ---------- widgets ---------- */
+function renderWidgets(E,now){
+  const N=NAMES[E.next.key],dl=dateLines(now,E),hj=dl.hj,gdt=new Date(Date.UTC(E.Y,E.M-1,E.Dd));
+  const cols=P.map(k=>{const isN=k===E.next.key&&E.next.o===0,past=E.today[k]<=now&&!isN;return `<div class="c ${isN?"n":""} ${past?"p":""}"><i>${NAMES[k].p}</i><b class="num">${fmt(E.today[k],false)}</b></div>`}).join("");
+  $("#s-widgets").innerHTML=`
+  <header><button class="backb" data-act="tab" data-v="set">${ARR()} ${tx("Settings")}</button><h1>${tx("Widgets")}</h1><p class="sub">${tx("The next prayer, right on your home screen.")}</p></header>
+  <div class="calbar" style="margin-top:16px"><b style="font-weight:500">${tx("Widget background")}</b><div class="seg" role="group" aria-label="${tx("Widget background")}"><button aria-pressed="${S.wbg==="transparent"}" data-act="wbg" data-v="transparent">${tx("Transparent")}</button><button aria-pressed="${S.wbg!=="transparent"}" data-act="wbg" data-v="blur">${tx("Blur")}</button></div></div>
+  <div class="wall dev ${S.wbg==="transparent"?"wb-t":"wb-b"}" style="margin-top:14px">
+    <div class="wt num">${fmt(now,false)}</div><div class="wd">${dateLines(now,E).gr}</div>
+    <div class="wg ws"><div class="ws-row"><span class="ws-p"><b>${NAMES[E.prev.key].p}</b> <span class="num">${fmtP(E.prev.ms)}</span></span><span class="ws-cd num b-cdh">${cdHTML(E.next.ms-now)}</span><span class="ws-p"><b>${N.p}</b> <span class="num">${fmtP(E.next.ms)}</span></span></div>
+      <div class="ws-bar"><i class="b-bar2" style="width:0%"></i></div>
+      <div class="ws-date">${WD[gdt.getUTCDay()]} ${dl.hd} ${dl.hm} ${dl.hy} - ${gdt.getUTCDate()} ${GM[gdt.getUTCMonth()]}</div></div>
+    <div class="wcap" style="margin-bottom:14px">4 \u00d7 1 \u00b7 ${tx("minimal")}</div>
+    <div class="wgrid">
+      <div><div class="wg w22">${archSVG({sw:5,pattern:false,inner:false})}<div class="an">${N.ar}</div><div><div class="tm num">${fmt(E.next.ms,false)}</div><div class="in">${tx("{0} in {1}",N.p,`<span class="num b-short">${short(E.next.ms-now)}</span>`)}</div></div></div><div class="wcap">2 × 2</div></div>
+      <div><div class="wg w22" style="justify-content:center;gap:6px"><div class="in" style="margin:0;color:var(--mist)">${dl.hm}</div><div class="tm num" style="font-size:44px">${dl.hd}</div><div class="in">${dl.hy} ${tx("AH")}</div></div><div class="wcap">${tx("2 \u00d7 2 \u00b7 date")}</div></div>
+    </div>
+    <div class="wg w42"><div class="top"><b class="num">${hj}</b><span>${cn(E.L)}</span></div><div class="cols">${cols}</div>
+      <div class="mbar"><i class="b-bar" style="width:0%"></i></div></div>
+    <div class="wcap">4 × 2</div>
+    <div class="dock"><i></i><i></i><i></i><i></i></div>
+  </div>
+  <p class="fine" style="margin:14px 6px 0">${tx("Bar color shifts from green to red as the next prayer gets closer.")}</p>
+  <p class="fine" style="margin:8px 6px 0">${tx("Widgets refresh every minute and keep working when the app is closed.")}</p>`;
+}
+
+/* ---------- sheet ---------- */
+function openSheet(html){$("#sheet").innerHTML='<div class="grab"></div>'+html;$("#sheet").classList.add("on");$("#shade").classList.add("on")}
+function closeSheet(){$("#sheet").classList.remove("on");$("#shade").classList.remove("on")}
+function openAdjust(){
+  const L=loc(),lt=new Date(Date.now()+L.tz*3600e3);
+  const b=baseTimes(lt.getUTCFullYear(),lt.getUTCMonth()+1,lt.getUTCDate(),L);
+  const keys=["fajr","sunrise","dhuhr","asr","maghrib","isha"];
+  openSheet(`<h2>${tx("Adjust prayer times")}</h2>
+  <p class="sub" style="margin-bottom:8px">${tx("Match your local mosque timetable. Reminders and widgets use the adjusted times.")}</p>
+  ${keys.map(k=>{const a=S.adj[k]||0;return `<div class="arow"><div class="t"><b>${NAMES[k].p}</b><span class="num">${fmt(b[k])}${a?` \u2192 <em>${fmt(b[k]+a*60000)}</em>`:""}</span></div>
+    <div class="stp"><button data-act="adj" data-v="${k}:-1" aria-label="${tx("Earlier by one minute for {0}",NP(k))}" ${a<=-ADJ_MAX?"disabled":""}>\u2212</button><b class="num ${a?"":"z"}">${a?adjTxt(a):tx("As calculated")}</b><button data-act="adj" data-v="${k}:1" aria-label="${tx("Later by one minute for {0}",NP(k))}" ${a>=ADJ_MAX?"disabled":""}>+</button></div></div>`}).join("")}
+  <p class="fine" style="margin:12px 0 0">${tx("Each time can move up to {0} minutes either way.",ADJ_MAX)}</p>
+  <div style="display:flex;gap:10px;margin-top:18px"><button class="btn ghost" style="flex:1" data-act="adjreset" ${adjCount()?"":"disabled"}>${tx("Reset all")}</button><button class="btn gold" style="flex:1" data-act="close">${tx("Done")}</button></div>`);
+}
+function openAbout(){
+  openSheet(`<div class="about">
+    <svg class="logo" viewBox="0 0 30 34" aria-hidden="true"><path d="M3 32V17C3 10 11 8 15 2C19 8 27 10 27 17V32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="21" r="2" fill="currentColor"/></svg>
+    <h2>${appn()}</h2>
+    <span class="vpill num">${tx("Version {0} \u00b7 build {1}",APP.version,APP.build)}</span>
+    <h3>${tx("Credits")}</h3>
+    ${CREDITS.map(([a,b])=>`<div class="crow ${/before release/.test(b)?"todo":""}">${tx(a)}<span>${tx(b)}</span></div>`).join("")}
+    <h3>${tx("Fonts")}</h3>
+    ${FONTS.map(([a,b])=>`<div class="crow">${a}<span>${b}</span></div>`).join("")}
+    <p class="priv">${tx("Prayer times are calculated on your device. Your location is never sent anywhere.")}</p>
+    <div class="copy"><button class="btn ghost" data-act="copyinfo">${tx("Copy app info")}</button></div>
+    <p class="fine" style="margin:18px 0 18px">${tx("\u00a9 {0} {1}. All rights reserved.",APP.year,appn())}</p>
+    <button class="btn gold" style="width:100%" data-act="close">${tx("Done")}</button>
+  </div>`);
+}
+function openLocation(){
+  openSheet(`<h2>${tx("Location")}</h2>
+  <p class="sub" style="margin-bottom:10px">${tx("Prayer times are calculated on your device.")}</p>
+  <button class="btn ghost" style="width:100%;margin-bottom:8px" data-act="geo">${tx("Use my current location")}</button>
+  ${S.city<0&&S.custom?`<button class="opt" role="radio" aria-checked="true"><span>${cn(S.custom)}</span><span class="rd"></span></button>`:""}
+  ${CITIES.map((c,i)=>`<button class="opt" role="radio" aria-checked="${S.city===i}" data-act="city" data-v="${i}"><span>${cn(c)}</span><span class="rd"></span></button>`).join("")}
+  <div style="margin-top:20px"><button class="btn gold" style="width:100%" data-act="close">${tx("Done")}</button></div>`);
+}
+const CHEV='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+function renderSettings(){
+  const L=loc(),n=adjCount();
+  const radio=(act,val,cur,title,sub)=>`<button class="opt" role="radio" aria-checked="${cur===val}" data-act="${act}" data-v="${val}"><span>${title}${sub?`<small>${sub}</small>`:""}</span><span class="rd"></span></button>`;
+  const row=(act,title,sub)=>`<button class="opt" data-act="${act}"><span>${title}<small>${sub}</small></span>${CHEV}</button>`;
+  const mSub=m=>m.ishaMin?tx("Fajr {0}° · Isha {1} min after Maghrib",m.fajr,m.ishaMin):tx("Fajr {0}° · Isha {1}°",m.fajr,m.isha);
+  $("#s-set").innerHTML=`
+  <header class="st-head"><h1>${tx("Settings")}</h1></header>
+  <div class="st-a">
+    <div class="sec"><h3>${tx("Language")}</h3>
+      <div class="card lc" role="radiogroup" aria-label="${tx("Language")}">${Object.entries(LANGS).map(([k,l])=>radio("setlang",k,LANG,l.name,"")).join("")}</div>
+    </div>
+    <div class="sec"><h3>${tx("You")}</h3>
+      <div class="card lc">${row("profile",tx("Profile"),S.profile?esc(S.profile.name)+" · "+tx(S.profile.g==="f"?"Female":"Male"):tx("Not set"))}${row("resetlog",tx("Reset prayer log"),tx("Clears ticks and streak"))}</div>
+    </div>
+    <div class="sec"><h3>${tx("Prayer times")}</h3>
+      <div class="card lc">${row("location",tx("Location"),cn(L))}${row("adjust",tx("Adjust prayer times"),n?tx("{0} adjusted",n):tx("Match your local mosque timetable"))}</div>
+      <div class="slab">${tx("Calculation method")}</div>
+      <div class="card lc" role="radiogroup" aria-label="${tx("Calculation method")}">${Object.entries(METHODS).map(([k,m])=>radio("method",k,S.method,tx(m.n),mSub(m))).join("")}</div>
+      <div class="slab">${tx("Asr calculation")}</div>
+      <div class="card lc" role="radiogroup" aria-label="${tx("Asr calculation")}">${radio("asr","shafii",S.asr,tx("Shafi\u2019i, Maliki, Hanbali"),tx("Shadow equals object height"))}${radio("asr","hanafi",S.asr,tx("Hanafi"),tx("Shadow equals twice the object height"))}</div>
+    </div>
+  </div>
+  <div class="st-b">
+    <div class="sec"><h3>${tx("Appearance")}</h3>
+      <div class="card lc" role="radiogroup" aria-label="${tx("Appearance")}">${[["auto","Follow the sun","Light from sunrise to Maghrib, midnight after"],["day","Dawn","Always light"],["night","Midnight","Always dark"]].map(([k,t,sub])=>radio("theme",k,S.theme||"auto",tx(t),tx(sub))).join("")}</div>
+    </div>
+    <div class="sec"><h3>${tx("Hijri date")}</h3>
+      <div class="card lc" role="radiogroup" aria-label="${tx("Hijri date")}">${[[-1,"1 day earlier","Your community sights the moon earlier"],[0,"As calculated","Umm al-Qura calendar"],[1,"1 day later","Your community sights the moon later"]].map(([v,t,sub])=>radio("hadj",v,S.hadj||0,tx(t),tx(sub))).join("")}</div>
+    </div>
+    <div class="sec"><h3>${tx("More")}</h3>
+      <div class="card lc">${CAN_PWA&&!isStandalone()?row("install",tx("Install app"),tx("Add it to your home screen for full-screen use and offline access.")):""}${row("widgetscr",tx("Home screen widgets"),tx("Preview the widgets"))}${row("about",tx("About {0}",appn()),tx("Version {0}, credits and licences",APP.version))}</div>
+    </div>
+  </div>`;
+}
+
+/* ---------- theme (follows the sun) ---------- */
+function applyTheme(E,now){
+  const m=S.theme||"auto";
+  const night=m==="night"||(m==="auto"&&(now<E.today.sunrise||now>=E.today.maghrib));
+  const t=night?"night":"day",h=document.documentElement;
+  if(h.dataset.theme!==t){h.dataset.theme=t;const mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=night?"#0A1022":"#EEF1F6"}
+}
+/* ---------- refresh + tick ---------- */
+let lastSig="";
+function refreshAll(){lastSig="";tick(true)}
+function tick(force){
+  const now=Date.now(),E=getEvents(now),sig=E.next.ms+"|"+E.Dd+"|"+E.L.name;
+  applyTheme(E,now);
+  if(force||sig!==lastSig){lastSig=sig;renderToday(E,now);renderWidgets(E,now);renderReminders(E);updateQibla();if(force)renderSettings()}
+  const rem=E.next.ms-now,p=Math.min(1,Math.max(0,(now-E.prev.ms)/(E.next.ms-E.prev.ms)));
+  $$(".b-cd").forEach(el=>el.textContent=hms(rem));
+  $$(".b-short").forEach(el=>el.textContent=short(rem));
+  $$(".b-bar").forEach(el=>el.style.width=(p*100)+"%");
+  $$(".b-bar2").forEach(el=>{el.style.width=(p*100)+"%";el.style.background=urgency(rem)});
+  $$(".b-cdh").forEach(el=>el.innerHTML=cdHTML(rem));
+  $$("[data-arch]").forEach(svg=>setArch(svg,p));
+  const sb=$("#sbtime");if(sb)sb.textContent=fmt(now,false);
+  checkReminders(E,now);
+}
+
+/* ---------- events ---------- */
+let curTab="today";
+function setTab(id){
+  curTab=id;
+  $$(".screen").forEach(s=>s.classList.toggle("on",s.id==="s-"+id));
+  const hi=({qibla:"today",widgets:"set"})[id]||id;
+  $$(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.v===hi));
+  const s=$("#s-"+id);if(id==="cal")renderCal();if(s)s.scrollTop=0;
+  if(id==="qibla"&&!sensorOn&&typeof DeviceOrientationEvent!=="undefined"&&typeof DeviceOrientationEvent.requestPermission!=="function")startSensor();
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-act]");if(!t)return;
+  const a=t.dataset.act,v=t.dataset.v;
+  switch(a){
+    case"tab":setTab(v);break;
+    case"close":closeSheet();break;
+    case"location":openLocation();break;
+    case"widgetscr":setTab("widgets");break;
+    case"bell":{S.rem[v]=S.rem[v]?0:1;save();const E=getEvents(Date.now());renderToday(E,Date.now());renderReminders(E);tick();toast(S.rem[v]?tx("{0} reminder on",NP(v)):tx("{0} reminder off",NP(v)));break}
+    case"lead":S.lead=+v;save();refreshAll();break;
+    case"sound":S.sound=v;save();refreshAll();if(v==="chime")chime();break;
+    case"perm":try{Notification.requestPermission().then(()=>{refreshAll();toast(tx(permState()==="granted"?"Notifications allowed":"Notifications not allowed"))})}catch(err){toast(tx("Notifications are not available here"))}break;
+    case"test":{const E=getEvents(Date.now());fire(E.next.key,E.next.ms,S.lead);break}
+    case"city":S.city=+v;save();refreshAll();openLocation();break;
+    case"theme":S.theme=v;save();refreshAll();break;
+    case"method":S.method=v;save();refreshAll();break;
+    case"asr":S.asr=v;save();refreshAll();break;
+    case"geo":
+      if(!navigator.geolocation){toast(tx("Location is unavailable here. Pick a city."));break}
+      navigator.geolocation.getCurrentPosition(pos=>{S.custom={name:"My location",lat:pos.coords.latitude,lon:pos.coords.longitude,tz:-new Date().getTimezoneOffset()/60};S.city=-1;save();refreshAll();openLocation();toast(tx("Location updated"))},()=>toast(tx("Location is unavailable here. Pick a city.")),{timeout:8000});break;
+    case"gprayer":S.prayer=v;G.i=0;save();renderGuide();break;
+    case"gnext":{const n=buildSteps(S.prayer).length;if(G.i>=n-1){G.i=0;toast(tx("Prayer complete. May Allah accept it."))}else G.i++;renderGuide();$("#s-guide").scrollTop=0;break}
+    case"gprev":G.i=Math.max(0,G.i-1);renderGuide();$("#s-guide").scrollTop=0;break;
+    case"glang":S.glang=v;save();renderGuide();break;
+    case"gtr":S.translit=!S.translit;save();renderGuide();break;
+    case"gsteps":openSteps();break;
+    case"gjump":G.i=+v;closeSheet();renderGuide();$("#s-guide").scrollTop=0;break;
+    case"compass":enableCompass();break;
+    case"about":openAbout();break;
+    case"pray":togglePrayer(v);break;
+    case"wgender":wst.g=v;$$(".gbtn",WL).forEach(b=>b.setAttribute("aria-checked",b.dataset.v===v));wCheck();break;
+    case"wsave":saveWelcome();break;
+    case"wcancel":WL.classList.remove("on");break;
+    case"profile":openWelcome(true);break;
+    case"setlang":setLang(v);break;
+    case"gmean":S.gmean=v;save();renderGuide();break;
+    case"install":installApp();break;
+    case"applyupd":updating=true;if(updReg&&updReg.waiting)updReg.waiting.postMessage({type:"SKIP_WAITING"});else location.reload();break;
+    case"wbg":{S.wbg=v;save();const n=Date.now();renderWidgets(getEvents(n),n);tick();break}
+    case"wlang":wst.name=($("#wname",WL)||{}).value||wst.name;setLang(v);openWelcome(wst.edit,true);break;
+    case"resetlog":openSheet(`<h2>${tx("Reset prayer log?")}</h2><p class="sub" style="margin:6px 0 18px">${tx("This clears every tick and your streak on this device. It can't be undone.")}</p><div style="display:flex;gap:10px"><button class="btn ghost" style="flex:1" data-act="close">${tx("Cancel")}</button><button class="btn gold" style="flex:1" data-act="resetdo">${tx("Reset")}</button></div>`);break;
+    case"resetdo":S.log={};save();closeSheet();refreshAll();toast(tx("Prayer log cleared"));break;
+    case"cmode":C.mode=v;S.cmode=v;save();calCursorTo(C.sel);renderCal();break;
+    case"cprev":if(C.mode==="g"){C.gm--;if(C.gm<0){C.gm=11;C.gy--}}else C.hs=hStart(C.hs-1);renderCal();break;
+    case"cnext":if(C.mode==="g"){C.gm++;if(C.gm>11){C.gm=0;C.gy++}}else C.hs=C.hs+hLen(C.hs);renderCal();break;
+    case"ctoday":C.sel=localDay();calCursorTo(C.sel);renderCal();break;
+    case"cday":C.sel=+v;renderCal();break;
+    case"cgo":C.sel=+v;calCursorTo(C.sel);renderCal();$("#s-cal").scrollTop=0;break;
+    case"hadj":S.hadj=+v;save();refreshAll();renderCal();toast(S.hadj?tx(S.hadj>0?"Hijri dates shifted later by a day":"Hijri dates shifted earlier by a day"):tx("Hijri dates as calculated"));break;
+    case"adjust":openAdjust();break;
+    case"adj":{const [k,d]=v.split(":");S.adj[k]=Math.max(-ADJ_MAX,Math.min(ADJ_MAX,(S.adj[k]||0)+ +d));save();refreshAll();openAdjust();break}
+    case"adjreset":S.adj=Object.assign({},DEF.adj);save();refreshAll();openAdjust();toast(tx("Times reset to calculated"));break;
+    case"copyinfo":{const t=APP.name+" "+APP.version+" (build "+APP.build+")";try{navigator.clipboard.writeText(t).then(()=>toast(tx("App info copied")),()=>toast(t))}catch(err){toast(t)}break}
+  }
+});
+let sx=null;
+document.addEventListener("touchstart",e=>{sx=e.target.closest("#reader")?e.touches[0].clientX:null},{passive:true});
+document.addEventListener("touchend",e=>{
+  if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;sx=null;
+  if(Math.abs(dx)<60)return;
+  const n=buildSteps(S.prayer).length;
+  if(dx<0&&G.i<n-1)G.i++;else if(dx>0&&G.i>0)G.i--;else return;
+  renderGuide();
+});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+
+/* ---------- calendar ---------- */
+const C={mode:null,gy:0,gm:0,hs:0,sel:0};
+const localDay=()=>Math.floor((Date.now()+loc().tz*3600e3)/864e5);
+const gparts=n=>{const d=new Date(n*864e5);return {y:d.getUTCFullYear(),m:d.getUTCMonth(),d:d.getUTCDate(),w:d.getUTCDay()}};
+const hStart=n=>n-(hij(n).d-1);
+function hLen(hs){let n=hs+28;while(hij(n).d!==1&&n<hs+32)n++;return n-hs}
+function occOf(h){return OCC.find(o=>o.m===h.m&&o.d===h.d)}
+function when(d){return d===0?tx("Today"):d===1?tx("Tomorrow"):LANG==="ar"?"بعد "+arDaysAfter(d):tx("In {0} days",d)}
+function initCal(){
+  if(C.mode)return;
+  const t=localDay(),g=gparts(t);
+  C.mode=S.cmode||"g";C.gy=g.y;C.gm=g.m;C.hs=hStart(t);C.sel=t;
+}
+function calCursorTo(n){const g=gparts(n);C.gy=g.y;C.gm=g.m;C.hs=hStart(n)}
+function renderCal(){
+  initCal();
+  const today=localDay(),gm=C.mode==="g";
+  let first,len;
+  if(gm){first=Date.UTC(C.gy,C.gm,1)/864e5;len=new Date(Date.UTC(C.gy,C.gm+1,0)).getUTCDate()}
+  else{first=C.hs;len=hLen(C.hs)}
+  const wd=gparts(first).w,rows=Math.ceil((wd+len)/7),start=first-wd;
+  const a=hij(first),b=hij(first+len-1),ga=gparts(first),gb=gparts(first+len-1);
+  let main,sub;
+  if(gm){
+    main=GM[C.gm]+" "+C.gy;
+    sub=a.m===b.m&&a.y===b.y?HM[a.m-1]+" "+a.y:a.y===b.y?HM[a.m-1]+" \u2013 "+HM[b.m-1]+" "+a.y:HM[a.m-1]+" "+a.y+" \u2013 "+HM[b.m-1]+" "+b.y;
+  }else{
+    main=HM[a.m-1]+" "+a.y;
+    sub=ga.m===gb.m&&ga.y===gb.y?GM[ga.m]+" "+ga.y:ga.y===gb.y?GMS[ga.m]+" \u2013 "+GMS[gb.m]+" "+ga.y:GMS[ga.m]+" "+ga.y+" \u2013 "+GMS[gb.m]+" "+gb.y;
+  }
+  let cells="";
+  for(let i=0;i<rows*7;i++){
+    const n=start+i,gp=gparts(n),h=hij(n),inM=n>=first&&n<first+len,oc=occOf(h);
+    const prim=gm?gp.d:h.d,sec=gm?(h.d===1?HMS[h.m-1]:h.d):(gp.d===1?GMS[gp.m]:gp.d);
+    cells+=`<button class="dcell ${inM?"":"out"} ${gp.w===5?"fri":""} ${n===today?"today":""} ${n===C.sel?"sel":""}" data-act="cday" data-v="${n}" aria-label="${WDF[gp.w]} ${gp.d} ${GM[gp.m]} ${gp.y}, ${h.d} ${HM[h.m-1]} ${h.y}${oc?", "+oc[LANG]:""}" aria-pressed="${n===C.sel}"><span class="g num">${prim}</span><span class="s num ${gm&&h.d===1||!gm&&gp.d===1?"mo":""}">${sec}</span>${oc?"<i></i>":""}</button>`;
+  }
+  const sp=gparts(C.sel),sh=hij(C.sel),so=occOf(sh),L=loc();
+  const bt=baseTimes(sp.y,sp.m+1,sp.d,L),sel_in_range=true;
+  const times=P.map(k=>`<div class="c"><i>${NAMES[k].p}</i><b class="num">${fmt(bt[k]+(S.adj[k]||0)*60000,false)}</b></div>`).join("");
+  const up=[];
+  for(let n=today;n<today+420&&up.length<4;n++){const o=occOf(hij(n));if(o)up.push({n,o,h:hij(n),g:gparts(n)})}
+  $("#s-cal").innerHTML=`
+  <header class="c-head"><h1>${tx("Calendar")}</h1><p class="sub">${tx("Hijri and Gregorian, side by side.")}</p></header>
+  <div class="c-main">
+    <div class="calbar">
+      <div class="seg" role="group" aria-label="${tx("Calendar type")}"><button aria-pressed="${gm}" data-act="cmode" data-v="g">${tx("Gregorian")}</button><button aria-pressed="${!gm}" data-act="cmode" data-v="h">${tx("Hijri")}</button></div>
+      <button class="btn ghost" style="padding:8px 16px;font-size:13.5px" data-act="ctoday">${tx("Today")}</button>
+    </div>
+    <div class="mbar2"><button class="navb" data-act="cprev" aria-label="${tx("Previous month")}">${ARR()}</button><div class="mt"><h2>${main}</h2><span>${sub}</span></div><button class="navb" data-act="cnext" aria-label="${tx("Next month")}">${LANG==="ar"?"\u2039":"\u203A"}</button></div>
+    <div class="wdr">${WD.map((w,i)=>`<span class="${i===5?"fri":""}">${w}</span>`).join("")}</div>
+    <div class="cal">${cells}</div>
+    <p class="fine" style="margin:10px 4px 0"><span class="lg"></span>${gm?tx("Islamic occasion. Small numbers show the Hijri date."):tx("Islamic occasion. Small numbers show the Gregorian date.")}</p>
+  </div>
+  <div class="c-side">
+    <div class="card seld">
+      <div class="l1">${WDF[sp.w]}, ${sp.d} ${GM[sp.m]} ${sp.y}</div>
+      <div class="l2 num">${sh.d} ${HM[sh.m-1]} ${sh.y}</div>
+      ${so||sp.w===5?`<div class="tags">${so?`<span class="tag">${so[LANG]}</span>`:""}${sp.w===5?`<span class="tag">${tx("Jumu\u2019ah")}</span>`:""}</div>`:""}
+      <div class="w42x">${times}</div>
+      <div class="fine" style="margin-top:8px">${cn(L)} · ${tx(METHODS[S.method].n)}</div>
+    </div>
+    <div class="sec"><h3>${tx("Coming up")}</h3>
+      <div class="card" style="padding:4px 16px">${up.map(u=>`<button class="up" data-act="cgo" data-v="${u.n}"><div><b>${u.o[LANG]}</b><em class="num">${u.h.d} ${HM[u.h.m-1]} ${u.h.y} · ${u.g.d} ${GMS[u.g.m]} ${u.g.y}</em></div><span class="when">${when(u.n-today)}</span></button>`).join("")}</div>
+      <p class="fine" style="margin:8px 4px 0">${tx("Dates can move by a day with moon sighting.")} <button class="verlink" style="margin:0" data-act="tab" data-v="set">${tx("Adjust in Settings")}</button></p>
+    </div>
+  </div>`;
+}
+
+/* ---------- profile, prayer log, streaks ---------- */
+const BIT={fajr:1,dhuhr:2,asr:4,maghrib:8,isha:16},FULL=31;
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const CHECK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.500 4.500L19 7.500"/></svg>';
+const FLAME='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3.500 5 5.500 5 10a5 5 0 0 1-10 0c0-2 1-3.200 2-4.500.3 1.500 1 2.200 1.800 2.500C10.500 8.500 11 5.500 12 3z"/></svg>';
+const dkey=n=>{const g=gparts(n);return g.y+"-"+String(g.m+1).padStart(2,"0")+"-"+String(g.d).padStart(2,"0")};
+const maskOf=n=>S.log[dkey(n)]||0;
+const isFull=n=>maskOf(n)===FULL;
+const cnt=m=>P.reduce((a,k)=>a+((m&BIT[k])?1:0),0);
+function streakNow(today){let n=isFull(today)?today:today-1,c=0;while(isFull(n)){c++;n--}return c}
+function bestStreak(){
+  const ds=Object.keys(S.log).filter(k=>S.log[k]===FULL).map(k=>{const [y,m,d]=k.split("-").map(Number);return Date.UTC(y,m-1,d)/864e5}).sort((a,b)=>a-b);
+  let best=0,run=0,prev=null;
+  for(const n of ds){run=(prev!==null&&n===prev+1)?run+1:1;if(run>best)best=run;prev=n}
+  return best;
+}
+const ckBtn=(k,arrived,on)=>`<button class="ck ${on?"on":""} ${arrived&&!on?"due":""} ${arrived?"":"wait"}" data-act="pray" data-v="${k}" role="checkbox" aria-checked="${on}" aria-disabled="${!arrived}" aria-label="${tx("{0} prayed",NP(k))}">${CHECK}</button>`;
+
+function encourage(now,E){
+  const pf=S.profile||{name:"friend",g:"m"},nm=pf.name||"friend",f=pf.g==="f";
+  const ad={en:f?"sister":"brother",ml:f?"സഹോദരീ":"സഹോദരാ",ar:f?"أختي":"أخي"};
+  const g2=(m,w)=>f?w:m;
+  const today=localDay(),mask=maskOf(today),streak=streakNow(today),done=cnt(mask);
+  const arrived=P.filter(k=>E.today[k]<=now),pend=arrived.filter(k=>!(mask&BIT[k]));
+  const cur=E.prev.o===0&&P.includes(E.prev.key)?E.prev.key:null;
+  const missed=pend.filter(k=>k!==cur),curP=cur&&pend.includes(cur);
+  const nk=E.next.key,nt=fmt(E.next.ms),NN=NAMES[nk];
+  const W={as:{en:"Assalamu alaikum",ml:"അസ്സലാമു അലൈക്കും",ar:"السلام عليكم"},hm:{en:"Alhamdulillah",ml:"അൽഹംദുലില്ലാഹ്",ar:"الحمد لله"},ma:{en:"Masha Allah",ml:"മാശാ അല്ലാഹ്",ar:"ما شاء الله"}};
+  const H=w=>({en:W[w].en+", "+nm,ml:W[w].ml+", "+nm,ar:W[w].ar+"\u060C "+nm});
+  const out=(w,en,ml,ar)=>({h:H(w),en,ml,ar});
+  const arStreak=n=>n===2?"يومان متتاليان":n<=10?n+" أيام متتالية":n+" يومًا متتاليًا";
+  if(done===5)return out("hm",
+    streak>=2?`All five done. ${streak} days in a row, ${ad.en}.`:"All five prayers done today. May Allah accept them.",
+    streak>=2?`അഞ്ചു നേരവും പൂർത്തിയായി. തുടർച്ചയായി ${streak} ദിവസം, ${ad.ml}.`:"ഇന്നത്തെ അഞ്ചു നമസ്കാരവും പൂർത്തിയായി. അല്ലാഹു സ്വീകരിക്കട്ടെ.",
+    streak>=2?`تمّت الصلوات الخمس. ${arStreak(streak)} يا ${ad.ar}.`:"تمّت صلواتك الخمس اليوم. تقبّل الله منك.");
+  if(!arrived.length){const t=fmt(E.today.fajr);return out("as",
+    streak?`Fajr is at ${t}. Keep your ${streak}-day streak going.`:`Fajr is at ${t}. Start the day with it.`,
+    streak?`സുബ്ഹി ${t}-ന്. ${streak} ദിവസത്തെ തുടർച്ച നിലനിർത്താം.`:`സുബ്ഹി ${t}-ന്. ദിവസം അതിൽ തുടങ്ങാം.`,
+    streak?`الفجر عند ${t}. ${g2("حافظ","حافظي")} على سلسلتك البالغة ${arDays(streak)}.`:`الفجر عند ${t}. ${g2("ابدأ","ابدئي")} يومك بها.`)}
+  if(missed.length){const M=NAMES[missed[0]];return out("as",
+    missed.length>1?`${missed.length} earlier prayers aren't marked. Tick the ones you've prayed.`:`${M.en} isn't marked yet. Pray it if you can, then tick it.`,
+    missed.length>1?`${missed.length} നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തിയിട്ടില്ല. നമസ്കരിച്ചവ ടിക്ക് ചെയ്യൂ.`:`${M.ml} രേഖപ്പെടുത്തിയിട്ടില്ല. സാധിക്കുമെങ്കിൽ നമസ്കരിച്ച ശേഷം ടിക്ക് ചെയ്യൂ.`,
+    missed.length>1?`هناك صلوات سابقة غير مسجّلة. ${g2("حدّد","حدّدي")} ما ${g2("صلّيته","صلّيتِه")}.`:`${M.ar} غير مسجّلة بعد. ${g2("صلِّها","صلّيها")} إن ${g2("استطعت","استطعتِ")} ثم ${g2("حدّدها","حدّديها")}.`)}
+  if(curP){
+    const C=NAMES[cur];
+    if(cur==="isha"&&done===4)return out("as",
+      streak?`Isha is all that's left. Keep your ${streak}-day streak.`:"Isha is all that's left for a full day.",
+      streak?`ഇശാ മാത്രമേ ബാക്കിയുള്ളൂ. ${streak} ദിവസത്തെ തുടർച്ച നിലനിർത്താം.`:"ഇശാ കൂടി ആയാൽ ഇന്നത്തെ ദിവസം പൂർണം.",
+      streak?`بقيت العشاء فقط. ${g2("حافظ","حافظي")} على سلسلتك البالغة ${arDays(streak)}.`:"بقيت العشاء لإتمام اليوم.");
+    return out("as",`It's ${C.en} time. Pray, then tick it.`,`${C.ml} നമസ്കാരത്തിന്റെ സമയമായി. നമസ്കരിച്ച ശേഷം ടിക്ക് ചെയ്യൂ.`,`حان وقت ${C.ar}. ${g2("صلِّ","صلّي")} ثم ${g2("حدّد","حدّدي")}.`);
+  }
+  return out("ma",`${done} of 5 done, keep it up ${ad.en}. Next: ${NN.en} at ${nt}.`,`5-ൽ ${done} പൂർത്തിയായി, തുടരൂ ${ad.ml}. അടുത്തത് ${NN.ml} ${nt}-ന്.`,`${done} من 5 مكتملة، ${g2("واصل","واصلي")} يا ${ad.ar}. التالية: ${NN.ar} عند ${nt}.`);
+}
+function ringSVG(mask){
+  const segs=[0,1,2,3,4].map(i=>{
+    const a0=(-90+i*72+7)*D2R,a1=(-90+i*72+65)*D2R;
+    const f=v=>v.toFixed(2),x0=18+15*Math.cos(a0),y0=18+15*Math.sin(a0),x1=18+15*Math.cos(a1),y1=18+15*Math.sin(a1);
+    return `<path d="M${f(x0)} ${f(y0)}A15 15 0 0 1 ${f(x1)} ${f(y1)}" fill="none" stroke-width="3.2" stroke-linecap="round" style="stroke:${mask&BIT[P[i]]?"var(--gold)":"var(--line)"}"/>`;
+  }).join("");
+  return `<svg viewBox="0 0 36 36" aria-hidden="true">${segs}</svg>`;
+}
+function streakHTML(now){
+  const today=localDay(),wd=gparts(today).w,start=today-wd;            /* week runs Sunday to Saturday */
+  const cur=streakNow(today),best=Math.max(bestStreak(),cur);
+  const weeks=Math.floor(cur/7),months=Math.floor(cur/30);             /* completed 7-day and 30-day blocks of the running streak */
+  let cells="";
+  for(let i=0;i<7;i++){
+    const n=start+i,g=gparts(n),m=maskOf(n),full=m===FULL;
+    if(n>today){cells+=`<div class="skd future">${ringSVG(0)}<span class="num">${g.d}</span></div>`;continue}
+    cells+=`<div class="skd ${n===today?"today":""} ${full?"full":""}" role="img" aria-label="${tx("{0} {1}: {2} of 5 prayers",g.d,GM[g.m],cnt(m))}">${ringSVG(m)}<span class="num">${g.d}</span></div>`;
+  }
+  return `<div class="card stk">
+    <div class="stk-top"><div class="stk-flame ${cur?"on":""}">${FLAME}</div>
+      <div class="stk-big"><b class="num">${cur}</b><span>${tx("day streak")}</span></div>
+      <div class="stk-mini"><div><b class="num">${best}</b><span>${tx("Best")}</span></div></div></div>
+    <div class="stk-pills"><span class="spill ${weeks?"on":""}">${tx("Week streak")} <b class="num">${weeks}</b></span><span class="spill ${months?"on":""}">${tx("Month streak")} <b class="num">${months}</b></span></div>
+    <div class="wdr" style="margin-top:14px">${WDL.map((w,i)=>`<span class="${i===5?"fri":""}">${w}</span>`).join("")}</div>
+    <div class="skg">${cells}</div>
+    <p class="fine" style="margin:12px 2px 0">${tx("Each ring has five parts, one for each prayer.")}</p>
+  </div>`;
+}
+function refreshHome(){const now=Date.now(),E=getEvents(now);renderToday(E,now);tick()}
+function togglePrayer(k){
+  const now=Date.now(),E=getEvents(now);
+  if(E.today[k]>now){toast(tx("{0} can be ticked once its time begins",NP(k)));return}
+  const n=localDay(),key=dkey(n),m=S.log[key]||0,nm=m^BIT[k];
+  if(nm)S.log[key]=nm;else delete S.log[key];
+  save();refreshHome();
+  if(navigator.vibrate){try{navigator.vibrate(12)}catch(e){}}
+  toast(nm===FULL?tx("All five done. Alhamdulillah!"):(nm&BIT[k])?tx("{0} marked",NP(k)):tx("{0} unmarked",NP(k)));
+}
+/* ---------- welcome / profile ---------- */
+const WL=$("#welcome");let wst={name:"",g:null,edit:false};
+function openWelcome(edit,keep){
+  const pf=S.profile||{};
+  if(!keep)wst={name:pf.name||"",g:pf.g||null,edit:!!edit};
+  edit=wst.edit;
+  WL.innerHTML=`<div class="wlc">
+    <div class="chips" role="group" aria-label="${tx("Language")}">${Object.entries(LANGS).map(([k,l])=>`<button class="chip" aria-pressed="${k===LANG}" data-act="wlang" data-v="${k}">${l.name}</button>`).join("")}</div>
+    <svg class="logo" viewBox="0 0 30 34" aria-hidden="true"><path d="M3 32V17C3 10 11 8 15 2C19 8 27 10 27 17V32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="21" r="2" fill="currentColor"/></svg>
+    <h1 id="wtitle">${edit?tx("Your profile"):tx("Welcome to Mihrab")}</h1>
+    
+    <p class="lead">${edit?tx("Update how we address you."):tx("Tell us a little about you, so we can cheer you on with every prayer.")}</p>
+    <div class="fld"><label for="wname">${tx("Your name")}</label><input id="wname" type="text" maxlength="24" autocomplete="given-name" placeholder="${tx("Enter your name")}" value="${esc(wst.name)}"></div>
+    <div class="fld"><div class="lbl" id="wgl">${tx("Gender")}</div>
+      <div class="gq" role="radiogroup" aria-labelledby="wgl">
+        <button class="gbtn" role="radio" aria-checked="${wst.g==="m"}" data-act="wgender" data-v="m"><b>${tx("Male")}</b></button>
+        <button class="gbtn" role="radio" aria-checked="${wst.g==="f"}" data-act="wgender" data-v="f"><b>${tx("Female")}</b></button>
+      </div></div>
+    <button class="btn gold go" id="wgo" data-act="wsave">${edit?tx("Save"):tx("Continue")}</button>
+    ${edit?`<button class="skip" data-act="wcancel">${tx("Cancel")}</button>`:`<p class="fine" style="margin-top:16px">${tx("Stored only on this device.")}</p>`}
+  </div>`;
+  WL.classList.add("on");
+  const inp=$("#wname",WL);
+  inp.addEventListener("input",()=>{wst.name=inp.value;wCheck()});
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&wOk())$("#wgo").click()});
+  wCheck();if(!keep)setTimeout(()=>{try{inp.focus()}catch(e){}},80);
+}
+const wOk=()=>wst.name.trim().length>0&&!!wst.g;
+function wCheck(){const b=$("#wgo");if(b)b.disabled=!wOk()}
+function saveWelcome(){
+  if(!wOk())return;
+  S.profile={name:wst.name.trim().slice(0,24),g:wst.g};save();
+  WL.classList.remove("on");refreshAll();
+  toast(wst.edit?tx("Profile updated"):tx("Welcome, {0}",S.profile.name));
+}
+
+function labelScreens(){
+  [["today","Today"],["cal","Calendar"],["guide","Prayer guide"],["qibla","Qibla"],["rem","Reminders"],["set","Settings"],["widgets","Widgets"]].forEach(([id,k])=>{const e=$("#s-"+id);if(e)e.setAttribute("aria-label",tx(k))});
+}
+function buildTabs(){
+  labelScreens();
+$("#tabs").innerHTML='<button class="brand" data-act="about" aria-label="'+tx("About {0}",appn())+'"><svg viewBox="0 0 30 34" aria-hidden="true"><path d="M3 32V17C3 10 11 8 15 2C19 8 27 10 27 17V32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>'+TABS.map(([id,t],i)=>`<button class="tab" role="tab" data-act="tab" data-v="${id}" aria-selected="${i===0}">${TABICON[id]}<span>${tx(t)}</span></button>`).join("");
+  $$(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.v===(({qibla:"today",widgets:"set"})[curTab]||curTab)));
+}
+function applyLang(){
+  const h=document.documentElement;h.lang=LANG;h.dir=LANGS[LANG].dir;setLists();
+  buildTabs();renderGuide();buildQibla();renderCal();refreshAll();
+}
+function setLang(v){
+  if(!LANGS[v])return;
+  LANG=v;S.lang=v;S.glang=v==="ml"?"ml":"en";S.translit=(v==="en");save();applyLang();
+}
+/* ---------- installable web app: service worker, install, updates, offline ---------- */
+const CAN_PWA="serviceWorker" in navigator&&/^https?:$/.test(location.protocol)&&window.top===window.self;
+const isStandalone=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+let deferredInstall=null,swReg=null,updReg=null,updating=false;
+function installApp(){
+  if(deferredInstall){const d=deferredInstall;deferredInstall=null;d.prompt();d.userChoice.finally(()=>renderSettings());return}
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+  const steps=ios?["Tap the Share button in Safari","Choose Add to Home Screen","Tap Add"]:["Open your browser menu","Choose Install app or Add to Home screen"];
+  openSheet(`<h2>${tx("Install {0}",appn())}</h2><p class="sub" style="margin-bottom:6px">${tx("Add it to your home screen for full-screen use and offline access.")}</p>
+    <ol class="inst">${steps.map((t,i)=>`<li><b>${i+1}</b><span>${tx(t)}</span></li>`).join("")}</ol>
+    <button class="btn gold" style="width:100%" data-act="close">${tx("Done")}</button>`);
+}
+function showUpdate(reg){
+  updReg=reg;
+  $("#upd").innerHTML=`<span>${tx("A new version is ready.")}</span><button class="btn gold" style="padding:8px 16px;font-size:13.5px" data-act="applyupd">${tx("Refresh")}</button>`;
+  $("#upd").classList.add("on");
+}
+if(CAN_PWA){
+  window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;renderSettings()});
+  window.addEventListener("appinstalled",()=>{deferredInstall=null;toast(tx("App installed"));renderSettings()});
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("sw.js").then(reg=>{
+      swReg=reg;
+      if(reg.waiting&&navigator.serviceWorker.controller)showUpdate(reg);
+      reg.addEventListener("updatefound",()=>{const nw=reg.installing;if(nw)nw.addEventListener("statechange",()=>{if(nw.state==="installed"&&navigator.serviceWorker.controller)showUpdate(reg)})});
+    }).catch(()=>{});
+  });
+  navigator.serviceWorker.addEventListener("controllerchange",()=>{if(updating)location.reload()});
+  window.addEventListener("offline",()=>toast(tx("You\u2019re offline. Everything still works.")));
+  window.addEventListener("online",()=>toast(tx("Back online")));
+  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+}
+
+/* ---------- init ---------- */
+setLists();document.documentElement.lang=LANG;document.documentElement.dir=LANGS[LANG].dir;
+buildTabs();
+renderGuide();buildQibla();
+document.documentElement.classList.add("no-anim");
+tick(true);
+requestAnimationFrame(()=>requestAnimationFrame(()=>document.documentElement.classList.remove("no-anim")));
+setInterval(()=>tick(false),1000);
+if(!S.profile)openWelcome(false);
+try{const q=new URLSearchParams(location.search).get("tab");if(q&&["today","cal","guide","rem","set","qibla","widgets"].includes(q))setTab(q)}catch(e){}
+})();
+</script>
+</body>
+</html>
