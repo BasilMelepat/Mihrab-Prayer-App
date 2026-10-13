@@ -3,24 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0A1022">
-<meta name="description" content="Mihrab – a prayer companion: prayer times, Qibla, calendar, guides and reminders. Works offline.">
-<meta name="application-name" content="Mihrab">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Mihrab">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
-<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <title>Mihrab – prayer companion</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Hanken+Grotesk:wght@400;500;600&family=Noto+Sans+Malayalam:wght@400;500;600&family=Noto+Serif+Malayalam:wght@500;600&family=Noto+Sans+Arabic:wght@400;500;600&family=Barlow+Condensed:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Manrope:wght@300;400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600&family=Noto+Sans+Malayalam:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Barlow+Condensed:wght@600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --display:"Cormorant Garamond","Noto Serif Malayalam","Amiri","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --display:"Manrope","Noto Sans Malayalam","Noto Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
   --body:"Hanken Grotesk","Noto Sans Malayalam","Noto Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;
   --ar:"Amiri","Noto Naskh Arabic","Traditional Arabic",serif;
   --ml:"Hanken Grotesk","Noto Sans Malayalam","Manjari","Kartika",sans-serif;
@@ -29,33 +18,33 @@
 }
 
 /* ---- registered colour tokens: lets the theme cross-fade smoothly ---- */
-@property --midnight{syntax:"<color>";inherits:true;initial-value:#0A1022}
-@property --night{syntax:"<color>";inherits:true;initial-value:#0F1830}
-@property --dusk{syntax:"<color>";inherits:true;initial-value:#16213F}
-@property --dusk2{syntax:"<color>";inherits:true;initial-value:#1E2B50}
-@property --gold{syntax:"<color>";inherits:true;initial-value:#D6B26E}
-@property --goldhi{syntax:"<color>";inherits:true;initial-value:#F1DCA8}
-@property --goldlo{syntax:"<color>";inherits:true;initial-value:#8F7340}
-@property --ivory{syntax:"<color>";inherits:true;initial-value:#EFE8D6}
-@property --mist{syntax:"<color>";inherits:true;initial-value:#9AA3BF}
+@property --midnight{syntax:"<color>";inherits:true;initial-value:#090D1B}
+@property --night{syntax:"<color>";inherits:true;initial-value:#0F1530}
+@property --dusk{syntax:"<color>";inherits:true;initial-value:#141B38}
+@property --dusk2{syntax:"<color>";inherits:true;initial-value:#1B2447}
+@property --gold{syntax:"<color>";inherits:true;initial-value:#E2BC78}
+@property --goldhi{syntax:"<color>";inherits:true;initial-value:#F3DDAA}
+@property --goldlo{syntax:"<color>";inherits:true;initial-value:#9B7B45}
+@property --ivory{syntax:"<color>";inherits:true;initial-value:#F0ECE2}
+@property --mist{syntax:"<color>";inherits:true;initial-value:#98A1BE}
 @property --mist2{syntax:"<color>";inherits:true;initial-value:#6B759A}
-@property --line{syntax:"<color>";inherits:true;initial-value:rgba(214,178,110,.2)}
-@property --line-soft{syntax:"<color>";inherits:true;initial-value:rgba(214,178,110,.1)}
-@property --on-gold{syntax:"<color>";inherits:true;initial-value:#241a07}
-@property --btn-a{syntax:"<color>";inherits:true;initial-value:#E3C27F}
-@property --btn-b{syntax:"<color>";inherits:true;initial-value:#C99F55}
-@property --bg-glow{syntax:"<color>";inherits:true;initial-value:#1D2D5C}
-@property --card-a{syntax:"<color>";inherits:true;initial-value:rgba(30,43,80,.55)}
-@property --card-b{syntax:"<color>";inherits:true;initial-value:rgba(22,33,63,.55)}
-@property --chip-bg{syntax:"<color>";inherits:true;initial-value:rgba(22,33,63,.55)}
-@property --tabbar{syntax:"<color>";inherits:true;initial-value:rgba(10,16,34,.92)}
-@property --sheet-bg{syntax:"<color>";inherits:true;initial-value:#0F1830}
-@property --toast-bg{syntax:"<color>";inherits:true;initial-value:#1E2B50}
-@property --sw-off{syntax:"<color>";inherits:true;initial-value:#27345F}
-@property --gold-a18{syntax:"<color>";inherits:true;initial-value:rgba(214,178,110,.18)}
-@property --nxt-a{syntax:"<color>";inherits:true;initial-value:rgba(214,178,110,.16)}
-@property --nxt-b{syntax:"<color>";inherits:true;initial-value:rgba(214,178,110,.04)}
-@property --pose-bg{syntax:"<color>";inherits:true;initial-value:rgba(10,16,34,.5)}
+@property --line{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.09)}
+@property --line-soft{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.055)}
+@property --on-gold{syntax:"<color>";inherits:true;initial-value:#2A1D05}
+@property --btn-a{syntax:"<color>";inherits:true;initial-value:#EBC884}
+@property --btn-b{syntax:"<color>";inherits:true;initial-value:#D1A55C}
+@property --bg-glow{syntax:"<color>";inherits:true;initial-value:rgba(9,13,27,0)}
+@property --card-a{syntax:"<color>";inherits:true;initial-value:#151D3C}
+@property --card-b{syntax:"<color>";inherits:true;initial-value:#111831}
+@property --chip-bg{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.07)}
+@property --tabbar{syntax:"<color>";inherits:true;initial-value:rgba(19,26,53,.80)}
+@property --sheet-bg{syntax:"<color>";inherits:true;initial-value:#0F1530}
+@property --toast-bg{syntax:"<color>";inherits:true;initial-value:#1B2447}
+@property --sw-off{syntax:"<color>";inherits:true;initial-value:#2A3563}
+@property --gold-a18{syntax:"<color>";inherits:true;initial-value:rgba(226,188,120,.18)}
+@property --nxt-a{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.085)}
+@property --nxt-b{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.045)}
+@property --pose-bg{syntax:"<color>";inherits:true;initial-value:rgba(255,255,255,.04)}
 @property --shade{syntax:"<color>";inherits:true;initial-value:rgba(3,6,16,.62)}
 @property --arch-a{syntax:"<color>";inherits:true;initial-value:#22336B}
 @property --arch-b{syntax:"<color>";inherits:true;initial-value:#0D1630}
@@ -63,37 +52,47 @@
 @property --arch-dot{syntax:"<color>";inherits:true;initial-value:#FFF3CF}
 @property --dial-a{syntax:"<color>";inherits:true;initial-value:#16244B}
 @property --dial-b{syntax:"<color>";inherits:true;initial-value:#0B1330}
-html{transition:--midnight 1.6s cubic-bezier(.4,0,.2,1),--night 1.6s cubic-bezier(.4,0,.2,1),--dusk 1.6s cubic-bezier(.4,0,.2,1),--dusk2 1.6s cubic-bezier(.4,0,.2,1),--gold 1.6s cubic-bezier(.4,0,.2,1),--goldhi 1.6s cubic-bezier(.4,0,.2,1),--goldlo 1.6s cubic-bezier(.4,0,.2,1),--ivory 1.6s cubic-bezier(.4,0,.2,1),--mist 1.6s cubic-bezier(.4,0,.2,1),--mist2 1.6s cubic-bezier(.4,0,.2,1),--line 1.6s cubic-bezier(.4,0,.2,1),--line-soft 1.6s cubic-bezier(.4,0,.2,1),--on-gold 1.6s cubic-bezier(.4,0,.2,1),--btn-a 1.6s cubic-bezier(.4,0,.2,1),--btn-b 1.6s cubic-bezier(.4,0,.2,1),--bg-glow 1.6s cubic-bezier(.4,0,.2,1),--card-a 1.6s cubic-bezier(.4,0,.2,1),--card-b 1.6s cubic-bezier(.4,0,.2,1),--chip-bg 1.6s cubic-bezier(.4,0,.2,1),--tabbar 1.6s cubic-bezier(.4,0,.2,1),--sheet-bg 1.6s cubic-bezier(.4,0,.2,1),--toast-bg 1.6s cubic-bezier(.4,0,.2,1),--sw-off 1.6s cubic-bezier(.4,0,.2,1),--gold-a18 1.6s cubic-bezier(.4,0,.2,1),--nxt-a 1.6s cubic-bezier(.4,0,.2,1),--nxt-b 1.6s cubic-bezier(.4,0,.2,1),--pose-bg 1.6s cubic-bezier(.4,0,.2,1),--shade 1.6s cubic-bezier(.4,0,.2,1),--arch-a 1.6s cubic-bezier(.4,0,.2,1),--arch-b 1.6s cubic-bezier(.4,0,.2,1),--arch-prog 1.6s cubic-bezier(.4,0,.2,1),--arch-dot 1.6s cubic-bezier(.4,0,.2,1),--dial-a 1.6s cubic-bezier(.4,0,.2,1),--dial-b 1.6s cubic-bezier(.4,0,.2,1)}
+@property --st-late{syntax:"<color>";inherits:true;initial-value:#8DA2D0}
+@property --st-miss{syntax:"<color>";inherits:true;initial-value:#D9806E}
+html{transition:--midnight 1.6s cubic-bezier(.4,0,.2,1),--night 1.6s cubic-bezier(.4,0,.2,1),--dusk 1.6s cubic-bezier(.4,0,.2,1),--dusk2 1.6s cubic-bezier(.4,0,.2,1),--gold 1.6s cubic-bezier(.4,0,.2,1),--goldhi 1.6s cubic-bezier(.4,0,.2,1),--goldlo 1.6s cubic-bezier(.4,0,.2,1),--ivory 1.6s cubic-bezier(.4,0,.2,1),--mist 1.6s cubic-bezier(.4,0,.2,1),--mist2 1.6s cubic-bezier(.4,0,.2,1),--line 1.6s cubic-bezier(.4,0,.2,1),--line-soft 1.6s cubic-bezier(.4,0,.2,1),--on-gold 1.6s cubic-bezier(.4,0,.2,1),--btn-a 1.6s cubic-bezier(.4,0,.2,1),--btn-b 1.6s cubic-bezier(.4,0,.2,1),--bg-glow 1.6s cubic-bezier(.4,0,.2,1),--card-a 1.6s cubic-bezier(.4,0,.2,1),--card-b 1.6s cubic-bezier(.4,0,.2,1),--chip-bg 1.6s cubic-bezier(.4,0,.2,1),--tabbar 1.6s cubic-bezier(.4,0,.2,1),--sheet-bg 1.6s cubic-bezier(.4,0,.2,1),--toast-bg 1.6s cubic-bezier(.4,0,.2,1),--sw-off 1.6s cubic-bezier(.4,0,.2,1),--gold-a18 1.6s cubic-bezier(.4,0,.2,1),--nxt-a 1.6s cubic-bezier(.4,0,.2,1),--nxt-b 1.6s cubic-bezier(.4,0,.2,1),--pose-bg 1.6s cubic-bezier(.4,0,.2,1),--shade 1.6s cubic-bezier(.4,0,.2,1),--arch-a 1.6s cubic-bezier(.4,0,.2,1),--arch-b 1.6s cubic-bezier(.4,0,.2,1),--arch-prog 1.6s cubic-bezier(.4,0,.2,1),--arch-dot 1.6s cubic-bezier(.4,0,.2,1),--dial-a 1.6s cubic-bezier(.4,0,.2,1),--dial-b 1.6s cubic-bezier(.4,0,.2,1),--st-late 1.6s cubic-bezier(.4,0,.2,1),--st-miss 1.6s cubic-bezier(.4,0,.2,1)}
 html.no-anim,html.no-anim *{transition:none!important}
 
 /* ---- themes: midnight (default, also used inside device mock-ups) and dawn ---- */
 :root,.dev{
-  --midnight:#0A1022; --night:#0F1830; --dusk:#16213F; --dusk2:#1E2B50;
-  --gold:#D6B26E; --goldhi:#F1DCA8; --goldlo:#8F7340;
-  --ivory:#EFE8D6; --mist:#9AA3BF; --mist2:#6B759A;
-  --line:rgba(214,178,110,.2); --line-soft:rgba(214,178,110,.1);
-  --on-gold:var(--on-gold); --btn-a:#E3C27F; --btn-b:#C99F55;
-  --bg-glow:#1D2D5C; --card-a:var(--card-a); --card-b:var(--card-b);
-  --chip-bg:var(--card-b); --tabbar:rgba(10,16,34,.92); --sheet-bg:#0F1830; --toast-bg:#1E2B50;
-  --sw-off:#27345F; --gold-a18:rgba(214,178,110,.18); --nxt-a:rgba(214,178,110,.16); --nxt-b:rgba(214,178,110,.04);
-  --pose-bg:rgba(10,16,34,.5); --shade:rgba(3,6,16,.62);
+  --midnight:#090D1B; --night:#0F1530; --dusk:#141B38; --dusk2:#1B2447;
+  --gold:#E2BC78; --goldhi:#F3DDAA; --goldlo:#9B7B45;
+  --ivory:#F0ECE2; --mist:#98A1BE; --mist2:#6B759A;
+  --line:rgba(255,255,255,.09); --line-soft:rgba(255,255,255,.055);
+  --on-gold:#2A1D05; --btn-a:#EBC884; --btn-b:#D1A55C;
+  --bg-glow:rgba(9,13,27,0); --card-a:#151D3C; --card-b:#111831;
+  --chip-bg:rgba(255,255,255,.07); --tabbar:rgba(19,26,53,.80); --sheet-bg:#0F1530; --toast-bg:#1B2447;
+  --sw-off:#2A3563; --gold-a18:rgba(226,188,120,.18); --nxt-a:rgba(255,255,255,.085); --nxt-b:rgba(255,255,255,.045);
+  --pose-bg:rgba(255,255,255,.04); --shade:rgba(3,6,16,.62);
   --arch-a:#22336B; --arch-b:#0D1630; --arch-prog:#F1DCA8; --arch-dot:#FFF3CF;
-  --dial-a:#16244B; --dial-b:#0B1330;
+  --dial-a:#16244B; --dial-b:#0B1330; --st-late:#8DA2D0; --st-miss:#D9806E;
+  --shadow-card:0 1px 0 rgba(255,255,255,.05) inset,0 2px 6px rgba(0,0,0,.28),0 18px 38px -18px rgba(0,0,0,.72);
+  --shadow-sm:0 8px 18px -8px rgba(0,0,0,.65);
+  --shadow-sky:0 26px 52px -20px rgba(0,0,0,.8),0 4px 12px rgba(0,0,0,.25);
+  --shadow-nav:0 18px 40px -12px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.07);
   color-scheme:dark;
 }
 .dev{color:var(--ivory)}
 html[data-theme="day"]{
-  --midnight:#EEF1F6; --night:#F7F8FB; --dusk:#E4E9F2; --dusk2:#DCE3EF;
+  --midnight:#F3F5FA; --night:#F8F9FD; --dusk:#E8ECF5; --dusk2:#DEE4F0;
   --gold:#9A6C15; --goldhi:#7D5410; --goldlo:#B39254;
-  --ivory:#14203F; --mist:#55607E; --mist2:#7A84A2;
-  --line:rgba(122,84,16,.24); --line-soft:rgba(122,84,16,.13);
+  --ivory:#141B34; --mist:#586383; --mist2:#7C86A5;
+  --line:rgba(20,28,58,.10); --line-soft:rgba(20,28,58,.065);
   --on-gold:#FFF8E6; --btn-a:#B8862A; --btn-b:#946913;
-  --bg-glow:#FBE0AE; --card-a:rgba(255,255,255,.88); --card-b:rgba(255,255,255,.62);
-  --chip-bg:rgba(255,255,255,.7); --tabbar:rgba(244,246,250,.93); --sheet-bg:#F7F8FB; --toast-bg:#FFFFFF;
-  --sw-off:#C9D1E2; --gold-a18:rgba(154,108,21,.2); --nxt-a:rgba(154,108,21,.17); --nxt-b:rgba(154,108,21,.04);
-  --pose-bg:rgba(255,255,255,.65); --shade:rgba(20,32,63,.4);
+  --bg-glow:rgba(243,245,250,0); --card-a:#FFFFFF; --card-b:#FFFFFF;
+  --chip-bg:#EBEEF6; --tabbar:rgba(255,255,255,.84); --sheet-bg:#FFFFFF; --toast-bg:#FFFFFF;
+  --sw-off:#CDD4E4; --gold-a18:rgba(154,108,21,.14); --nxt-a:rgba(40,60,130,.07); --nxt-b:rgba(40,60,130,.04);
+  --pose-bg:#F3F5FA; --shade:rgba(20,28,58,.4);
   --arch-a:#FFF6DE; --arch-b:#F3D399; --arch-prog:#9A6C15; --arch-dot:#6E4A0C;
-  --dial-a:#FFFFFF; --dial-b:#E3E9F3;
+  --dial-a:#FFFFFF; --dial-b:#E3E9F3; --st-late:#5C74A6; --st-miss:#B5513F;
+  --shadow-card:0 1px 2px rgba(22,32,66,.04),0 12px 32px -12px rgba(22,32,66,.16),0 32px 64px -32px rgba(22,32,66,.16);
+  --shadow-sm:0 8px 18px -8px rgba(22,32,66,.24);
+  --shadow-sky:0 24px 48px -18px rgba(44,76,150,.46),0 6px 16px -6px rgba(22,32,66,.14);
+  --shadow-nav:0 18px 40px -14px rgba(22,32,66,.30),0 0 0 1px rgba(22,32,66,.045);
   color-scheme:light;
 }
 *,*::before,*::after{box-sizing:inherit}
@@ -108,7 +107,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 /* stage + phone */
 .stage{height:100%;display:grid;place-items:center;padding:16px}
 .phone{--sb:52px;position:relative;width:390px;height:min(844px,calc(100dvh - 32px));min-height:600px;overflow:hidden;border-radius:46px;border:1px solid rgba(214,178,110,.3);box-shadow:0 0 0 8px #060a17,0 40px 90px rgba(0,0,0,.55);
-  background:radial-gradient(130% 55% at 50% -5%,var(--bg-glow) 0%,transparent 62%),var(--midnight)}
+  background:var(--midnight)}
 .sbar{position:absolute;top:0;left:0;right:0;height:44px;display:flex;justify-content:space-between;align-items:center;padding:6px 30px 0;font-size:13px;font-weight:600;z-index:5;pointer-events:none}
 .sbar svg{width:18px;height:18px;fill:var(--ivory)}
 @media (max-width:520px){
@@ -116,16 +115,16 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   .phone{width:100%;height:100%;min-height:0;border-radius:0;border:0;box-shadow:none;--sb:20px}
   .sbar{display:none}
 }
-.screen{position:absolute;inset:0 0 72px 0;overflow-y:auto;overflow-x:hidden;padding:var(--sb) 20px 32px;display:none;scrollbar-width:none}
+.screen{position:absolute;inset:0 0 94px 0;overflow-y:auto;overflow-x:hidden;padding:var(--sb) 20px 32px;display:none;scrollbar-width:none}
 .screen::-webkit-scrollbar{display:none}
 .screen.on{display:block}
 
 /* tabs */
-.tabs{position:absolute;left:0;right:0;bottom:0;height:72px;display:grid;grid-template-columns:repeat(5,1fr);background:var(--tabbar);backdrop-filter:blur(14px);border-top:1px solid var(--line);z-index:4}
+.tabs{position:absolute;left:14px;right:14px;bottom:14px;height:66px;display:grid;grid-template-columns:repeat(5,1fr);background:var(--tabbar);backdrop-filter:blur(20px) saturate(170%);-webkit-backdrop-filter:blur(20px) saturate(170%);border:0;border-radius:28px;box-shadow:var(--shadow-nav);z-index:4}
 .tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;color:var(--mist2);position:relative}
 .tab svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .tab[aria-selected=true]{color:var(--gold)}
-.tab[aria-selected=true]::before{content:"";position:absolute;top:-1px;width:26px;height:2px;background:var(--gold);border-radius:2px}
+.tab[aria-selected=true]::before{content:"";position:absolute;inset:7px 4px;background:var(--gold-a18);border-radius:22px;z-index:-1}
 
 /* type */
 h1{font-family:var(--display);font-weight:500;font-size:36px;line-height:1.05;margin:0;letter-spacing:.2px}
@@ -137,7 +136,7 @@ h2{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15;ma
 .th{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .hij{font-family:var(--display);font-size:30px;font-weight:500;line-height:1.05}
 .greg{color:var(--mist);font-size:13.5px;margin-top:4px}
-.loc{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 11px 7px 9px;font-size:13px;color:var(--goldhi);background:var(--chip-bg);white-space:nowrap}
+.loc{display:flex;align-items:center;gap:6px;border:0;border-radius:999px;padding:7px 11px 7px 9px;font-size:13px;color:var(--goldhi);background:var(--card-a);box-shadow:var(--shadow-sm);white-space:nowrap}
 .loc svg{width:15px;height:15px;fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 
 /* hero arch */
@@ -152,8 +151,8 @@ h2{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15;ma
 .hero .at{font-size:13px;color:var(--mist);margin-top:6px}
 
 /* prayer list */
-.list{margin-top:14px;display:flex;flex-direction:column;gap:2px}
-.row{display:grid;grid-template-columns:28px 1fr auto auto 38px;align-items:center;gap:10px;padding:11px 8px 11px 10px;border-radius:16px}
+.list{margin-top:16px;padding:8px;display:flex;flex-direction:column;gap:2px;background:linear-gradient(180deg,var(--card-a),var(--card-b));border-radius:28px;box-shadow:var(--shadow-card);transition:box-shadow 1.6s cubic-bezier(.4,0,.2,1)}
+.row{display:grid;grid-template-columns:28px 1fr auto auto;align-items:center;gap:10px;padding:11px 14px 11px 10px;border-radius:20px}
 .row .dt{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--mist2)}
 .row .nm b{font-weight:500;font-size:16px;display:block;line-height:1.2}
 .row .nm span{font-family:var(--ml);font-size:12px;color:var(--mist)}
@@ -162,31 +161,26 @@ h2{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15;ma
 .row.past .nm,.row.past .a,.row.past time{opacity:.6}
 .row.past .dt{background:var(--goldlo);border-color:var(--goldlo)}
 .row.cur .dt{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-a18)}
-.row.nxt{background:linear-gradient(90deg,var(--nxt-a),var(--nxt-b));outline:1px solid var(--line)}
+.row.nxt{background:linear-gradient(90deg,var(--nxt-a),var(--nxt-b))}
 .row.nxt .dt{border-color:var(--gold)}
 .row.nxt .a,.row.nxt time{color:var(--goldhi)}
 .row.sun{opacity:.75}
 .row.sun .dt{border-style:dashed}
-.bell{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;color:var(--mist2)}
-.bell svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.bell.on{color:var(--gold)}
-.bell.on svg path:first-child{fill:var(--gold-a18)}
-.row .nob{width:36px}
 
 /* chips / buttons */
 .chips{display:flex;gap:8px;flex-wrap:wrap}
 .chips.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:2px 20px}
 .chips.scroll::-webkit-scrollbar{display:none}
-.chip{border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13.5px;color:var(--mist);white-space:nowrap;background:var(--chip-bg)}
+.chip{border:0;border-radius:999px;padding:8px 14px;font-size:13.5px;color:var(--mist);white-space:nowrap;background:var(--chip-bg)}
 .chip[aria-pressed=true]{background:var(--gold);border-color:var(--gold);color:var(--on-gold);font-weight:600}
 .chip small{opacity:.75;margin-left:4px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:13px 22px;font-weight:600;font-size:15px}
 .btn.gold{background:linear-gradient(180deg,var(--btn-a),var(--btn-b));color:var(--on-gold)}
-.btn.ghost{border:1px solid var(--line);color:var(--goldhi);background:var(--chip-bg)}
+.btn.ghost{border:0;color:var(--goldhi);background:var(--chip-bg)}
 .btn[disabled]{opacity:.4;pointer-events:none}
 
 /* cards */
-.card{background:linear-gradient(180deg,var(--card-a),var(--card-b));border:1px solid var(--line);border-radius:22px;padding:16px}
+.card{background:linear-gradient(180deg,var(--card-a),var(--card-b));border:0;border-radius:26px;padding:16px;box-shadow:var(--shadow-card);transition:box-shadow 1.6s cubic-bezier(.4,0,.2,1)}
 .sec{margin-top:22px}
 .sec>h3{margin:0 0 10px;font-family:var(--display);font-weight:500;font-size:21px}
 .setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
@@ -219,7 +213,7 @@ h2{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15;ma
 .gnav{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
 .gnav .cnt{color:var(--mist);font-size:13px}
 .gopts{margin-top:18px}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--chip-bg)}
+.seg{display:inline-flex;border:0;border-radius:999px;padding:3px;background:var(--chip-bg)}
 .seg button{padding:6px 14px;border-radius:999px;font-size:13.5px;color:var(--mist)}
 .seg button[aria-pressed=true]{background:var(--gold);color:var(--on-gold);font-weight:600}
 
@@ -284,7 +278,7 @@ h2{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15;ma
 /* sheet + banner + toast */
 .shade{position:absolute;inset:0;background:var(--shade);opacity:0;pointer-events:none;transition:opacity .25s;z-index:8}
 .shade.on{opacity:1;pointer-events:auto}
-.sheet{position:absolute;left:0;right:0;bottom:0;max-height:84%;overflow-y:auto;background:var(--sheet-bg);border-top:1px solid var(--line);border-radius:28px 28px 0 0;padding:10px 20px 28px;transform:translateY(102%);transition:transform .32s cubic-bezier(.2,.8,.2,1);z-index:9}
+.sheet{position:absolute;left:0;right:0;bottom:0;max-height:84%;overflow-y:auto;background:var(--sheet-bg);box-shadow:0 -24px 60px -24px rgba(8,14,40,.45);border-radius:30px 30px 0 0;padding:10px 20px 28px;transform:translateY(102%);transition:transform .32s cubic-bezier(.2,.8,.2,1);z-index:9}
 .sheet.on{transform:none}
 .grab{width:40px;height:4px;border-radius:4px;background:var(--mist2);opacity:.5;margin:0 auto 14px}
 .sheet h2{margin-bottom:6px}
@@ -294,7 +288,7 @@ h2{font-family:var(--display);font-weight:500;font-size:26px;line-height:1.15;ma
 .opt[aria-checked=true] .rd{border-color:var(--gold);background:radial-gradient(circle,var(--gold) 0 45%,transparent 50%)}
 .banner{position:absolute;left:12px;right:12px;top:calc(var(--sb) - 10px);z-index:12;transform:translateY(-160%);transition:transform .45s cubic-bezier(.2,.9,.2,1);pointer-events:none}
 .banner.on{transform:none;pointer-events:auto}
-.toast{position:absolute;left:50%;bottom:90px;transform:translate(-50%,20px);background:var(--toast-bg);border:1px solid var(--line);color:var(--ivory);padding:10px 16px;border-radius:999px;font-size:13.5px;opacity:0;transition:.3s;z-index:13;white-space:nowrap;max-width:92%;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+.toast{position:absolute;left:50%;bottom:104px;transform:translate(-50%,20px);background:var(--toast-bg);border:0;box-shadow:var(--shadow-sm);color:var(--ivory);padding:10px 16px;border-radius:999px;font-size:13.5px;opacity:0;transition:.3s;z-index:13;white-space:nowrap;max-width:92%;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 
@@ -322,7 +316,7 @@ button.brand{background:none;border:0;padding:0;cursor:pointer}
 .arow .t span{display:block;font-size:12.5px;color:var(--mist);margin-top:1px}
 .arow .t span em{font-style:normal;color:var(--goldhi)}
 .stp{display:flex;align-items:center;gap:6px}
-.stp button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--chip-bg);color:var(--goldhi);font-size:22px;line-height:1;display:grid;place-items:center}
+.stp button{width:38px;height:38px;border-radius:50%;border:0;background:var(--chip-bg);color:var(--goldhi);font-size:22px;line-height:1;display:grid;place-items:center}
 .stp button[disabled]{opacity:.3;pointer-events:none}
 .stp b{min-width:98px;text-align:center;font-weight:500;font-size:14px}
 .stp b.z{color:var(--mist)}
@@ -336,7 +330,7 @@ button.brand{background:none;border:0;padding:0;cursor:pointer}
 .mbar2 .mt{text-align:center;min-width:0}
 .mbar2 .mt h2{font-size:28px}
 .mbar2 .mt span{font-size:13px;color:var(--goldhi)}
-.navb{flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--chip-bg);color:var(--goldhi);font-size:26px;line-height:1;display:grid;place-items:center;padding-bottom:3px}
+.navb{flex:none;width:42px;height:42px;border-radius:50%;border:0;background:var(--card-a);box-shadow:var(--shadow-sm);color:var(--goldhi);font-size:26px;line-height:1;display:grid;place-items:center;padding-bottom:3px}
 .wdr{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center;font-size:12px;color:var(--mist);margin-bottom:4px}
 .wdr .fri{color:var(--goldhi);font-weight:600}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
@@ -371,7 +365,7 @@ button.brand{background:none;border:0;padding:0;cursor:pointer}
 
 
 /* ---- qibla button, location row, settings ---- */
-.qbtn{flex:none;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--chip-bg);color:var(--gold);display:grid;place-items:center}
+.qbtn{flex:none;width:46px;height:46px;border-radius:50%;border:0;background:var(--card-a);box-shadow:var(--shadow-sm);color:var(--gold);display:grid;place-items:center}
 .qbtn svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .locrow{display:flex;justify-content:flex-start;margin:14px 0 0}
 .backb{display:inline-flex;align-items:center;color:var(--goldhi);font-size:14px;margin-bottom:12px}
@@ -383,9 +377,6 @@ button.brand{background:none;border:0;padding:0;cursor:pointer}
 
 /* ---- greeting, checkboxes, streak, welcome ---- */
 .greet{min-width:0;flex:1}
-.hi-h{font-family:var(--display);font-size:27px;font-weight:500;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hi-m{font-size:14px;color:var(--ivory);margin:6px 0 0;line-height:1.4}
-.hi-ml{font-family:var(--ml);font-size:12.5px;color:var(--mist);margin:3px 0 0;line-height:1.65}
 .ck{flex:none;width:26px;height:26px;border-radius:9px;border:1.8px solid var(--mist2);display:grid;place-items:center;color:transparent;justify-self:center;transition:background .2s,border-color .2s,color .2s}
 .ck svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
 .ck.on{background:var(--gold);border-color:var(--gold);color:var(--on-gold)}
@@ -412,7 +403,7 @@ button.brand{background:none;border:0;padding:0;cursor:pointer}
 .skd.full .num{color:var(--goldhi);font-weight:700}
 .skd.today .num{color:var(--goldhi);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .skd.future{opacity:.35}
-.welcome{position:absolute;inset:0;z-index:30;display:none;overflow-y:auto;padding:var(--sb) 24px 28px;background:radial-gradient(120% 50% at 50% -5%,var(--bg-glow) 0%,transparent 62%),var(--midnight)}
+.welcome{position:absolute;inset:0;z-index:30;display:none;overflow-y:auto;padding:var(--sb) 24px 28px;background:var(--midnight)}
 .welcome.on{display:flex}
 .wlc{margin:auto;width:100%;max-width:420px;text-align:center}
 .wlc .logo{width:58px;height:66px;color:var(--gold);display:block;margin:0 auto 14px}
@@ -431,8 +422,6 @@ button.brand{background:none;border:0;padding:0;cursor:pointer}
 .gbtn[aria-checked=true] b{color:var(--goldhi)}
 .wlc .go{width:100%;margin-top:6px}
 .wlc .skip{margin-top:14px;color:var(--mist);font-size:14px;text-decoration:underline;text-underline-offset:3px}
-.q-head{position:relative}
-.locrow.qloc{position:absolute;top:-4px;right:0;margin:0}
 
 /* ---- layout helpers (phone defaults) ---- */
 .chips.scroll.g-chips{margin-top:16px}
@@ -454,14 +443,14 @@ button.brand,.brand{display:none}
   .stage{padding:0;display:block}
   .phone{width:100%;height:100%;min-height:0;border-radius:0;border:0;box-shadow:none;--sb:32px}
   .sbar{display:none}
-  .tabs{top:0;right:auto;width:104px;height:auto;grid-template-columns:1fr;grid-auto-rows:78px;align-content:center;border-top:0;border-right:1px solid var(--line)}
+  .tabs{top:14px;bottom:14px;right:14px;left:auto;width:84px;height:auto;grid-template-columns:1fr;grid-auto-rows:76px;align-content:center;border-radius:30px}
   .tab{font-size:11.5px}
-  .tab[aria-selected=true]::before{top:50%;left:-1px;width:3px;height:30px;margin-top:-15px;border-radius:0 3px 3px 0}
-  button.brand,.brand{display:block;position:absolute;top:34px;left:50%;transform:translateX(-50%);width:30px;height:34px;color:var(--gold)}
+  .tab[aria-selected=true]::before{inset:6px 8px;border-radius:22px}
+  button.brand,.brand{display:block;position:absolute;top:22px;left:50%;transform:translateX(-50%);width:30px;height:34px;color:var(--gold)}
   .brand svg{width:100%;height:100%;display:block}
-  .screen{inset:0 0 0 104px;padding:var(--sb) max(36px,calc((100% - 680px)/2)) 56px}
+  .screen{inset:0 112px 0 0;padding:var(--sb) max(36px,calc((100% - 680px)/2)) 56px}
   h1{font-size:40px}
-  .hero{width:min(100%,380px)}
+  .hero,.sky{width:min(100%,480px);--u:min(.9vw,4.8px)}
   .row{padding:13px 12px 13px 16px}
   .row time{font-size:24px}
   .reader{padding:24px 28px 28px}
@@ -469,22 +458,21 @@ button.brand,.brand{display:none}
   .ln .mn{font-size:16.5px}
   #s-widgets{padding-inline:max(36px,calc((100% - 600px)/2))}
   /* sheet becomes a centred dialog */
-  .sheet{left:50%;right:auto;bottom:auto;top:50%;width:min(520px,92%);max-height:82%;border:1px solid var(--line);border-radius:28px;transform:translate(-50%,-46%) scale(.97);opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s}
+  .sheet{left:50%;right:auto;bottom:auto;top:50%;width:min(520px,92%);max-height:82%;border:0;box-shadow:0 36px 80px -24px rgba(8,14,40,.5);border-radius:30px;transform:translate(-50%,-46%) scale(.97);opacity:0;pointer-events:none;transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s}
   .sheet.on{transform:translate(-50%,-50%);opacity:1;pointer-events:auto}
   .grab{display:none}
-  .banner{left:auto;right:24px;top:24px;width:400px;max-width:calc(100% - 48px)}
-  .toast{bottom:32px;left:calc(50% + 52px)}
+  .banner{left:auto;right:124px;top:24px;width:400px;max-width:calc(100% - 48px)}
+  .toast{bottom:32px;left:calc(50% - 56px)}
 }
 /* ---- wide tablet / landscape: two columns ---- */
 @media (min-width:860px){
   .screen{padding-inline:max(44px,calc((100% - 1040px)/2))}
   h1{font-size:44px}
-  #s-today.on{display:grid;grid-template-columns:minmax(300px,420px) minmax(340px,1fr);column-gap:64px;align-content:start}
+  #s-today.on{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:28px;row-gap:20px;align-content:start}
   #s-today .th{grid-column:1/-1}
-  #s-today .hero{grid-column:1;grid-row:2;width:100%;margin:18px 0 0;align-self:start}
-  #s-today .list{grid-column:2;grid-row:2;margin-top:12px}
-  #s-today .fine{grid-column:2;grid-row:3}
-  #s-today .stk{grid-column:1;grid-row:3;margin-top:22px}
+  #s-today .sky{--u:5.2px;grid-column:1/-1;grid-row:2;width:min(100%,520px);margin:0 auto}
+  #s-today .list{grid-column:1;grid-row:3;margin:0;align-self:start}
+  #s-today .stk{grid-column:2;grid-row:3;margin:0;align-self:start}
 
   #s-guide.on,#s-qibla.on,#s-rem.on,#s-cal.on,#s-set.on{bottom:auto;max-height:100%}
   #s-set.on{display:grid;grid-template-columns:1fr 1fr;column-gap:56px;align-items:start;align-content:start}
@@ -523,20 +511,17 @@ button.brand,.brand{display:none}
 
 /* ---- right-to-left (Arabic) ---- */
 .hi-m,.hi-ml,.seld .l3,.up em,.up .ml,.ln .mn,.ln .tr,.t2,.row .nm span{unicode-bidi:plaintext}
-html[dir="rtl"] .hi-ml{text-align:end}
-html[dir="rtl"] .locrow.qloc{right:auto;left:0}
-html[dir="rtl"] .opt>svg{transform:scaleX(-1)}
+html[dir="rtl"] html[dir="rtl"] html[dir="rtl"] .opt>svg{transform:scaleX(-1)}
 html[dir="rtl"] .ln .tr{direction:ltr}
 html[dir="rtl"] .sw::after{left:auto;right:3px}
 html[dir="rtl"] .sw[aria-checked=true]::after{left:auto;right:23px}
 html[dir="rtl"] .brand svg{transform:none}
 .wlc .chips{justify-content:center;margin-bottom:22px}
 @media (min-width:700px){
-  html[dir="rtl"] .tabs{left:auto;right:0;border-right:0;border-left:1px solid var(--line)}
-  html[dir="rtl"] .screen{inset:0 104px 0 0}
-  html[dir="rtl"] .tab[aria-selected=true]::before{left:auto;right:-1px;border-radius:3px 0 0 3px}
-  html[dir="rtl"] .banner{right:auto;left:24px}
-  html[dir="rtl"] .toast{left:calc(50% - 52px)}
+  html[dir="rtl"] .tabs{left:14px;right:auto}
+  html[dir="rtl"] .screen{inset:0 0 0 112px}
+  html[dir="rtl"] .banner{right:auto;left:124px}
+  html[dir="rtl"] .toast{left:calc(50% + 56px)}
 }
 
 /* ---- Malayalam: the script runs larger than Latin at the same size, so type is scaled down ---- */
@@ -544,9 +529,7 @@ html[dir="rtl"] .brand svg{transform:none}
 html[lang="ml"] h1{font-size:28px;line-height:1.3}
 html[lang="ml"] h2{font-size:20px;line-height:1.35}
 html[lang="ml"] .sec>h3,html[lang="ml"] .about h3{font-size:17px;line-height:1.4}
-html[lang="ml"] .hi-h{font-size:20px;line-height:1.35;white-space:normal}
-html[lang="ml"] .hi-m{font-size:13.5px;line-height:1.65}
-html[lang="ml"] .sub{font-size:13px;line-height:1.6}
+html[lang="ml"] html[lang="ml"] html[lang="ml"] .sub{font-size:13px;line-height:1.6}
 html[lang="ml"] .fine{font-size:11.5px;line-height:1.7}
 html[lang="ml"] .hero .nx,html[lang="ml"] .hero .at{font-size:3.6cqw}
 html[lang="ml"] .hero .enn{font-size:5.4cqw;line-height:1.35}
@@ -569,7 +552,7 @@ html[lang="ml"] .ln .mn.ml{font-size:14px;line-height:1.85}
 html[lang="ml"] .note{font-size:12.5px}
 html[lang="ml"] .tab{font-size:10px}
 html[lang="ml"] .qstatus{font-size:13.5px}
-@media (min-width:700px){html[lang="ml"] h1{font-size:32px}html[lang="ml"] .hi-h{font-size:22px}}
+@media (min-width:700px){html[lang="ml"] h1{font-size:32px}}
 
 /* ---- minimal strip widget + background modes ---- */
 .wall{position:relative;overflow:hidden}
@@ -588,12 +571,12 @@ html[lang="ml"] .qstatus{font-size:13.5px}
 .ws-date{font-size:12.5px;text-align:center;opacity:.96}
 
 /* ---- install / update ---- */
-.updbar{position:absolute;left:12px;right:12px;bottom:84px;z-index:14;display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--toast-bg);border:1px solid var(--line);border-radius:18px;padding:12px 14px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.updbar{position:absolute;left:14px;right:14px;bottom:98px;z-index:14;display:none;align-items:center;justify-content:space-between;gap:12px;background:var(--toast-bg);border:0;border-radius:20px;padding:12px 14px;font-size:14px;box-shadow:var(--shadow-nav)}
 .updbar.on{display:flex}
 .inst{list-style:none;margin:14px 0 20px;padding:0;display:grid;gap:12px}
 .inst li{display:flex;gap:12px;align-items:center;font-size:15px}
 .inst li b{flex:none;width:28px;height:28px;border-radius:50%;background:var(--gold-a18);color:var(--goldhi);display:grid;place-items:center;font-size:13px;font-weight:600}
-@media (min-width:700px){.updbar{bottom:24px;left:128px;right:24px;max-width:460px;margin-inline:auto}html[dir="rtl"] .updbar{left:24px;right:128px}}
+@media (min-width:700px){.updbar{bottom:24px;left:24px;right:128px;max-width:460px;margin-inline:auto}html[dir="rtl"] .updbar{left:128px;right:24px}}
 
 .g-trans{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:14px;color:var(--mist)}
 .stk-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
@@ -601,6 +584,132 @@ html[lang="ml"] .qstatus{font-size:13.5px}
 .spill b{font-weight:600;color:var(--mist)}
 .spill.on{border-color:var(--gold);color:var(--goldhi)}
 .spill.on b{color:var(--goldhi)}
+
+/* ---- prayer tracker ---- */
+button.nm{text-align:start;display:block;min-width:0}
+.skd.rest{opacity:.55}
+.skd.rest .num{color:var(--mist)}
+.stk-more{width:100%;margin-top:12px;padding:10px 16px;font-size:14px}
+button.spill{cursor:pointer}
+.trk-seg{display:flex;width:100%;margin-top:16px}
+.trk-seg button{flex:1;text-align:center}
+.trk-main{display:flex;align-items:center;gap:22px;margin-top:22px}
+.donut{position:relative;flex:none;width:168px;aspect-ratio:1}
+.donut svg{width:100%;height:100%;display:block}
+.dc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.dc span{font-size:12.5px;color:var(--mist)}
+.dc b{font-family:var(--display);font-size:38px;font-weight:600;line-height:1.1}
+.legend{list-style:none;margin:0;padding:0;flex:1;min-width:0;display:grid;gap:11px}
+.legend li{display:flex;align-items:center;gap:10px;font-size:14px}
+.legend li i{flex:none;width:12px;height:12px;border-radius:4px}
+.legend li b{margin-inline-start:auto;font-weight:600}
+.legend li.sep{height:1px;background:var(--line-soft);padding:0}
+.tbars{margin-top:26px;display:grid;gap:16px}
+.tb .r{display:flex;justify-content:space-between;gap:12px;font-size:14.5px}
+.tb .r b{font-weight:600}
+.tb .bar{height:8px;border-radius:8px;background:var(--line-soft);margin-top:8px;overflow:hidden}
+.tb .bar i{display:block;height:100%;border-radius:8px;min-width:0;transition:width .5s}
+html[lang="ml"] .dc b{font-size:34px}
+
+/* ---- the sky is the home background ---- */
+html.sky-on{background:var(--sk1,var(--midnight))}
+.skybg{position:absolute;top:0;left:0;right:0;--skh:700px;--skf:440px;height:var(--skh);z-index:0;pointer-events:none;overflow:hidden;will-change:transform;
+  background:radial-gradient(62% 48% at var(--ox,50%) var(--oy,300px),var(--glow,rgba(255,206,130,.3)),transparent 72%),linear-gradient(180deg,var(--sk1,#070B20) 0%,var(--sk2,#0E1640) 40%,var(--sk3,#1E2A60) 78%,var(--sk3,#1E2A60) 100%);
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 var(--skf),transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 var(--skf),transparent 100%)}
+@media (min-width:700px){.skybg{--skh:820px;--skf:560px}}
+@media (min-width:860px){.skybg{--skh:920px;--skf:640px}}
+.sk-stars{position:absolute;inset:0}
+.sk-stars i{position:absolute;border-radius:50%;background:#fff}
+.sk-stars .tw{animation:twk 3.4s ease-in-out infinite alternate}
+@keyframes twk{from{opacity:.25}to{opacity:1}}
+.screen{z-index:1}
+.sky{--u:min(.9vw,4.2px);position:relative;width:min(100%,400px);min-height:calc(93.6*var(--u) + 48px);margin:6px auto 12px;color:#fff}
+.sk-wrap{position:relative;aspect-ratio:400/278}
+.sk-wrap svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
+.sk-n{font:500 13px var(--body);fill:#fff;fill-opacity:.94}
+.sk-n.nx{fill:#F5DFAE;fill-opacity:1;font-weight:600}
+.sk-t{font:400 11px var(--body);fill:#fff;fill-opacity:.68}
+.sk-pulse{transform-box:fill-box;transform-origin:center;animation:skp 2.4s ease-out infinite}
+@keyframes skp{0%{transform:scale(.7);opacity:.95}100%{transform:scale(1.7);opacity:0}}
+.sk-in{position:absolute;left:20%;right:20%;top:36%;height:43%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none}
+.sk-in .nx{font-size:calc(3.4*var(--u));color:rgba(255,255,255,.78);margin-bottom:calc(.6*var(--u))}
+.sk-in .arn{font-family:var(--ar);font-size:calc(12.4*var(--u));line-height:1.15;color:#F5DFAE;text-shadow:0 2px 18px rgba(0,20,60,.4)}
+.sk-cd{position:relative;z-index:1;text-align:center;padding:calc(1*var(--u)) calc(4*var(--u)) calc(1.6*var(--u))}
+.sk-loc{position:relative;z-index:1;display:flex;justify-content:center;padding:calc(1.6*var(--u)) 0 calc(2*var(--u))}
+.sk-cd .cd{font-family:var(--display);font-size:calc(14.6*var(--u));font-weight:500;line-height:1.05;letter-spacing:.5px;color:#fff;text-shadow:0 3px 22px rgba(0,20,60,.45)}
+.sk-cd .at{font-size:calc(3.6*var(--u));color:rgba(255,255,255,.86);margin-top:calc(1.4*var(--u));text-shadow:0 1px 10px rgba(0,20,60,.4)}
+html[lang="ml"] .sk-n{font-size:12px}
+html[lang="ml"] .sky .sk-cd .at,html[lang="ml"] .sky .sk-in .nx{font-size:calc(3.2*var(--u))}
+.th .glass{background:rgba(255,255,255,.2);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.mc{display:block;padding:0;background:none;border-radius:50%;min-width:0}
+.mc .skd{width:100%;max-width:42px;margin:0 auto}
+.dtag{border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--mist);box-shadow:inset 0 0 0 1px var(--line)}
+.dtag.on{background:var(--gold-a18);color:var(--goldhi);box-shadow:inset 0 0 0 1px var(--gold)}
+
+
+/* ---- month strip, status checkbox, danger row ---- */
+.ck.miss{border-color:var(--st-miss);color:var(--st-miss)}
+.opt.danger>span:first-child{color:var(--st-miss)}
+.skd.sel{box-shadow:0 0 0 2px var(--gold)}
+.skd.future{opacity:.35}
+
+/* ---- greeting: small, with a fixed two-line message so nothing jumps ---- */
+.greet{min-width:0;flex:1}
+.hi-h{font-family:var(--display);font-size:19px;font-weight:500;line-height:1.2;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 12px rgba(0,20,60,.4)}
+.hi-m{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;height:36px;margin:4px 0 0;padding:0;border:0;background:none;font:inherit;font-size:12.5px;line-height:18px;color:rgba(255,255,255,.9);text-align:start;text-shadow:0 1px 10px rgba(0,20,60,.4)}
+button.hi-m{display:-webkit-box;width:100%;cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
+html[lang="ml"] .hi-h{font-size:17px;line-height:1.3}
+html[lang="ml"] .hi-m{font-size:11.5px;line-height:20px;height:40px}
+@media (min-width:700px){.hi-h{font-size:21px}.hi-m{font-size:13px}}
+/* ---- mark-a-day menu ---- */
+.dsh-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.dsh-h h2{font-size:24px}
+.dsh-n{flex:none;font-family:var(--display);font-size:32px;font-weight:600;line-height:1;color:var(--goldhi);padding-top:2px}
+.dsh-n i{font-style:normal;font-size:15px;color:var(--mist);margin-inline-start:2px}
+.dleg{display:flex;gap:16px;margin:10px 0 4px;font-size:12px;color:var(--mist)}
+.dleg span{display:inline-flex;align-items:center;gap:6px}
+.dleg i{width:9px;height:9px;border-radius:50%}
+.dr{padding:11px 0;border-top:1px solid var(--line-soft)}
+.dr.lock{opacity:.5}
+.dr-main{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dr-name{min-width:0}
+.dr-name b{display:block;font-weight:500;font-size:16px;line-height:1.25}
+.dr-name span{font-size:12.5px;color:var(--mist)}
+.dr-ic{display:flex;gap:8px;flex:none}
+.stb{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--chip-bg);color:var(--mist2);transition:background .2s,color .2s}
+.stb svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.stb.on.o{background:var(--gold);color:var(--on-gold)}
+.stb.on.l{background:var(--st-late);color:#fff}
+.stb.on.m{background:var(--st-miss);color:#fff}
+.dr-x{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.dft{display:flex;gap:10px;margin-top:14px}
+.dft .btn{flex:1;padding:11px 12px;font-size:14px}
+/* ---- modern type: Manrope replaces the old serif display face ---- */
+h1,h2,.sec>h3,.about h3,.stk-mo,.hi-h,.stk-big b,.stk-mini b,.dc b,.qinfo b,.seld .l2,.dsh-n,.row time,.qc .deg,.lock .lt,.wall .wt,.w22 .tm,.w42 .top b,.w42 .c b,.w42x .c b,.sk-cd .cd{letter-spacing:-.02em}
+html[lang="ml"] body *,html[lang="ar"] body *{letter-spacing:normal}
+h1{font-size:30px;font-weight:700}
+h2{font-size:22px;font-weight:700}
+.sec>h3,.about h3{font-size:18px;font-weight:700}
+.stk-mo{font-size:17px;font-weight:700}
+.hi-h{font-size:16.5px;font-weight:600;letter-spacing:-.01em}
+.stk-big b{font-size:34px;font-weight:700}
+.stk-mini b{font-size:20px;font-weight:700}
+.dc b{font-size:32px;font-weight:700}
+.qinfo b{font-size:21px;font-weight:700}
+.seld .l2{font-size:25px;font-weight:700}
+.dsh-n{font-size:26px;font-weight:700}
+.dsh-h h2{font-size:21px}
+.row time{font-size:17px;font-weight:600}
+.qc .deg{font-size:42px;font-weight:300}
+.lock .lt{font-size:52px;font-weight:300}
+.wall .wt{font-size:46px;font-weight:300}
+.w22 .tm{font-size:25px;font-weight:600}
+.w42 .top b{font-size:16px;font-weight:600}
+.w42 .c b{font-size:14.5px;font-weight:700}
+.w42x .c b{font-size:15.5px;font-weight:700}
+.sk-cd .cd{font-size:calc(13.2*var(--u));font-weight:300}
+@media (min-width:700px){h1{font-size:34px}.hi-h{font-size:19px}}
+@media (min-width:860px){h1{font-size:38px}}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -610,12 +719,14 @@ html[lang="ml"] .qstatus{font-size:13.5px}
   <div class="phone" id="phone">
     <div class="sbar"><span id="sbtime">9:41</span><svg viewBox="0 0 24 24"><path d="M2 18h3v3H2zm5-4h3v7H7zm5-4h3v11h-3zm5-5h3v16h-3z"/></svg></div>
 
+    <div class="skybg" id="skybg" aria-hidden="true"></div>
     <section class="screen on" id="s-today" aria-label="Today"></section>
     <section class="screen" id="s-cal" aria-label="Calendar"></section>
     <section class="screen" id="s-guide" aria-label="Prayer guide"></section>
     <section class="screen" id="s-qibla" aria-label="Qibla"></section>
     <section class="screen" id="s-rem" aria-label="Reminders"></section>
     <section class="screen" id="s-widgets" aria-label="Widgets"></section>
+    <section class="screen" id="s-trk" aria-label="Prayer tracker"></section>
     <section class="screen" id="s-set" aria-label="Settings"></section>
 
     <nav class="tabs" role="tablist" id="tabs"></nav>
@@ -670,21 +781,21 @@ const METHODS={
 };
 const KAABA={lat:21.4225,lon:39.8262};
 /* edit these before release */
-const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.9.0",build:"2026.10.11.13",year:2026};
+const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.18.0",build:"2026.10.11.24",year:2026};
 const CREDITS=[
-  ["Design and development","Mihrab team"],
+  ["Design and development","Basil Melepat"],
   ["Religious content review","To be added before release"],
   ["Prayer times","PrayTimes.org method (MIT)"],
   ["Hijri date","Umm al-Qura calendar"],
   ["Qibla bearing","Great-circle path to the Kaaba"]
 ];
-const FONTS=[["Amiri","SIL Open Font License"],["Cormorant Garamond","SIL Open Font License"],["Hanken Grotesk","SIL Open Font License"],["Noto Sans Malayalam","SIL Open Font License"]];
+const FONTS=[["Amiri","SIL Open Font License"],["Manrope","SIL Open Font License"],["Hanken Grotesk","SIL Open Font License"],["Noto Sans Malayalam","SIL Open Font License"]];
 
 /* ---------- state ---------- */
-const DEF={city:0,custom:null,method:"mwl",asr:"shafii",rem:{fajr:1,dhuhr:1,asr:1,maghrib:1,isha:1},lead:10,sound:"chime",glang:"ml",translit:true,prayer:"fajr",theme:"auto",lang:"en",wbg:"blur",gmean:null,profile:null,log:{},hadj:0,cmode:"g",adj:{fajr:0,sunrise:0,dhuhr:0,asr:0,maghrib:0,isha:0}};
+const DEF={city:0,custom:null,method:"mwl",asr:"shafii",rem:{fajr:1,dhuhr:1,asr:1,maghrib:1,isha:1},lead:10,sound:"chime",glang:"ml",translit:true,prayer:"fajr",theme:"auto",lang:"en",wbg:"blur",gmean:null,profile:null,log:{},trk:{},since:null,restR:[],restA:null,hadj:0,cmode:"g",adj:{fajr:0,sunrise:0,dhuhr:0,asr:0,maghrib:0,isha:0}};
 let S=Object.assign({},DEF);
 try{const raw=localStorage.getItem("mihrab-v1");if(raw)S=Object.assign({},DEF,JSON.parse(raw))}catch(e){}
-S.adj=Object.assign({},DEF.adj,S.adj||{});
+S.adj=Object.assign({},DEF.adj,S.adj||{});S.trk=S.trk||{};S.log=S.log||{};S.restR=S.restR||[];
 const save=()=>{try{localStorage.setItem("mihrab-v1",JSON.stringify(S))}catch(e){}};
 const loc=()=>S.city>=0?CITIES[S.city]||CITIES[0]:(S.custom||CITIES[0]);
 /* ---------- language ---------- */
@@ -693,7 +804,12 @@ let LANG=LANGS[S.lang]?S.lang:"en";
 const APPNAME={en:"Mihrab",ml:"മിഹ്റാബ്",ar:"محراب"};
 const TR={
 ml:{
-"Today":"ഇന്ന്","Widget background":"വിജറ്റ് പശ്ചാത്തലം","Week streak":"ആഴ്ച തുടർച്ച","Month streak":"മാസ തുടർച്ച","Each ring has five parts, one for each prayer.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്.","Translation":"പരിഭാഷ","Off":"ഓഫ്", "Install app":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക","Add it to your home screen for full-screen use and offline access.":"ഫുൾ സ്ക്രീനിലും ഓഫ്‌ലൈനിലും ഉപയോഗിക്കാൻ ഹോം സ്ക്രീനിൽ ചേർക്കുക.","Install {0}":"{0} ഇൻസ്റ്റാൾ ചെയ്യുക","Tap the Share button in Safari":"സഫാരിയിലെ ഷെയർ ബട്ടൺ തൊടുക","Choose Add to Home Screen":"“ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","Tap Add":"“ചേർക്കുക” തൊടുക","Open your browser menu":"ബ്രൗസർ മെനു തുറക്കുക","Choose Install app or Add to Home screen":"“ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക” അല്ലെങ്കിൽ “ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","App installed":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തു","A new version is ready.":"പുതിയ പതിപ്പ് തയ്യാറാണ്.","Refresh":"റിഫ്രഷ്","You\u2019re offline. Everything still works.":"നിങ്ങൾ ഓഫ്‌ലൈനാണ്. എല്ലാം പ്രവർത്തിക്കും.","Back online":"വീണ്ടും ഓൺലൈൻ","Transparent":"സുതാര്യം","Blur":"ബ്ലർ","Bar color shifts from green to red as the next prayer gets closer.":"അടുത്ത നമസ്കാരം അടുക്കുന്തോറും ബാർ പച്ചയിൽ നിന്ന് ചുവപ്പിലേക്ക് മാറുന്നു.","minimal":"മിനിമൽ","H":"മ","M":"മി","S":"സെ","Calendar":"കലണ്ടർ","Guide":"വഴികാട്ടി","Reminders":"റിമൈൻഡർ","Settings":"ക്രമീകരണം","Widgets":"വിജറ്റുകൾ","Qibla":"ഖിബ്‌ല",
+"Today":"ഇന്ന്","Widget background":"വിജറ്റ് പശ്ചാത്തലം","No prayers yet today.":"ഇന്ന് ഇതുവരെ നമസ്കാര സമയം ആയിട്ടില്ല.", "All on time":"എല്ലാം സമയത്ത്","Clear day":"ദിവസം മായ്ക്കുക","Not yet":"ഇതുവരെ ആയില്ല","Tap an icon to mark each prayer.":"ഓരോ നമസ്കാരവും രേഖപ്പെടുത്താൻ ഐക്കൺ തൊടുക.", "Tap a date to mark its prayers.":"പ്രാർഥനകൾ രേഖപ്പെടുത്താൻ ഒരു തീയതി തൊടുക.", "Factory reset":"ഫാക്ടറി റീസെറ്റ്","Erase everything and start fresh":"എല്ലാം മായ്ച്ച് പുതുതായി തുടങ്ങുക","Factory reset?":"ഫാക്ടറി റീസെറ്റ് ചെയ്യണോ?","This erases your profile, settings, prayer log and streak from this device, then restarts the app. It can\u2019t be undone.":"ഇത് നിങ്ങളുടെ പ്രൊഫൈൽ, ക്രമീകരണങ്ങൾ, നമസ്കാര രേഖ, തുടർച്ച എന്നിവ ഈ ഉപകരണത്തിൽ നിന്ന് മായ്ച്ച് ആപ്പ് വീണ്ടും തുടങ്ങും. ഇത് തിരിച്ചെടുക്കാനാവില്ല.","Erase everything":"എല്ലാം മായ്ക്കുക","Suggested: {0}":"നിർദേശം: {0}","Change it if needed.":"ആവശ്യമെങ്കിൽ മാറ്റാം.","{0} of 5 prayers":"5-ൽ {0} നമസ്കാരം","Rest day":"വിശ്രമ ദിനം","Days of this month":"ഈ മാസത്തെ ദിവസങ്ങൾ","Prayer tracker":"നമസ്കാര ട്രാക്കർ","Your prayers, at a glance.":"നിങ്ങളുടെ നമസ്കാരങ്ങൾ ഒറ്റ നോട്ടത്തിൽ.","Week":"ആഴ്ച","Month":"മാസം","Year":"വർഷം","Overall":"ആകെ","On time":"സമയത്ത്","Late":"വൈകി","Missed":"നഷ്ടപ്പെട്ടു","Jama\u2019ah":"ജമാഅത്ത്","First row":"ആദ്യ സ്വഫ്",
+"Prayed with Jama\u2019ah":"ജമാഅത്തായി നമസ്കരിച്ചു","Prayed in the first row":"ആദ്യ സ്വഫിൽ നമസ്കരിച്ചു","Prayed on time":"സമയത്ത് നമസ്കരിച്ചു","Prayed late":"വൈകി നമസ്കരിച്ചു","Missed prayers":"നഷ്ടപ്പെട്ട നമസ്കാരങ്ങൾ",
+"How did it go?":"എങ്ങനെയായിരുന്നു?","Extras":"അധികം","Clear":"മായ്ക്കുക","Track options":"ട്രാക്ക് ഓപ്ഷനുകൾ","Marked automatically from the prayer time. Change it if needed.":"പ്രാർഥനാ സമയം നോക്കി സ്വയം രേഖപ്പെടുത്തി. ആവശ്യമെങ്കിൽ മാറ്റാം.","View tracker":"ട്രാക്കർ കാണുക",
+"On time means prayed before the next prayer begins.":"അടുത്ത നമസ്കാരം തുടങ്ങുന്നതിന് മുമ്പ് നമസ്കരിച്ചാൽ സമയത്ത് എന്ന് കണക്കാക്കും.","Prayers you don\u2019t mark once their time has passed count as missed.":"സമയം കഴിഞ്ഞിട്ടും രേഖപ്പെടുത്താത്ത നമസ്കാരങ്ങൾ നഷ്ടപ്പെട്ടതായി കണക്കാക്കും.","No prayers tracked yet.":"ഇതുവരെ നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തിയിട്ടില്ല.",
+"Rest days":"വിശ്രമ ദിനങ്ങൾ","Pause tracking and reminders":"ട്രാക്കിംഗും റിമൈൻഡറുകളും താൽക്കാലികമായി നിർത്തുക","On since {0}":"{0} മുതൽ ഓണാണ്","Start rest days":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങുക","End rest days":"വിശ്രമ ദിനങ്ങൾ അവസാനിപ്പിക്കുക","End":"അവസാനിപ്പിക്കുക",
+"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"ഈ ദിവസങ്ങൾ ശതമാനത്തിലോ തുടർച്ചയിലോ കണക്കാക്കില്ല, റിമൈൻഡറുകൾ ശബ്ദിക്കില്ല. ഇത് ഈ ഉപകരണത്തിൽ മാത്രം.","Rest days started":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങി","Rest days ended. Welcome back.":"വിശ്രമ ദിനങ്ങൾ അവസാനിച്ചു. വീണ്ടും സ്വാഗതം.","Week streak":"ആഴ്ച തുടർച്ച","Month streak":"മാസ തുടർച്ച","Each ring has five parts, one for each prayer.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്.","Translation":"പരിഭാഷ","Off":"ഓഫ്", "Install app":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക","Add it to your home screen for full-screen use and offline access.":"ഫുൾ സ്ക്രീനിലും ഓഫ്‌ലൈനിലും ഉപയോഗിക്കാൻ ഹോം സ്ക്രീനിൽ ചേർക്കുക.","Install {0}":"{0} ഇൻസ്റ്റാൾ ചെയ്യുക","Tap the Share button in Safari":"സഫാരിയിലെ ഷെയർ ബട്ടൺ തൊടുക","Choose Add to Home Screen":"“ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","Tap Add":"“ചേർക്കുക” തൊടുക","Open your browser menu":"ബ്രൗസർ മെനു തുറക്കുക","Choose Install app or Add to Home screen":"“ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക” അല്ലെങ്കിൽ “ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","App installed":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തു","A new version is ready.":"പുതിയ പതിപ്പ് തയ്യാറാണ്.","Refresh":"റിഫ്രഷ്","You\u2019re offline. Everything still works.":"നിങ്ങൾ ഓഫ്‌ലൈനാണ്. എല്ലാം പ്രവർത്തിക്കും.","Back online":"വീണ്ടും ഓൺലൈൻ","Transparent":"സുതാര്യം","Blur":"ബ്ലർ","Bar color shifts from green to red as the next prayer gets closer.":"അടുത്ത നമസ്കാരം അടുക്കുന്തോറും ബാർ പച്ചയിൽ നിന്ന് ചുവപ്പിലേക്ക് മാറുന്നു.","minimal":"മിനിമൽ","H":"മ","M":"മി","S":"സെ","Calendar":"കലണ്ടർ","Guide":"വഴികാട്ടി","Reminders":"റിമൈൻഡർ","Settings":"ക്രമീകരണം","Widgets":"വിജറ്റുകൾ","Qibla":"ഖിബ്‌ല",
 "Next prayer":"അടുത്ത നമസ്കാരം","{0} at {1}":"{0} {1}-ന്","day streak":"ദിവസ തുടർച്ച","Best":"മികച്ചത്","Full days":"പൂർണ ദിനങ്ങൾ",
 "Each ring has five parts, one for each prayer. Tap a day to update it.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്. പുതുക്കാൻ ഒരു ദിവസം തൊടുക.",
 "Tap the bell to set a reminder.":"റിമൈൻഡർ സജ്ജമാക്കാൻ മണി തൊടുക.","Asr: {0}":"അസ്ർ: {0}","{0} adjusted":"{0} ക്രമീകരിച്ചു","{0} prayed":"{0} നമസ്കരിച്ചു",
@@ -751,7 +867,12 @@ ml:{
 "Reset prayer log?":"നമസ്കാര രേഖ റീസെറ്റ് ചെയ്യണോ?","This clears every tick and your streak on this device. It can't be undone.":"ഈ ഉപകരണത്തിലെ എല്ലാ ടിക്കുകളും തുടർച്ചയും മായ്ക്കപ്പെടും. ഇത് തിരിച്ചെടുക്കാനാവില്ല.","Reset":"റീസെറ്റ്"
 },
 ar:{
-"Today":"اليوم","Widget background":"خلفية الودجة","Week streak":"سلسلة أسبوعية","Month streak":"سلسلة شهرية","Each ring has five parts, one for each prayer.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة.","Translation":"الترجمة","Off":"إيقاف", "Install app":"تثبيت التطبيق","Add it to your home screen for full-screen use and offline access.":"أضِفه إلى شاشتك الرئيسية للاستخدام بملء الشاشة ودون اتصال.","Install {0}":"تثبيت {0}","Tap the Share button in Safari":"اضغط على زر المشاركة في سفاري","Choose Add to Home Screen":"اختر «إضافة إلى الشاشة الرئيسية»","Tap Add":"اضغط «إضافة»","Open your browser menu":"افتح قائمة المتصفح","Choose Install app or Add to Home screen":"اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»","App installed":"تم تثبيت التطبيق","A new version is ready.":"إصدار جديد جاهز.","Refresh":"تحديث","You\u2019re offline. Everything still works.":"أنت غير متصل. كل شيء يعمل.","Back online":"عدنا متصلين","Transparent":"شفاف","Blur":"ضبابي","Bar color shifts from green to red as the next prayer gets closer.":"يتحول لون الشريط من الأخضر إلى الأحمر كلما اقتربت الصلاة القادمة.","minimal":"مبسّط","H":"س","M":"د","S":"ث","Calendar":"التقويم","Guide":"الدليل","Reminders":"التذكيرات","Settings":"الإعدادات","Widgets":"الودجات","Qibla":"القبلة",
+"Today":"اليوم","Widget background":"خلفية الودجة","No prayers yet today.":"لم يحن وقت أي صلاة اليوم بعد.", "All on time":"الكل في وقتها","Clear day":"مسح اليوم","Not yet":"لم يحن بعد","Tap an icon to mark each prayer.":"اضغط على رمز لتسجيل كل صلاة.", "Tap a date to mark its prayers.":"اضغط على تاريخ لتسجيل صلواته.", "Factory reset":"إعادة ضبط المصنع","Erase everything and start fresh":"مسح كل شيء والبدء من جديد","Factory reset?":"إعادة ضبط المصنع؟","This erases your profile, settings, prayer log and streak from this device, then restarts the app. It can\u2019t be undone.":"سيمسح هذا ملفك الشخصي وإعداداتك وسجل صلواتك وسلسلتك من هذا الجهاز ثم يعيد تشغيل التطبيق. لا يمكن التراجع عن ذلك.","Erase everything":"مسح كل شيء","Suggested: {0}":"المقترح: {0}","Change it if needed.":"غيّرها إن لزم.","{0} of 5 prayers":"{0} من 5 صلوات","Rest day":"يوم راحة","Days of this month":"أيام هذا الشهر","Prayer tracker":"متتبّع الصلاة","Your prayers, at a glance.":"صلواتك في لمحة.","Week":"الأسبوع","Month":"الشهر","Year":"السنة","Overall":"الإجمالي","On time":"في وقتها","Late":"متأخرة","Missed":"فائتة","Jama\u2019ah":"جماعة","First row":"الصف الأول",
+"Prayed with Jama\u2019ah":"الصلاة جماعة","Prayed in the first row":"الصلاة في الصف الأول","Prayed on time":"الصلاة في وقتها","Prayed late":"الصلاة متأخرة","Missed prayers":"الصلوات الفائتة",
+"How did it go?":"كيف كانت؟","Extras":"إضافات","Clear":"مسح","Track options":"خيارات التتبّع","Marked automatically from the prayer time. Change it if needed.":"تُسجَّل تلقائيًا بحسب الوقت. غيّرها إن لزم.","View tracker":"عرض المتتبّع",
+"On time means prayed before the next prayer begins.":"تُحتسب «في وقتها» إذا صُلّيت قبل دخول وقت الصلاة التالية.","Prayers you don\u2019t mark once their time has passed count as missed.":"الصلوات التي لا تُسجَّل بعد خروج وقتها تُحتسب فائتة.","No prayers tracked yet.":"لم تُسجَّل صلوات بعد.",
+"Rest days":"أيام الراحة","Pause tracking and reminders":"إيقاف التتبّع والتذكيرات مؤقتًا","On since {0}":"مفعّلة منذ {0}","Start rest days":"بدء أيام الراحة","End rest days":"إنهاء أيام الراحة","End":"إنهاء",
+"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"لا تُحتسب هذه الأيام في النسب أو السلسلة، وتصمت التذكيرات. يبقى هذا على جهازك فقط.","Rest days started":"بدأت أيام الراحة","Rest days ended. Welcome back.":"انتهت أيام الراحة. أهلًا بعودتك.","Week streak":"سلسلة أسبوعية","Month streak":"سلسلة شهرية","Each ring has five parts, one for each prayer.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة.","Translation":"الترجمة","Off":"إيقاف", "Install app":"تثبيت التطبيق","Add it to your home screen for full-screen use and offline access.":"أضِفه إلى شاشتك الرئيسية للاستخدام بملء الشاشة ودون اتصال.","Install {0}":"تثبيت {0}","Tap the Share button in Safari":"اضغط على زر المشاركة في سفاري","Choose Add to Home Screen":"اختر «إضافة إلى الشاشة الرئيسية»","Tap Add":"اضغط «إضافة»","Open your browser menu":"افتح قائمة المتصفح","Choose Install app or Add to Home screen":"اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»","App installed":"تم تثبيت التطبيق","A new version is ready.":"إصدار جديد جاهز.","Refresh":"تحديث","You\u2019re offline. Everything still works.":"أنت غير متصل. كل شيء يعمل.","Back online":"عدنا متصلين","Transparent":"شفاف","Blur":"ضبابي","Bar color shifts from green to red as the next prayer gets closer.":"يتحول لون الشريط من الأخضر إلى الأحمر كلما اقتربت الصلاة القادمة.","minimal":"مبسّط","H":"س","M":"د","S":"ث","Calendar":"التقويم","Guide":"الدليل","Reminders":"التذكيرات","Settings":"الإعدادات","Widgets":"الودجات","Qibla":"القبلة",
 "Next prayer":"الصلاة القادمة","{0} at {1}":"{0} عند {1}","day streak":"أيام متتالية","Best":"الأفضل","Full days":"أيام كاملة",
 "Each ring has five parts, one for each prayer. Tap a day to update it.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة. اضغط على يوم لتحديثه.",
 "Tap the bell to set a reminder.":"اضغط على الجرس لضبط تذكير.","Asr: {0}":"العصر: {0}","{0} adjusted":"{0} معدّلة","{0} prayed":"تمت صلاة {0}",
@@ -987,37 +1108,23 @@ function setArch(svg,p){
 }
 
 /* ---------- today ---------- */
-function bellBtn(k){
-  const on=S.rem[k];
-  return `<button class="bell ${on?"on":""}" data-act="bell" data-v="${k}" aria-label="${on?tx("Turn off reminder for {0}",NP(k)):tx("Turn on reminder for {0}",NP(k))}" aria-pressed="${!!on}">${on?IC.bell:IC.bellOff}</button>`;
-}
 function renderToday(E,now){
-  const N=NAMES[E.next.key],mask=maskOf(localDay()),msg=encourage(now,E);
+  const N=NAMES[E.next.key],mask=maskOf(localDay()),msg=encourage(now,E),resting=S.restA!=null;
   const rows=[["fajr"],["sunrise"],["dhuhr"],["asr"],["maghrib"],["isha"]].map(([k])=>{
     const ms=E.today[k],past=ms<=now;
     const isNext=k===E.next.key&&E.next.o===0;
     const isCur=E.prev.o===0&&E.prev.key===k||(k==="isha"&&E.prev.o===-1&&E.prev.key==="isha");
     const cls=["row",k==="sunrise"?"sun":"",past&&!isCur?"past":"",isCur?"cur":"",isNext?"nxt":""].join(" ");
-    return `<div class="${cls}">${k==="sunrise"?'<span class="dt"></span>':ckBtn(k,ms<=now,!!(mask&BIT[k]))}<div class="nm"><b>${NAMES[k].p}</b><span>${S.adj[k]?` <em class="adjb">${adjTxt(S.adj[k])}</em>`:""}</span></div><span class="a">${LANG==="ar"?"":NAMES[k].ar}</span><time class="num">${fmtH(ms)}</time>${k==="sunrise"?'<span class="nob"></span>':bellBtn(k)}</div>`;
+    return `<div class="${cls}">${k==="sunrise"||resting?'<span class="dt"></span>':ckBtn(k,ms<=now,!!(mask&BIT[k]),(trkDay(localDay())[k]||{}).s==="m")}${(()=>{const inner=`<b>${NAMES[k].p}</b><span>${statusLabel(k)}${S.adj[k]?` <em class="adjb">${adjTxt(S.adj[k])}</em>`:""}</span>`;return (k==="sunrise"||resting||ms>now)?`<div class="nm">${inner}</div>`:`<button class="nm" data-act="pdetail" data-v="${k}" aria-label="${tx("Track options")}">${inner}</button>`})()}<span class="a">${LANG==="ar"?"":NAMES[k].ar}</span><time class="num">${fmtH(ms)}</time></div>`;
   }).join("");
   $("#s-today").innerHTML=`
   <header class="th">
-    <div class="greet"><div class="hi-h">${esc(msg.h[LANG])}</div><p class="hi-m" dir="auto">${msg[LANG]}</p></div>
-    <button class="qbtn" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}</button>
+    <div class="greet"><div class="hi-h">${esc(msg.h[LANG])}</div>${resting?`<button class="hi-m" data-act="restend" dir="auto">${msg[LANG]}</button>`:`<p class="hi-m" dir="auto">${msg[LANG]}</p>`}</div>
+    <button class="qbtn glass" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}</button>
   </header>
-  <div class="hero">
-    ${archSVG({})}
-    <div class="hero-in">
-      <div class="nx">${tx("Next prayer")}</div>
-      <div class="arn">${N.ar}</div>
-      ${LANG==="ar"?"":`<div class="enn">${NAMES[E.next.key][LANG]}</div>`}
-      <div class="cd num b-cd">${hms(E.next.ms-now)}</div>
-      <div class="at num">${tx("{0} at {1}",N.p,fmt(E.next.ms))}</div>
-    </div>
-  </div>
-  <div class="list">${rows}</div>
-  ${streakHTML(now)}
-  <p class="fine" style="margin:14px 8px 0">${cn(E.L)} · ${tx(METHODS[S.method].n)} · ${tx("Asr: {0}",tx(S.asr==="hanafi"?"Hanafi":"Shafi\u2019i"))}${adjCount()?` · ${tx("{0} adjusted",adjCount())}`:""}. ${tx("Tap the bell to set a reminder.")}</p>`;
+  <div class="sky">${skyHTML(E,now,mask,resting)}</div>
+  <div class="list">${rows}<p class="fine" style="margin:6px 12px 8px">${tx(METHODS[S.method].n)} · ${tx("Asr: {0}",tx(S.asr==="hanafi"?"Hanafi":"Shafi\u2019i"))}${adjCount()?` · ${tx("{0} adjusted",adjCount())}`:""}</p></div>
+  ${streakHTML(now)}`;
 }
 
 /* ---------- guide ---------- */
@@ -1153,9 +1260,9 @@ function buildQibla(){
     const big=a%30===0,mid=a%10===0,r1=128,r2=big?112:mid?118:122;
     ticks+=`<line x1="0" y1="${-r1}" x2="0" y2="${-r2}" transform="rotate(${a})" style="stroke:var(--gold)" stroke-opacity="${big?.9:mid?.5:.28}" stroke-width="${big?2:1}"/>`;
   }
-  const lab=[["N",0],["E",90],["S",180],["W",270]].map(([t,a])=>`<text transform="rotate(${a}) translate(0 -92) rotate(${-a})" text-anchor="middle" dominant-baseline="central" font-family="${LANG==="ar"?"Amiri,Noto Naskh Arabic,serif":LANG==="ml"?"Noto Sans Malayalam,sans-serif":"Cormorant Garamond,Georgia,serif"}" font-size="${LANG==="ar"?(t==="N"?32:26):LANG==="ml"?(t==="N"?24:19):(t==="N"?26:20)}" font-weight="600" fill="${t==="N"?"var(--goldhi)":"var(--mist)"}"><tspan>${LANG==="ar"?({N:"ش",E:"ق",S:"ج",W:"غ"})[t]:LANG==="ml"?({N:"വ",E:"കി",S:"തെ",W:"പ"})[t]:t}</tspan></text>`).join("");
+  const lab=[["N",0],["E",90],["S",180],["W",270]].map(([t,a])=>`<text transform="rotate(${a}) translate(0 -92) rotate(${-a})" text-anchor="middle" dominant-baseline="central" font-family="${LANG==="ar"?"Amiri,Noto Naskh Arabic,serif":LANG==="ml"?"Noto Sans Malayalam,sans-serif":"Manrope,system-ui,sans-serif"}" font-size="${LANG==="ar"?(t==="N"?32:26):LANG==="ml"?(t==="N"?24:19):(t==="N"?26:20)}" font-weight="600" fill="${t==="N"?"var(--goldhi)":"var(--mist)"}"><tspan>${LANG==="ar"?({N:"ش",E:"ق",S:"ج",W:"غ"})[t]:LANG==="ml"?({N:"വ",E:"കി",S:"തെ",W:"പ"})[t]:t}</tspan></text>`).join("");
   $("#s-qibla").innerHTML=`
-  <header class="q-head"><button class="backb" data-act="tab" data-v="today">${ARR()} ${tx("Today")}</button><h1>${tx("Qibla")}</h1><p class="sub" id="qsub"></p><div class="locrow qloc"><button class="loc" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span id="qloc"></span>${IC.chev}</button></div></header>
+  <header class="q-head"><button class="backb" data-act="tab" data-v="today">${ARR()} ${tx("Today")}</button><h1>${tx("Qibla")}</h1><p class="sub" id="qsub"></p></header>
   <div class="qwrap" id="qwrap" aria-label="${tx("Compass dial. Drag to rotate if your device has no compass sensor.")}">
     <svg viewBox="-150 -150 300 300" aria-hidden="true">
       <defs><radialGradient id="qg" cx="50%" cy="50%" r="50%"><stop offset="0" style="stop-color:var(--dial-a)"/><stop offset="1" style="stop-color:var(--dial-b)"/></radialGradient><filter id="qf" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6"/></filter></defs>
@@ -1209,7 +1316,7 @@ function updateQibla(){
   $("#qbear").textContent=b.toFixed(1)+"°";
   $("#qdist").textContent=tx("{0} km",Math.round(distKm(L.lat,L.lon)).toLocaleString("en-IN"));
   $("#qsub").textContent=tx("Face {0} ({1}°) from your location",cardinal(b),Math.round(b));
-  $("#qloc").textContent=cn(L);
+  
   setHeading(heading);
 }
 function startSensor(){
@@ -1267,6 +1374,7 @@ function renderReminders(E){
 }
 const fired=new Set();
 function checkReminders(E,now){
+  if(S.restA!=null)return;
   E.list.forEach(ev=>{
     if(!S.rem[ev.key])return;
     const at=ev.ms-S.lead*60000,id=ev.key+ev.ms;
@@ -1327,6 +1435,94 @@ function renderWidgets(E,now){
   <p class="fine" style="margin:8px 6px 0">${tx("Widgets refresh every minute and keep working when the app is closed.")}</p>`;
 }
 
+/* ---------- living sky: the semicircle day dial ---------- */
+const SK={cx:200,cy:226,r:148};
+const skDir=()=>LANG==="ar"?-1:1;                                    /* the day runs right-to-left in Arabic */
+const skPt=(f,off=0)=>{const th=(180-45*f)*Math.PI/180,rr=SK.r+off,d=skDir();return [SK.cx+d*rr*Math.cos(th),SK.cy-rr*Math.sin(th),d*Math.cos(th)]};
+const hex2=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));
+const mixC=(a,b,t)=>{const A=hex2(a),B=hex2(b);return "#"+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,"0")).join("")};
+/* sky colours (top, middle, horizon), star brightness and the colour of the sun/moon glow at each moment of the day */
+const SKY={
+  fajr:   {c:["#121A44","#38306E","#B25A70"],s:.75},
+  sunrise:{c:["#1D3C78","#6D7DBE","#E99D68"],s:0},
+  dhuhr:  {c:["#14478A","#2E78C6","#5BA0DA"],s:0},
+  asr:    {c:["#1D4684","#7B7EB0","#E39A48"],s:0},
+  maghrib:{c:["#191E4E","#6B3071","#DA5E34"],s:.25},
+  isha:   {c:["#070B20","#0E1640","#1E2A60"],s:1}
+};
+function skyAt(E,now){
+  const yI=(E.list.find(e=>e.o===-1&&e.key==="isha")||{ms:E.today.fajr-6*3600e3}).ms,tF=(E.list.find(e=>e.o===1&&e.key==="fajr")||{ms:E.today.isha+8*3600e3}).ms,t=E.today;
+  const an=[[yI,"isha"],[t.fajr,"fajr"],[t.sunrise,"sunrise"],[t.dhuhr,"dhuhr"],[t.asr,"asr"],[t.maghrib,"maghrib"],[t.isha,"isha"],[tF,"fajr"]];
+  let i=0;while(i<an.length-2&&now>=an[i+1][0])i++;
+  const [t0,k0]=an[i],[t1,k1]=an[i+1],u=Math.max(0,Math.min(1,(now-t0)/(t1-t0))),A=SKY[k0],B=SKY[k1];
+  return {c:A.c.map((c,j)=>mixC(c,B.c[j],u)),s:A.s+(B.s-A.s)*u};
+}
+const STARS=(()=>{let a=20260101;const r=()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};const o=[];for(let i=0;i<80;i++)o.push([r()*400,r()*440,.5+r()*1.1,.3+r()*.7,i%7===0]);return o})();
+function skyHTML(E,now,mask,resting){
+  const d=skDir(),cx=SK.cx,cy=SK.cy,R=SK.r,fx=cx-d*R,ix=cx+d*R;
+  const dayArc=`M${fx} ${cy}A${R} ${R} 0 0 ${d===1?1:0} ${ix} ${cy}`,nightArc=`M${ix} ${cy}A${R} ${R} 0 0 ${d===1?0:1} ${fx} ${cy}`;
+  let ticks="";
+  for(let k=0;k<=60;k++){
+    const th=(180-3*k)*Math.PI/180,node=k%15===0,mid=k%5===0,r1=R-(node?21:mid?17:13),r2=R-8;
+    ticks+=`<line x1="${(cx+d*r1*Math.cos(th)).toFixed(1)}" y1="${(cy-r1*Math.sin(th)).toFixed(1)}" x2="${(cx+d*r2*Math.cos(th)).toFixed(1)}" y2="${(cy-r2*Math.sin(th)).toFixed(1)}" stroke-width="${node?2:mid?1.6:1.2}" stroke-linecap="round"/>`;
+  }
+  let nodes="",labels="";
+  P.forEach((k,i)=>{
+    const [x,y,c]=skPt(i),ticked=!!(mask&BIT[k])&&!resting,arrived=E.today[k]<=now,isNext=k===E.next.key&&E.next.o===0&&!resting;
+    nodes+=isNext?`<circle class="sk-pulse" cx="${x}" cy="${y}" r="11" fill="none" stroke="#F1DCA8" stroke-width="1.5"/>`:"";
+    nodes+=ticked?`<circle cx="${x}" cy="${y}" r="8.5" fill="#E6C27E" stroke="rgba(255,255,255,.75)" stroke-width="1.2"/><path d="M${x-3.6} ${y+.2}L${x-1} ${y+2.9}L${x+3.8} ${y-2.8}" fill="none" stroke="#3A2A08" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>`
+      :arrived&&!resting?`<circle cx="${x}" cy="${y}" r="6.5" fill="rgba(8,12,34,.55)" stroke="#E6C27E" stroke-width="2"/>`
+      :`<circle cx="${x}" cy="${y}" r="5.2" fill="rgba(255,255,255,.14)" stroke="rgba(255,255,255,.6)" stroke-width="1.4"/>`;
+    const end=Math.abs(c)>0.95,tm=fmt(E.today[k],false);
+    let nx,ny,tx_,ty,an;
+    if(end){nx=x;ny=cy+27;tx_=x;ty=cy+41;an="middle"}
+    else{const [lx,ly]=skPt(i,34);an=Math.abs(c)<0.3?"middle":c<0?"end":"start";nx=lx;tx_=lx;ny=Math.abs(c)<0.3?ly-8:ly-1;ty=ny+14}
+    labels+=`<text class="sk-n${isNext?" nx":""}" x="${nx.toFixed(1)}" y="${ny.toFixed(1)}" text-anchor="${an}">${NAMES[k].p}</text><text class="sk-t num" x="${tx_.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${an}">${tm}</text>`;
+  });
+  return `<div class="sk-wrap"><svg data-sky viewBox="0 0 400 278" aria-hidden="true">
+    <defs>
+      <radialGradient id="skSunG"><stop offset="0" stop-color="#FFE3A0" stop-opacity=".9"/><stop offset=".35" stop-color="#FFC768" stop-opacity=".38"/><stop offset="1" stop-color="#FFB347" stop-opacity="0"/></radialGradient>
+      <radialGradient id="skSunC"><stop offset="0" stop-color="#FFFBEA"/><stop offset="1" stop-color="#F6C86B"/></radialGradient>
+      <radialGradient id="skMoonG"><stop offset="0" stop-color="#CFDBFF" stop-opacity=".55"/><stop offset="1" stop-color="#9FB6FF" stop-opacity="0"/></radialGradient>
+      <mask id="skMoonM" maskUnits="userSpaceOnUse" x="-20" y="-20" width="40" height="40"><rect x="-20" y="-20" width="40" height="40" fill="#fff"/><circle cx="5.5" cy="-3" r="9" fill="#000"/></mask>
+      <mask id="skmD" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="278"><path class="sk-d" d="${dayArc}" fill="none" stroke="#fff" stroke-width="64"/></mask>
+      <mask id="skmN" maskUnits="userSpaceOnUse" x="0" y="0" width="400" height="278"><path class="sk-n2" d="${nightArc}" fill="none" stroke="#fff" stroke-width="64"/></mask>
+    </defs>
+    <line x1="${fx}" y1="${cy}" x2="${ix}" y2="${cy}" stroke="rgba(255,255,255,.22)" stroke-width="1.4"/>
+    <path d="${dayArc}" fill="none" stroke="rgba(255,255,255,.34)" stroke-width="1.4"/>
+    <g stroke="rgba(255,255,255,.28)">${ticks}</g>
+    <g stroke="#F6D58E" mask="url(#skmD)">${ticks}</g>
+    <g stroke="#C9D7FF" mask="url(#skmN)">${ticks}</g>
+    ${nodes}
+    <g class="sk-orb"><g class="sun"><circle r="40" fill="url(#skSunG)"/><circle r="11.5" fill="url(#skSunC)"/></g><g class="moon" style="display:none"><circle r="32" fill="url(#skMoonG)"/><circle r="10.5" fill="#F3F6FF" mask="url(#skMoonM)"/></g></g>
+    ${labels}
+  </svg>
+  <div class="sk-in"><div class="nx">${tx("Next prayer")}</div><div class="arn">${NAMES[E.next.key].ar}</div></div></div>
+  <div class="sk-cd"><div class="cd num b-cd">${hms(E.next.ms-now)}</div><div class="at num">${tx("{0} at {1}",NAMES[E.next.key].p,fmt(E.next.ms))}</div></div>
+  <div class="sk-loc"><button class="loc" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span>${cn(E.L)}</span>${IC.chev}</button></div>`;
+}
+function updateSky(E,now,p){
+  const el=$(".sky");if(!el)return;
+  const a=skyAt(E,now),night=E.prev.key==="isha",f=night?4-4*p:P.indexOf(E.prev.key)+p,root=document.documentElement;
+  [0,1,2].forEach(i=>root.style.setProperty("--sk"+(i+1),a.c[i]));
+  root.style.setProperty("--stars",a.s.toFixed(2));
+  root.style.setProperty("--glow",night?"rgba(170,195,255,.24)":"rgba(255,206,130,.38)");
+  const [x,y]=skPt(f),L=Math.PI*SK.r;
+  const d=$(".sk-d",el),n=$(".sk-n2",el),orb=$(".sk-orb",el);
+  if(d)d.style.strokeDasharray=`${night?0:L*f/4} ${L*2}`;
+  if(n)n.style.strokeDasharray=`${night?L*p:0} ${L*2}`;
+  if(orb){orb.setAttribute("transform",`translate(${x.toFixed(1)} ${y.toFixed(1)})`);$(".sun",orb).style.display=night?"none":"";$(".moon",orb).style.display=night?"":"none"}
+  const bg=$("#skybg");
+  if(bg&&orb&&el.offsetParent){const r=orb.getBoundingClientRect(),br=bg.getBoundingClientRect();bg.style.setProperty("--ox",(r.left+r.width/2-br.left).toFixed(0)+"px");bg.style.setProperty("--oy",(r.top+r.height/2-br.top).toFixed(0)+"px")}
+}
+/* the sky is the home screen's background: it scrolls with the page and fades into the app colour */
+function initSkyBg(){
+  const b=$("#skybg");if(!b)return;
+  b.innerHTML=`<div class="sk-stars" style="opacity:var(--stars,0)">${STARS.map(([x,y,r,o,tw])=>`<i class="${tw?"tw":""}" style="left:${(x/4).toFixed(1)}%;top:${(y*1.25).toFixed(0)}px;width:${(r*2).toFixed(1)}px;height:${(r*2).toFixed(1)}px;opacity:${o.toFixed(2)};${tw?`animation-delay:${(x%5).toFixed(1)}s`:""}"></i>`).join("")}</div>`;
+  const sc=$("#s-today");
+  sc.addEventListener("scroll",()=>{b.style.transform=`translate3d(0,${-sc.scrollTop}px,0)`},{passive:true});
+}
+
 /* ---------- sheet ---------- */
 function openSheet(html){$("#sheet").innerHTML='<div class="grab"></div>'+html;$("#sheet").classList.add("on");$("#shade").classList.add("on")}
 function closeSheet(){$("#sheet").classList.remove("on");$("#shade").classList.remove("on")}
@@ -1377,7 +1573,7 @@ function renderSettings(){
       <div class="card lc" role="radiogroup" aria-label="${tx("Language")}">${Object.entries(LANGS).map(([k,l])=>radio("setlang",k,LANG,l.name,"")).join("")}</div>
     </div>
     <div class="sec"><h3>${tx("You")}</h3>
-      <div class="card lc">${row("profile",tx("Profile"),S.profile?esc(S.profile.name)+" · "+tx(S.profile.g==="f"?"Female":"Male"):tx("Not set"))}${row("resetlog",tx("Reset prayer log"),tx("Clears ticks and streak"))}</div>
+      <div class="card lc">${row("profile",tx("Profile"),S.profile?esc(S.profile.name)+" · "+tx(S.profile.g==="f"?"Female":"Male"):tx("Not set"))}${S.profile&&S.profile.g==="f"?row("rest",tx("Rest days"),S.restA!=null?tx("On since {0}",gparts(S.restA).d+" "+GM[gparts(S.restA).m]):tx("Pause tracking and reminders")):""}${row("resetlog",tx("Reset prayer log"),tx("Clears ticks and streak"))}</div>
     </div>
     <div class="sec"><h3>${tx("Prayer times")}</h3>
       <div class="card lc">${row("location",tx("Location"),cn(L))}${row("adjust",tx("Adjust prayer times"),n?tx("{0} adjusted",n):tx("Match your local mosque timetable"))}</div>
@@ -1397,6 +1593,9 @@ function renderSettings(){
     <div class="sec"><h3>${tx("More")}</h3>
       <div class="card lc">${CAN_PWA&&!isStandalone()?row("install",tx("Install app"),tx("Add it to your home screen for full-screen use and offline access.")):""}${row("widgetscr",tx("Home screen widgets"),tx("Preview the widgets"))}${row("about",tx("About {0}",appn()),tx("Version {0}, credits and licences",APP.version))}</div>
     </div>
+    <div class="sec"><h3>${tx("Reset")}</h3>
+      <div class="card lc"><button class="opt danger" data-act="factory"><span>${tx("Factory reset")}<small>${tx("Erase everything and start fresh")}</small></span>${CHEV}</button></div>
+    </div>
   </div>`;
 }
 
@@ -1413,7 +1612,7 @@ function refreshAll(){lastSig="";tick(true)}
 function tick(force){
   const now=Date.now(),E=getEvents(now),sig=E.next.ms+"|"+E.Dd+"|"+E.L.name;
   applyTheme(E,now);
-  if(force||sig!==lastSig){lastSig=sig;renderToday(E,now);renderWidgets(E,now);renderReminders(E);updateQibla();if(force)renderSettings()}
+  if(force||sig!==lastSig){lastSig=sig;renderToday(E,now);renderWidgets(E,now);renderReminders(E);updateQibla();if(force){renderSettings();renderTracker()}}
   const rem=E.next.ms-now,p=Math.min(1,Math.max(0,(now-E.prev.ms)/(E.next.ms-E.prev.ms)));
   $$(".b-cd").forEach(el=>el.textContent=hms(rem));
   $$(".b-short").forEach(el=>el.textContent=short(rem));
@@ -1421,6 +1620,7 @@ function tick(force){
   $$(".b-bar2").forEach(el=>{el.style.width=(p*100)+"%";el.style.background=urgency(rem)});
   $$(".b-cdh").forEach(el=>el.innerHTML=cdHTML(rem));
   $$("[data-arch]").forEach(svg=>setArch(svg,p));
+  updateSky(E,now,p);
   const sb=$("#sbtime");if(sb)sb.textContent=fmt(now,false);
   checkReminders(E,now);
 }
@@ -1430,9 +1630,9 @@ let curTab="today";
 function setTab(id){
   curTab=id;
   $$(".screen").forEach(s=>s.classList.toggle("on",s.id==="s-"+id));
-  const hi=({qibla:"today",widgets:"set"})[id]||id;
+  const hi=({qibla:"today",widgets:"set",trk:"today"})[id]||id;
   $$(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.v===hi));
-  const s=$("#s-"+id);if(id==="cal")renderCal();if(s)s.scrollTop=0;
+  const s=$("#s-"+id);if(id==="cal")renderCal();if(id==="trk")renderTracker();const sbg=$("#skybg");if(sbg){sbg.style.display=id==="today"?"":"none";sbg.style.transform="";document.documentElement.classList.toggle("sky-on",id==="today")}if(s)s.scrollTop=0;
   if(id==="qibla"&&!sensorOn&&typeof DeviceOrientationEvent!=="undefined"&&typeof DeviceOrientationEvent.requestPermission!=="function")startSensor();
 }
 document.addEventListener("click",e=>{
@@ -1464,19 +1664,38 @@ document.addEventListener("click",e=>{
     case"gjump":G.i=+v;closeSheet();renderGuide();$("#s-guide").scrollTop=0;break;
     case"compass":enableCompass();break;
     case"about":openAbout();break;
-    case"pray":togglePrayer(v);break;
+    case"pray":openPrayer(v);break;
     case"wgender":wst.g=v;$$(".gbtn",WL).forEach(b=>b.setAttribute("aria-checked",b.dataset.v===v));wCheck();break;
     case"wsave":saveWelcome();break;
     case"wcancel":WL.classList.remove("on");break;
     case"profile":openWelcome(true);break;
     case"setlang":setLang(v);break;
+    case"factory":openSheet(`<h2>${tx("Factory reset?")}</h2><p class="sub" style="margin:6px 0 18px">${tx("This erases your profile, settings, prayer log and streak from this device, then restarts the app. It can\u2019t be undone.")}</p><div style="display:flex;gap:10px"><button class="btn ghost" style="flex:1" data-act="close">${tx("Cancel")}</button><button class="btn gold" style="flex:1;background:var(--st-miss);color:#fff" data-act="factorydo">${tx("Erase everything")}</button></div>`);break;
+    case"factorydo":try{localStorage.removeItem("mihrab-v1")}catch(e){}location.reload();break;
+    case"dopen":openDay(+v);break;
+    case"dall":{const nn=+v;touchDay(nn,d=>{P.forEach(k=>{if(dayLocked(nn,k))return;if(!d[k]||d[k].s==="x")d[k]={s:"o"}})});break}
+    case"dclr":{const nn=+v;touchDay(nn,d=>{P.forEach(k=>{if(!dayLocked(nn,k))delete d[k]})});break}
+    case"dst":{const [n,k,st]=v.split(":"),nn=+n;if(dayLocked(nn,k)){toast(tx("{0} can be ticked once its time begins",NP(k)));break}
+      touchDay(nn,d=>{const old=d[k];if(old&&old.s===st)delete d[k];else{const r={s:st};if(st!=="m"&&old&&(old.s==="o"||old.s==="l")){if(old.j)r.j=1;if(old.f)r.f=1}d[k]=r}});break}
+    case"dtg":{const [n,k,tg]=v.split(":"),nn=+n;if(dayLocked(nn,k)){toast(tx("{0} can be ticked once its time begins",NP(k)));break}
+      touchDay(nn,d=>{let r=d[k];if(!r||r.s==="m"||r.s==="x")r=d[k]={s:nn<localDay()?"o":autoStatus(getEvents(Date.now()),k,Date.now())};if(r[tg])delete r[tg];else r[tg]=1});break}
+    case"pdetail":openPrayer(v);break;
+    case"pst":{const [k,st]=v.split(":"),d=dayRec(),old=d[k],r={s:st},was=maskOf(localDay())===FULL,first=!old||old.s==="x";if(st!=="m"&&old&&old.s!=="m"&&old.s!=="x"){if(old.j)r.j=1;if(old.f)r.f=1}d[k]=r;save();refreshHome();if(navigator.vibrate){try{navigator.vibrate(12)}catch(e){}}
+      if(!was&&maskOf(localDay())===FULL)toast(tx("All five done. Alhamdulillah!"));
+      if(first){openPrayer(k);setTimeout(closeSheet,260)}else openPrayer(k);break}
+    case"ptag":{const [k,tg]=v.split(":"),now=Date.now(),E=getEvents(now),d=dayRec(),was=maskOf(localDay())===FULL;let r=d[k];if(!r||r.s==="m"||r.s==="x")r=d[k]={s:autoStatus(E,k,now)};if(r[tg])delete r[tg];else r[tg]=1;save();refreshHome();if(!was&&maskOf(localDay())===FULL)toast(tx("All five done. Alhamdulillah!"));openPrayer(k);break}
+    case"pclear":{const d=dayRec();delete d[v];cleanDay();save();refreshHome();closeSheet();break}
+    case"tper":TK.p=v;renderTracker();break;
+    case"rest":openRest();break;
+    case"reststart":startRest();break;
+    case"restend":endRest();break;
     case"gmean":S.gmean=v;save();renderGuide();break;
     case"install":installApp();break;
     case"applyupd":updating=true;if(updReg&&updReg.waiting)updReg.waiting.postMessage({type:"SKIP_WAITING"});else location.reload();break;
     case"wbg":{S.wbg=v;save();const n=Date.now();renderWidgets(getEvents(n),n);tick();break}
     case"wlang":wst.name=($("#wname",WL)||{}).value||wst.name;setLang(v);openWelcome(wst.edit,true);break;
     case"resetlog":openSheet(`<h2>${tx("Reset prayer log?")}</h2><p class="sub" style="margin:6px 0 18px">${tx("This clears every tick and your streak on this device. It can't be undone.")}</p><div style="display:flex;gap:10px"><button class="btn ghost" style="flex:1" data-act="close">${tx("Cancel")}</button><button class="btn gold" style="flex:1" data-act="resetdo">${tx("Reset")}</button></div>`);break;
-    case"resetdo":S.log={};save();closeSheet();refreshAll();toast(tx("Prayer log cleared"));break;
+    case"resetdo":S.log={};S.trk={};S.restR=[];S.since=localDay();save();closeSheet();refreshAll();toast(tx("Prayer log cleared"));break;
     case"cmode":C.mode=v;S.cmode=v;save();calCursorTo(C.sel);renderCal();break;
     case"cprev":if(C.mode==="g"){C.gm--;if(C.gm<0){C.gm=11;C.gy--}}else C.hs=hStart(C.hs-1);renderCal();break;
     case"cnext":if(C.mode==="g"){C.gm++;if(C.gm>11){C.gm=0;C.gy++}}else C.hs=C.hs+hLen(C.hs);renderCal();break;
@@ -1573,26 +1792,79 @@ function renderCal(){
 const BIT={fajr:1,dhuhr:2,asr:4,maghrib:8,isha:16},FULL=31;
 const esc=t=>String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const CHECK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.500 4.500L19 7.500"/></svg>';
+const XMARK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg>';
 const FLAME='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c1 3.500 5 5.500 5 10a5 5 0 0 1-10 0c0-2 1-3.200 2-4.500.3 1.500 1 2.200 1.800 2.500C10.500 8.500 11 5.500 12 3z"/></svg>';
 const dkey=n=>{const g=gparts(n);return g.y+"-"+String(g.m+1).padStart(2,"0")+"-"+String(g.d).padStart(2,"0")};
-const maskOf=n=>S.log[dkey(n)]||0;
-const isFull=n=>maskOf(n)===FULL;
+/* Each day: S.trk[date][prayer] = {s:"o"|"l"|"m"|"x", j?:1, f?:1}  (on time, late, missed, excused) */
+const trkDay=n=>S.trk[dkey(n)]||{};
+const isRest=n=>(S.restA!=null&&n>=S.restA)||S.restR.some(r=>n>=r[0]&&n<=r[1]);
+const maskOf=n=>{const d=trkDay(n);return P.reduce((a,k)=>a+((d[k]&&(d[k].s==="o"||d[k].s==="l"))?BIT[k]:0),0)};
+function dayState(n){
+  if(isRest(n))return "rest";
+  const d=trkDay(n);let pr=0,ex=0;
+  P.forEach(k=>{const r=d[k];if(r&&r.s==="x")ex++;else if(r&&(r.s==="o"||r.s==="l"))pr++});
+  if(ex===5)return "rest";
+  return (pr+ex===5&&pr>0)?"full":"part";
+}
+const isFull=n=>dayState(n)==="full";
 const cnt=m=>P.reduce((a,k)=>a+((m&BIT[k])?1:0),0);
-function streakNow(today){let n=isFull(today)?today:today-1,c=0;while(isFull(n)){c++;n--}return c}
+/* rest days neither add to nor break a streak; today only counts once it is complete */
+function streakNow(today){let n=today,c=0;for(let g=0;g<4000;g++,n--){const st=dayState(n);if(st==="rest")continue;if(st==="full"){c++;continue}if(n===today)continue;break}return c}
 function bestStreak(){
-  const ds=Object.keys(S.log).filter(k=>S.log[k]===FULL).map(k=>{const [y,m,d]=k.split("-").map(Number);return Date.UTC(y,m-1,d)/864e5}).sort((a,b)=>a-b);
-  let best=0,run=0,prev=null;
-  for(const n of ds){run=(prev!==null&&n===prev+1)?run+1:1;if(run>best)best=run;prev=n}
+  const keys=Object.keys(S.trk);if(!keys.length)return 0;
+  const first=Math.min(...keys.map(k=>{const [y,m,d]=k.split("-").map(Number);return Date.UTC(y,m-1,d)/864e5})),today=localDay();
+  let best=0,run=0;
+  for(let n=first;n<=today;n++){const st=dayState(n);if(st==="rest")continue;if(st==="full"){run++;if(run>best)best=run}else if(n!==today)run=0}
   return best;
 }
-const ckBtn=(k,arrived,on)=>`<button class="ck ${on?"on":""} ${arrived&&!on?"due":""} ${arrived?"":"wait"}" data-act="pray" data-v="${k}" role="checkbox" aria-checked="${on}" aria-disabled="${!arrived}" aria-label="${tx("{0} prayed",NP(k))}">${CHECK}</button>`;
+/* a prayer's window runs until the next prayer begins (Fajr until sunrise, Isha until the next Fajr) */
+function windowEnd(E,k){const t=E.today;return k==="fajr"?t.sunrise:k==="dhuhr"?t.asr:k==="asr"?t.maghrib:k==="maghrib"?t.isha:((E.list.find(e=>e.o===1&&e.key==="fajr")||{}).ms||t.isha+6*3600e3)}
+const autoStatus=(E,k,now)=>now<windowEnd(E,k)?"o":"l";
+const dayRec=()=>{const key=dkey(localDay());return S.trk[key]||(S.trk[key]={})};
+const cleanDay=()=>{const key=dkey(localDay());if(S.trk[key]&&!Object.keys(S.trk[key]).length)delete S.trk[key]};
+const statusLabel=k=>{const r=trkDay(localDay())[k];return r&&(r.s==="o"||r.s==="l"||r.s==="m")?tx(r.s==="o"?"On time":r.s==="l"?"Late":"Missed"):""};
+function statsFor(period,now){
+  const E=getEvents(now),today=localDay(),g=gparts(today);
+  const start=period==="today"?today:period==="week"?today-g.w:period==="month"?Date.UTC(g.y,g.m,1)/864e5:Date.UTC(g.y,0,1)/864e5;
+  const since=S.since==null?today:S.since;
+  let o=0,l=0,m=0,j=0,f=0,tracked=0;
+  for(let n=Math.max(start,since);n<=today;n++){
+    if(isRest(n))continue;
+    for(const k of P){
+      const rec=trkDay(n)[k];let st;
+      if(rec&&rec.s==="x")continue;
+      if(rec)st=rec.s;
+      else{
+        if(n===today&&now<windowEnd(E,k))continue;                       /* still open or not started */
+        if(n===today-1&&k==="isha"&&now<E.today.fajr)continue;           /* last night's Isha is open until Fajr */
+        st="m";
+      }
+      tracked++;
+      if(st==="o")o++;else if(st==="l")l++;else m++;
+      if(rec&&st!=="m"){if(rec.j)j++;if(rec.f)f++}
+    }
+  }
+  return {o,l,m,j,f,tracked,prayed:o+l};
+}
+function migrateData(){
+  if(Object.keys(S.log).length){
+    for(const key in S.log){const mk=S.log[key],d=S.trk[key]||(S.trk[key]={});P.forEach(k=>{if((mk&BIT[k])&&!d[k])d[k]={s:"o"}})}
+    S.log={};
+  }
+  if(S.since==null){
+    const ks=Object.keys(S.trk).sort();
+    S.since=ks.length?(()=>{const [y,m,d]=ks[0].split("-").map(Number);return Date.UTC(y,m-1,d)/864e5})():localDay();
+  }
+  save();
+}
+const ckBtn=(k,arrived,on,miss)=>`<button class="ck ${on?"on":""} ${miss?"miss":""} ${arrived&&!on&&!miss?"due":""} ${arrived?"":"wait"}" data-act="pray" data-v="${k}" role="checkbox" aria-haspopup="dialog" aria-checked="${on}" aria-disabled="${!arrived}" aria-label="${NP(k)}: ${tx("Track options")}">${miss?XMARK:CHECK}</button>`;
 
 function encourage(now,E){
   const pf=S.profile||{name:"friend",g:"m"},nm=pf.name||"friend",f=pf.g==="f";
   const ad={en:f?"sister":"brother",ml:f?"സഹോദരീ":"സഹോദരാ",ar:f?"أختي":"أخي"};
   const g2=(m,w)=>f?w:m;
   const today=localDay(),mask=maskOf(today),streak=streakNow(today),done=cnt(mask);
-  const arrived=P.filter(k=>E.today[k]<=now),pend=arrived.filter(k=>!(mask&BIT[k]));
+  const exc=k=>((trkDay(today)[k]||{}).s==="x"),arrived=P.filter(k=>E.today[k]<=now),pend=arrived.filter(k=>!(mask&BIT[k])&&!exc(k));
   const cur=E.prev.o===0&&P.includes(E.prev.key)?E.prev.key:null;
   const missed=pend.filter(k=>k!==cur),curP=cur&&pend.includes(cur);
   const nk=E.next.key,nt=fmt(E.next.ms),NN=NAMES[nk];
@@ -1600,6 +1872,7 @@ function encourage(now,E){
   const H=w=>({en:W[w].en+", "+nm,ml:W[w].ml+", "+nm,ar:W[w].ar+"\u060C "+nm});
   const out=(w,en,ml,ar)=>({h:H(w),en,ml,ar});
   const arStreak=n=>n===2?"يومان متتاليان":n<=10?n+" أيام متتالية":n+" يومًا متتاليًا";
+  if(S.restA!=null)return out("as","Rest days are on. Your progress is safe. Tap to end.","വിശ്രമ ദിനങ്ങൾ ഓണാണ്. പുരോഗതി സുരക്ഷിതം. അവസാനിപ്പിക്കാൻ തൊടുക.","أيام الراحة مفعّلة. تقدّمك محفوظ. اضغط للإنهاء.");
   if(done===5)return out("hm",
     streak>=2?`All five done. ${streak} days in a row, ${ad.en}.`:"All five prayers done today. May Allah accept them.",
     streak>=2?`അഞ്ചു നേരവും പൂർത്തിയായി. തുടർച്ചയായി ${streak} ദിവസം, ${ad.ml}.`:"ഇന്നത്തെ അഞ്ചു നമസ്കാരവും പൂർത്തിയായി. അല്ലാഹു സ്വീകരിക്കട്ടെ.",
@@ -1609,16 +1882,16 @@ function encourage(now,E){
     streak?`സുബ്ഹി ${t}-ന്. ${streak} ദിവസത്തെ തുടർച്ച നിലനിർത്താം.`:`സുബ്ഹി ${t}-ന്. ദിവസം അതിൽ തുടങ്ങാം.`,
     streak?`الفجر عند ${t}. ${g2("حافظ","حافظي")} على سلسلتك البالغة ${arDays(streak)}.`:`الفجر عند ${t}. ${g2("ابدأ","ابدئي")} يومك بها.`)}
   if(missed.length){const M=NAMES[missed[0]];return out("as",
-    missed.length>1?`${missed.length} earlier prayers aren't marked. Tick the ones you've prayed.`:`${M.en} isn't marked yet. Pray it if you can, then tick it.`,
-    missed.length>1?`${missed.length} നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തിയിട്ടില്ല. നമസ്കരിച്ചവ ടിക്ക് ചെയ്യൂ.`:`${M.ml} രേഖപ്പെടുത്തിയിട്ടില്ല. സാധിക്കുമെങ്കിൽ നമസ്കരിച്ച ശേഷം ടിക്ക് ചെയ്യൂ.`,
-    missed.length>1?`هناك صلوات سابقة غير مسجّلة. ${g2("حدّد","حدّدي")} ما ${g2("صلّيته","صلّيتِه")}.`:`${M.ar} غير مسجّلة بعد. ${g2("صلِّها","صلّيها")} إن ${g2("استطعت","استطعتِ")} ثم ${g2("حدّدها","حدّديها")}.`)}
+    missed.length>1?`${missed.length} earlier prayers aren't marked. Mark their status.`:`${M.en} isn't marked yet. Mark its status.`,
+    missed.length>1?`${missed.length} നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തിയിട്ടില്ല. അവയുടെ സ്ഥിതി രേഖപ്പെടുത്തൂ.`:`${M.ml} രേഖപ്പെടുത്തിയിട്ടില്ല. അതിന്റെ സ്ഥിതി രേഖപ്പെടുത്തൂ.`,
+    missed.length>1?`هناك صلوات سابقة غير مسجّلة. ${g2("سجّل","سجّلي")} حالتها.`:`${M.ar} غير مسجّلة بعد. ${g2("سجّل","سجّلي")} حالتها.`)}
   if(curP){
     const C=NAMES[cur];
     if(cur==="isha"&&done===4)return out("as",
       streak?`Isha is all that's left. Keep your ${streak}-day streak.`:"Isha is all that's left for a full day.",
       streak?`ഇശാ മാത്രമേ ബാക്കിയുള്ളൂ. ${streak} ദിവസത്തെ തുടർച്ച നിലനിർത്താം.`:"ഇശാ കൂടി ആയാൽ ഇന്നത്തെ ദിവസം പൂർണം.",
       streak?`بقيت العشاء فقط. ${g2("حافظ","حافظي")} على سلسلتك البالغة ${arDays(streak)}.`:"بقيت العشاء لإتمام اليوم.");
-    return out("as",`It's ${C.en} time. Pray, then tick it.`,`${C.ml} നമസ്കാരത്തിന്റെ സമയമായി. നമസ്കരിച്ച ശേഷം ടിക്ക് ചെയ്യൂ.`,`حان وقت ${C.ar}. ${g2("صلِّ","صلّي")} ثم ${g2("حدّد","حدّدي")}.`);
+    return out("as",`It's ${C.en} time. Mark its status when you're done.`,`${C.ml} നമസ്കാരത്തിന്റെ സമയമായി. കഴിഞ്ഞാൽ സ്ഥിതി രേഖപ്പെടുത്തൂ.`,`حان وقت ${C.ar}. ${g2("سجّل","سجّلي")} حالتها بعد الانتهاء.`);
   }
   return out("ma",`${done} of 5 done, keep it up ${ad.en}. Next: ${NN.en} at ${nt}.`,`5-ൽ ${done} പൂർത്തിയായി, തുടരൂ ${ad.ml}. അടുത്തത് ${NN.ml} ${nt}-ന്.`,`${done} من 5 مكتملة، ${g2("واصل","واصلي")} يا ${ad.ar}. التالية: ${NN.ar} عند ${nt}.`);
 }
@@ -1626,40 +1899,119 @@ function ringSVG(mask){
   const segs=[0,1,2,3,4].map(i=>{
     const a0=(-90+i*72+7)*D2R,a1=(-90+i*72+65)*D2R;
     const f=v=>v.toFixed(2),x0=18+15*Math.cos(a0),y0=18+15*Math.sin(a0),x1=18+15*Math.cos(a1),y1=18+15*Math.sin(a1);
-    return `<path d="M${f(x0)} ${f(y0)}A15 15 0 0 1 ${f(x1)} ${f(y1)}" fill="none" stroke-width="3.2" stroke-linecap="round" style="stroke:${mask&BIT[P[i]]?"var(--gold)":"var(--line)"}"/>`;
+    return `<path d="M${f(x0)} ${f(y0)}A15 15 0 0 1 ${f(x1)} ${f(y1)}" fill="none" stroke-width="3.2" stroke-linecap="round" style="stroke:${mask&BIT[P[i]]?"var(--gold)":"var(--mist2)"}" stroke-opacity="${mask&BIT[P[i]]?1:.3}"/>`;
   }).join("");
   return `<svg viewBox="0 0 36 36" aria-hidden="true">${segs}</svg>`;
 }
 function streakHTML(now){
-  const today=localDay(),wd=gparts(today).w,start=today-wd;            /* week runs Sunday to Saturday */
+  const today=localDay(),g=gparts(today),first=Date.UTC(g.y,g.m,1)/864e5,len=new Date(Date.UTC(g.y,g.m+1,0)).getUTCDate(),wd=gparts(first).w;
   const cur=streakNow(today),best=Math.max(bestStreak(),cur);
   const weeks=Math.floor(cur/7),months=Math.floor(cur/30);             /* completed 7-day and 30-day blocks of the running streak */
   let cells="";
-  for(let i=0;i<7;i++){
-    const n=start+i,g=gparts(n),m=maskOf(n),full=m===FULL;
-    if(n>today){cells+=`<div class="skd future">${ringSVG(0)}<span class="num">${g.d}</span></div>`;continue}
-    cells+=`<div class="skd ${n===today?"today":""} ${full?"full":""}" role="img" aria-label="${tx("{0} {1}: {2} of 5 prayers",g.d,GM[g.m],cnt(m))}">${ringSVG(m)}<span class="num">${g.d}</span></div>`;
+  for(let i=0;i<wd;i++)cells+="<span></span>";
+  for(let d=1;d<=len;d++){
+    const n=first+d-1,st=n<=today?dayState(n):"future",m=maskOf(n),ring=ringSVG(st==="rest"||st==="future"?0:m);
+    const cls=`skd ${st==="rest"?"rest":""} ${st==="full"?"full":""} ${n===today?"today":""} ${st==="future"?"future":""}`;
+    cells+=st==="future"?`<div class="mc"><div class="${cls}">${ring}<span class="num">${d}</span></div></div>`
+      :`<button class="mc" data-act="dopen" data-v="${n}" aria-label="${tx("{0} {1}: {2} of 5 prayers",d,GM[g.m],cnt(m))}"><div class="${cls}">${ring}<span class="num">${d}</span></div></button>`;
   }
   return `<div class="card stk">
     <div class="stk-top"><div class="stk-flame ${cur?"on":""}">${FLAME}</div>
       <div class="stk-big"><b class="num">${cur}</b><span>${tx("day streak")}</span></div>
       <div class="stk-mini"><div><b class="num">${best}</b><span>${tx("Best")}</span></div></div></div>
-    <div class="stk-pills"><span class="spill ${weeks?"on":""}">${tx("Week streak")} <b class="num">${weeks}</b></span><span class="spill ${months?"on":""}">${tx("Month streak")} <b class="num">${months}</b></span></div>
-    <div class="wdr" style="margin-top:14px">${WDL.map((w,i)=>`<span class="${i===5?"fri":""}">${w}</span>`).join("")}</div>
+    <div class="stk-pills"><span class="spill ${weeks?"on":""}">${tx("Week streak")} <b class="num">${weeks}</b></span><span class="spill ${months?"on":""}">${tx("Month streak")} <b class="num">${months}</b></span>${S.restA!=null?`<span class="spill on">${tx("Rest days")}</span>`:""}</div>
+    <div class="stk-mo">${GM[g.m]} ${g.y}</div>
+    <div class="wdr">${WDL.map((w,i)=>`<span class="${i===5?"fri":""}">${w}</span>`).join("")}</div>
     <div class="skg">${cells}</div>
-    <p class="fine" style="margin:12px 2px 0">${tx("Each ring has five parts, one for each prayer.")}</p>
+    <p class="fine" style="margin:12px 2px 0">${tx("Each ring has five parts, one for each prayer.")} ${tx("Tap a date to mark its prayers.")}</p>
+    <button class="btn ghost stk-more" data-act="tab" data-v="trk">${tx("View tracker")}</button>
   </div>`;
 }
+
+/* ---------- mark any day of this month: every prayer with On time / Late / Missed + extras ---------- */
+const dayLocked=(n,k)=>n===localDay()&&getEvents(Date.now()).today[k]>Date.now();
+const IC_LATE='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.500V12l3 2"/></svg>';
+function openDay(n){
+  const now=Date.now(),L=loc(),g=gparts(n),bt=baseTimes(g.y,g.m+1,g.d,L),d=trkDay(n),today=localDay();
+  const lab={o:"On time",l:"Late",m:"Missed"};
+  const vis=P.filter(k=>n!==today||bt[k]+(S.adj[k]||0)*60000<=now);       /* today: previous + current prayers only */
+  const rows=vis.map(k=>{
+    const t=bt[k]+(S.adj[k]||0)*60000,locked=false,r=d[k]&&d[k].s!=="x"?d[k]:null,st=r?r.s:null,tagsOk=st==="o"||st==="l";
+    const btns=[["o",CHECK],["l",IC_LATE],["m",XMARK]].map(([v,svg])=>`<button class="stb ${v} ${st===v?"on":""}" data-act="dst" data-v="${n}:${k}:${v}" aria-pressed="${st===v}" aria-label="${tx(lab[v])}" ${locked?'aria-disabled="true"':""}>${svg}</button>`).join("");
+    const extra=tagsOk?`<div class="dr-x">${[["j","Jama\u2019ah"],["f","First row"]].map(([tg,l])=>`<button class="dtag ${r[tg]?"on":""}" data-act="dtg" data-v="${n}:${k}:${tg}" aria-pressed="${!!r[tg]}">${tx(l)}</button>`).join("")}</div>`:"";
+    return `<div class="dr ${locked?"lock":""}"><div class="dr-main"><div class="dr-name"><b>${NP(k)}</b><span class="num">${fmt(t)}${locked?" \u00b7 "+tx("Not yet"):st?" \u00b7 "+tx(lab[st]):""}</span></div><div class="dr-ic" role="group" aria-label="${NP(k)}">${btns}</div></div>${extra}</div>`;
+  }).join("");
+  openSheet(`<div class="dsh-h"><div><h2>${WDF[g.w]}, ${g.d} ${GM[g.m]}</h2><p class="sub">${tx("Tap an icon to mark each prayer.")}</p></div><span class="dsh-n num">${cnt(maskOf(n))}<i>/${vis.length}</i></span></div>
+  <div class="dleg"><span><i style="background:var(--gold)"></i>${tx("On time")}</span><span><i style="background:var(--st-late)"></i>${tx("Late")}</span><span><i style="background:var(--st-miss)"></i>${tx("Missed")}</span></div>
+  ${rows||`<p class="sub" style="margin:18px 0 6px">${tx("No prayers yet today.")}</p>`}
+  <div class="dft"><button class="btn ghost" data-act="dall" data-v="${n}">${tx("All on time")}</button><button class="btn ghost" data-act="dclr" data-v="${n}">${tx("Clear day")}</button></div>
+  <button class="btn gold" style="width:100%;margin-top:10px" data-act="close">${tx("Done")}</button>`);
+}
+function touchDay(n,fn){
+  const key=dkey(n),d=S.trk[key]||(S.trk[key]={}),was=maskOf(n)===FULL;
+  fn(d);
+  if(!Object.keys(d).length)delete S.trk[key];
+  if(S.since==null||n<S.since)S.since=n;                       /* tracking now starts from the earliest day you mark */
+  save();refreshHome();openDay(n);
+  if(n===localDay()&&!was&&maskOf(n)===FULL)toast(tx("All five done. Alhamdulillah!"));
+}
+
 function refreshHome(){const now=Date.now(),E=getEvents(now);renderToday(E,now);tick()}
-function togglePrayer(k){
+function openPrayer(k){
   const now=Date.now(),E=getEvents(now);
   if(E.today[k]>now){toast(tx("{0} can be ticked once its time begins",NP(k)));return}
-  const n=localDay(),key=dkey(n),m=S.log[key]||0,nm=m^BIT[k];
-  if(nm)S.log[key]=nm;else delete S.log[key];
-  save();refreshHome();
-  if(navigator.vibrate){try{navigator.vibrate(12)}catch(e){}}
-  toast(nm===FULL?tx("All five done. Alhamdulillah!"):(nm&BIT[k])?tx("{0} marked",NP(k)):tx("{0} unmarked",NP(k)));
+  const rec=trkDay(localDay())[k]||null,st=rec&&rec.s!=="x"?rec.s:null,tagsOk=st==="o"||st==="l";
+  const rad=(v,t)=>`<button class="opt" role="radio" aria-checked="${st===v}" data-act="pst" data-v="${k}:${v}"><span>${t}</span><span class="rd"></span></button>`;
+  const chk=(t,lab)=>`<button class="opt" role="checkbox" aria-checked="${tagsOk&&!!rec[t]}" data-act="ptag" data-v="${k}:${t}"><span>${lab}</span><span class="ck ${tagsOk&&rec[t]?"on":""}">${CHECK}</span></button>`;
+  openSheet(`<h2>${NP(k)} <span class="num" style="color:var(--mist);font-size:.7em">${fmt(E.today[k])}</span></h2>
+  <p class="sub" style="margin-bottom:8px">${rec&&rec.s!=="x"?tx("Change it if needed."):tx("Suggested: {0}",tx(autoStatus(E,k,now)==="o"?"On time":"Late"))}</p>
+  <div role="radiogroup" aria-label="${tx("How did it go?")}">${rad("o",tx("On time"))}${rad("l",tx("Late"))}${rad("m",tx("Missed"))}</div>
+  <div class="slab" style="margin-top:16px">${tx("Extras")}</div>
+  <div>${chk("j",tx("Prayed with Jama\u2019ah"))}${chk("f",tx("Prayed in the first row"))}</div>
+  <div style="display:flex;gap:10px;margin-top:18px"><button class="btn ghost" style="flex:1" data-act="pclear" data-v="${k}" ${rec&&rec.s!=="x"?"":"disabled"}>${tx("Clear")}</button><button class="btn gold" style="flex:1" data-act="close">${tx("Done")}</button></div>`);
 }
+function openRest(){
+  const on=S.restA!=null,g=on?gparts(S.restA):null;
+  openSheet(`<h2>${tx("Rest days")}</h2><p class="sub" style="margin:6px 0 ${on?10:18}px">${tx("These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.")}</p>
+  ${on?`<p class="fine" style="margin:0 0 18px">${tx("On since {0}",g.d+" "+GM[g.m])}</p>`:""}
+  <button class="btn gold" style="width:100%" data-act="${on?"restend":"reststart"}">${on?tx("End rest days"):tx("Start rest days")}</button>
+  <button class="btn ghost" style="width:100%;margin-top:10px" data-act="close">${tx("Cancel")}</button>`);
+}
+function startRest(){S.restA=localDay();save();closeSheet();refreshAll();toast(tx("Rest days started"))}
+function endRest(){
+  if(S.restA==null)return;
+  const now=Date.now(),E=getEvents(now),n=localDay();
+  if(S.restA<=n-1)S.restR.push([S.restA,n-1]);
+  const d=dayRec();P.forEach(k=>{if(!d[k]&&windowEnd(E,k)<=now)d[k]={s:"x"}});   /* prayers whose time already passed today are excused */
+  S.restA=null;cleanDay();save();closeSheet();refreshAll();toast(tx("Rest days ended. Welcome back."));
+}
+
+/* ---------- prayer tracker screen ---------- */
+const TK={p:"today"};
+function donutSVG(st){
+  const R=78,C=2*Math.PI*R,tot=st.tracked,parts=[[st.o,"var(--gold)"],[st.l,"var(--st-late)"],[st.m,"var(--st-miss)"]].filter(x=>x[0]>0);
+  let off=0,segs="";
+  if(tot>0)parts.forEach(([v,c])=>{const len=C*v/tot,gap=parts.length>1?3:0;segs+=`<circle cx="100" cy="100" r="${R}" fill="none" style="stroke:${c}" stroke-width="22" stroke-dasharray="${Math.max(len-gap,.5)} ${C}" stroke-dashoffset="${-off}" transform="rotate(-90 100 100)"/>`;off+=len});
+  return `<svg viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="${R}" fill="none" style="stroke:var(--line)" stroke-width="22"/>${segs}</svg>`;
+}
+function renderTracker(){
+  const st=statsFor(TK.p,Date.now()),tot=st.tracked,pct=v=>tot?Math.round(v/tot*100):0;
+  const fem=S.profile&&S.profile.g==="f";
+  const bar=(lab,v,c)=>`<div class="tb"><div class="r"><span>${lab}</span><b class="num">${pct(v)}%</b></div><div class="bar"><i style="width:${pct(v)}%;background:${c}"></i></div></div>`;
+  const li=(c,lab,v)=>`<li><i style="background:${c}"></i><span>${lab}</span><b class="num">${v}</b></li>`;
+  $("#s-trk").innerHTML=`
+  <header><button class="backb" data-act="tab" data-v="today">${ARR()} ${tx("Today")}</button><h1>${tx("Prayer tracker")}</h1><p class="sub">${tx("Your prayers, at a glance.")}</p></header>
+  <div class="seg trk-seg" role="group" aria-label="${tx("Prayer tracker")}">${[["today","Today"],["week","Week"],["month","Month"],["year","Year"]].map(([k,t])=>`<button aria-pressed="${TK.p===k}" data-act="tper" data-v="${k}">${tx(t)}</button>`).join("")}</div>
+  <div class="trk-main">
+    <div class="donut">${donutSVG(st)}<div class="dc"><span>${tx("Overall")}</span><b class="num">${tot?Math.round(st.prayed/tot*100)+"%":"\u2013"}</b></div></div>
+    <ul class="legend">${li("var(--gold)",tx("On time"),st.o)}${li("var(--st-late)",tx("Late"),st.l)}${li("var(--st-miss)",tx("Missed"),st.m)}<li class="sep"></li>${li("var(--goldhi)",tx("Jama\u2019ah"),st.j)}${li("var(--goldlo)",tx("First row"),st.f)}</ul>
+  </div>
+  ${tot?"":`<p class="fine" style="margin:14px 2px 0">${tx("No prayers tracked yet.")}</p>`}
+  <div class="tbars">${bar(tx("Prayed with Jama\u2019ah"),st.j,"var(--goldhi)")}${bar(tx("Prayed in the first row"),st.f,"var(--goldlo)")}${bar(tx("Prayed on time"),st.o,"var(--gold)")}${bar(tx("Prayed late"),st.l,"var(--st-late)")}${bar(tx("Missed prayers"),st.m,"var(--st-miss)")}</div>
+  <p class="fine" style="margin:18px 2px 0">${tx("On time means prayed before the next prayer begins.")} ${tx("Prayers you don\u2019t mark once their time has passed count as missed.")}</p>
+  ${fem?`<div class="card lc" style="margin-top:20px"><button class="opt" data-act="rest"><span>${tx("Rest days")}<small>${S.restA!=null?tx("On since {0}",gparts(S.restA).d+" "+GM[gparts(S.restA).m]):tx("Pause tracking and reminders")}</small></span>${CHEV}</button></div>`:""}`;
+}
+
 /* ---------- welcome / profile ---------- */
 const WL=$("#welcome");let wst={name:"",g:null,edit:false};
 function openWelcome(edit,keep){
@@ -1691,18 +2043,18 @@ const wOk=()=>wst.name.trim().length>0&&!!wst.g;
 function wCheck(){const b=$("#wgo");if(b)b.disabled=!wOk()}
 function saveWelcome(){
   if(!wOk())return;
-  S.profile={name:wst.name.trim().slice(0,24),g:wst.g};save();
+  S.profile={name:wst.name.trim().slice(0,24),g:wst.g};if(wst.g!=="f")S.restA=null;save();
   WL.classList.remove("on");refreshAll();
   toast(wst.edit?tx("Profile updated"):tx("Welcome, {0}",S.profile.name));
 }
 
 function labelScreens(){
-  [["today","Today"],["cal","Calendar"],["guide","Prayer guide"],["qibla","Qibla"],["rem","Reminders"],["set","Settings"],["widgets","Widgets"]].forEach(([id,k])=>{const e=$("#s-"+id);if(e)e.setAttribute("aria-label",tx(k))});
+  [["today","Today"],["cal","Calendar"],["guide","Prayer guide"],["qibla","Qibla"],["rem","Reminders"],["set","Settings"],["widgets","Widgets"],["trk","Prayer tracker"]].forEach(([id,k])=>{const e=$("#s-"+id);if(e)e.setAttribute("aria-label",tx(k))});
 }
 function buildTabs(){
   labelScreens();
 $("#tabs").innerHTML='<button class="brand" data-act="about" aria-label="'+tx("About {0}",appn())+'"><svg viewBox="0 0 30 34" aria-hidden="true"><path d="M3 32V17C3 10 11 8 15 2C19 8 27 10 27 17V32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>'+TABS.map(([id,t],i)=>`<button class="tab" role="tab" data-act="tab" data-v="${id}" aria-selected="${i===0}">${TABICON[id]}<span>${tx(t)}</span></button>`).join("");
-  $$(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.v===(({qibla:"today",widgets:"set"})[curTab]||curTab)));
+  $$(".tab").forEach(t=>t.setAttribute("aria-selected",t.dataset.v===(({qibla:"today",widgets:"set",trk:"today"})[curTab]||curTab)));
 }
 function applyLang(){
   const h=document.documentElement;h.lang=LANG;h.dir=LANGS[LANG].dir;setLists();
@@ -1746,6 +2098,8 @@ if(CAN_PWA){
 }
 
 /* ---------- init ---------- */
+migrateData();
+initSkyBg();document.documentElement.classList.add("sky-on");
 setLists();document.documentElement.lang=LANG;document.documentElement.dir=LANGS[LANG].dir;
 buildTabs();
 renderGuide();buildQibla();
@@ -1754,7 +2108,7 @@ tick(true);
 requestAnimationFrame(()=>requestAnimationFrame(()=>document.documentElement.classList.remove("no-anim")));
 setInterval(()=>tick(false),1000);
 if(!S.profile)openWelcome(false);
-try{const q=new URLSearchParams(location.search).get("tab");if(q&&["today","cal","guide","rem","set","qibla","widgets"].includes(q))setTab(q)}catch(e){}
+try{const q=new URLSearchParams(location.search).get("tab");if(q&&["today","cal","guide","rem","set","qibla","widgets","trk"].includes(q))setTab(q)}catch(e){}
 })();
 </script>
 </body>
