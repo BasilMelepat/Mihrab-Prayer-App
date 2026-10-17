@@ -447,12 +447,12 @@ button.brand,.brand{display:none}
 @media (min-width:860px){
   .screen{padding-inline:max(44px,calc((100% - 1040px)/2))}
   h1{font-size:44px}
-  #s-today.on{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:28px;row-gap:20px;align-content:start}
-  #s-today .hero-pin{grid-column:1/-1;grid-row:1;align-self:start}
-  #s-today .sky{--u:5.2px;width:min(100%,520px);margin:0 auto}
-  
-  #s-today .list{grid-column:1;grid-row:2;margin:0;align-self:start}
-  #s-today .stk{grid-column:2;grid-row:2;margin:0;align-self:start}
+  #s-today.on{display:block}
+  #s-today .sky{--u:5.2px;width:min(100%,520px);margin:0 auto;min-height:calc(93.6*var(--u))}
+  #s-today .cards{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:stretch;align-content:start;margin-top:44px}
+  #s-today .list,#s-today .stk{margin:0}
+  #s-today .th .loc-h{display:flex}
+  #s-today .sk-loc{display:none}
 
   #s-guide.on,#s-qibla.on,#s-rem.on,#s-cal.on,#s-set.on{bottom:auto;max-height:100%}
   #s-set.on{display:block}
@@ -738,6 +738,41 @@ html[lang="ml"] .gs-r{font-size:12.5px}
 .cloud.s2{background:radial-gradient(30% 56% at 16% 68%,var(--cc) 0,transparent 72%),radial-gradient(36% 82% at 38% 46%,var(--cc) 0,transparent 72%),radial-gradient(28% 62% at 62% 60%,var(--cc) 0,transparent 72%),radial-gradient(32% 52% at 82% 66%,var(--cc) 0,transparent 72%)}
 .cloud.s3{background:radial-gradient(38% 62% at 24% 64%,var(--cc) 0,transparent 72%),radial-gradient(28% 72% at 52% 42%,var(--cc) 0,transparent 72%),radial-gradient(34% 58% at 78% 62%,var(--cc) 0,transparent 72%)}
 @keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(calc(100vw + var(--w)),0,0)}}
+/* ---- home header pill (wide screens) and room below the cards ---- */
+.th-r{display:flex;align-items:center;gap:10px;flex:none}
+.th .loc-h{display:none}
+.cards{position:relative;min-height:100%}
+/* ---- phones: greeting centred; Qibla and location sit together under the counter, then a clear gap before the cards ---- */
+.sk-loc .qb-s{display:none}
+@media (max-width:699px){
+  .th-r{display:none}
+  .greet,.hi-h,.hi-m,button.hi-m{text-align:center}
+  .sk-loc{align-items:center;gap:10px;padding:calc(2.4*var(--u)) 0 0}
+  .sk-loc .qb-s{display:grid;width:40px;height:40px;background:rgba(255,255,255,.2);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+  .hero-pin{padding-bottom:20px}
+}
+/* ---- location and Qibla: highlighted frosted-glass buttons on the sky ---- */
+.hero-pin .loc,.hero-pin .qbtn,.hero-pin .qbtn.glass{background:rgba(255,255,255,.2);-webkit-backdrop-filter:blur(16px) saturate(165%);backdrop-filter:blur(16px) saturate(165%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.42),0 8px 20px -10px rgba(0,20,60,.55);border-radius:999px;width:auto;height:auto;min-height:40px;padding:9px 15px;align-items:center;justify-content:center;gap:7px;color:#fff;font-size:14px;font-weight:600;line-height:1.2;text-shadow:0 1px 8px rgba(0,25,60,.4);white-space:nowrap}
+.hero-pin .qbtn{display:inline-flex;position:relative}
+.hero-pin .sk-loc .qb-s{display:none}
+.hero-pin .loc svg,.hero-pin .qbtn svg{width:17px;height:17px;stroke:#F5DFAE;stroke-width:1.8;filter:drop-shadow(0 1px 4px rgba(0,25,60,.4))}
+.hero-pin .loc svg:last-child{width:13px;height:13px;stroke:#fff;opacity:.85}
+.hero-pin .loc:hover,.hero-pin .qbtn:hover{background:rgba(255,255,255,.3)}
+.hero-pin .loc:active,.hero-pin .qbtn:active{transform:scale(.97)}
+.hero-pin .loc:focus-visible,.hero-pin .qbtn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.th-r{gap:10px}
+html[lang="ml"] .hero-pin .loc,html[lang="ml"] .hero-pin .qbtn{font-size:13px}
+@media (max-width:699px){.hero-pin .sk-loc .qb-s{display:inline-flex}.sk-loc{gap:10px}}
+/* ---- parallax layers, prayer-card shortcut and highlight ---- */
+.cl-layer{position:absolute;inset:0;will-change:transform}
+.lfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:6px 8px 6px 12px}
+.list .lfoot{margin-top:auto;padding-top:6px}
+.lfoot .fine{margin:0;flex:1;min-width:0}
+.lbtn{flex:none;display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:8px 13px;font-size:12.5px;font-weight:500;color:var(--goldhi);background:var(--chip-bg)}
+.lbtn svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round}
+.lbtn:active{opacity:.7}
+.list.hl{transition:none;animation:hlpulse 1.2s ease-out 2;box-shadow:0 0 0 3px var(--gold),var(--shadow-card)}
+@keyframes hlpulse{0%{box-shadow:0 0 0 3px var(--gold),0 0 0 0 rgba(226,188,120,.6),var(--shadow-card)}100%{box-shadow:0 0 0 3px var(--gold),0 0 0 22px rgba(226,188,120,0),var(--shadow-card)}}
 @media (prefers-reduced-motion:reduce){.cloud{left:var(--sx)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -809,7 +844,7 @@ const METHODS={
 };
 const KAABA={lat:21.4225,lon:39.8262};
 /* edit these before release */
-const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.27.0",build:"2026.10.11.36",year:2026};
+const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.28.0",build:"2026.10.11.36",year:2026};
 const CREDITS=[
   ["Design and development","Basil Melepat"],
   ["Religious content review","To be added before release"],
@@ -832,7 +867,7 @@ let LANG=LANGS[S.lang]?S.lang:"en";
 const APPNAME={en:"Mihrab",ml:"മിഹ്റാബ്",ar:"محراب"};
 const TR={
 ml:{
-"Today":"ഇന്ന്","Widget background":"വിജറ്റ് പശ്ചാത്തലം", "Profile & data":"പ്രൊഫൈലും ഡാറ്റയും","Adjust Hijri date":"ഹിജ്റി തീയതി ക്രമീകരിക്കുക", "Occasion":"അവസരം","After wudu":"വുദൂഇന് ശേഷം", "Sunnah":"സുന്നത്ത്","Time today":"ഇന്നത്തെ സമയം","{0} to {1}":"{0} മുതൽ {1} വരെ","From about {0}":"ഏകദേശം {0} മുതൽ","Ramadan nights only":"റമദാൻ രാത്രികളിൽ മാത്രം","After the first pair":"ആദ്യ ജോഡിക്ക് ശേഷം", "Daily":"ദൈനംദിനം","Special":"പ്രത്യേകം","Travel":"യാത്ര","When":"എപ്പോൾ","Rak\u2019ahs":"റക്അത്തുകൾ","Ruling":"വിധി","Pending scholar review":"പണ്ഡിത പരിശോധന ബാക്കി","Say {0} times":"{0} തവണ","Before the prayer":"നമസ്കാരത്തിന് മുമ്പ്","After the prayer":"നമസ്കാരത്തിന് ശേഷം","The two khutbahs":"രണ്ട് ഖുത്ബകൾ","Conditions":"നിബന്ധനകൾ","Takbir {0} of {1}":"തക്ബീർ {0} / {1}","Choose a category":"വിഭാഗം തിരഞ്ഞെടുക്കുക","No prayers yet today.":"ഇന്ന് ഇതുവരെ നമസ്കാര സമയം ആയിട്ടില്ല.", "All on time":"എല്ലാം സമയത്ത്","Clear day":"ദിവസം മായ്ക്കുക","Not yet":"ഇതുവരെ ആയില്ല","Tap an icon to mark each prayer.":"ഓരോ നമസ്കാരവും രേഖപ്പെടുത്താൻ ഐക്കൺ തൊടുക.", "Tap a date to mark its prayers.":"പ്രാർഥനകൾ രേഖപ്പെടുത്താൻ ഒരു തീയതി തൊടുക.", "Factory reset":"ഫാക്ടറി റീസെറ്റ്","Erase everything and start fresh":"എല്ലാം മായ്ച്ച് പുതുതായി തുടങ്ങുക","Factory reset?":"ഫാക്ടറി റീസെറ്റ് ചെയ്യണോ?","This erases your profile, settings, prayer log and streak from this device, then restarts the app. It can\u2019t be undone.":"ഇത് നിങ്ങളുടെ പ്രൊഫൈൽ, ക്രമീകരണങ്ങൾ, നമസ്കാര രേഖ, തുടർച്ച എന്നിവ ഈ ഉപകരണത്തിൽ നിന്ന് മായ്ച്ച് ആപ്പ് വീണ്ടും തുടങ്ങും. ഇത് തിരിച്ചെടുക്കാനാവില്ല.","Erase everything":"എല്ലാം മായ്ക്കുക","Suggested: {0}":"നിർദേശം: {0}","Change it if needed.":"ആവശ്യമെങ്കിൽ മാറ്റാം.","{0} of 5 prayers":"5-ൽ {0} നമസ്കാരം","Rest day":"വിശ്രമ ദിനം","Days of this month":"ഈ മാസത്തെ ദിവസങ്ങൾ","Prayer tracker":"നമസ്കാര ട്രാക്കർ","Your prayers, at a glance.":"നിങ്ങളുടെ നമസ്കാരങ്ങൾ ഒറ്റ നോട്ടത്തിൽ.","Week":"ആഴ്ച","Month":"മാസം","Year":"വർഷം","Overall":"ആകെ","On time":"സമയത്ത്","Late":"വൈകി","Missed":"നഷ്ടപ്പെട്ടു","Jama\u2019ah":"ജമാഅത്ത്","First row":"ആദ്യ സ്വഫ്",
+"Today":"ഇന്ന്","Widget background":"വിജറ്റ് പശ്ചാത്തലം", "Adjust times":"സമയം ക്രമീകരിക്കുക","Update today\u2019s prayers here":"ഇന്നത്തെ നമസ്കാരങ്ങൾ ഇവിടെ രേഖപ്പെടുത്തുക", "Profile & data":"പ്രൊഫൈലും ഡാറ്റയും","Adjust Hijri date":"ഹിജ്റി തീയതി ക്രമീകരിക്കുക", "Occasion":"അവസരം","After wudu":"വുദൂഇന് ശേഷം", "Sunnah":"സുന്നത്ത്","Time today":"ഇന്നത്തെ സമയം","{0} to {1}":"{0} മുതൽ {1} വരെ","From about {0}":"ഏകദേശം {0} മുതൽ","Ramadan nights only":"റമദാൻ രാത്രികളിൽ മാത്രം","After the first pair":"ആദ്യ ജോഡിക്ക് ശേഷം", "Daily":"ദൈനംദിനം","Special":"പ്രത്യേകം","Travel":"യാത്ര","When":"എപ്പോൾ","Rak\u2019ahs":"റക്അത്തുകൾ","Ruling":"വിധി","Pending scholar review":"പണ്ഡിത പരിശോധന ബാക്കി","Say {0} times":"{0} തവണ","Before the prayer":"നമസ്കാരത്തിന് മുമ്പ്","After the prayer":"നമസ്കാരത്തിന് ശേഷം","The two khutbahs":"രണ്ട് ഖുത്ബകൾ","Conditions":"നിബന്ധനകൾ","Takbir {0} of {1}":"തക്ബീർ {0} / {1}","Choose a category":"വിഭാഗം തിരഞ്ഞെടുക്കുക","No prayers yet today.":"ഇന്ന് ഇതുവരെ നമസ്കാര സമയം ആയിട്ടില്ല.", "All on time":"എല്ലാം സമയത്ത്","Clear day":"ദിവസം മായ്ക്കുക","Not yet":"ഇതുവരെ ആയില്ല","Tap an icon to mark each prayer.":"ഓരോ നമസ്കാരവും രേഖപ്പെടുത്താൻ ഐക്കൺ തൊടുക.", "Tap a date to mark its prayers.":"പ്രാർഥനകൾ രേഖപ്പെടുത്താൻ ഒരു തീയതി തൊടുക.", "Factory reset":"ഫാക്ടറി റീസെറ്റ്","Erase everything and start fresh":"എല്ലാം മായ്ച്ച് പുതുതായി തുടങ്ങുക","Factory reset?":"ഫാക്ടറി റീസെറ്റ് ചെയ്യണോ?","This erases your profile, settings, prayer log and streak from this device, then restarts the app. It can\u2019t be undone.":"ഇത് നിങ്ങളുടെ പ്രൊഫൈൽ, ക്രമീകരണങ്ങൾ, നമസ്കാര രേഖ, തുടർച്ച എന്നിവ ഈ ഉപകരണത്തിൽ നിന്ന് മായ്ച്ച് ആപ്പ് വീണ്ടും തുടങ്ങും. ഇത് തിരിച്ചെടുക്കാനാവില്ല.","Erase everything":"എല്ലാം മായ്ക്കുക","Suggested: {0}":"നിർദേശം: {0}","Change it if needed.":"ആവശ്യമെങ്കിൽ മാറ്റാം.","{0} of 5 prayers":"5-ൽ {0} നമസ്കാരം","Rest day":"വിശ്രമ ദിനം","Days of this month":"ഈ മാസത്തെ ദിവസങ്ങൾ","Prayer tracker":"നമസ്കാര ട്രാക്കർ","Your prayers, at a glance.":"നിങ്ങളുടെ നമസ്കാരങ്ങൾ ഒറ്റ നോട്ടത്തിൽ.","Week":"ആഴ്ച","Month":"മാസം","Year":"വർഷം","Overall":"ആകെ","On time":"സമയത്ത്","Late":"വൈകി","Missed":"നഷ്ടപ്പെട്ടു","Jama\u2019ah":"ജമാഅത്ത്","First row":"ആദ്യ സ്വഫ്",
 "Prayed with Jama\u2019ah":"ജമാഅത്തായി നമസ്കരിച്ചു","Prayed in the first row":"ആദ്യ സ്വഫിൽ നമസ്കരിച്ചു","Prayed on time":"സമയത്ത് നമസ്കരിച്ചു","Prayed late":"വൈകി നമസ്കരിച്ചു","Missed prayers":"നഷ്ടപ്പെട്ട നമസ്കാരങ്ങൾ",
 "How did it go?":"എങ്ങനെയായിരുന്നു?","Extras":"അധികം","Clear":"മായ്ക്കുക","Track options":"ട്രാക്ക് ഓപ്ഷനുകൾ","Marked automatically from the prayer time. Change it if needed.":"പ്രാർഥനാ സമയം നോക്കി സ്വയം രേഖപ്പെടുത്തി. ആവശ്യമെങ്കിൽ മാറ്റാം.","View tracker":"ട്രാക്കർ കാണുക",
 "On time means prayed before the next prayer begins.":"അടുത്ത നമസ്കാരം തുടങ്ങുന്നതിന് മുമ്പ് നമസ്കരിച്ചാൽ സമയത്ത് എന്ന് കണക്കാക്കും.","Prayers you don\u2019t mark once their time has passed count as missed.":"സമയം കഴിഞ്ഞിട്ടും രേഖപ്പെടുത്താത്ത നമസ്കാരങ്ങൾ നഷ്ടപ്പെട്ടതായി കണക്കാക്കും.","No prayers tracked yet.":"ഇതുവരെ നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തിയിട്ടില്ല.",
@@ -895,7 +930,7 @@ ml:{
 "Reset prayer log?":"നമസ്കാര രേഖ റീസെറ്റ് ചെയ്യണോ?","This clears every tick and your streak on this device. It can't be undone.":"ഈ ഉപകരണത്തിലെ എല്ലാ ടിക്കുകളും തുടർച്ചയും മായ്ക്കപ്പെടും. ഇത് തിരിച്ചെടുക്കാനാവില്ല.","Reset":"റീസെറ്റ്"
 },
 ar:{
-"Today":"اليوم","Widget background":"خلفية الودجة", "Profile & data":"الملف والبيانات","Adjust Hijri date":"ضبط التاريخ الهجري", "Occasion":"مناسبة","After wudu":"بعد الوضوء", "Sunnah":"السنن","Time today":"وقت اليوم","{0} to {1}":"من {0} إلى {1}","From about {0}":"من حوالي {0}","Ramadan nights only":"ليالي رمضان فقط","After the first pair":"بعد الركعتين الأوليين", "Daily":"اليومية","Special":"خاصة","Travel":"السفر","When":"متى","Rak\u2019ahs":"الركعات","Ruling":"الحكم","Pending scholar review":"بانتظار مراجعة عالِم","Say {0} times":"{0} مرات","Before the prayer":"قبل الصلاة","After the prayer":"بعد الصلاة","The two khutbahs":"الخطبتان","Conditions":"الشروط","Takbir {0} of {1}":"التكبيرة {0} من {1}","Choose a category":"اختر الفئة","No prayers yet today.":"لم يحن وقت أي صلاة اليوم بعد.", "All on time":"الكل في وقتها","Clear day":"مسح اليوم","Not yet":"لم يحن بعد","Tap an icon to mark each prayer.":"اضغط على رمز لتسجيل كل صلاة.", "Tap a date to mark its prayers.":"اضغط على تاريخ لتسجيل صلواته.", "Factory reset":"إعادة ضبط المصنع","Erase everything and start fresh":"مسح كل شيء والبدء من جديد","Factory reset?":"إعادة ضبط المصنع؟","This erases your profile, settings, prayer log and streak from this device, then restarts the app. It can\u2019t be undone.":"سيمسح هذا ملفك الشخصي وإعداداتك وسجل صلواتك وسلسلتك من هذا الجهاز ثم يعيد تشغيل التطبيق. لا يمكن التراجع عن ذلك.","Erase everything":"مسح كل شيء","Suggested: {0}":"المقترح: {0}","Change it if needed.":"غيّرها إن لزم.","{0} of 5 prayers":"{0} من 5 صلوات","Rest day":"يوم راحة","Days of this month":"أيام هذا الشهر","Prayer tracker":"متتبّع الصلاة","Your prayers, at a glance.":"صلواتك في لمحة.","Week":"الأسبوع","Month":"الشهر","Year":"السنة","Overall":"الإجمالي","On time":"في وقتها","Late":"متأخرة","Missed":"فائتة","Jama\u2019ah":"جماعة","First row":"الصف الأول",
+"Today":"اليوم","Widget background":"خلفية الودجة", "Adjust times":"ضبط الأوقات","Update today\u2019s prayers here":"يمكنك تحديث صلوات اليوم هنا", "Profile & data":"الملف والبيانات","Adjust Hijri date":"ضبط التاريخ الهجري", "Occasion":"مناسبة","After wudu":"بعد الوضوء", "Sunnah":"السنن","Time today":"وقت اليوم","{0} to {1}":"من {0} إلى {1}","From about {0}":"من حوالي {0}","Ramadan nights only":"ليالي رمضان فقط","After the first pair":"بعد الركعتين الأوليين", "Daily":"اليومية","Special":"خاصة","Travel":"السفر","When":"متى","Rak\u2019ahs":"الركعات","Ruling":"الحكم","Pending scholar review":"بانتظار مراجعة عالِم","Say {0} times":"{0} مرات","Before the prayer":"قبل الصلاة","After the prayer":"بعد الصلاة","The two khutbahs":"الخطبتان","Conditions":"الشروط","Takbir {0} of {1}":"التكبيرة {0} من {1}","Choose a category":"اختر الفئة","No prayers yet today.":"لم يحن وقت أي صلاة اليوم بعد.", "All on time":"الكل في وقتها","Clear day":"مسح اليوم","Not yet":"لم يحن بعد","Tap an icon to mark each prayer.":"اضغط على رمز لتسجيل كل صلاة.", "Tap a date to mark its prayers.":"اضغط على تاريخ لتسجيل صلواته.", "Factory reset":"إعادة ضبط المصنع","Erase everything and start fresh":"مسح كل شيء والبدء من جديد","Factory reset?":"إعادة ضبط المصنع؟","This erases your profile, settings, prayer log and streak from this device, then restarts the app. It can\u2019t be undone.":"سيمسح هذا ملفك الشخصي وإعداداتك وسجل صلواتك وسلسلتك من هذا الجهاز ثم يعيد تشغيل التطبيق. لا يمكن التراجع عن ذلك.","Erase everything":"مسح كل شيء","Suggested: {0}":"المقترح: {0}","Change it if needed.":"غيّرها إن لزم.","{0} of 5 prayers":"{0} من 5 صلوات","Rest day":"يوم راحة","Days of this month":"أيام هذا الشهر","Prayer tracker":"متتبّع الصلاة","Your prayers, at a glance.":"صلواتك في لمحة.","Week":"الأسبوع","Month":"الشهر","Year":"السنة","Overall":"الإجمالي","On time":"في وقتها","Late":"متأخرة","Missed":"فائتة","Jama\u2019ah":"جماعة","First row":"الصف الأول",
 "Prayed with Jama\u2019ah":"الصلاة جماعة","Prayed in the first row":"الصلاة في الصف الأول","Prayed on time":"الصلاة في وقتها","Prayed late":"الصلاة متأخرة","Missed prayers":"الصلوات الفائتة",
 "How did it go?":"كيف كانت؟","Extras":"إضافات","Clear":"مسح","Track options":"خيارات التتبّع","Marked automatically from the prayer time. Change it if needed.":"تُسجَّل تلقائيًا بحسب الوقت. غيّرها إن لزم.","View tracker":"عرض المتتبّع",
 "On time means prayed before the next prayer begins.":"تُحتسب «في وقتها» إذا صُلّيت قبل دخول وقت الصلاة التالية.","Prayers you don\u2019t mark once their time has passed count as missed.":"الصلوات التي لا تُسجَّل بعد خروج وقتها تُحتسب فائتة.","No prayers tracked yet.":"لم تُسجَّل صلوات بعد.",
@@ -1149,12 +1184,14 @@ function renderToday(E,now){
   <div class="hero-pin">
   <header class="th">
     <div class="greet"><div class="hi-h">${esc(msg.h[LANG])}</div>${resting?`<button class="hi-m" data-act="restend" dir="auto">${msg[LANG]}</button>`:`<p class="hi-m" dir="auto">${msg[LANG]}</p>`}</div>
-    <button class="qbtn glass" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}</button>
+    <div class="th-r"><button class="loc loc-h" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span>${cn(E.L)}</span>${IC.chev}</button><button class="qbtn glass" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}<span>${tx("Qibla")}</span></button></div>
   </header>
   <div class="sky">${skyHTML(E,now,mask,resting)}</div>
   </div>
-  <div class="list">${rows}<p class="fine" style="margin:6px 12px 8px">${tx(METHODS[S.method].n)} · ${tx("Asr: {0}",tx(S.asr==="hanafi"?"Hanafi":"Shafi\u2019i"))}${adjCount()?` · ${tx("{0} adjusted",adjCount())}`:""}</p></div>
-  ${streakHTML(now)}`;
+  <div class="cards">
+  <div class="list">${rows}<div class="lfoot"><p class="fine">${tx(METHODS[S.method].n)} · ${tx("Asr: {0}",tx(S.asr==="hanafi"?"Hanafi":"Shafi\u2019i"))}${adjCount()?` · ${tx("{0} adjusted",adjCount())}`:""}</p><button class="lbtn" data-act="adjust" aria-label="${tx("Adjust prayer times")}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>${tx("Adjust times")}</button></div></div>
+  ${streakHTML(now)}
+  </div>`;
   heroP=-1;heroScroll();
 }
 
@@ -2043,7 +2080,7 @@ function skyHTML(E,now,mask,resting){
   </svg>
   <div class="sk-in"><div class="nx">${tx("Next prayer")}</div><div class="arn">${NAMES[E.next.key].ar}</div></div></div>
   <div class="sk-cd"><div class="cd num b-cd">${hms(E.next.ms-now)}</div><div class="at num">${tx("{0} at {1}",NAMES[E.next.key].p,fmt(E.next.ms))}</div></div>
-  <div class="sk-loc"><button class="loc" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span>${cn(E.L)}</span>${IC.chev}</button></div>`;
+  <div class="sk-loc"><button class="loc" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span>${cn(E.L)}</span>${IC.chev}</button><button class="qbtn qb-s" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}<span>${tx("Qibla")}</span></button></div>`;
 }
 function updateSky(E,now,p){
   const el=$(".sky");if(!el)return;
@@ -2066,24 +2103,40 @@ function updateSky(E,now,p){
 /* the sky is the home screen's background: it scrolls with the page and fades into the app colour */
 const CLOUDS=[[62,300,1,150,-40,.5,12],[150,380,2,120,-95,.44,62],[236,260,3,190,-20,.36,30],[318,340,1,135,-70,.32,78],[112,200,3,230,-150,.3,46],[40,240,2,210,-110,.28,86],[384,280,3,175,-5,.24,6],[196,460,1,100,-60,.28,40]];
 function cloudsHTML(){
-  const k=innerWidth>=860?1.5:innerWidth>=700?1.25:1;                              /* a bigger screen gets bigger clouds */
-  return `<div class="sk-clouds" aria-hidden="true">${CLOUDS.map(([y,w,sh,t,dl,o,sx])=>`<i class="cloud s${sh}" style="--y:${Math.round(y*k)}px;--w:${Math.round(w*k)}px;--t:${t}s;--dl:${dl}s;--o:${o};--sx:${sx}%"></i>`).join("")}</div>`;
+  const k=innerWidth>=860?1.5:innerWidth>=700?1.25:1,F=[.06,.12,.22],g=[[],[],[]];       /* a bigger screen gets bigger clouds; bigger = closer = faster parallax */
+  CLOUDS.forEach(c=>g[c[1]>=340?2:c[1]>=240?1:0].push(c));
+  return `<div class="sk-clouds" aria-hidden="true">${g.map((arr,d)=>`<div class="cl-layer" data-f="${F[d]}">${arr.map(([y,w,sh,t,dl,o,sx])=>`<i class="cloud s${sh}" style="--y:${Math.round(y*k)}px;--w:${Math.round(w*k)}px;--t:${t}s;--dl:${dl}s;--o:${o};--sx:${sx}%"></i>`).join("")}</div>`).join("")}</div>`;
 }
 function initSkyBg(){
   const b=$("#skybg");if(!b)return;
   b.innerHTML=`<div class="sk-stars" style="opacity:var(--stars,0)">${STARS.map(([x,y,r,o,tw])=>`<i style="left:${(x/4).toFixed(1)}%;top:${(y*1.25).toFixed(0)}px;width:${(r*2).toFixed(1)}px;height:${(r*2).toFixed(1)}px;--hi:${o.toFixed(2)};--lo:${(o*(tw?.1:.35)).toFixed(2)};--d:${(tw?1.5+((x*7)%10)/10*1.5:2.8+((x*13)%10)/10*4.2).toFixed(2)}s;--dl:-${(((x*3)%7)+((y*5)%3)).toFixed(1)}s"></i>`).join("")}</div>`+cloudsHTML();
   const sc=$("#s-today");
-  sc.addEventListener("scroll",()=>heroScroll(),{passive:true});
+  sc.addEventListener("scroll",onHomeScroll,{passive:true});
   scheduleShooter(true);
 }
-let heroP=0,moonOn=false;
+let heroP=0,moonOn=false,scrollTick=false,skyLayers=null;
+function onHomeScroll(){if(scrollTick)return;scrollTick=true;requestAnimationFrame(()=>{scrollTick=false;heroScroll()})}
 function heroScroll(){
   const sc=$("#s-today"),h=$(".hero-pin");if(!sc||!h)return;
-  const p=Math.max(0,Math.min(1,sc.scrollTop/Math.max(120,h.offsetHeight*.85)));
+  const st=sc.scrollTop;
+  if(!skyLayers)skyLayers=[[$(".sk-stars"),.03]].concat([...document.querySelectorAll("#skybg .cl-layer")].map(e=>[e,+e.dataset.f]));
+  skyLayers.forEach(([el,f])=>{if(el)el.style.transform=`translate3d(0,${(-st*f).toFixed(1)}px,0)`});   /* gentle parallax: far layers barely move */
+  const p=Math.max(0,Math.min(1,st/Math.max(160,h.offsetHeight+20)));   /* 1 = the cards have reached the top of the countdown block */
   if(Math.abs(p-heroP)<.004)return;heroP=p;
-  h.style.filter=p>.01?`blur(${(p*4).toFixed(1)}px)`:"none";
-  h.style.opacity=(1-p*.4).toFixed(3);
-  h.style.transform=p>.01?`scale(${(1-p*.04).toFixed(4)})`:"none";
+  const f=Math.max(0,Math.min(1,(p-.35)/.6)),o=1-f*f*(3-2*f);                      /* mild blur first, then it fades out completely once covered */
+  h.style.filter=p>.01?`blur(${(Math.min(1,p/.7)*4).toFixed(1)}px)`:"none";
+  h.style.opacity=o.toFixed(3);
+  h.style.transform=p>.01?`translate3d(0,${(-p*h.offsetHeight*.2).toFixed(1)}px,0) scale(${(1-p*.04).toFixed(4)})`:"none";
+  h.style.pointerEvents=o<.15?"none":"";
+}
+/* tapping today in the month calendar: scroll up to today's prayers and light the card up so the user updates them there */
+function focusPrayerCard(){
+  const sc=$("#s-today"),l=$(".list");if(!sc||!l)return;
+  const top=Math.max(0,sc.scrollTop+l.getBoundingClientRect().top-sc.getBoundingClientRect().top-16);
+  sc.scrollTo({top,behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});
+  l.classList.remove("hl");void l.offsetWidth;l.classList.add("hl");
+  toast(tx("Update today\u2019s prayers here"));
+  setTimeout(()=>{const e=$(".list");if(e)e.classList.remove("hl")},2600);
 }
 /* a rare shooting star, only while the moon is out and the home screen is showing */
 function shootingStar(){
@@ -2259,7 +2312,7 @@ document.addEventListener("click",e=>{
     case"setpage":SP=v==="hub"?null:v;renderSettings();{const sc=$("#s-set");if(sc)sc.scrollTop=0}break;
     case"factory":openSheet(`<h2>${tx("Factory reset?")}</h2><p class="sub" style="margin:6px 0 18px">${tx("This erases your profile, settings, prayer log and streak from this device, then restarts the app. It can\u2019t be undone.")}</p><div style="display:flex;gap:10px"><button class="btn ghost" style="flex:1" data-act="close">${tx("Cancel")}</button><button class="btn gold" style="flex:1;background:var(--st-miss);color:#fff" data-act="factorydo">${tx("Erase everything")}</button></div>`);break;
     case"factorydo":try{localStorage.removeItem("mihrab-v1")}catch(e){}location.reload();break;
-    case"dopen":openDay(+v);break;
+    case"dopen":if(+v===localDay())focusPrayerCard();else openDay(+v);break;
     case"dall":{const nn=+v;touchDay(nn,d=>{P.forEach(k=>{if(dayLocked(nn,k))return;if(!d[k]||d[k].s==="x")d[k]={s:"o"}})});break}
     case"dclr":{const nn=+v;touchDay(nn,d=>{P.forEach(k=>{if(!dayLocked(nn,k))delete d[k]})});break}
     case"dst":{const [n,k,st]=v.split(":"),nn=+n;if(dayLocked(nn,k)){toast(tx("{0} can be ticked once its time begins",NP(k)));break}
