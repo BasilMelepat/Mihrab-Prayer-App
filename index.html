@@ -775,6 +775,48 @@ html[lang="ml"] .hero-pin .loc,html[lang="ml"] .hero-pin .qbtn{font-size:13px}
 @keyframes hlpulse{0%{box-shadow:0 0 0 3px var(--gold),0 0 0 0 rgba(226,188,120,.6),var(--shadow-card)}100%{box-shadow:0 0 0 3px var(--gold),0 0 0 22px rgba(226,188,120,0),var(--shadow-card)}}
 @media (prefers-reduced-motion:reduce){.cloud{left:var(--sx)}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---- menu bar v4: edge-docked bar with a glowing top indicator; docked rail on wide screens ---- */
+.tabs{left:0;right:0;bottom:0;height:calc(66px + env(safe-area-inset-bottom,0px));padding:0 6px env(safe-area-inset-bottom,0px);display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-radius:24px 24px 0 0;background:var(--tabbar);backdrop-filter:blur(28px) saturate(190%);-webkit-backdrop-filter:blur(28px) saturate(190%);box-shadow:0 -1px 0 var(--line),0 -16px 36px -18px rgba(0,0,0,.45)}
+.tab{height:66px;gap:5px;border-radius:0;font-size:11px;font-weight:500;letter-spacing:.01em;color:var(--mist2);overflow:hidden;-webkit-tap-highlight-color:transparent;transition:color .25s,background .35s}
+.tab svg{width:23px;height:23px;stroke-width:1.55;transition:transform .35s cubic-bezier(.3,1.4,.5,1),stroke-width .2s}
+.tab span{line-height:1.1;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px}
+.tab:active svg{transform:scale(.88)}
+.tab:focus-visible{outline:2px solid var(--gold);outline-offset:-4px;border-radius:16px}
+@media (hover:hover){.tab:not([aria-selected=true]):hover{color:var(--ivory)}}
+.tab[aria-selected=true]{color:var(--gold);font-weight:600;background:radial-gradient(70% 90% at 50% 0,var(--gold-a18),transparent 78%)}
+.tab[aria-selected=true] svg{stroke-width:1.9;transform:translateY(-1px)}
+.tab[aria-selected=true]::before{content:"";position:absolute;inset:0 auto auto 50%;width:30px;height:3px;margin-left:-15px;border-radius:0 0 4px 4px;background:var(--gold);box-shadow:0 2px 12px 1px var(--gold);z-index:auto}
+.tab[aria-selected=true]::after{content:none}
+html[lang="ml"] .tab{font-size:10px}
+.updbar{bottom:calc(78px + env(safe-area-inset-bottom,0px))}
+@media (min-width:700px){
+  .tabs{top:50%;bottom:auto;right:18px;left:auto;width:76px;height:auto;max-height:calc(100% - 36px);transform:translateY(-50%);display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:6px;padding:12px 8px;border-radius:30px;box-shadow:var(--shadow-nav),0 1px 0 rgba(255,255,255,.12) inset;overflow:hidden auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  button.brand,.brand{position:relative;left:auto;top:auto;right:auto;bottom:auto;transform:none;flex:none;width:42px;height:42px;margin:0 auto 12px;padding:0;display:grid;place-items:center;border:0;border-radius:50%;background:var(--gold-a18);color:var(--gold);transition:transform .2s}
+  .brand:active{transform:scale(.92)}
+  .brand::after{content:"";position:absolute;left:-4px;right:-4px;bottom:-7px;height:1px;background:var(--line)}
+  .brand svg{width:19px;height:22px}
+  .tab{flex:none;height:62px;gap:4px;border-radius:19px;font-size:10.5px;overflow:visible;transition:color .25s,background .3s,box-shadow .3s,transform .18s}
+  .tab:active{transform:scale(.95)}
+  .tab:last-of-type{margin-top:6px}
+  .tab:not([aria-selected=true]):hover{background:var(--chip-bg)}
+  .tab[aria-selected=true]{color:var(--on-gold);background:linear-gradient(180deg,var(--btn-a),var(--btn-b));box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 12px 24px -10px var(--btn-b)}
+  .tab[aria-selected=true]::before{content:none}
+  .tab[aria-selected=true] svg{transform:none;stroke-width:1.85}
+  .tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:19px}
+  .updbar{bottom:98px}
+}
+@media (min-width:700px) and (max-height:700px){.tab{height:54px}.tab span{font-size:10px}.brand{width:36px;height:36px;margin-bottom:10px}}
+/* ---- tablet and desktop home: location + Qibla pinned top right, with clear space before the cards ---- */
+@media (min-width:700px){
+  #s-today .th-r{display:flex}
+  #s-today .th .loc-h{display:flex}
+  #s-today .sk-loc{display:none}
+}
+@media (min-width:860px){
+  #s-today .cards{margin-top:48px}
+}
 </style>
 </head>
 <body>
@@ -844,7 +886,7 @@ const METHODS={
 };
 const KAABA={lat:21.4225,lon:39.8262};
 /* edit these before release */
-const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.28.0",build:"2026.10.11.36",year:2026};
+const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.32.1",build:"2026.10.17.42",year:2026};
 const CREDITS=[
   ["Design and development","Basil Melepat"],
   ["Religious content review","To be added before release"],
@@ -1206,11 +1248,10 @@ const MLC={2:"രണ്ട്",3:"മൂന്ന്",4:"നാല്"},ENC={2:"
 const L1=(ar,tr,ml,en)=>({ar,tr,ml,en});
 const BASE={
   takbir:{tEn:"Opening takbir",tMl:"തക്ബീറത്തുൽ ഇഹ്റാം",tAr:"تكبيرة الإحرام",pose:"stand",lines:[L1("اللَّهُ أَكْبَرُ","Allaahu akbar","അല്ലാഹു ഏറ്റവും വലിയവനാണ്.","Allah is the Greatest.")],
-    nEn:"Raise both hands to your shoulders as you say it, then fold them over your chest.",nMl:"ഇരു കൈകളും ചുമൽ വരെ ഉയർത്തി, പിന്നീട് നെഞ്ചിനു മുകളിൽ കെട്ടുക.",nAr:"ارفع يديك حذو منكبيك عند التكبير، ثم ضعهما على صدرك."},
+    nEn:"Intend the prayer in your heart; do not say it aloud. Raise both hands to your shoulders as you say it, then place them on your chest. Raise them the same way before and after bowing, and when standing up after the first tashahhud.",nMl:"ഇരു കൈകളും ചുമൽ വരെ ഉയർത്തി, പിന്നീട് നെഞ്ചിനു മുകളിൽ കെട്ടുക.",nAr:"ارفع يديك حذو منكبيك عند التكبير، ثم ضعهما على صدرك."},
   iftitah:{tEn:"Opening supplication",tMl:"ഇഫ്തിതാഹ് ദുആ",tAr:"دعاء الاستفتاح",pose:"stand",lines:[
-    L1("وَجَّهْتُ وَجْهِيَ لِلَّذِي فَطَرَ السَّمَاوَاتِ وَالْأَرْضَ حَنِيفًا مُسْلِمًا وَمَا أَنَا مِنَ الْمُشْرِكِينَ","Wajjahtu wajhiya lillathee fataras-samaawaati wal-arda haneefan muslimaa, wa maa ana minal-mushrikeen.","ആകാശങ്ങളെയും ഭൂമിയെയും സൃഷ്ടിച്ചവന്റെ നേരെ, നേർമാർഗത്തിൽ നിലകൊണ്ടും കീഴടങ്ങിയവനായും ഞാൻ എന്റെ മുഖം തിരിച്ചിരിക്കുന്നു; ഞാൻ ബഹുദൈവാരാധകരിൽ പെട്ടവനല്ല.","I have turned my face toward the One who created the heavens and the earth, upright and in submission. I am not among those who associate partners with Him."),
-    L1("إِنَّ صَلَاتِي وَنُسُكِي وَمَحْيَايَ وَمَمَاتِي لِلَّهِ رَبِّ الْعَالَمِينَ","Inna salaatee wa nusukee wa mahyaaya wa mamaatee lillaahi rabbil-aalameen.","തീർച്ചയായും എന്റെ നമസ്കാരവും ആരാധനാകർമങ്ങളും എന്റെ ജീവിതവും മരണവും ലോകരക്ഷിതാവായ അല്ലാഹുവിനുള്ളതാണ്.","My prayer, my acts of worship, my living and my dying are for Allah, Lord of all the worlds."),
-    L1("لَا شَرِيكَ لَهُ وَبِذَلِكَ أُمِرْتُ وَأَنَا مِنَ الْمُسْلِمِينَ","Laa shareeka lahu, wa bithaalika umirtu wa ana minal-muslimeen.","അവന് പങ്കാളികളില്ല. അതാണ് എന്നോട് കൽപ്പിക്കപ്പെട്ടത്; ഞാൻ മുസ്ലിംകളിൽ ഒരാളാണ്.","He has no partner. This I was commanded, and I am among those who submit.")]},
+    L1("اللَّهُمَّ بَاعِدْ بَيْنِي وَبَيْنَ خَطَايَايَ كَمَا بَاعَدْتَ بَيْنَ الْمَشْرِقِ وَالْمَغْرِبِ، اللَّهُمَّ نَقِّنِي مِنَ الْخَطَايَا كَمَا يُنَقَّى الثَّوْبُ الْأَبْيَضُ مِنَ الدَّنَسِ، اللَّهُمَّ اغْسِلْنِي مِنْ خَطَايَايَ بِالثَّلْجِ وَالْمَاءِ وَالْبَرَدِ","Allaahumma baa\u2019id baynee wa bayna khataayaaya kamaa baa\u2019adta baynal-mashriqi wal-maghrib, allaahumma naqqinee minal-khataayaa kamaa yunaqqath-thawbul-abyadu minad-danas, allaahummaghsilnee min khataayaaya bith-thalji wal-maa\u2019i wal-barad","അല്ലാഹുവേ, കിഴക്കിനെയും പടിഞ്ഞാറിനെയും നീ അകറ്റിയതുപോലെ എനിക്കും എന്റെ തെറ്റുകൾക്കുമിടയിൽ അകലം വെക്കേണമേ. വെളുത്ത വസ്ത്രം അഴുക്കിൽ നിന്ന് ശുദ്ധീകരിക്കപ്പെടുന്നതുപോലെ എന്റെ തെറ്റുകളിൽ നിന്ന് എന്നെ ശുദ്ധീകരിക്കേണമേ. മഞ്ഞും വെള്ളവും ആലിപ്പഴവും കൊണ്ട് എന്റെ തെറ്റുകളെ കഴുകിക്കളയേണമേ.","O Allah, put distance between me and my sins as You put distance between the east and the west. O Allah, cleanse me of my sins as a white garment is cleansed of dirt. O Allah, wash my sins away with snow, water and hail.")],
+    nEn:"Any authentic opening supplication is fine. This one is reported in Bukhari and Muslim.",nMl:"സ്വഹീഹായ ഏത് ആരംഭ പ്രാർത്ഥനയും ചൊല്ലാം. ബുഖാരിയിലും മുസ്‌ലിമിലും ഉള്ളതാണിത്.",nAr:"يجوز أي دعاء استفتاح صحيح، وهذا في الصحيحين."},
   fatiha:{tEn:"Al-Fatiha",tMl:"സൂറത്തുൽ ഫാതിഹ",tAr:"سورة الفاتحة",pose:"stand",lines:[
     L1("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ","Bismillaahir-rahmaanir-raheem","പരമകാരുണികനും കരുണാനിധിയുമായ അല്ലാഹുവിന്റെ നാമത്തിൽ.","In the name of Allah, the Most Gracious, the Most Merciful."),
     L1("الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ","Alhamdu lillaahi rabbil-aalameen","സർവലോകങ്ങളുടെയും രക്ഷിതാവായ അല്ലാഹുവിന് സർവസ്തുതിയും.","All praise is for Allah, Lord of all the worlds."),
@@ -1226,13 +1267,14 @@ const BASE={
     L1("لَمْ يَلِدْ وَلَمْ يُولَدْ","Lam yalid wa lam yoolad","അവൻ ജനിപ്പിച്ചിട്ടില്ല, ജനിപ്പിക്കപ്പെട്ടിട്ടുമില്ല.","He neither begets nor was born."),
     L1("وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ","Wa lam yakul-lahu kufuwan ahad","അവന് തുല്യനായി ആരുമില്ല.","And there is none comparable to Him.")],
     nEn:"Any surah may be recited. Al-Ikhlas is shown as an example.",nMl:"ഏതു സൂറത്തും ഓതാം. ഉദാഹരണമായി സൂറത്തുൽ ഇഖ്ലാസ് കാണിച്ചിരിക്കുന്നു.",nAr:"يجوز قراءة أي سورة. سورة الإخلاص مثال."},
-  ruku:{tEn:"Bowing",tMl:"റുകൂഅ്",tAr:"الركوع",pose:"ruku",rep:3,lines:[L1("سُبْحَانَ رَبِّيَ الْعَظِيمِ وَبِحَمْدِهِ","Subhaana rabbiyal-azeemi wa bihamdih","മഹാനായ എന്റെ രക്ഷിതാവ് പരിശുദ്ധനാണ്; അവനെ ഞാൻ സ്തുതിക്കുന്നു.","Glory be to my Lord, the Magnificent, and praise be to Him.")],
+  ameen:{tEn:"Ameen",tMl:"ആമീൻ",tAr:"التأمين",pose:"stand",lines:[L1("آمِين","Aameen","ആമീൻ.","O Allah, accept.")],nEn:"Say it right after Al-Fatiha: aloud in the loud prayers, quietly in the others.",nMl:"ഫാതിഹക്ക് ശേഷം പറയുക: ഉറക്കെ ഓതുന്ന നമസ്കാരങ്ങളിൽ ഉറക്കെ, മറ്റുള്ളവയിൽ പതുക്കെ.",nAr:"يُقال بعد الفاتحة: جهرًا في الجهرية، وسرًّا في السرية."},
+  ruku:{tEn:"Bowing",tMl:"റുകൂഅ്",tAr:"الركوع",pose:"ruku",rep:3,lines:[L1("سُبْحَانَ رَبِّيَ الْعَظِيمِ","Subhaana rabbiyal-azeem","മഹത്വമേറിയ എന്റെ രക്ഷിതാവ് എത്ര പരിശുദ്ധൻ.","Glory be to my Lord, the Magnificent.")],
     nEn:"Keep your back level and rest your hands on your knees.",nMl:"മുതുക് നേരെ പിടിച്ച് കൈകൾ മുട്ടിൽ വെച്ച് കുനിയുക.",nAr:"اجعل ظهرك مستويًا وضع يديك على ركبتيك."},
   itidal:{tEn:"Standing up",tMl:"ഇഅ്തിദാൽ",tAr:"الاعتدال",pose:"stand2",lines:[
     L1("سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ","Sami\u2019allaahu liman hamidah","തന്നെ സ്തുതിച്ചവരുടെ സ്തുതി അല്ലാഹു കേട്ടിരിക്കുന്നു.","Allah hears whoever praises Him."),
     L1("رَبَّنَا لَكَ الْحَمْدُ","Rabbanaa lakal-hamd","ഞങ്ങളുടെ രക്ഷിതാവേ, നിനക്കാണ് സർവസ്തുതിയും.","Our Lord, all praise is Yours.")],
     nEn:"Rise fully and stand straight before going down.",nMl:"പൂർണമായി നിവർന്നുനിന്ന ശേഷം സുജൂദിലേക്ക് പോകുക.",nAr:"قم منتصبًا تمامًا قبل أن تهوي للسجود."},
-  sujud:{tEn:"Prostration",tMl:"സുജൂദ്",tAr:"السجود",pose:"sujood",rep:3,lines:[L1("سُبْحَانَ رَبِّيَ الْأَعْلَى وَبِحَمْدِهِ","Subhaana rabbiyal-a\u2019laa wa bihamdih","അത്യുന്നതനായ എന്റെ രക്ഷിതാവ് പരിശുദ്ധനാണ്; അവനെ ഞാൻ സ്തുതിക്കുന്നു.","Glory be to my Lord, the Most High, and praise be to Him.")],
+  sujud:{tEn:"Prostration",tMl:"സുജൂദ്",tAr:"السجود",pose:"sujood",rep:3,lines:[L1("سُبْحَانَ رَبِّيَ الْأَعْلَى","Subhaana rabbiyal-a\u2019laa","അത്യുന്നതനായ എന്റെ രക്ഷിതാവ് എത്ര പരിശുദ്ധൻ.","Glory be to my Lord, the Most High.")],
     nEn:"Forehead, nose, both palms, knees and toes touch the ground.",nMl:"നെറ്റി, മൂക്ക്, ഇരു കൈപ്പത്തികൾ, മുട്ടുകൾ, കാൽവിരലുകൾ എന്നിവ നിലത്തു തൊടണം.",nAr:"تلامس الجبهة والأنف والكفان والركبتان وأطراف القدمين الأرض."},
   sit:{tEn:"Sitting between prostrations",tMl:"സുജൂദുകൾക്കിടയിലെ ഇരുത്തം",tAr:"الجلسة بين السجدتين",pose:"sit",lines:[L1("رَبِّ اغْفِرْ لِي وَارْحَمْنِي وَاجْبُرْنِي وَارْفَعْنِي وَارْزُقْنِي وَاهْدِنِي وَعَافِنِي وَاعْفُ عَنِّي","Rabbigh-fir lee warhamnee wajburnee warfa\u2019nee warzuqnee wahdinee wa aafinee wa\u2019fu annee","എന്റെ രക്ഷിതാവേ, എനിക്ക് പൊറുത്തുതരേണമേ, കരുണ കാണിക്കേണമേ, എന്റെ പോരായ്മകൾ നികത്തേണമേ, എന്നെ ഉയർത്തേണമേ, ഉപജീവനം നൽകേണമേ, നേർവഴി കാണിക്കേണമേ, ആരോഗ്യം നൽകേണമേ, എനിക്ക് മാപ്പ് നൽകേണമേ.","My Lord, forgive me, have mercy on me, make up my shortcomings, raise me, provide for me, guide me, grant me well-being, and pardon me.")]},
   tashahhud:{tEn:"Tashahhud",tMl:"തശഹ്ഹുദ്",tAr:"التشهد",pose:"sit",lines:[
@@ -1243,6 +1285,7 @@ const BASE={
   salawat:{tEn:"Blessings on the Prophet",tMl:"സ്വലാത്ത്",tAr:"الصلاة على النبي",pose:"sit",lines:[
     L1("اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ","Allaahumma salli alaa muhammadin wa alaa aali muhammad, kamaa sallayta alaa ibraaheema wa alaa aali ibraaheem","അല്ലാഹുവേ, ഇബ്രാഹീം നബിയുടെയും കുടുംബത്തിന്റെയും മേൽ നീ അനുഗ്രഹം ചൊരിഞ്ഞതുപോലെ, മുഹമ്മദ് നബിയുടെയും കുടുംബത്തിന്റെയും മേൽ നീ അനുഗ്രഹം ചൊരിയേണമേ.","O Allah, send blessings upon Muhammad and his family as You sent blessings upon Ibrahim and his family."),
     L1("وَبَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، فِي الْعَالَمِينَ إِنَّكَ حَمِيدٌ مَجِيدٌ","Wa baarik alaa muhammadin wa alaa aali muhammad, kamaa baarakta alaa ibraaheema wa alaa aali ibraaheem, fil-aalameena innaka hameedun majeed","ഇബ്രാഹീം നബിയുടെയും കുടുംബത്തിന്റെയും മേൽ നീ അഭിവൃദ്ധി നൽകിയതുപോലെ, മുഹമ്മദ് നബിയുടെയും കുടുംബത്തിന്റെയും മേൽ അഭിവൃദ്ധി നൽകേണമേ. തീർച്ചയായും നീ സ്തുത്യർഹനും മഹത്വമുള്ളവനുമാകുന്നു.","And bestow Your favour upon Muhammad and his family as You did upon Ibrahim and his family, in all the worlds. You are indeed Praiseworthy and Glorious.")]},
+  refuge:{tEn:"Refuge before the salam",tMl:"സലാമിന് മുമ്പ് അഭയം തേടൽ",tAr:"الاستعاذة قبل السلام",pose:"sit",lines:[L1("اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ","Allaahumma innee a\u2019oodhu bika min \u2019adhaabi jahannam, wa min \u2019adhaabil-qabr, wa min fitnatil-mahyaa wal-mamaat, wa min sharri fitnatil-maseehid-dajjaal","അല്ലാഹുവേ, നരകശിക്ഷയിൽ നിന്നും ഖബർശിക്ഷയിൽ നിന്നും ജീവിതത്തിലെയും മരണത്തിലെയും പരീക്ഷണങ്ങളിൽ നിന്നും മസീഹുദ്ദജ്ജാലിന്റെ കുഴപ്പത്തിന്റെ ദോഷത്തിൽ നിന്നും ഞാൻ നിന്നോട് അഭയം തേടുന്നു.","O Allah, I seek refuge in You from the punishment of Hell, the punishment of the grave, the trials of life and death, and the evil of the trial of the False Messiah.")],nEn:"Then ask Allah for anything you wish before you give the salam.",nMl:"സലാം വീട്ടുന്നതിന് മുമ്പ് ഇഷ്ടമുള്ളത് അല്ലാഹുവോട് ചോദിക്കുക.",nAr:"ثم ادعُ بما شئت قبل أن تسلّم."},
   salam:{tEn:"Salam",tMl:"സലാം",tAr:"التسليم",pose:"sit",lines:[L1("السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ","As-salaamu alaykum wa rahmatullaah","നിങ്ങളുടെ മേൽ സമാധാനവും അല്ലാഹുവിന്റെ കാരുണ്യവും ഉണ്ടാകട്ടെ.","Peace and the mercy of Allah be upon you.")],
     nEn:"Turn your head to the right, then to the left.",nMl:"ആദ്യം വലത്തോട്ടും പിന്നെ ഇടത്തോട്ടും മുഖം തിരിക്കുക.",nAr:"التفت برأسك إلى اليمين ثم إلى اليسار."}
 };
@@ -1298,13 +1341,13 @@ niy_eid_a:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
   lines:[L1("أُصَلِّي سُنَّةَ عِيدِ الْأَضْحَى رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ مَأْمُومًا لِلَّهِ تَعَالَى","Usallee sunnata eedil-adhaa rak\u2019ataini mustaqbilal-qiblati ma\u2019moomam lillaahi ta\u2019aalaa","ഖിബ്ലക്ക് അഭിമുഖമായി, ഇമാമിനെ പിൻപറ്റി, അല്ലാഹുവിനു വേണ്ടി, ഈദുൽ അദ്ഹായുടെ രണ്ട് റക്അത്ത് സുന്നത്ത് ഞാൻ നിർവഹിക്കുന്നു.","I intend to pray the two rak\u2019ahs of the sunnah of Eid al-Adha behind the imam, facing the Qibla, for the sake of Allah.")],
   nt:TL3("There is no adhan or iqamah. The call is \u201cAs-salaatu jaami\u2019ah\u201d.","ബാങ്കും ഇഖാമത്തും ഇല്ല; \u201cഅസ്സ്വലാത്തു ജാമിഅ\u201d എന്ന് വിളിക്കും.","لا أذان ولا إقامة، ويُنادى: «الصلاة جامعة».")}),
 eid_x7:XM(TL3("Seven extra takbirs","ഏഴ് അധിക തക്ബീറുകൾ","سبع تكبيرات زائدة"),{rep:7,
-  lines:[TKB,L1("سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلَهَ إِلَّا اللَّهُ وَاللَّهُ أَكْبَرُ","Subhaanallaahi walhamdu lillaahi wa laa ilaaha illallaahu wallaahu akbar","അല്ലാഹു പരിശുദ്ധൻ, അല്ലാഹുവിന് സ്തുതി, അല്ലാഹുവല്ലാതെ ആരാധനയ്ക്ക് അർഹനില്ല, അല്ലാഹു ഏറ്റവും വലിയവൻ.","Glory be to Allah, praise be to Allah, there is no god but Allah, and Allah is the Greatest.")],
-  b:TL3("After the opening supplication and before Al-Fatiha, say Allahu akbar seven times, raising your hands each time. Between every two takbirs, say the short dhikr.",
+  lines:[TKB],
+  b:TL3("After the opening supplication and before Al-Fatiha, say Allahu akbar seven times, raising your hands each time.",
         "ഇഫ്തിതാഹ് ദുആക്ക് ശേഷം, ഫാതിഹക്ക് മുമ്പ്, ഓരോ തവണയും കൈകൾ ഉയർത്തി ഏഴ് തവണ \u201cഅല്ലാഹു അക്ബർ\u201d പറയുക. ഓരോ രണ്ട് തക്ബീറിനും ഇടയിൽ ഈ ചെറിയ ദിക്ർ ചൊല്ലുക.",
         "بعد دعاء الافتتاح وقبل الفاتحة كبّر سبع تكبيرات رافعًا يديك مع كل تكبيرة، وقل بين كل تكبيرتين هذا الذكر.")}),
 eid_x5:XM(TL3("Five extra takbirs","അഞ്ച് അധിക തക്ബീറുകൾ","خمس تكبيرات زائدة"),{rep:5,
-  lines:[TKB,L1("سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلَهَ إِلَّا اللَّهُ وَاللَّهُ أَكْبَرُ","Subhaanallaahi walhamdu lillaahi wa laa ilaaha illallaahu wallaahu akbar","അല്ലാഹു പരിശുദ്ധൻ, അല്ലാഹുവിന് സ്തുതി, അല്ലാഹുവല്ലാതെ ആരാധനയ്ക്ക് അർഹനില്ല, അല്ലാഹു ഏറ്റവും വലിയവൻ.","Glory be to Allah, praise be to Allah, there is no god but Allah, and Allah is the Greatest.")],
-  b:TL3("After standing up for the second rak\u2019ah and before Al-Fatiha, say Allahu akbar five times, with the same dhikr between them.",
+  lines:[TKB],
+  b:TL3("After standing up for the second rak\u2019ah and before Al-Fatiha, say Allahu akbar five times.",
         "രണ്ടാം റക്അത്തിനായി എഴുന്നേറ്റ ശേഷം, ഫാതിഹക്ക് മുമ്പ്, അഞ്ച് തവണ \u201cഅല്ലാഹു അക്ബർ\u201d പറയുക; ഇടയിൽ അതേ ദിക്ർ ചൊല്ലുക.",
         "بعد القيام للركعة الثانية وقبل الفاتحة كبّر خمس تكبيرات، وقل بينها الذكر نفسه.")}),
 sur_eid:XM(TL3("A surah","സൂറത്ത്","سورة"),{pose:"info",
@@ -1313,7 +1356,7 @@ sur_eid:XM(TL3("A surah","സൂറത്ത്","سورة"),{pose:"info",
         "اقرأ سورة بعد الفاتحة. والسنة قراءة سورة ق في الأولى وسورة القمر في الثانية (أو الأعلى والغاشية).")}),
 eid_khutbah:XM(TL3("The khutbah","ഖുത്ബ","الخطبة"),{pose:"info",
   lines:[L1("تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ","Taqabbalallaahu minnaa wa minkum","അല്ലാഹു ഞങ്ങളിൽ നിന്നും നിങ്ങളിൽ നിന്നും സ്വീകരിക്കട്ടെ.","May Allah accept it from us and from you.")],
-  b:TL3("After the prayer the imam gives two sermons. The first begins with nine takbirs and the second with seven. Listening is sunnah. Greet one another with the words below.",
+  b:TL3("After the prayer the imam gives two sermons. Listening is sunnah. Greet one another with the words below.",
         "നമസ്കാരത്തിന് ശേഷം ഇമാം രണ്ട് ഖുത്ബകൾ നടത്തും. ഒന്നാമത്തേത് ഒമ്പത് തക്ബീറോടെയും രണ്ടാമത്തേത് ഏഴ് തക്ബീറോടെയും തുടങ്ങും. ശ്രദ്ധിച്ച് കേൾക്കുന്നത് സുന്നത്താണ്. താഴെ കൊടുത്ത വാക്കുകളാൽ പരസ്പരം ആശംസിക്കുക.",
         "بعد الصلاة يخطب الإمام خطبتين، يفتتح الأولى بتسع تكبيرات والثانية بسبع. والاستماع سنة. وتبادلوا التهنئة بالعبارة التالية.")}),
 /* ---- Janazah ---- */
@@ -1358,10 +1401,10 @@ jm_4:XM(TL3("If you arrive late","تാമസിച്ച് എത്തിയ�
   b:TL3("Join the imam in whatever position he is in, saying the opening takbir while standing. You gain the rak\u2019ah if you reach the bowing with the imam and are calm in it. When the imam finishes with the salam, stand up and complete what you missed.","ഇമാം ഏത് അവസ്ഥയിലാണോ അതിൽ ചേരുക; നിന്നുകൊണ്ട് തക്ബീറത്തുൽ ഇഹ്റാം ചൊല്ലുക. ഇമാമിനൊപ്പം റുകൂഅ് ലഭിക്കുകയും അതിൽ ശാന്തത പാലിക്കുകയും ചെയ്താൽ ആ റക്അത്ത് ലഭിച്ചു. ഇമാം സലാം വീട്ടിയ ശേഷം എഴുന്നേറ്റ് നഷ്ടപ്പെട്ടത് പൂർത്തിയാക്കുക.","انضم إلى الإمام في أي حال كان، وكبّر تكبيرة الإحرام قائمًا. تُدرك الركعة إذا أدركت الركوع مع الإمام واطمأننت فيه. وإذا سلّم الإمام فقم وأتمّ ما فاتك.")}),
 /* ---- travel: qasr ---- */
 qs_1:XM(TL3("When may you shorten?","എപ്പോൾ ചുരുക്കാം?","متى يجوز القصر؟"),{pose:"info",
-  b:TL3("On a lawful journey of about 81 km (two marhalah) or more. Begin shortening once you leave the boundary of your town. It applies to Dhuhr, Asr and Isha, which become two rak\u2019ahs; Fajr and Maghrib stay the same.",
+  b:TL3("On a journey that is customarily called travel; many scholars take about 80 km as a guide. Begin shortening once you leave the boundary of your town. It applies to Dhuhr, Asr and Isha, which become two rak\u2019ahs; Fajr and Maghrib stay the same.",
         "ഏകദേശം 81 കിലോമീറ്റർ (രണ്ട് മർഹല) അല്ലെങ്കിൽ കൂടുതലുള്ള അനുവദനീയമായ യാത്രയിൽ. നിങ്ങളുടെ നാടിന്റെ അതിർത്തി കടന്നാൽ ചുരുക്കി തുടങ്ങാം. ളുഹ്ർ, അസ്ർ, ഇശാ എന്നിവ രണ്ട് റക്അത്തായി മാറും; സുബ്ഹിയും മഗ്‌രിബും മാറ്റമില്ലാതെ തുടരും.",
         "في سفر مباح مسافته نحو ٨١ كم (مرحلتان) فأكثر. تبدأ القصر إذا جاوزت حدود بلدك. ويشمل الظهر والعصر والعشاء فتصير ركعتين، أما الفجر والمغرب فلا تتغيران."),
-  nt:TL3("Distances and conditions differ a little between the schools; this follows the Shafi\u2019i view.","ദൂരവും നിബന്ധനകളും മദ്ഹബുകൾക്കിടയിൽ അൽപം വ്യത്യാസപ്പെടും; ഇത് ശാഫിഈ അഭിപ്രായമനുസരിച്ചാണ്.","تختلف المسافة والشروط قليلًا بين المذاهب، وهذا وفق المذهب الشافعي.")}),
+  nt:TL3("Scholars differ on the exact distance, so follow a scholar you trust.","ദൂരവും നിബന്ധനകളും മദ്ഹബുകൾക്കിടയിൽ അൽപം വ്യത്യാസപ്പെടും; ഇത് ശാഫിഈ അഭിപ്രായമനുസരിച്ചാണ്.","تختلف المسافة والشروط قليلًا بين المذاهب، وهذا وفق المذهب الشافعي.")}),
 qs_2:XM(TL3("How long?","എത്ര കാലം?","إلى متى؟"),{pose:"info",
   b:TL3("You may shorten for as long as you are travelling. If you intend to stay four days or more in one place, not counting the days of arrival and departure, you pray in full.",
         "യാത്രക്കാരനായിരിക്കുന്ന കാലമത്രയും ചുരുക്കാം. എത്തുന്ന ദിവസവും പുറപ്പെടുന്ന ദിവസവും ഒഴികെ ഒരിടത്ത് നാല് ദിവസമോ അതിൽ കൂടുതലോ താമസിക്കാൻ ഉദ്ദേശിച്ചാൽ പൂർണമായി നമസ്കരിക്കണം.",
@@ -1433,8 +1476,8 @@ rw_1:XM(TL3("The sunnah prayers","റവാത്തിബ് സുന്നത
   b:TL3("The rawatib are the sunnah rak\u2019ahs prayed before and after the five daily prayers, each as two rak\u2019ahs. The Prophet \uFDFA never left the Fajr sunnah, so it is the most important of them.",
         "അഞ്ച് നേരത്തെ നമസ്കാരങ്ങൾക്ക് മുമ്പും ശേഷവും നമസ്കരിക്കുന്ന സുന്നത്തുകളാണ് റവാത്തിബ്; ഓരോന്നും രണ്ട് റക്അത്ത് വീതം. നബി \uFDFA സുബ്ഹിയുടെ സുന്നത്ത് ഒരിക്കലും ഉപേക്ഷിച്ചില്ല, അതിനാൽ അവയിൽ ഏറ്റവും പ്രധാനം അതാണ്.",
         "الرواتب هي السنن التي تُصلّى قبل الصلوات الخمس وبعدها، وكل منها ركعتان. ولم يترك النبي \uFDFA سنة الفجر، فهي أهمها.")}),
-rw_2:XM(TL3("The ten confirmed rak\u2019ahs","സ്ഥിരീകരിച്ച പത്ത് റക്അത്തുകൾ","الركعات العشر المؤكدة"),{pose:"info",
-  b:TL3("Two before Fajr. Two before Dhuhr. Two after Dhuhr. Two after Maghrib. Two after Isha.\n\nOther sunnahs are also recommended: two more before Dhuhr and two more after it, four before Asr, two before Maghrib and two before Isha.",
+rw_2:XM(TL3("The twelve confirmed rak\u2019ahs","സ്ഥിരീകരിച്ച പത്ത് റക്അത്തുകൾ","الركعات العشر المؤكدة"),{pose:"info",
+  b:TL3("Two before Fajr, four before Dhuhr, two after Dhuhr, two after Maghrib and two after Isha. The Prophet \uFDFA said that whoever prays twelve rak'ahs a day has a house built for them in Paradise (Muslim).\n\nOther voluntary prayers are also recommended, such as four before Asr.",
         "സുബ്ഹിക്ക് മുമ്പ് രണ്ട്. ളുഹ്റിന് മുമ്പ് രണ്ട്. ളുഹ്റിന് ശേഷം രണ്ട്. മഗ്‌രിബിന് ശേഷം രണ്ട്. ഇശായ്ക്ക് ശേഷം രണ്ട്.\n\nമറ്റ് സുന്നത്തുകളും ശുപാർശ ചെയ്യപ്പെടുന്നു: ളുഹ്റിന് മുമ്പ് രണ്ടും ശേഷം രണ്ടും കൂടി, അസ്റിന് മുമ്പ് നാല്, മഗ്‌രിബിന് മുമ്പ് രണ്ട്, ഇശായ്ക്ക് മുമ്പ് രണ്ട്.",
         "ركعتان قبل الفجر. ركعتان قبل الظهر. ركعتان بعد الظهر. ركعتان بعد المغرب. ركعتان بعد العشاء.\n\nويُستحب غيرها: ركعتان أخريان قبل الظهر وركعتان بعده، وأربع قبل العصر، وركعتان قبل المغرب، وركعتان قبل العشاء.")}),
 rw_3:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
@@ -1451,7 +1494,7 @@ sur_rw:XM(TL3("A surah","സൂറത്ത്","سورة"),{pose:"info",
 /* ---- Witr ---- */
 wt_info:XM(TL3("About witr","വിത്റിനെക്കുറിച്ച്","عن الوتر"),{pose:"info",
   lines:[L1("اجْعَلُوا آخِرَ صَلَاتِكُمْ بِاللَّيْلِ وِتْرًا","Ij\u2019aloo aakhira salaatikum billayli witraa","രാത്രി നമസ്കാരത്തിലെ അവസാനത്തേത് വിത്റാക്കുക.","Make witr the last of your night prayers.")],
-  b:TL3("Witr is a strongly recommended sunnah with an odd number of rak\u2019ahs, from one to eleven; three is common. Its time is from after Isha until Fajr.",
+  b:TL3("Witr is a strongly recommended sunnah with an odd number of rak\u2019ahs, from one to eleven; three is common. Its time is from after Isha until Fajr. The qunut is not limited to Ramadan.",
         "വിത്ർ ശക്തമായ സുന്നത്താണ്; ഒറ്റസംഖ്യ റക്അത്തുകളാണ്, ഒന്ന് മുതൽ പതിനൊന്ന് വരെ; മൂന്ന് സാധാരണമാണ്. ഇശായ്ക്ക് ശേഷം മുതൽ സുബ്ഹി വരെയാണ് അതിന്റെ സമയം.",
         "الوتر سنة مؤكدة عدد ركعاتها فردي من واحدة إلى إحدى عشرة، وأشهرها ثلاث. ووقتها من بعد العشاء إلى الفجر."),
   nt:TL3("Three rak\u2019ahs are shown here: two with a salam, then one.","ഇവിടെ മൂന്ന് റക്അത്ത് കാണിച്ചിരിക്കുന്നു: സലാമോടെ രണ്ട്, പിന്നെ ഒന്ന്.","هنا ثلاث ركعات: ركعتان بسلام ثم ركعة.")}),
@@ -1469,13 +1512,13 @@ wt_qunut:XM(TL3("Qunut (second half of Ramadan)","ഖുനൂത്ത് (റ�
      "Allaahummah-dinee feeman hadayt, wa aafinee feeman aafayt, wa tawallanee feeman tawallayt, wa baarik lee feemaa a\u2019tayt, wa qinee sharra maa qadhayt, fa-innaka taqdee wa laa yuqdaa alayk, wa innahu laa yadhillu man waalayt, wa laa ya\u2019izzu man aadayt, tabaarakta rabbanaa wa ta\u2019aalayt",
      "അല്ലാഹുവേ, നീ നേർവഴിയിലാക്കിയവരിൽ എന്നെയും ഉൾപ്പെടുത്തി നേർവഴിയിലാക്കേണമേ; നീ സൗഖ്യം നൽകിയവരിൽ എനിക്കും സൗഖ്യം നൽകേണമേ; നീ ഏറ്റെടുത്തവരിൽ എന്നെയും ഏറ്റെടുക്കേണമേ; നീ നൽകിയതിൽ എനിക്ക് ബറകത്ത് നൽകേണമേ; നീ വിധിച്ച തിന്മയിൽ നിന്ന് എന്നെ കാക്കേണമേ. തീർച്ചയായും നീ വിധിക്കുന്നു, നിനക്കെതിരെ വിധിക്കപ്പെടുകയില്ല. നീ സഹായിച്ചവൻ അപമാനിതനാവില്ല, നീ ശത്രുവാക്കിയവൻ പ്രതാപിയാവുകയുമില്ല. ഞങ്ങളുടെ രക്ഷിതാവേ, നീ അനുഗ്രഹപൂർണനും അത്യുന്നതനുമാകുന്നു.",
      "O Allah, guide me among those You have guided, grant me well-being among those You have granted well-being, take me into Your care among those You have taken into Your care, bless me in what You have given, and protect me from the evil You have decreed. You decree and none decrees over You. He whom You support is never humiliated, and he whom You oppose is never honoured. Blessed are You, our Lord, and exalted.")],
-  nt:TL3("In the Shafi\u2019i school the qunut of witr is recited after rising from the bowing of the last rak\u2019ah, during the second half of Ramadan. Raise your hands; the congregation says Ameen.","ശാഫിഈ മദ്ഹബിൽ വിത്റിലെ ഖുനൂത്ത് റമദാനിന്റെ രണ്ടാം പകുതിയിൽ, അവസാന റക്അത്തിലെ റുകൂഇൽ നിന്ന് ഉയർന്ന ശേഷം ഓതുന്നു. കൈകൾ ഉയർത്തുക; ജമാഅത്ത് ആമീൻ പറയും.","في المذهب الشافعي يُقرأ قنوت الوتر بعد الرفع من ركوع الركعة الأخيرة في النصف الثاني من رمضان. ارفع يديك، والمأمومون يقولون آمين.")}),
+  nt:TL3("Qunut in witr is reported from the Prophet \uFDFA without a time limit, so it may be said at any time of year, and only sometimes. It may be recited before or after the bowing of the last rak\u2019ah.","ശാഫിഈ മദ്ഹബിൽ വിത്റിലെ ഖുനൂത്ത് റമദാനിന്റെ രണ്ടാം പകുതിയിൽ, അവസാന റക്അത്തിലെ റുകൂഇൽ നിന്ന് ഉയർന്ന ശേഷം ഓതുന്നു. കൈകൾ ഉയർത്തുക; ജമാഅത്ത് ആമീൻ പറയും.","في المذهب الشافعي يُقرأ قنوت الوتر بعد الرفع من ركوع الركعة الأخيرة في النصف الثاني من رمضان. ارفع يديك، والمأمومون يقولون آمين.")}),
 wt_after:XM(TL3("After witr","വിത്റിന് ശേഷം","بعد الوتر"),{pose:"info",rep:3,
   lines:[L1("سُبْحَانَ الْمَلِكِ الْقُدُّوسِ","Subhaanal-malikil-quddoos","പരമാധികാരിയും പരിശുദ്ധനുമായ അല്ലാഹു പരിശുദ്ധൻ.","Glory be to the Sovereign, the Most Holy.")],
   nt:TL3("Say it three times, raising your voice on the third.","മൂന്ന് തവണ ചൊല്ലുക, മൂന്നാമത്തേതിൽ ശബ്ദം ഉയർത്തുക.","قلها ثلاث مرات، وارفع صوتك في الثالثة.")}),
 /* ---- Taraweeh ---- */
 tw_info:XM(TL3("About Taraweeh","തറാവീഹിനെക്കുറിച്ച്","عن التراويح"),{pose:"info",
-  b:TL3("Taraweeh is the Ramadan night prayer, prayed after Isha. In the Shafi\u2019i school it is twenty rak\u2019ahs, as ten pairs, each pair ending with a salam. It is best prayed in congregation, and Witr follows it.",
+  b:TL3("Taraweeh is the Ramadan night prayer (qiyam), prayed after Isha. The Prophet \uFDFA prayed eleven rak\u2019ahs in pairs, each pair ending with a salam, then Witr (Bukhari and Muslim). There is no fixed limit, and more is permitted. It is best prayed in congregation.",
         "റമദാൻ രാത്രികളിൽ ഇശായ്ക്ക് ശേഷം നമസ്കരിക്കുന്ന നമസ്കാരമാണ് തറാവീഹ്. ശാഫിഈ മദ്ഹബിൽ ഇത് ഇരുപത് റക്അത്താണ്, പത്ത് ജോഡിയായി, ഓരോ ജോഡിയും സലാമോടെ അവസാനിക്കും. ജമാഅത്തായി നമസ്കരിക്കുന്നതാണ് ഉത്തമം; അതിന് ശേഷം വിത്ർ നമസ്കരിക്കും.",
         "التراويح صلاة ليالي رمضان بعد العشاء. وهي في المذهب الشافعي عشرون ركعة، عشر تسليمات، يُسلَّم من كل ركعتين. والأفضل أداؤها جماعة، ويليها الوتر.")}),
 tw_niy:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
@@ -1507,7 +1550,7 @@ dh_info:XM(TL3("About Duha","ദുഹായെക്കുറിച്ച്","
 dh_niy:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
   lines:[L1("أُصَلِّي سُنَّةَ الضُّحَى رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ لِلَّهِ تَعَالَى","Usallee sunnatad-duhaa rak\u2019ataini mustaqbilal-qiblati lillaahi ta\u2019aalaa","ഖിബ്ലക്ക് അഭിമുഖമായി, അല്ലാഹുവിനു വേണ്ടി, ദുഹായുടെ രണ്ട് റക്അത്ത് സുന്നത്ത് ഞാൻ നിർവഹിക്കുന്നു.","I intend to pray two rak\u2019ahs of the Duha sunnah, facing the Qibla, for the sake of Allah.")]}),
 sur_duha:XM(TL3("A surah","സൂറത്ത്","سورة"),{pose:"info",
-  b:TL3("Recite a surah after Al-Fatiha. The sunnah is Surah Ash-Shams in the first rak\u2019ah and Surah Ad-Duha in the second.","ഫാതിഹക്ക് ശേഷം ഒരു സൂറത്ത് ഓതുക. ഒന്നാം റക്അത്തിൽ സൂറത്തുശ്ശംസും രണ്ടാമത്തേതിൽ സൂറത്തുദ്ദുഹായും ഓതുന്നത് സുന്നത്താണ്.","اقرأ سورة بعد الفاتحة. والسنة قراءة الشمس في الأولى والضحى في الثانية.")}),
+  b:TL3("Recite any surah after Al-Fatiha.","ഫാതിഹക്ക് ശേഷം ഒരു സൂറത്ത് ഓതുക. ഒന്നാം റക്അത്തിൽ സൂറത്തുശ്ശംസും രണ്ടാമത്തേതിൽ സൂറത്തുദ്ദുഹായും ഓതുന്നത് സുന്നത്താണ്.","اقرأ سورة بعد الفاتحة. والسنة قراءة الشمس في الأولى والضحى في الثانية.")}),
 /* ---- Awwabin ---- */
 aw_info:XM(TL3("About Awwabin","അവ്വാബീനെക്കുറിച്ച്","عن الأوابين"),{pose:"info",
   b:TL3("Awwabin is a voluntary prayer between Maghrib and Isha. Six rak\u2019ahs after the Maghrib sunnah is common, prayed in pairs. The word means those who often return to Allah.",
@@ -1525,27 +1568,27 @@ ish_niy:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
   lines:[L1("أُصَلِّي سُنَّةَ الْإِشْرَاقِ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ لِلَّهِ تَعَالَى","Usallee sunnatal-ishraaqi rak\u2019ataini mustaqbilal-qiblati lillaahi ta\u2019aalaa","ഖിബ്ലക്ക് അഭിമുഖമായി, അല്ലാഹുവിനു വേണ്ടി, ഇശ്റാഖിന്റെ രണ്ട് റക്അത്ത് സുന്നത്ത് ഞാൻ നിർവഹിക്കുന്നു.","I intend to pray two rak\u2019ahs of the Ishraq sunnah, facing the Qibla, for the sake of Allah.")]})
 });
 
-const std2=(sx)=>{const o=[];for(let r=1;r<=2;r++){if(r===1)o.push({k:"takbir",r:1},{k:"iftitah",r:1});o.push({k:"fatiha",r});o.push(sx?{x:sx,r}:{k:"surah",r});o.push({k:"ruku",r},{k:"itidal",r},{k:"sujud1",r},{k:"sit",r},{k:"sujud2",r});if(r===2)o.push({k:"tashahhud",r},{k:"salawat",r},{k:"salam",r})}return o};
-const eidSteps=a=>[{x:a?"eidtk_a":"eidtk_f",lbl:["Before the prayer"]},{x:a?"niy_eid_a":"niy_eid_f",r:1},{k:"takbir",r:1},{k:"iftitah",r:1},{x:"eid_x7",r:1},{k:"fatiha",r:1},{x:"sur_eid",r:1},{k:"ruku",r:1},{k:"itidal",r:1},{k:"sujud1",r:1},{k:"sit",r:1},{k:"sujud2",r:1},{x:"eid_x5",r:2},{k:"fatiha",r:2},{x:"sur_eid",r:2},{k:"ruku",r:2},{k:"itidal",r:2},{k:"sujud1",r:2},{k:"sit",r:2},{k:"sujud2",r:2},{k:"tashahhud",r:2},{k:"salawat",r:2},{k:"salam",r:2},{x:"eid_khutbah",lbl:["After the prayer"]}];
+const std2=(sx)=>{const o=[];for(let r=1;r<=2;r++){if(r===1)o.push({k:"takbir",r:1},{k:"iftitah",r:1});o.push({k:"fatiha",r},{k:"ameen",r});o.push(sx?{x:sx,r}:{k:"surah",r});o.push({k:"ruku",r},{k:"itidal",r},{k:"sujud1",r},{k:"sit",r},{k:"sujud2",r});if(r===2)o.push({k:"tashahhud",r},{k:"salawat",r},{k:"refuge",r},{k:"salam",r})}return o};
+const eidSteps=a=>[{x:a?"eidtk_a":"eidtk_f",lbl:["Before the prayer"]},{x:a?"niy_eid_a":"niy_eid_f",r:1},{k:"takbir",r:1},{k:"iftitah",r:1},{x:"eid_x7",r:1},{k:"fatiha",r:1},{k:"ameen",r:1},{x:"sur_eid",r:1},{k:"ruku",r:1},{k:"itidal",r:1},{k:"sujud1",r:1},{k:"sit",r:1},{k:"sujud2",r:1},{x:"eid_x5",r:2},{k:"fatiha",r:2},{k:"ameen",r:2},{x:"sur_eid",r:2},{k:"ruku",r:2},{k:"itidal",r:2},{k:"sujud1",r:2},{k:"sit",r:2},{k:"sujud2",r:2},{k:"tashahhud",r:2},{k:"salawat",r:2},{k:"refuge",r:2},{k:"salam",r:2},{x:"eid_khutbah",lbl:["After the prayer"]}];
 const TB=(n)=>["Takbir {0} of {1}",n,4];
 const GD={
   jumuah:{cat:"special",n:2,nm:TL3("Jumu\u2019ah (Friday)","ജുമുഅ (വെള്ളി)","صلاة الجمعة"),
     sum:{when:TL3("Friday, in Dhuhr\u2019s time, after two khutbahs","വെള്ളിയാഴ്ച, ളുഹ്ർ സമയത്ത്, രണ്ട് ഖുത്ബകൾക്ക് ശേഷം","يوم الجمعة، في وقت الظهر، بعد خطبتين"),rak:TL3("2","2","٢"),rule:TL3("Obligatory for resident men; it replaces Dhuhr","താമസക്കാരായ പുരുഷന്മാർക്ക് നിർബന്ധം; ളുഹ്റിന് പകരമാണ്","فرض على الرجال المقيمين، وتحلّ محل الظهر")},
     build:()=>[{x:"ghusl_j",lbl:["Before the prayer"]},{x:"khut_j",lbl:["Before the prayer"]},{x:"niy_j",r:1}].concat(std2("sur_jum"))},
   eid_fitr:{cat:"special",n:2,nm:TL3("Eid al-Fitr","ഈദുൽ ഫിത്ർ","عيد الفطر"),
-    sum:{when:TL3("1 Shawwal, after sunrise","ശവ്വാൽ 1, സൂര്യോദയത്തിന് ശേഷം","١ شوال، بعد شروق الشمس"),rak:TL3("2, with extra takbirs","2, അധിക തക്ബീറുകളോടെ","٢، مع تكبيرات زائدة"),rule:TL3("Sunnah mu\u2019akkadah, prayed in congregation","ശക്തമായ സുന്നത്ത്, ജമാഅത്തായി","سنة مؤكدة، تُصلّى جماعة")},
+    sum:{when:TL3("1 Shawwal, after sunrise","ശവ്വാൽ 1, സൂര്യോദയത്തിന് ശേഷം","١ شوال، بعد شروق الشمس"),rak:TL3("2, with extra takbirs","2, അധിക തക്ബീറുകളോടെ","٢، مع تكبيرات زائدة"),rule:TL3("A confirmed sunnah, and many scholars say obligatory; men and women attend","ശക്തമായ സുന്നത്ത്, ജമാഅത്തായി","سنة مؤكدة، تُصلّى جماعة")},
     build:()=>eidSteps(false)},
   eid_adha:{cat:"special",n:2,nm:TL3("Eid al-Adha","ഈദുൽ അദ്ഹാ","عيد الأضحى"),
-    sum:{when:TL3("10 Dhul Hijjah, after sunrise","ദുൽഹിജ്ജ 10, സൂര്യോദയത്തിന് ശേഷം","١٠ ذو الحجة، بعد شروق الشمس"),rak:TL3("2, with extra takbirs","2, അധിക തക്ബീറുകളോടെ","٢، مع تكبيرات زائدة"),rule:TL3("Sunnah mu\u2019akkadah, prayed in congregation","ശക്തമായ സുന്നത്ത്, ജമാഅത്തായി","سنة مؤكدة، تُصلّى جماعة")},
+    sum:{when:TL3("10 Dhul Hijjah, after sunrise","ദുൽഹിജ്ജ 10, സൂര്യോദയത്തിന് ശേഷം","١٠ ذو الحجة، بعد شروق الشمس"),rak:TL3("2, with extra takbirs","2, അധിക തക്ബീറുകളോടെ","٢، مع تكبيرات زائدة"),rule:TL3("A confirmed sunnah, and many scholars say obligatory; men and women attend","ശക്തമായ സുന്നത്ത്, ജമാഅത്തായി","سنة مؤكدة، تُصلّى جماعة")},
     build:()=>eidSteps(true)},
   janazah:{cat:"special",n:0,nm:TL3("Janazah (funeral)","ജനാസ (മയ്യിത്ത്)","صلاة الجنازة"),
     sum:{when:TL3("After the body is bathed and shrouded","മയ്യിത്ത് കുളിപ്പിച്ച് കഫൻ ചെയ്ത ശേഷം","بعد تغسيل الميت وتكفينه"),rak:TL3("4 takbirs, no bowing or prostration","4 തക്ബീറുകൾ, റുകൂഅും സുജൂദും ഇല്ല","٤ تكبيرات، بلا ركوع ولا سجود"),rule:TL3("Fard kifayah (a communal duty)","ഫർള് കിഫായ (സമൂഹത്തിന്റെ ബാധ്യത)","فرض كفاية")},
     build:()=>[{x:"jz_info"},{x:"niy_jz"},{x:"jz_1",lbl:TB(1)},{x:"jz_2",lbl:TB(2)},{x:"jz_3",lbl:TB(3)},{x:"jz_child",lbl:TB(3)},{x:"jz_4",lbl:TB(4)},{k:"salam"}]},
   jamaah:{cat:"special",n:0,nm:TL3("In congregation","ജമാഅത്തായി","في جماعة"),
-    sum:{when:TL3("Any of the five daily prayers","അഞ്ച് നേരത്തെ ഏത് നമസ്കാരവും","أي صلاة من الخمس"),rak:TL3("As the imam prays","ഇമാം നമസ്കരിക്കുന്നതുപോലെ","كما يصلّي الإمام"),rule:TL3("Fard kifayah for the community; strongly recommended for each man","സമൂഹത്തിന് ഫർള് കിഫായ; ഓരോ പുരുഷനും ശക്തമായി സുന്നത്ത്","فرض كفاية على المجتمع، وسنة مؤكدة لكل رجل")},
+    sum:{when:TL3("Any of the five daily prayers","അഞ്ച് നേരത്തെ ഏത് നമസ്കാരവും","أي صلاة من الخمس"),rak:TL3("As the imam prays","ഇമാം നമസ്കരിക്കുന്നതുപോലെ","كما يصلّي الإمام"),rule:TL3("Obligatory for men, in the mosque","സമൂഹത്തിന് ഫർള് കിഫായ; ഓരോ പുരുഷനും ശക്തമായി സുന്നത്ത്","فرض كفاية على المجتمع، وسنة مؤكدة لكل رجل")},
     build:()=>[{x:"jm_1"},{x:"jm_2"},{x:"jm_3"},{x:"jm_4"}]},
   qasr:{cat:"travel",n:2,nm:TL3("Qasr (shorten)","ഖസ്ർ (ചുരുക്കൽ)","القصر"),
-    sum:{when:TL3("On a lawful journey of about 81 km or more","ഏകദേശം 81 കി.മീ. ഉള്ള അനുവദനീയമായ യാത്രയിൽ","في سفر مباح نحو ٨١ كم فأكثر"),rak:TL3("2 instead of 4 (Dhuhr, Asr, Isha)","4-ന് പകരം 2 (ളുഹ്ർ, അസ്ർ, ഇശാ)","٢ بدل ٤ (الظهر والعصر والعشاء)"),rule:TL3("A concession (rukhsah) for travellers","യാത്രക്കാർക്കുള്ള ഇളവ് (റുഖ്സ)","رخصة للمسافر")},
+    sum:{when:TL3("On a journey of about 80 km or more","ഏകദേശം 81 കി.മീ. ഉള്ള അനുവദനീയമായ യാത്രയിൽ","في سفر مباح نحو ٨١ كم فأكثر"),rak:TL3("2 instead of 4 (Dhuhr, Asr, Isha)","4-ന് പകരം 2 (ളുഹ്ർ, അസ്ർ, ഇശാ)","٢ بدل ٤ (الظهر والعصر والعشاء)"),rule:TL3("A concession (rukhsah) for travellers","യാത്രക്കാർക്കുള്ള ഇളവ് (റുഖ്സ)","رخصة للمسافر")},
     build:()=>[{x:"qs_1",lbl:["Conditions"]},{x:"qs_2",lbl:["Conditions"]},{x:"qs_3",r:1}].concat(std2(null))},
   jam_taqdim:{cat:"travel",n:0,nm:TL3("Jam\u2019 early","ജംഅ് തഖ്ദീം","جمع التقديم"),
     sum:{when:TL3("Asr with Dhuhr, or Isha with Maghrib, in the first prayer\u2019s time","ആദ്യ നമസ്കാരത്തിന്റെ സമയത്ത് ളുഹ്റിനൊപ്പം അസ്ർ, മഗ്‌രിബിനൊപ്പം ഇശാ","العصر مع الظهر أو العشاء مع المغرب في وقت الأولى"),rak:TL3("As each prayer","ഓരോ നമസ്കാരത്തിനും അതിന്റേത്","كما لكل صلاة"),rule:TL3("A concession while travelling","യാത്രയിലെ ഇളവ്","رخصة في السفر")},
@@ -1566,16 +1609,16 @@ function nightWin(E,now){
 const hmRange=(a,b)=>tx("{0} to {1}",fmt(a),fmt(b));
 Object.assign(GD,{
   rawatib:{cat:"sunnah",n:2,nm:TL3("Rawatib","റവാത്തിബ്","الرواتب"),
-    sum:{when:TL3("Before and after the five daily prayers","അഞ്ച് നേരത്തെ നമസ്കാരങ്ങൾക്ക് മുമ്പും ശേഷവും","قبل الصلوات الخمس وبعدها"),rak:TL3("10 confirmed, in pairs","10 സ്ഥിരീകരിച്ചത്, ജോഡികളായി","١٠ مؤكدة، مثنى مثنى"),rule:TL3("Sunnah mu\u2019akkadah","ശക്തമായ സുന്നത്ത്","سنة مؤكدة")},
+    sum:{when:TL3("Before and after the five daily prayers","അഞ്ച് നേരത്തെ നമസ്കാരങ്ങൾക്ക് മുമ്പും ശേഷവും","قبل الصلوات الخمس وبعدها"),rak:TL3("12 confirmed, in pairs","10 സ്ഥിരീകരിച്ചത്, ജോഡികളായി","١٠ مؤكدة، مثنى مثنى"),rule:TL3("Sunnah mu\u2019akkadah","ശക്തമായ സുന്നത്ത്","سنة مؤكدة")},
     build:()=>[{x:"rw_1"},{x:"rw_2"},{x:"rw_3",r:1}].concat(std2("sur_rw"))},
   witr:{cat:"sunnah",n:3,nm:TL3("Witr","വിത്ർ","الوتر"),
     sum:{when:TL3("After Isha until Fajr","ഇശായ്ക്ക് ശേഷം സുബ്ഹി വരെ","من بعد العشاء إلى الفجر"),rak:TL3("1 to 11 (commonly 3)","1 മുതൽ 11 വരെ (സാധാരണ 3)","من ١ إلى ١١ (غالبًا ٣)"),rule:TL3("Sunnah mu\u2019akkadah","ശക്തമായ സുന്നത്ത്","سنة مؤكدة")},
     win:(E,now)=>{const w=nightWin(E,now);return hmRange(w.i,w.f)},
-    build:()=>[{x:"wt_info"},{x:"wt_niy2",r:1}].concat(std2("sur_wt")).concat([{x:"wt_niy1",r:3},{k:"takbir",r:3},{k:"iftitah",r:3},{k:"fatiha",r:3},{x:"sur_wt3",r:3},{k:"ruku",r:3},{k:"itidal",r:3},{x:"wt_qunut",r:3},{k:"sujud1",r:3},{k:"sit",r:3},{k:"sujud2",r:3},{k:"tashahhud",r:3},{k:"salawat",r:3},{k:"salam",r:3},{x:"wt_after",lbl:["After the prayer"]}])},
+    build:()=>[{x:"wt_info"},{x:"wt_niy2",r:1}].concat(std2("sur_wt")).concat([{x:"wt_niy1",r:3},{k:"takbir",r:3},{k:"iftitah",r:3},{k:"fatiha",r:3},{k:"ameen",r:3},{x:"sur_wt3",r:3},{k:"ruku",r:3},{k:"itidal",r:3},{x:"wt_qunut",r:3},{k:"sujud1",r:3},{k:"sit",r:3},{k:"sujud2",r:3},{k:"tashahhud",r:3},{k:"salawat",r:3},{k:"refuge",r:3},{k:"salam",r:3},{x:"wt_after",lbl:["After the prayer"]}])},
   taraweeh:{cat:"sunnah",n:2,nm:TL3("Taraweeh","തറാവീഹ്","التراويح"),
-    sum:{when:TL3("Ramadan nights, after Isha","റമദാൻ രാത്രികളിൽ, ഇശായ്ക്ക് ശേഷം","ليالي رمضان بعد العشاء"),rak:TL3("20, in pairs","20, ജോഡികളായി","٢٠ مثنى مثنى"),rule:TL3("Sunnah mu\u2019akkadah, best in congregation","ശക്തമായ സുന്നത്ത്, ജമാഅത്തായി ഉത്തമം","سنة مؤكدة، والأفضل جماعة")},
+    sum:{when:TL3("Ramadan nights, after Isha","റമദാൻ രാത്രികളിൽ, ഇശായ്ക്ക് ശേഷം","ليالي رمضان بعد العشاء"),rak:TL3("11 as the Prophet \uFDFA prayed; more is permitted","20, ജോഡികളായി","٢٠ مثنى مثنى"),rule:TL3("Sunnah mu\u2019akkadah, best in congregation","ശക്തമായ സുന്നത്ത്, ജമാഅത്തായി ഉത്തമം","سنة مؤكدة، والأفضل جماعة")},
     win:(E,now)=>{if(hij(localDay()).m!==9)return tx("Ramadan nights only");const w=nightWin(E,now);return hmRange(w.i,w.f)},
-    build:()=>[{x:"tw_info"},{x:"tw_niy",r:1}].concat(std2(null)).concat([{x:"tw_rep",lbl:["After the first pair"]}])},
+    build:()=>[{x:"tw_info"},{x:"tw_niy",r:1}].concat(std2(null))},
   tahajjud:{cat:"sunnah",n:2,nm:TL3("Tahajjud","തഹജ്ജുദ്","التهجد"),
     sum:{when:TL3("At night, best in its last third","രാത്രിയിൽ, അവസാന മൂന്നിലൊന്നിൽ ഉത്തമം","بالليل، وأفضله الثلث الأخير"),rak:TL3("2 or more, in pairs (8 is common)","2 അല്ലെങ്കിൽ കൂടുതൽ, ജോഡികളായി (8 സാധാരണം)","ركعتان فأكثر مثنى مثنى (٨ شائعة)"),rule:TL3("Voluntary, strongly encouraged","ഐച്ഛികം, ശക്തമായി പ്രോത്സാഹിപ്പിക്കപ്പെടുന്നു","نافلة مؤكدة الاستحباب")},
     win:(E,now)=>{const w=nightWin(E,now),t=(w.f-w.m)/3;return hmRange(w.f-t,w.f)},
@@ -1593,15 +1636,16 @@ Object.assign(GD,{
     win:E=>tx("From about {0}",fmt(E.today.sunrise+15*60000)),
     build:()=>[{x:"ish_info"},{x:"ish_niy",r:1}].concat(std2(null))}
 });
-const GLIST={daily:P,sunnah:["rawatib","witr","taraweeh","tahajjud","duha","awwabin","ishraq"],special:["jumuah","eid_fitr","eid_adha","janazah","jamaah"],travel:["qasr","jam_taqdim","jam_takhir","vehicle"]};
+const GLIST={daily:P,sunnah:["rawatib","witr","taraweeh","tahajjud","duha","ishraq"],special:["jumuah","eid_fitr","eid_adha","janazah","jamaah"],travel:["qasr","jam_taqdim","jam_takhir","vehicle"]};
 const GCAT=[["daily","Daily"],["sunnah","Sunnah"],["special","Special"],["travel","Travel"]];
 const gcatOf=id=>GD[id]?GD[id].cat:"daily";
 const gname=id=>GD[id]?GD[id].nm[LANG]:NAMES[id].p;
-const gsteps=id=>GD[id]?GD[id].build():buildSteps(id);
+const SPOKEN=l=>/^(Usallee|Nawaytu|Asjudu)/.test(l.tr);
+const gsteps=id=>(GD[id]?GD[id].build():buildSteps(id)).filter(st=>st.k?st.k!=="niyyah":!/^Inten[td]/.test(XC[st.x].t.en));
 const gcount=id=>GD[id]?GD[id].n:RAK[id];
 /* one shape for every step, whether it comes from the daily prayer pieces or the new guides */
 function CV(st,id){
-  if(st.x){const c=XC[st.x];return {t:c.t,pose:c.pose||"stand",lines:c.lines||[],rep:c.rep,b:c.b,nt:c.nt}}
+  if(st.x){const c=XC[st.x];return {t:c.t,pose:c.pose||"stand",lines:(c.lines||[]).filter(l=>!SPOKEN(l)),rep:c.rep,b:c.b,nt:c.nt}}
   const c=content(st.k,id);
   return {t:TL3(c.tEn,c.tMl,c.tAr),pose:c.pose,lines:c.lines,rep:c.rep,b:null,nt:TL3(c.nEn||"",c.nMl||"",c.nAr||"")};
 }
@@ -1616,7 +1660,7 @@ c3_ik1:XM(TL3("What is Istikhara?","എന്താണ് ഇസ്തിഖാ�
 c3_ik2:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
   lines:[L1("أُصَلِّي سُنَّةَ الِاسْتِخَارَةِ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى","Usallee sunnatal-istikhaarati rak\u2019ataini mustaqbilal-qiblati adaa\u2019an lillaahi ta\u2019aalaa","ഖിബ്ലക്ക് അഭിമുഖമായി, അല്ലാഹുവിനു വേണ്ടി, ഇസ്തിഖാറയുടെ രണ്ട് റക്അത്ത് സുന്നത്ത് ഞാൻ നിർവഹിക്കുന്നു.","I intend to pray two rak\u2019ahs of the Istikhara sunnah, facing the Qibla, for the sake of Allah.")]}),
 c3_ik3:XM(TL3("A surah","സൂറത്ത്","سورة"),{pose:"info",
-  b:TL3("Recite Surah Al-Kafirun in the first rak\u2019ah and Surah Al-Ikhlas in the second. This is recommended, not required.","ഒന്നാം റക്അത്തിൽ സൂറത്തുൽ കാഫിറൂനും രണ്ടാമത്തേതിൽ സൂറത്തുൽ ഇഖ്ലാസും ഓതുക. ഇത് സുന്നത്താണ്, നിർബന്ധമല്ല.","اقرأ الكافرون في الأولى والإخلاص في الثانية، وهذا مستحب وليس واجبًا.")}),
+  b:TL3("Recite any surah after Al-Fatiha.","ഒന്നാം റക്അത്തിൽ സൂറത്തുൽ കാഫിറൂനും രണ്ടാമത്തേതിൽ സൂറത്തുൽ ഇഖ്ലാസും ഓതുക. ഇത് സുന്നത്താണ്, നിർബന്ധമല്ല.","اقرأ الكافرون في الأولى والإخلاص في الثانية، وهذا مستحب وليس واجبًا.")}),
 c3_ik4:XM(TL3("The dua of Istikhara","ഇസ്തിഖാറയുടെ ദുആ","دعاء الاستخارة"),{pose:"sit",
   lines:[L1("اللَّهُمَّ إِنِّي أَسْتَخِيرُكَ بِعِلْمِكَ، وَأَسْتَقْدِرُكَ بِقُدْرَتِكَ، وَأَسْأَلُكَ مِنْ فَضْلِكَ الْعَظِيمِ، فَإِنَّكَ تَقْدِرُ وَلَا أَقْدِرُ، وَتَعْلَمُ وَلَا أَعْلَمُ، وَأَنْتَ عَلَّامُ الْغُيُوبِ",
      "Allaahumma innee astakheeruka bi\u2019ilmika, wa astaqdiruka biqudratika, wa as\u2019aluka min fadlikal-azeem, fa-innaka taqdiru wa laa aqdir, wa ta\u2019lamu wa laa a\u2019lam, wa anta allaamul-ghuyoob",
@@ -1662,14 +1706,14 @@ c3_tb3:XM(TL3("Seeking forgiveness","പാപമോചനം തേടൽ","ا�
      "I seek forgiveness from Allah the Mighty, besides whom there is no god, the Ever-Living, the Sustainer, and I turn to Him in repentance.")]}),
 /* ---- Sujud al-Shukr ---- */
 c3_sh1:XM(TL3("Gratitude to Allah","അല്ലാഹുവോടുള്ള നന്ദി","شكر الله"),{pose:"info",
-  b:TL3("When Allah gives you good news or removes a hardship, it is sunnah to prostrate in thanks. Be in wudu, face the Qibla, say Allahu akbar, prostrate once, then rise with the takbir and give the salam. You may also pray two rak\u2019ahs of thanks if you wish.",
+  b:TL3("When Allah gives you good news or removes a hardship, it is sunnah to prostrate in thanks. Face the Qibla if you can, prostrate once and thank Allah. No set words, takbir or salam are reported for it.",
         "അല്ലാഹു നിങ്ങൾക്ക് സന്തോഷവാർത്ത നൽകുമ്പോഴോ ഒരു പ്രയാസം നീക്കുമ്പോഴോ നന്ദിസൂചകമായി സുജൂദ് ചെയ്യുന്നത് സുന്നത്താണ്. വുദൂഇൽ ഖിബ്ലക്ക് അഭിമുഖമായി \u201cഅല്ലാഹു അക്ബർ\u201d പറഞ്ഞ് ഒരു സുജൂദ് ചെയ്യുക, തക്ബീറോടെ ഉയർന്ന് സലാം വീട്ടുക. താൽപര്യമുണ്ടെങ്കിൽ നന്ദിയുടെ രണ്ട് റക്അത്തും നമസ്കരിക്കാം.",
         "إذا رزقك الله خبرًا سارًّا أو كشف عنك كربًا فيُسنّ سجود الشكر. كن على طهارة، واستقبل القبلة، وكبّر، واسجد سجدة واحدة، ثم ارفع مكبّرًا وسلّم. ولك أن تصلي ركعتين شكرًا إن شئت.")}),
 c3_sh2:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
   lines:[L1("أَسْجُدُ لِلَّهِ سُجُودَ الشُّكْرِ","Asjudu lillaahi sujoodash-shukr","അല്ലാഹുവിനു വേണ്ടി നന്ദിയുടെ സുജൂദ് ഞാൻ ചെയ്യുന്നു.","I prostrate to Allah in gratitude.")]}),
 c3_sh3:XM(TL3("The prostration","സുജൂദ്","السجدة"),{pose:"sujood",
   lines:BASE.sujud.lines.concat([L1("الْحَمْدُ لِلَّهِ الَّذِي بِنِعْمَتِهِ تَتِمُّ الصَّالِحَاتُ","Alhamdu lillaahil-ladhee bini\u2019matihi tatimmus-saalihaat","ഏതൊരുവന്റെ അനുഗ്രഹത്താൽ സൽകർമങ്ങൾ പൂർത്തിയാകുന്നുവോ ആ അല്ലാഹുവിന് സ്തുതി.","Praise be to Allah, by whose favour good deeds are completed.")]),
-  nt:TL3("Say Allahu akbar to go down, and Allahu akbar to rise, then give the salam.","താഴുമ്പോഴും ഉയരുമ്പോഴും \u201cഅല്ലാഹു അക്ബർ\u201d പറയുക, പിന്നെ സലാം വീട്ടുക.","كبّر عند الهبوط وعند الرفع، ثم سلّم.")}),
+  nt:TL3("Go down in prostration and praise Allah, then rise.","താഴുമ്പോഴും ഉയരുമ്പോഴും \u201cഅല്ലാഹു അക്ബർ\u201d പറയുക, പിന്നെ സലാം വീട്ടുക.","كبّر عند الهبوط وعند الرفع، ثم سلّم.")}),
 /* ---- Tahiyyat al-Masjid ---- */
 c3_tm1:XM(TL3("Entering the mosque","പള്ളിയിൽ പ്രവേശിക്കുമ്പോൾ","دخول المسجد"),{pose:"info",
   lines:[L1("بِسْمِ اللَّهِ وَالصَّلَاةُ وَالسَّلَامُ عَلَى رَسُولِ اللَّهِ، اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ","Bismillaah, was-salaatu was-salaamu alaa rasoolillaah, allaahummaf-tah lee abwaaba rahmatik","അല്ലാഹുവിന്റെ നാമത്തിൽ; അല്ലാഹുവിന്റെ ദൂതരുടെ മേൽ സ്വലാത്തും സലാമും ഉണ്ടാകട്ടെ. അല്ലാഹുവേ, നിന്റെ കാരുണ്യത്തിന്റെ വാതിലുകൾ എനിക്ക് തുറന്നുതരേണമേ.","In the name of Allah, and blessings and peace be upon the Messenger of Allah. O Allah, open the doors of Your mercy for me.")],
@@ -1681,7 +1725,7 @@ c3_tm2:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
 /* ---- Sunnah of wudu ---- */
 c3_tu1:XM(TL3("After wudu","വുദൂഇന് ശേഷം","بعد الوضوء"),{pose:"info",
   lines:[L1("أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ، اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ","Ash-hadu an laa ilaaha illallaahu wahdahu laa shareeka lah, wa ash-hadu anna muhammadan abduhu wa rasooluh, allaahummaj-alnee minat-tawwaabeena waj-alnee minal-mutatahhireen","അല്ലാഹുവല്ലാതെ ആരാധനയ്ക്ക് അർഹനില്ലെന്നും, അവൻ ഏകനും പങ്കുകാരില്ലാത്തവനുമാണെന്നും, മുഹമ്മദ് നബി അവന്റെ ദാസനും ദൂതനുമാണെന്നും ഞാൻ സാക്ഷ്യം വഹിക്കുന്നു. അല്ലാഹുവേ, എന്നെ പശ്ചാത്തപിക്കുന്നവരിലും ശുദ്ധി പാലിക്കുന്നവരിലും ഉൾപ്പെടുത്തേണമേ.","I bear witness that there is no god but Allah alone, without partner, and that Muhammad is His servant and messenger. O Allah, make me among those who repent and among those who purify themselves.")],
-  b:TL3("After finishing wudu, before the water dries, say the dua below and pray two rak\u2019ahs. Bilal (may Allah be pleased with him) prayed two rak\u2019ahs after every wudu, and the Prophet \uFDFA gave him glad tidings for it.",
+  b:TL3("After finishing wudu, say the dua below and pray two rak\u2019ahs. Bilal (may Allah be pleased with him) prayed two rak\u2019ahs after every wudu, and the Prophet \uFDFA gave him glad tidings for it.",
         "വുദൂഅ് കഴിഞ്ഞ്, വെള്ളം ഉണങ്ങുന്നതിന് മുമ്പ്, താഴെയുള്ള ദുആ ചൊല്ലി രണ്ട് റക്അത്ത് നമസ്കരിക്കുക. ബിലാൽ (റ) ഓരോ വുദൂഇന് ശേഷവും രണ്ട് റക്അത്ത് നമസ്കരിക്കാറുണ്ടായിരുന്നു; അതിന്റെ പേരിൽ നബി ﷺ അദ്ദേഹത്തിന് സുവിശേഷം നൽകി.",
         "بعد الفراغ من الوضوء وقبل أن يجف الماء قل الدعاء الآتي وصلِّ ركعتين. كان بلال رضي الله عنه يصلي ركعتين بعد كل وضوء، وبشّره النبي ﷺ بذلك.")}),
 c3_tu2:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
@@ -1700,14 +1744,14 @@ c3_ks3:XM(TL3("A long surah","ദീർഘമായ സൂറത്ത്","سو
         "ഫാതിഹക്ക് ശേഷം സൂറത്തുൽ ബഖറയുടെ നീളമുള്ള ഒരു ദീർഘ സൂറത്ത് ഓതുക. പിന്നെ തസ്ബീഹ് ധാരാളം ചൊല്ലി ദീർഘമായി റുകൂഅ് ചെയ്യുക.",
         "بعد الفاتحة اقرأ سورة طويلة بقدر سورة البقرة. ثم اركع ركوعًا طويلًا مكثرًا من التسبيح.")}),
 c3_ks4:XM(TL3("Stand again","വീണ്ടും നിൽക്കുക","القيام الثاني"),{pose:"info",
-  b:TL3("After rising from the first bowing, do not prostrate yet. Recite Al-Fatiha again and a shorter surah, about 200 verses in length.",
+  b:TL3("After rising from the first bowing, do not prostrate yet. Recite Al-Fatiha again and a shorter surah.",
         "ആദ്യ റുകൂഇൽ നിന്ന് ഉയർന്ന ശേഷം ഇപ്പോൾ സുജൂദ് ചെയ്യരുത്. വീണ്ടും ഫാതിഹ ഓതി, ഏകദേശം 200 ആയത്തുകളുടെ നീളമുള്ള ചെറിയ ഒരു സൂറത്ത് ഓതുക.",
         "بعد الرفع من الركوع الأول لا تسجد بعد. اقرأ الفاتحة مرة أخرى وسورة أقصر بنحو مئتي آية.")}),
 c3_ks5:XM(TL3("Second bowing","രണ്ടാം റുകൂഅ്","الركوع الثاني"),{pose:"ruku",
   lines:BASE.ruku.lines,
   nt:TL3("Bow for a shorter time than the first bowing. After rising, go down to prostrate, and make the prostration long, about as long as the bowing.","ആദ്യ റുകൂഇനേക്കാൾ കുറഞ്ഞ സമയം റുകൂഅ് ചെയ്യുക. ഉയർന്ന ശേഷം സുജൂദിലേക്ക് പോകുക; സുജൂദ് റുകൂഇന്റെ അത്രയും ദീർഘമാക്കുക.","اركع أقصر من الركوع الأول. وبعد الرفع اهوِ إلى السجود وأطِل فيه بقدر الركوع.")}),
 c3_ks6:XM(TL3("The second rak\u2019ah","രണ്ടാം റക്അത്ത്","الركعة الثانية"),{pose:"info",
-  b:TL3("Repeat the same, a little shorter: after Al-Fatiha recite a surah of about 150 verses and bow, rise, then recite Al-Fatiha and a surah of about 100 verses, bow again, rise and prostrate twice.",
+  b:TL3("Repeat the same, a little shorter: after Al-Fatiha recite a surah and bow, rise, then recite Al-Fatiha and a shorter surah, bow again, rise and prostrate twice.",
         "അതേപോലെ അൽപം ചെറുതായി ആവർത്തിക്കുക: ഫാതിഹക്ക് ശേഷം ഏകദേശം 150 ആയത്തുള്ള സൂറത്ത് ഓതി റുകൂഅ് ചെയ്യുക, ഉയരുക, പിന്നെ ഫാതിഹയും ഏകദേശം 100 ആയത്തുള്ള സൂറത്തും ഓതി വീണ്ടും റുകൂഅ് ചെയ്യുക, ഉയർന്ന് രണ്ട് സുജൂദ് ചെയ്യുക.",
         "كرّر مثل ذلك أخفّ قليلًا: بعد الفاتحة اقرأ سورة بنحو مئة وخمسين آية واركع، ثم ارفع، ثم اقرأ الفاتحة وسورة بنحو مئة آية واركع ثانية، ثم ارفع واسجد سجدتين.")}),
 c3_ks7:XM(TL3("The khutbah","ഖുത്ബ","الخطبة"),{pose:"info",
@@ -1716,7 +1760,7 @@ c3_ks7:XM(TL3("The khutbah","ഖുത്ബ","الخطبة"),{pose:"info",
         "بعد الصلاة يخطب الإمام خطبتين يذكّر فيهما بالتوبة والصدقة وذكر الله. أنصت وادعُ حتى ينتهي الكسوف.")}),
 /* ---- Rain prayer (Istisqa) ---- */
 c3_is1:XM(TL3("Asking Allah for rain","മഴക്കായി അല്ലാഹുവോട് ചോദിക്കൽ","طلب السقيا"),{pose:"info",
-  b:TL3("Istisqa is prayed when rain is needed. The imam calls people to repent, give charity and fast for three days. Then they go out to open ground humbly, in plain clothes, with children and the elderly. A simple dua for rain, even without the prayer, is also sunnah.",
+  b:TL3("Istisqa is prayed when rain is needed. The imam calls people to repent and give charity. Then they go out to open ground humbly, in plain clothes. A simple dua for rain, even without the prayer, is also sunnah.",
         "മഴ ആവശ്യമായി വരുമ്പോഴാണ് ഇസ്തിസ്ഖാഅ് നമസ്കരിക്കുന്നത്. പശ്ചാത്തപിക്കാനും ദാനം ചെയ്യാനും മൂന്ന് ദിവസം നോമ്പെടുക്കാനും ഇമാം ജനങ്ങളെ ആഹ്വാനം ചെയ്യും. പിന്നെ അവർ വിനയത്തോടെ, ലളിതമായ വസ്ത്രം ധരിച്ച്, കുട്ടികളോടും വൃദ്ധരോടും ഒപ്പം തുറന്ന സ്ഥലത്തേക്ക് പോകും. നമസ്കാരമില്ലാതെ മഴക്കായി ലളിതമായ ദുആ ചെയ്യുന്നതും സുന്നത്താണ്.",
         "تُصلّى الاستسقاء عند الحاجة إلى المطر. ويدعو الإمام الناس إلى التوبة والصدقة وصيام ثلاثة أيام. ثم يخرجون إلى الصحراء متواضعين في ثياب بذلة ومعهم الصبيان والشيوخ. ويُسنّ أيضًا الدعاء بالسقيا دون صلاة.")}),
 c3_is2:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
@@ -1725,16 +1769,16 @@ c3_is2:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
 c3_is3:XM(TL3("The khutbah and dua","ഖുത്ബയും ദുആയും","الخطبة والدعاء"),{pose:"sit",
   lines:[L1("اللَّهُمَّ اسْقِنَا غَيْثًا مُغِيثًا هَنِيئًا مَرِيئًا مَرِيعًا غَدَقًا عَاجِلًا غَيْرَ آجِلٍ","Allaahummas-qinaa ghaythan mugheethan haneee\u2019an mareee\u2019an maree\u2019an ghadaqan aajilan ghayra aajil","അല്ലാഹുവേ, ഞങ്ങൾക്ക് ആശ്വാസം നൽകുന്ന, സുഖപ്രദവും പോഷകസമൃദ്ധവുമായ, സമൃദ്ധമായ, വൈകാതെ ഉടനെ ലഭിക്കുന്ന മഴ നൽകേണമേ.","O Allah, give us rain that relieves, wholesome and fertile, abundant, soon and not delayed."),
          L1("أَسْتَغْفِرُ اللَّهَ","Astaghfirullaah","ഞാൻ അല്ലാഹുവോട് പാപമോചനം തേടുന്നു.","I seek Allah\u2019s forgiveness.")],
-  b:TL3("After the prayer the imam gives two sermons, beginning the first with istighfar nine times and the second seven times. He raises his hands in dua and turns his cloak over. Everyone makes dua with him.",
+  b:TL3("After the prayer the imam gives two sermons. He raises his hands in dua and turns his cloak over. Everyone makes dua with him.",
         "നമസ്കാരത്തിന് ശേഷം ഇമാം രണ്ട് ഖുത്ബകൾ നടത്തും; ഒന്നാമത്തേത് ഒമ്പത് തവണയും രണ്ടാമത്തേത് ഏഴ് തവണയും ഇസ്തിഗ്ഫാർ കൊണ്ട് തുടങ്ങും. അദ്ദേഹം കൈകൾ ഉയർത്തി ദുആ ചെയ്യുകയും മേലങ്കി മറിച്ചിടുകയും ചെയ്യും. എല്ലാവരും അദ്ദേഹത്തോടൊപ്പം ദുആ ചെയ്യും.",
         "بعد الصلاة يخطب الإمام خطبتين، يفتتح الأولى بالاستغفار تسعًا والثانية سبعًا. ويرفع يديه بالدعاء ويقلب رداءه. ويدعو الجميع معه.")})
 });
-const ksSteps=()=>{const o=[{x:"c3_ks1",lbl:["Before the prayer"]},{x:"c3_ks2",r:1},{k:"takbir",r:1},{k:"iftitah",r:1},{k:"fatiha",r:1},{x:"c3_ks3",r:1},{k:"ruku",r:1},{k:"itidal",r:1},{k:"fatiha",r:1},{x:"c3_ks4",r:1},{x:"c3_ks5",r:1},{k:"itidal",r:1},{k:"sujud1",r:1},{k:"sit",r:1},{k:"sujud2",r:1},{x:"c3_ks6",r:2},{k:"fatiha",r:2},{k:"ruku",r:2},{k:"itidal",r:2},{k:"fatiha",r:2},{x:"c3_ks5",r:2},{k:"itidal",r:2},{k:"sujud1",r:2},{k:"sit",r:2},{k:"sujud2",r:2},{k:"tashahhud",r:2},{k:"salawat",r:2},{k:"salam",r:2},{x:"c3_ks7",lbl:["After the prayer"]}];return o};
-const istSteps=()=>[{x:"c3_is1",lbl:["Before the prayer"]},{x:"c3_is2",r:1},{k:"takbir",r:1},{k:"iftitah",r:1},{x:"eid_x7",r:1},{k:"fatiha",r:1},{x:"sur_eid",r:1},{k:"ruku",r:1},{k:"itidal",r:1},{k:"sujud1",r:1},{k:"sit",r:1},{k:"sujud2",r:1},{x:"eid_x5",r:2},{k:"fatiha",r:2},{x:"sur_eid",r:2},{k:"ruku",r:2},{k:"itidal",r:2},{k:"sujud1",r:2},{k:"sit",r:2},{k:"sujud2",r:2},{k:"tashahhud",r:2},{k:"salawat",r:2},{k:"salam",r:2},{x:"c3_is3",lbl:["After the prayer"]}];
+const ksSteps=()=>{const o=[{x:"c3_ks1",lbl:["Before the prayer"]},{x:"c3_ks2",r:1},{k:"takbir",r:1},{k:"iftitah",r:1},{k:"fatiha",r:1},{k:"ameen",r:1},{x:"c3_ks3",r:1},{k:"ruku",r:1},{k:"itidal",r:1},{k:"fatiha",r:1},{k:"ameen",r:1},{x:"c3_ks4",r:1},{x:"c3_ks5",r:1},{k:"itidal",r:1},{k:"sujud1",r:1},{k:"sit",r:1},{k:"sujud2",r:1},{x:"c3_ks6",r:2},{k:"fatiha",r:2},{k:"ameen",r:2},{k:"ruku",r:2},{k:"itidal",r:2},{k:"fatiha",r:2},{k:"ameen",r:2},{x:"c3_ks5",r:2},{k:"itidal",r:2},{k:"sujud1",r:2},{k:"sit",r:2},{k:"sujud2",r:2},{k:"tashahhud",r:2},{k:"salawat",r:2},{k:"refuge",r:2},{k:"salam",r:2},{x:"c3_ks7",lbl:["After the prayer"]}];return o};
+const istSteps=()=>[{x:"c3_is1",lbl:["Before the prayer"]},{x:"c3_is2",r:1},{k:"takbir",r:1},{k:"iftitah",r:1},{x:"eid_x7",r:1},{k:"fatiha",r:1},{k:"ameen",r:1},{x:"sur_eid",r:1},{k:"ruku",r:1},{k:"itidal",r:1},{k:"sujud1",r:1},{k:"sit",r:1},{k:"sujud2",r:1},{x:"eid_x5",r:2},{k:"fatiha",r:2},{k:"ameen",r:2},{x:"sur_eid",r:2},{k:"ruku",r:2},{k:"itidal",r:2},{k:"sujud1",r:2},{k:"sit",r:2},{k:"sujud2",r:2},{k:"tashahhud",r:2},{k:"salawat",r:2},{k:"refuge",r:2},{k:"salam",r:2},{x:"c3_is3",lbl:["After the prayer"]}];
 Object.assign(GD,{
   istikhara:{cat:"occasion",n:2,nm:TL3("Istikhara","ഇസ്തിഖാറ","الاستخارة"),
     sum:{when:TL3("When choosing between permissible options","അനുവദനീയമായ കാര്യങ്ങളിൽ ഒന്ന് തിരഞ്ഞെടുക്കുമ്പോൾ","عند الاختيار بين أمرين مباحين"),rak:TL3("2, then the dua","2, പിന്നെ ദുആ","٢ ثم الدعاء"),rule:TL3("Sunnah","സുന്നത്ത്","سنة")},
-    build:()=>[{x:"c3_ik1",lbl:["Before the prayer"]},{x:"c3_ik2",r:1}].concat(std2("c3_ik3"),[{x:"c3_ik4",lbl:["After the prayer"]}])},
+    build:()=>[{x:"c3_ik1",lbl:["Before the prayer"]},{x:"c3_ik2",r:1}].concat(std2(null),[{x:"c3_ik4",lbl:["After the prayer"]}])},
   hajah:{cat:"occasion",n:2,nm:TL3("Salat al-Hajah","ഹാജത്ത് നമസ്കാരം","صلاة الحاجة"),
     sum:{when:TL3("When you have a need from Allah","അല്ലാഹുവിനോട് ഒരു ആവശ്യം ഉണ്ടാകുമ്പോൾ","عند الحاجة إلى شيء من الله"),rak:TL3("2, then the dua","2, പിന്നെ ദുആ","٢ ثم الدعاء"),rule:TL3("Voluntary (the report is weak)","ഐച്ഛികം (റിപ്പോർട്ട് ദുർബലം)","نافلة (والحديث ضعيف)")},
     build:()=>[{x:"c3_hj1",lbl:["Before the prayer"]},{x:"c3_hj2",r:1}].concat(std2(null),[{x:"c3_hj3",lbl:["After the prayer"]}])},
@@ -1758,17 +1802,17 @@ Object.assign(GD,{
     build:istSteps}
 });
 GLIST.special.push("kusuf","istisqa");
-GLIST.occasion=["istikhara","hajah","tawbah","shukr","tahiyyat_masjid","tahiyyat_wudu"];
+GLIST.occasion=["istikhara","tawbah","shukr","tahiyyat_masjid","tahiyyat_wudu"];
 GCAT.splice(3,0,["occasion","Occasion"]);
 
 function buildSteps(p){
   const n=RAK[p],out=[],add=(k,r,x)=>out.push(Object.assign({k,r},x||{}));
   for(let r=1;r<=n;r++){
     if(r===1){add("niyyah",1);add("takbir",1);add("iftitah",1)}
-    add("fatiha",r);if(r<=2)add("surah",r);
+    add("fatiha",r);add("ameen",r);if(r<=2)add("surah",r);
     add("ruku",r);add("itidal",r);add("sujud1",r);add("sit",r);add("sujud2",r);
     if(r===2&&n>2)add("tashahhud",r,{first:true});
-    if(r===n){add("tashahhud",r);add("salawat",r);add("salam",r)}
+    if(r===n){add("tashahhud",r);add("salawat",r);add("refuge",r);add("salam",r)}
   }
   return out;
 }
