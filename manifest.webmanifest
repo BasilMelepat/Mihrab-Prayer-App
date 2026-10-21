@@ -1,15 +1,14 @@
 {
+  "id": "/",
   "name": "Mihrab – prayer companion",
   "short_name": "Mihrab",
-  "description": "Prayer times, Qibla, calendar, guides and reminders. Works offline.",
-  "id": "/",
+  "description": "Prayer times, Qibla, reminders and a prayer tracker.",
   "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0A1022",
-  "theme_color": "#0A1022",
-  "lang": "en",
+  "background_color": "#0F1530",
+  "theme_color": "#0F1530",
   "categories": ["lifestyle", "utilities"],
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
@@ -17,8 +16,7 @@
     { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
-    { "name": "Today", "url": "/?tab=today", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
     { "name": "Qibla", "url": "/?tab=qibla", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Calendar", "url": "/?tab=cal", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+    { "name": "Prayer tracker", "url": "/?tab=trk", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
   ]
 }
