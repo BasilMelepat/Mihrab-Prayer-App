@@ -62,8 +62,8 @@
 @property --arch-dot{syntax:"<color>";inherits:true;initial-value:#FFF3CF}
 @property --dial-a{syntax:"<color>";inherits:true;initial-value:#16244B}
 @property --dial-b{syntax:"<color>";inherits:true;initial-value:#0B1330}
-@property --st-late{syntax:"<color>";inherits:true;initial-value:#8DA2D0}
-@property --st-miss{syntax:"<color>";inherits:true;initial-value:#D9806E}
+@property --st-late{syntax:"<color>";inherits:true;initial-value:#D9806E}
+@property --st-miss{syntax:"<color>";inherits:true;initial-value:#6B759A}
 html{font-synthesis-weight:none;transition:--midnight 1.6s cubic-bezier(.4,0,.2,1),--night 1.6s cubic-bezier(.4,0,.2,1),--dusk 1.6s cubic-bezier(.4,0,.2,1),--dusk2 1.6s cubic-bezier(.4,0,.2,1),--gold 1.6s cubic-bezier(.4,0,.2,1),--goldhi 1.6s cubic-bezier(.4,0,.2,1),--goldlo 1.6s cubic-bezier(.4,0,.2,1),--ivory 1.6s cubic-bezier(.4,0,.2,1),--mist 1.6s cubic-bezier(.4,0,.2,1),--mist2 1.6s cubic-bezier(.4,0,.2,1),--line 1.6s cubic-bezier(.4,0,.2,1),--line-soft 1.6s cubic-bezier(.4,0,.2,1),--on-gold 1.6s cubic-bezier(.4,0,.2,1),--btn-a 1.6s cubic-bezier(.4,0,.2,1),--btn-b 1.6s cubic-bezier(.4,0,.2,1),--bg-glow 1.6s cubic-bezier(.4,0,.2,1),--card-a 1.6s cubic-bezier(.4,0,.2,1),--card-b 1.6s cubic-bezier(.4,0,.2,1),--chip-bg 1.6s cubic-bezier(.4,0,.2,1),--tabbar 1.6s cubic-bezier(.4,0,.2,1),--sheet-bg 1.6s cubic-bezier(.4,0,.2,1),--toast-bg 1.6s cubic-bezier(.4,0,.2,1),--sw-off 1.6s cubic-bezier(.4,0,.2,1),--gold-a18 1.6s cubic-bezier(.4,0,.2,1),--nxt-a 1.6s cubic-bezier(.4,0,.2,1),--nxt-b 1.6s cubic-bezier(.4,0,.2,1),--pose-bg 1.6s cubic-bezier(.4,0,.2,1),--shade 1.6s cubic-bezier(.4,0,.2,1),--arch-a 1.6s cubic-bezier(.4,0,.2,1),--arch-b 1.6s cubic-bezier(.4,0,.2,1),--arch-prog 1.6s cubic-bezier(.4,0,.2,1),--arch-dot 1.6s cubic-bezier(.4,0,.2,1),--dial-a 1.6s cubic-bezier(.4,0,.2,1),--dial-b 1.6s cubic-bezier(.4,0,.2,1),--st-late 1.6s cubic-bezier(.4,0,.2,1),--st-miss 1.6s cubic-bezier(.4,0,.2,1)}
 html.no-anim,html.no-anim *{transition:none!important}
 
@@ -79,7 +79,7 @@ html.no-anim,html.no-anim *{transition:none!important}
   --sw-off:#2A3563; --gold-a18:rgba(226,188,120,.18); --nxt-a:rgba(255,255,255,.085); --nxt-b:rgba(255,255,255,.045);
   --pose-bg:rgba(255,255,255,.04); --shade:rgba(3,6,16,.62);
   --arch-a:#22336B; --arch-b:#0D1630; --arch-prog:#F1DCA8; --arch-dot:#FFF3CF;
-  --dial-a:#16244B; --dial-b:#0B1330; --st-late:#8DA2D0; --st-miss:#D9806E;
+  --dial-a:#16244B; --dial-b:#0B1330; --st-late:#D9806E; --st-miss:#6B759A;
   --shadow-card:0 1px 0 rgba(255,255,255,.05) inset,0 2px 6px rgba(0,0,0,.28),0 18px 38px -18px rgba(0,0,0,.72);
   --shadow-sm:0 8px 18px -8px rgba(0,0,0,.65);
   --shadow-sky:0 26px 52px -20px rgba(0,0,0,.8),0 4px 12px rgba(0,0,0,.25);
@@ -98,7 +98,7 @@ html[data-theme="day"]{
   --sw-off:#CDD4E4; --gold-a18:rgba(154,108,21,.14); --nxt-a:rgba(40,60,130,.07); --nxt-b:rgba(40,60,130,.04);
   --pose-bg:#F3F5FA; --shade:rgba(20,28,58,.4);
   --arch-a:#FFF6DE; --arch-b:#F3D399; --arch-prog:#9A6C15; --arch-dot:#6E4A0C;
-  --dial-a:#FFFFFF; --dial-b:#E3E9F3; --st-late:#5C74A6; --st-miss:#B5513F;
+  --dial-a:#FFFFFF; --dial-b:#E3E9F3; --st-late:#B5513F; --st-miss:#8A93AD;
   --shadow-card:0 1px 2px rgba(22,32,66,.04),0 12px 32px -12px rgba(22,32,66,.16),0 32px 64px -32px rgba(22,32,66,.16);
   --shadow-sm:0 8px 18px -8px rgba(22,32,66,.24);
   --shadow-sky:0 24px 48px -18px rgba(44,76,150,.46),0 6px 16px -6px rgba(22,32,66,.14);
@@ -622,7 +622,7 @@ html.sky-on{background:var(--sk1,var(--midnight))}
 @keyframes skp{0%{transform:scale(.7);opacity:.95}100%{transform:scale(1.7);opacity:0}}
 .sk-in{position:absolute;left:20%;right:20%;top:36%;height:43%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none}
 .sk-in .nx{font-size:calc(3.4*var(--u));color:rgba(255,255,255,.78);margin-bottom:calc(.6*var(--u))}
-.sk-in .arn{font-family:var(--ar);font-size:calc(12.4*var(--u));line-height:1.15;color:#F5DFAE;text-shadow:0 2px 18px rgba(0,20,60,.4)}
+.sk-in .arn{font-family:var(--ar);font-size:calc(9.4*var(--u));line-height:1.2;color:#F5DFAE;text-shadow:0 2px 18px rgba(0,20,60,.4)}
 .sk-cd{position:relative;z-index:1;text-align:center;padding:calc(1*var(--u)) calc(4*var(--u)) calc(1.6*var(--u))}
 .sk-loc{position:relative;z-index:1;display:flex;justify-content:center;padding:calc(1.6*var(--u)) 0 calc(2*var(--u))}
 .sk-cd .cd{font-family:var(--display);font-size:calc(14.6*var(--u));line-height:1.05;letter-spacing:.5px;color:#fff;text-shadow:0 3px 22px rgba(0,20,60,.45)}
@@ -638,7 +638,7 @@ html[lang="ml"] .sky .sk-cd .at,html[lang="ml"] .sky .sk-in .nx{font-size:calc(3
 
 /* ---- month strip, status checkbox, danger row ---- */
 .ck.miss{border-color:var(--st-miss);color:var(--st-miss)}
-.opt.danger>span:first-child{color:var(--st-miss)}
+.opt.danger>span:first-child{color:var(--st-late)}
 .skd.sel{box-shadow:0 0 0 2px var(--gold)}
 .skd.future{opacity:.35}
 
@@ -826,6 +826,76 @@ html[lang="ml"] .tab{font-size:10px}
 @media (min-width:860px){
   #s-today .cards{margin-top:48px}
 }
+/* bottom menu: content scrolls underneath and fades out through a progressive blur (0% opacity at the top, 100% at the bottom) */
+@media (max-width:699px){
+  .screen{inset:0;padding-bottom:calc(66px + env(safe-area-inset-bottom,0px) + 56px)}
+  .tabs{box-shadow:0 -1px 0 var(--line)}
+  .phone::after{content:"";position:absolute;left:0;right:0;bottom:calc(66px + env(safe-area-inset-bottom,0px));height:76px;z-index:3;pointer-events:none;
+    background:linear-gradient(to bottom,transparent 0%,var(--midnight) 100%);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 100%);mask-image:linear-gradient(to bottom,transparent 0%,#000 100%)}
+}
+/* guide: calmer category tabs (underline, scrollable, with counts) and roomier outlined sub-chips */
+.g-cat{display:flex;gap:6px;width:100%;margin-top:18px;padding:0;background:none;border-radius:0;border-bottom:1px solid var(--line-soft);overflow-x:auto;scrollbar-width:none}
+.g-cat::-webkit-scrollbar{display:none}
+.g-cat button{flex:none;position:relative;padding:10px 12px 13px;font-size:14.5px;font-weight:500;letter-spacing:.01em;color:var(--mist2);background:none;border-radius:0;transition:color .2s}
+.g-cat button:first-child{padding-left:2px}
+.g-cat button small{margin-left:5px;font-size:11px;opacity:.6}
+.g-cat button[aria-pressed=true]{background:none;color:var(--ivory);font-weight:600}
+.g-cat button[aria-pressed=true] small{opacity:1;color:var(--gold)}
+.g-cat button[aria-pressed=true]::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2.5px;border-radius:3px 3px 0 0;background:var(--gold);box-shadow:0 0 12px var(--gold-a18)}
+.g-cat button:first-child[aria-pressed=true]::after{left:2px}
+.chips.scroll.g-chips{margin-top:16px;gap:10px}
+.g-chips .chip{padding:9px 16px;font-size:14px;background:transparent;box-shadow:inset 0 0 0 1px var(--line);color:var(--mist)}
+.g-chips .chip[aria-pressed=true]{background:var(--gold);box-shadow:none;color:var(--on-gold)}
+@media (max-width:699px){
+  .g-cat{width:auto;margin:18px -20px 0;padding:0 20px}
+  .chips.scroll.g-chips{padding:2px 44px 2px 20px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 36px),transparent)}
+}
+/* gentle rest-days hint inside the prayer card (female profiles only) */
+.restnote{display:flex;align-items:center;gap:12px;margin:14px 2px 0;padding-top:12px;border-top:1px solid var(--line-soft)}
+.restnote p{margin:0;flex:1;min-width:0;font-size:12.5px;line-height:1.55;color:var(--mist)}
+html[lang="ml"] .restnote p{font-size:11.5px;line-height:1.7}
+.restnote .lbtn{color:var(--gold);background:var(--gold-a18)}
+/* Reminders: the lock-screen preview follows the app theme (dark by default, light in the day theme) */
+html[data-theme="day"] .lock{background:linear-gradient(170deg,#BFD0EE 0%,#E6EEFA 75%);border-color:rgba(20,28,58,.14)}
+html[data-theme="day"] .lock .lt{color:#101830}
+html[data-theme="day"] .lock .ld{color:#33405F}
+html[data-theme="day"] .ntf{background:rgba(255,255,255,.94);border-color:rgba(20,28,58,.14);box-shadow:0 10px 22px -12px rgba(22,32,66,.4)}
+html[data-theme="day"] .ntf+.ntf{opacity:.92}
+html[data-theme="day"] .ntf b{color:#101830}
+html[data-theme="day"] .ntf .hd{color:#43506F}
+html[data-theme="day"] .ntf p{color:#33405F}
+html[data-theme="day"] .ntf .ic{background:linear-gradient(160deg,#FFF1CF,#EBC57C);border-color:rgba(20,28,58,.12)}
+html[data-theme="day"] .ntf .ic svg{stroke:#6E4A0C}
+/* widgets: 2x2 = square version of the 4x1 design; new home-style widget */
+.ws22{aspect-ratio:1;padding:14px;display:flex;flex-direction:column;justify-content:space-between;margin-bottom:0}
+.ws22 .ws-p{display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-size:12.5px}
+.ws22 .ws-cd{font-size:34px;text-align:center}
+.ws22 .ws-bar{margin:0}
+.ws22 .ws-date{font-size:11px}
+.wh{color:#fff;padding:14px 14px 12px}
+.wh-dial{position:relative;width:100%;max-width:300px;margin:0 auto}
+.wh-dial svg{display:block;width:100%;height:auto;overflow:visible}
+.wh-in{position:absolute;left:0;right:0;bottom:9%;text-align:center}
+.wh-in .nx{font-size:11px;letter-spacing:.04em;color:rgba(255,255,255,.7)}
+.wh-in .arn{font-family:var(--ar);font-size:34px;line-height:1.3;color:#E6C27F}
+.wh-cd{display:flex;justify-content:center;align-items:baseline;gap:8px;margin-top:4px;font-size:13px;color:rgba(255,255,255,.75)}
+.wh-cd b{font-family:"Barlow Condensed","Oswald","Arial Narrow",var(--body);font-weight:600;font-size:24px;color:#fff}
+.wh .c i{color:rgba(255,255,255,.7)}
+.wh .c b{color:#fff}
+.wh .c.n i,.wh .c.n b{color:var(--on-gold)}
+/* clock widget */
+.wc{aspect-ratio:1;position:relative;color:#fff;padding:0}
+.wc svg{position:absolute;inset:0;width:100%;height:100%}
+.wc-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center}
+.wc-d{font-size:11px;color:rgba(255,255,255,.7)}
+.wc-t{font-family:var(--display);font-size:32px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.wc-n{font-size:11px;color:#E6C27F}
+/* guide summary: Malayalam labels are longer, so give the label column more room and let long words wrap instead of overlapping */
+.gs-r span{overflow-wrap:anywhere}
+html[lang="ml"] .gs-r{gap:14px}
+html[lang="ml"] .gs-r span{width:104px}
 </style>
 </head>
 <body>
@@ -895,7 +965,7 @@ const METHODS={
 };
 const KAABA={lat:21.4225,lon:39.8262};
 /* edit these before release */
-const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.32.1",build:"2026.10.17.42",year:2026};
+const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.33.7",build:"2026.10.22.62",year:2026};
 const CREDITS=[
   ["Design and development","Basil Melepat"],
   ["Religious content review","To be added before release"],
@@ -924,7 +994,7 @@ ml:{
 "On time means prayed before the next prayer begins.":"അടുത്ത നമസ്കാരം തുടങ്ങുന്നതിന് മുമ്പ് നമസ്കരിച്ചാൽ സമയത്ത് എന്ന് കണക്കാക്കും.","Prayers you don\u2019t mark once their time has passed count as missed.":"സമയം കഴിഞ്ഞിട്ടും രേഖപ്പെടുത്താത്ത നമസ്കാരങ്ങൾ നഷ്ടപ്പെട്ടതായി കണക്കാക്കും.","No prayers tracked yet.":"ഇതുവരെ നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തിയിട്ടില്ല.",
 "Rest days":"വിശ്രമ ദിനങ്ങൾ","Pause tracking and reminders":"ട്രാക്കിംഗും റിമൈൻഡറുകളും താൽക്കാലികമായി നിർത്തുക","On since {0}":"{0} മുതൽ ഓണാണ്","Start rest days":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങുക","End rest days":"വിശ്രമ ദിനങ്ങൾ അവസാനിപ്പിക്കുക","End":"അവസാനിപ്പിക്കുക",
 "These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"ഈ ദിവസങ്ങൾ ശതമാനത്തിലോ തുടർച്ചയിലോ കണക്കാക്കില്ല, റിമൈൻഡറുകൾ ശബ്ദിക്കില്ല. ഇത് ഈ ഉപകരണത്തിൽ മാത്രം.","Rest days started":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങി","Rest days ended. Welcome back.":"വിശ്രമ ദിനങ്ങൾ അവസാനിച്ചു. വീണ്ടും സ്വാഗതം.","Week streak":"ആഴ്ച തുടർച്ച","Month streak":"മാസ തുടർച്ച","Each ring has five parts, one for each prayer.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്.","Translation":"പരിഭാഷ","Off":"ഓഫ്", "Install app":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക","Add it to your home screen for full-screen use and offline access.":"ഫുൾ സ്ക്രീനിലും ഓഫ്‌ലൈനിലും ഉപയോഗിക്കാൻ ഹോം സ്ക്രീനിൽ ചേർക്കുക.","Install {0}":"{0} ഇൻസ്റ്റാൾ ചെയ്യുക","Tap the Share button in Safari":"സഫാരിയിലെ ഷെയർ ബട്ടൺ തൊടുക","Choose Add to Home Screen":"“ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","Tap Add":"“ചേർക്കുക” തൊടുക","Open your browser menu":"ബ്രൗസർ മെനു തുറക്കുക","Choose Install app or Add to Home screen":"“ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക” അല്ലെങ്കിൽ “ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","App installed":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തു","A new version is ready.":"പുതിയ പതിപ്പ് തയ്യാറാണ്.","Refresh":"റിഫ്രഷ്","You\u2019re offline. Everything still works.":"നിങ്ങൾ ഓഫ്‌ലൈനാണ്. എല്ലാം പ്രവർത്തിക്കും.","Back online":"വീണ്ടും ഓൺലൈൻ","Transparent":"സുതാര്യം","Blur":"ബ്ലർ","Bar color shifts from green to red as the next prayer gets closer.":"അടുത്ത നമസ്കാരം അടുക്കുന്തോറും ബാർ പച്ചയിൽ നിന്ന് ചുവപ്പിലേക്ക് മാറുന്നു.","minimal":"മിനിമൽ","H":"മ","M":"മി","S":"സെ","Calendar":"കലണ്ടർ","Guide":"വഴികാട്ടി","Reminders":"റിമൈൻഡർ","Settings":"ക്രമീകരണം","Widgets":"വിജറ്റുകൾ","Qibla":"ഖിബ്‌ല",
-"Next prayer":"അടുത്ത നമസ്കാരം","{0} at {1}":"{0} {1}-ന്","day streak":"ദിവസ തുടർച്ച","Best":"മികച്ചത്","Full days":"പൂർണ ദിനങ്ങൾ",
+"Next prayer":"അടുത്ത നമസ്കാരം","Now":"ഇപ്പോൾ","Purification":"ശുദ്ധി","4 × 3 · home":"4 × 3 · ഹോം","2 × 2 · clock":"2 × 2 · ക്ലോക്ക്","If you’re on your period, you can pause the tracker. Your progress stays safe.":"ആർത്തവ സമയത്താണെങ്കിൽ ട്രാക്കർ താൽക്കാലികമായി നിർത്തിവെക്കാം. നിങ്ങളുടെ പുരോഗതി സുരക്ഷിതമായിരിക്കും.","Pause":"നിർത്തിവെക്കുക","{0} at {1}":"{0} {1}-ന്","day streak":"ദിവസ തുടർച്ച","Best":"മികച്ചത്","Full days":"പൂർണ ദിനങ്ങൾ",
 "Each ring has five parts, one for each prayer. Tap a day to update it.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്. പുതുക്കാൻ ഒരു ദിവസം തൊടുക.",
 "Tap the bell to set a reminder.":"റിമൈൻഡർ സജ്ജമാക്കാൻ മണി തൊടുക.","Asr: {0}":"അസ്ർ: {0}","{0} adjusted":"{0} ക്രമീകരിച്ചു","{0} prayed":"{0} നമസ്കരിച്ചു",
 "Qibla direction":"ഖിബ്‌ല ദിശ","Turn off reminder for {0}":"{0} റിമൈൻഡർ ഓഫ് ചെയ്യുക","Turn on reminder for {0}":"{0} റിമൈൻഡർ ഓൺ ചെയ്യുക","min":"മിനിറ്റ്",
@@ -987,7 +1057,7 @@ ar:{
 "On time means prayed before the next prayer begins.":"تُحتسب «في وقتها» إذا صُلّيت قبل دخول وقت الصلاة التالية.","Prayers you don\u2019t mark once their time has passed count as missed.":"الصلوات التي لا تُسجَّل بعد خروج وقتها تُحتسب فائتة.","No prayers tracked yet.":"لم تُسجَّل صلوات بعد.",
 "Rest days":"أيام الراحة","Pause tracking and reminders":"إيقاف التتبّع والتذكيرات مؤقتًا","On since {0}":"مفعّلة منذ {0}","Start rest days":"بدء أيام الراحة","End rest days":"إنهاء أيام الراحة","End":"إنهاء",
 "These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"لا تُحتسب هذه الأيام في النسب أو السلسلة، وتصمت التذكيرات. يبقى هذا على جهازك فقط.","Rest days started":"بدأت أيام الراحة","Rest days ended. Welcome back.":"انتهت أيام الراحة. أهلًا بعودتك.","Week streak":"سلسلة أسبوعية","Month streak":"سلسلة شهرية","Each ring has five parts, one for each prayer.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة.","Translation":"الترجمة","Off":"إيقاف", "Install app":"تثبيت التطبيق","Add it to your home screen for full-screen use and offline access.":"أضِفه إلى شاشتك الرئيسية للاستخدام بملء الشاشة ودون اتصال.","Install {0}":"تثبيت {0}","Tap the Share button in Safari":"اضغط على زر المشاركة في سفاري","Choose Add to Home Screen":"اختر «إضافة إلى الشاشة الرئيسية»","Tap Add":"اضغط «إضافة»","Open your browser menu":"افتح قائمة المتصفح","Choose Install app or Add to Home screen":"اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»","App installed":"تم تثبيت التطبيق","A new version is ready.":"إصدار جديد جاهز.","Refresh":"تحديث","You\u2019re offline. Everything still works.":"أنت غير متصل. كل شيء يعمل.","Back online":"عدنا متصلين","Transparent":"شفاف","Blur":"ضبابي","Bar color shifts from green to red as the next prayer gets closer.":"يتحول لون الشريط من الأخضر إلى الأحمر كلما اقتربت الصلاة القادمة.","minimal":"مبسّط","H":"س","M":"د","S":"ث","Calendar":"التقويم","Guide":"الدليل","Reminders":"التذكيرات","Settings":"الإعدادات","Widgets":"الودجات","Qibla":"القبلة",
-"Next prayer":"الصلاة القادمة","{0} at {1}":"{0} عند {1}","day streak":"أيام متتالية","Best":"الأفضل","Full days":"أيام كاملة",
+"Next prayer":"الصلاة القادمة","Now":"الآن","Purification":"الطهارة","4 × 3 · home":"4 × 3 · الرئيسية","2 × 2 · clock":"2 × 2 · ساعة","If you’re on your period, you can pause the tracker. Your progress stays safe.":"إذا كنتِ في فترة الحيض، يمكنكِ إيقاف المتتبّع مؤقتًا، وتقدّمكِ يبقى محفوظًا.","Pause":"إيقاف مؤقت","{0} at {1}":"{0} عند {1}","day streak":"أيام متتالية","Best":"الأفضل","Full days":"أيام كاملة",
 "Each ring has five parts, one for each prayer. Tap a day to update it.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة. اضغط على يوم لتحديثه.",
 "Tap the bell to set a reminder.":"اضغط على الجرس لضبط تذكير.","Asr: {0}":"العصر: {0}","{0} adjusted":"{0} معدّلة","{0} prayed":"تمت صلاة {0}",
 "Qibla direction":"اتجاه القبلة","Turn off reminder for {0}":"إيقاف تذكير {0}","Turn on reminder for {0}":"تفعيل تذكير {0}","min":"د",
@@ -1800,9 +1870,6 @@ Object.assign(GD,{
   tahiyyat_masjid:{cat:"occasion",n:2,nm:TL3("Entering the mosque","പള്ളിയിൽ പ്രവേശിക്കുമ്പോൾ","تحية المسجد"),
     sum:{when:TL3("On entering a mosque, before sitting","പള്ളിയിൽ പ്രവേശിക്കുമ്പോൾ, ഇരിക്കുന്നതിന് മുമ്പ്","عند دخول المسجد قبل الجلوس"),rak:TL3("2","2","٢"),rule:TL3("Sunnah mu\u2019akkadah","ശക്തമായ സുന്നത്ത്","سنة مؤكدة")},
     build:()=>[{x:"c3_tm1",lbl:["Before the prayer"]},{x:"c3_tm2",r:1}].concat(std2(null))},
-  tahiyyat_wudu:{cat:"occasion",n:2,nm:TL3("After wudu","വുദൂഇന് ശേഷം","سنة الوضوء"),
-    sum:{when:TL3("After completing wudu","വുദൂഅ് പൂർത്തിയാക്കിയ ശേഷം","بعد إتمام الوضوء"),rak:TL3("2","2","٢"),rule:TL3("Sunnah","സുന്നത്ത്","سنة")},
-    build:()=>[{x:"c3_tu1",lbl:["After wudu"]},{x:"c3_tu2",r:1}].concat(std2(null))},
   kusuf:{cat:"special",n:2,nm:TL3("Eclipse (Kusuf)","ഗ്രഹണ നമസ്കാരം","صلاة الكسوف"),
     sum:{when:TL3("During a solar or lunar eclipse","സൂര്യഗ്രഹണ/ചന്ദ്രഗ്രഹണ സമയത്ത്","أثناء كسوف الشمس أو خسوف القمر"),rak:TL3("2, each with two standings and two bowings","2, ഓരോന്നിലും രണ്ട് നിൽപ്പും രണ്ട് റുകൂഉം","٢، في كل ركعة قيامان وركوعان"),rule:TL3("Sunnah mu\u2019akkadah","ശക്തമായ സുന്നത്ത്","سنة مؤكدة")},
     build:ksSteps},
@@ -1811,8 +1878,123 @@ Object.assign(GD,{
     build:istSteps}
 });
 GLIST.special.push("kusuf","istisqa");
-GLIST.occasion=["istikhara","tawbah","shukr","tahiyyat_masjid","tahiyyat_wudu"];
-GCAT.splice(3,0,["occasion","Occasion"]);
+/* ---- Wudu (making wudu + what follows it) and the forgetful prostration ---- */
+Object.assign(XC,{
+c4_w1:XM(TL3("Begin with intention","നിയ്യത്തോടെ ആരംഭിക്കുക","ابدأ بالنية"),{pose:"info",
+  lines:[L1("بِسْمِ اللَّهِ","Bismillaah","അല്ലാഹുവിന്റെ നാമത്തിൽ.","In the name of Allah."),
+    L1("نَوَيْتُ الْوُضُوءَ لِرَفْعِ الْحَدَثِ الْأَصْغَرِ فَرْضًا لِلَّهِ تَعَالَى","Nawaytul-wudoo’a li-raf’il-hadathil-asghari fardan lillaahi ta’aalaa","ചെറിയ അശുദ്ധി നീക്കാൻ, അല്ലാഹുവിനു വേണ്ടി, വുദൂഅ് ഞാൻ ഉദ്ദേശിക്കുന്നു.","I intend wudu to remove the minor impurity, as an obligation to Allah.")],
+  b:TL3("Say Bismillah, and intend wudu in your heart as you begin washing your face. The intention is obligatory; saying it aloud is sunnah. Do each step three times, right before left.",
+        "ബിസ്മില്ലാഹ് ചൊല്ലുക. മുഖം കഴുകാൻ തുടങ്ങുമ്പോൾ ഹൃദയത്തിൽ വുദൂഇന്റെ നിയ്യത്ത് ചെയ്യുക; നിയ്യത്ത് നിർബന്ധമാണ്, ഉച്ചരിക്കുന്നത് സുന്നത്ത്. ഓരോ ഭാഗവും മൂന്നു തവണ, വലതുഭാഗം ആദ്യം.",
+        "سمِّ الله، وانوِ الوضوء بقلبك عند غسل الوجه. النية واجبة والتلفظ بها سنة. اغسل كل عضو ثلاثًا، مقدِّمًا اليمنى على اليسرى.")}),
+c4_w2:XM(TL3("Hands, mouth and nose","കൈകൾ, വായ, മൂക്ക്","اليدان والفم والأنف"),{pose:"info",
+  b:TL3("Wash both hands up to the wrists, then rinse your mouth, sniff water into your nose and blow it out. These are sunnah. Use the siwak if you have one.",
+        "രണ്ട് കൈകളും മണിബന്ധം വരെ കഴുകുക; പിന്നെ വായ കഴുകുക, മൂക്കിൽ വെള്ളം കയറ്റി ചീറ്റുക. ഇവ സുന്നത്താണ്. സിവാക്ക് ഉണ്ടെങ്കിൽ ഉപയോഗിക്കുക.",
+        "اغسل كفيك إلى الرسغين، ثم تمضمض واستنشق واستنثر، وكل ذلك سنة. واستعمل السواك إن تيسر.")}),
+c4_w3:XM(TL3("Face and arms","മുഖവും കൈകളും","الوجه واليدان"),{pose:"info",
+  b:TL3("Wash your whole face, from the hairline to the chin and from ear to ear. Then wash each arm including the elbow, right then left. Both are obligatory.",
+        "മുടി വളരുന്ന ഭാഗം മുതൽ താടിക്ക് താഴെ വരെയും ഒരു ചെവി മുതൽ മറ്റേ ചെവി വരെയും മുഖം മുഴുവൻ കഴുകുക. പിന്നെ കൈമുട്ട് ഉൾപ്പെടെ വലതു കൈ, ശേഷം ഇടതു കൈ കഴുകുക. രണ്ടും നിർബന്ധമാണ്.",
+        "اغسل وجهك كله من منابت الشعر إلى أسفل الذقن ومن الأذن إلى الأذن، ثم اغسل يديك مع المرفقين، اليمنى ثم اليسرى. وكلاهما فرض.")}),
+c4_w4:XM(TL3("Head and ears","തലയും ചെവികളും","الرأس والأذنان"),{pose:"info",
+  b:TL3("Wipe part of your head with wet hands; wiping all of it is sunnah. Then wipe the inside and back of both ears with fresh water. Wiping part of the head is obligatory.",
+        "നനഞ്ഞ കൈകൊണ്ട് തലയുടെ ഒരു ഭാഗം തടവുക; മുഴുവൻ തടവുന്നത് സുന്നത്താണ്. പിന്നെ രണ്ട് ചെവികളുടെ അകവും പിൻഭാഗവും പുതിയ വെള്ളം കൊണ്ട് തടവുക. തലയുടെ ഒരു ഭാഗം തടവുന്നത് നിർബന്ധമാണ്.",
+        "امسح بعض رأسك ببلل يديك، ومسح الرأس كله سنة. ثم امسح أذنيك ظاهرًا وباطنًا بماء جديد. ومسح بعض الرأس فرض.")}),
+c4_w5:XM(TL3("Feet and order","പാദങ്ങളും ക്രമവും","القدمان والترتيب"),{pose:"info",
+  b:TL3("Wash both feet up to and including the ankles, right then left, and run water between the toes. Keep this order without a long break. The order is obligatory.",
+        "കണങ്കാൽ ഉൾപ്പെടെ രണ്ട് പാദങ്ങളും കഴുകുക, വലതു പാദം ആദ്യം; വിരലുകൾക്കിടയിലും വെള്ളം എത്തിക്കുക. ദീർഘമായ ഇടവേളയില്ലാതെ ഈ ക്രമത്തിൽ ചെയ്യുക. ക്രമം പാലിക്കൽ നിർബന്ധമാണ്.",
+        "اغسل قدميك مع الكعبين، اليمنى ثم اليسرى، وخلّل بين الأصابع. والتزم هذا الترتيب دون فاصل طويل، والترتيب فرض.")}),
+c4_s1:XM(TL3("When to do it","എപ്പോൾ ചെയ്യണം","متى يُشرع"),{pose:"info",
+  b:TL3("Do it when you forget a sunnah that has a make-up, like the first tashahhud or the qunoot, when you add something by mistake, or when you doubt your rak’ah count. In doubt, take the smaller number. A forgotten pillar must still be prayed; this prostration does not replace it.",
+        "ആദ്യ തശഹ്ഹുദ്, ഖുനൂത്ത് പോലുള്ള ഒരു സുന്നത്ത് മറന്നാൽ, അബദ്ധത്തിൽ എന്തെങ്കിലും അധികം ചെയ്താൽ, അല്ലെങ്കിൽ റക്അത്തിന്റെ എണ്ണത്തിൽ സംശയം വന്നാൽ ഇത് ചെയ്യുക. സംശയത്തിൽ കുറഞ്ഞ എണ്ണം എടുക്കുക. മറന്നുപോയ ഒരു റുക്ൻ നിർവഹിക്കണം; ഈ സുജൂദ് അതിന് പകരമാകില്ല.",
+        "يُشرع عند ترك بعض من الأبعاض كالتشهد الأول أو القنوت، أو عند الزيادة سهوًا، أو عند الشك في عدد الركعات فتبني على الأقل. أما الركن المنسي فيجب الإتيان به ولا يجبره سجود السهو.")}),
+c4_s2:XM(TL3("How to do it","എങ്ങനെ ചെയ്യണം","كيفيته"),{pose:"info",
+  b:TL3("Finish the last tashahhud, salawat and dua as usual, but do not give the salam yet. Say Allahu akbar and prostrate twice, sitting briefly between them, then sit and give the salam. If you remember soon after the salam, do it then.",
+        "അവസാന തശഹ്ഹുദും സ്വലാത്തും ദുആയും പതിവുപോലെ ചൊല്ലുക, പക്ഷേ സലാം വീട്ടരുത്. “അല്ലാഹു അക്ബർ” പറഞ്ഞ് രണ്ട് സുജൂദ് ചെയ്യുക, അവയ്ക്കിടയിൽ അല്പനേരം ഇരിക്കുക. പിന്നെ ഇരുന്ന് സലാം വീട്ടുക. സലാമിന് തൊട്ടുപിന്നാലെ ഓർമ വന്നാൽ അപ്പോൾ ചെയ്യാം.",
+        "أتمّ التشهد الأخير والصلاة على النبي ﷺ والدعاء ولا تسلّم بعد. ثم كبّر واسجد سجدتين يفصل بينهما جلوس قصير، ثم اجلس وسلّم. وإن ذكرتَ بعد السلام بزمن قريب فاسجد حينئذ.")}),
+c4_s3:XM(TL3("The two prostrations","രണ്ട് സുജൂദ്","السجدتان"),{pose:"sujood",
+  lines:BASE.sujud.lines.concat([L1("سُبْحَانَ مَنْ لَا يَنَامُ وَلَا يَسْهُو","Subhaana man laa yanaamu wa laa yashoo","ഉറങ്ങുകയോ മറക്കുകയോ ചെയ്യാത്തവൻ എത്ര പരിശുദ്ധൻ.","Glory be to Him who neither sleeps nor forgets.")]),
+  nt:TL3("Say the takbir when going down and rising. Prostrate twice, then give the salam.","താഴുമ്പോഴും ഉയരുമ്പോഴും “അല്ലാഹു അക്ബർ” പറയുക. രണ്ട് സുജൂദ് ചെയ്ത ശേഷം സലാം വീട്ടുക.","كبّر عند الهبوط والرفع، واسجد سجدتين ثم سلّم.")})
+});
+Object.assign(GD,{
+  wudu:{cat:"purification",n:2,nm:TL3("Wudu (ablution)","വുദൂഅ്","الوضوء"),
+    sum:{when:TL3("Before prayer, and whenever you are without wudu","നമസ്കാരത്തിന് മുമ്പും വുദൂഅ് ഇല്ലാത്തപ്പോഴും","قبل الصلاة وعند انتقاض الوضوء"),rak:TL3("2 sunnah rak’ahs after wudu","വുദൂഇന് ശേഷം 2 റക്അത്ത് സുന്നത്ത്","ركعتان سنة بعد الوضوء"),rule:TL3("Required for prayer","നമസ്കാരത്തിന് നിർബന്ധം","شرط للصلاة")},
+    build:()=>[{x:"c4_w1"},{x:"c4_w2"},{x:"c4_w3"},{x:"c4_w4"},{x:"c4_w5"},{x:"c3_tu1",lbl:["After wudu"]},{x:"c3_tu2",r:1}].concat(std2(null))},
+  sujood_sahw:{cat:"occasion",n:0,nm:TL3("Forgetful prostration (Sahw)","മറവിയുടെ സുജൂദ് (സഹ്‌വ്)","سجود السهو"),
+    sum:{when:TL3("When you forget or doubt something in prayer","നമസ്കാരത്തിൽ മറക്കുകയോ സംശയിക്കുകയോ ചെയ്യുമ്പോൾ","عند السهو أو الشك في الصلاة"),rak:TL3("Two prostrations before the salam","സലാമിന് മുമ്പ് രണ്ട് സുജൂദ്","سجدتان قبل السلام"),rule:TL3("Sunnah","സുന്നത്ത്","سنة")},
+    build:()=>[{x:"c4_s1"},{x:"c4_s2"},{x:"c4_s3"}]}
+});
+Object.assign(XC,{
+c5_g1:XM(TL3("When it is required","എപ്പോൾ നിർബന്ധം","متى يجب"),{pose:"info",
+  b:TL3("Ghusl is obligatory after sexual intercourse or emission, at the end of menstruation, and after postnatal bleeding. Ghusl on Fridays and Eids is sunnah.","ലൈംഗികബന്ധത്തിനോ സ്ഖലനത്തിനോ ശേഷവും, ആർത്തവം അവസാനിച്ചാലും, പ്രസവരക്തം നിലച്ചാലും കുളി നിർബന്ധമാണ്. വെള്ളിയാഴ്ചയും ഈദിനും കുളിക്കുന്നത് സുന്നത്താണ്.","يجب الغسل بعد الجماع أو خروج المني، وعند انقطاع الحيض، وبعد انقطاع دم النفاس. ويُسنّ الغسل للجمعة والعيدين.")}),
+c5_g2:XM(TL3("How to do it","എങ്ങനെ ചെയ്യണം","كيفيته"),{pose:"info",
+  lines:[L1("نَوَيْتُ الْغُسْلَ لِرَفْعِ الْحَدَثِ الْأَكْبَرِ لِلَّهِ تَعَالَى","Nawaytul-ghusla li-raf’il-hadathil-akbari lillaahi ta’aalaa","വലിയ അശുദ്ധി നീക്കാൻ അല്ലാഹുവിനു വേണ്ടി കുളി ഞാൻ ഉദ്ദേശിക്കുന്നു.","I intend ghusl to remove the major impurity, for Allah.")],
+  b:TL3("Intend in your heart, wash away any impurity and make wudu. Pour water over your head three times, then over the right side, then the left, so water reaches the whole body including the hair roots. The intention and washing the whole body are obligatory.","ഹൃദയത്തിൽ നിയ്യത്ത് ചെയ്യുക; അശുദ്ധി ഉണ്ടെങ്കിൽ കഴുകി വുദൂഅ് എടുക്കുക. തലയിൽ മൂന്നു തവണ വെള്ളമൊഴിക്കുക, പിന്നെ വലതുഭാഗത്തും ഇടതുഭാഗത്തും. മുടിയുടെ വേരുകൾ ഉൾപ്പെടെ ശരീരം മുഴുവൻ വെള്ളം എത്തണം. നിയ്യത്തും ശരീരം മുഴുവൻ കഴുകലും നിർബന്ധമാണ്.","انوِ بقلبك، وأزل النجاسة وتوضأ. اسكب الماء على رأسك ثلاثًا، ثم على شقك الأيمن ثم الأيسر، حتى يعم الماء جميع البدن مع أصول الشعر. والنية وتعميم البدن بالماء فرضان.")}),
+c5_t1:XM(TL3("When it is allowed","എപ്പോൾ അനുവദനീയം","متى يجوز"),{pose:"info",
+  b:TL3("Use tayammum when there is no water after searching, or when using water would harm you, such as in illness. The prayer time must have started.","തിരഞ്ഞിട്ടും വെള്ളം കിട്ടാത്തപ്പോൾ, അല്ലെങ്കിൽ രോഗം പോലെ വെള്ളം ഉപയോഗിക്കുന്നത് ഹാനികരമാകുമ്പോൾ തയമ്മും ചെയ്യാം. നമസ്കാരസമയം ആരംഭിച്ചിരിക്കണം.","يجوز التيمم عند عدم وجود الماء بعد طلبه، أو عند الضرر باستعماله كالمرض. ويشترط دخول وقت الصلاة.")}),
+c5_t2:XM(TL3("How to do it","എങ്ങനെ ചെയ്യണം","كيفيته"),{pose:"info",
+  lines:[L1("نَوَيْتُ التَّيَمُّمَ لِاسْتِبَاحَةِ فَرْضِ الصَّلَاةِ لِلَّهِ تَعَالَى","Nawaytut-tayammuma li-istibaahati fardis-salaati lillaahi ta’aalaa","നമസ്കാരം അനുവദനീയമാകാൻ അല്ലാഹുവിനു വേണ്ടി തയമ്മും ഞാൻ ഉദ്ദേശിക്കുന്നു.","I intend tayammum to make the obligatory prayer permissible, for Allah.")],
+  b:TL3("Intend and say Bismillah. Strike clean dust or earth with both palms and wipe your whole face. Strike again and wipe both arms up to the elbows. Make a new tayammum for each obligatory prayer.","നിയ്യത്ത് ചെയ്ത് ബിസ്മില്ലാഹ് ചൊല്ലുക. ശുദ്ധമായ മണ്ണിൽ രണ്ട് കൈപ്പത്തിയും അടിച്ച് മുഖം മുഴുവൻ തടവുക. വീണ്ടും അടിച്ച് കൈമുട്ട് വരെ രണ്ട് കൈകളും തടവുക. ഓരോ ഫർള് നമസ്കാരത്തിനും പുതിയ തയമ്മും വേണം.","انوِ وسمِّ الله، واضرب بكفيك على تراب طاهر وامسح وجهك كله، ثم اضرب ضربة ثانية وامسح يديك إلى المرفقين. ولكل فريضة تيمم جديد.")}),
+c5_m1:XM(TL3("Conditions and time","നിബന്ധനകളും സമയവും","الشروط والمدة"),{pose:"info",
+  b:TL3("You may wipe over leather socks or thick socks worn after complete wudu that cover the ankles and are strong enough to walk in. The time is one day and night, or three days and nights when travelling, from your first wudu-break after putting them on.","പൂർണ വുദൂഇന് ശേഷം ധരിച്ച, കണങ്കാൽ മൂടുന്ന, നടക്കാൻ കരുത്തുള്ള തുകൽ മോസുകളുടെയോ കട്ടിയുള്ള സോക്സുകളുടെയോ മുകളിൽ തടവാം. ധരിച്ച ശേഷം ആദ്യം വുദൂഅ് മുറിഞ്ഞതു മുതൽ നാട്ടിൽ ഒരു രാപ്പകലും യാത്രയിൽ മൂന്ന് രാപ്പകലുമാണ് സമയം.","يجوز المسح على الخفين أو الجوربين الثخينين إذا لُبسا بعد وضوء كامل، وسترا الكعبين، وأمكن المشي فيهما. ومدته يوم وليلة للمقيم وثلاثة أيام بلياليها للمسافر، من أول حدث بعد اللبس.")}),
+c5_m2:XM(TL3("How to wipe","എങ്ങനെ തടവണം","كيفية المسح"),{pose:"info",
+  b:TL3("Wipe the top of each sock with wet fingers, right then left; a little is enough. The permission ends when you take them off, the time runs out, or ghusl becomes obligatory. Then wash your feet.","നനഞ്ഞ വിരലുകൾ കൊണ്ട് ഓരോ സോക്സിന്റെയും മുകൾഭാഗം തടവുക, വലതു കാൽ ആദ്യം; അല്പം തടവിയാൽ മതി. അവ ഊരിയാൽ, സമയം തീർന്നാൽ, അല്ലെങ്കിൽ കുളി നിർബന്ധമായാൽ ഈ അനുവാദം അവസാനിക്കും; പിന്നെ പാദങ്ങൾ കഴുകണം.","امسح أعلى كل خف بأصابع مبلولة، اليمنى ثم اليسرى، ويكفي أقل المسح. وينتهي المسح بخلع الخفين أو انقضاء المدة أو وجوب الغسل، فحينئذ تغسل قدميك.")}),
+c5_b1:XM(TL3("What breaks wudu","വുദൂഅ് മുറിക്കുന്നത്","نواقض الوضوء"),{pose:"info",
+  b:TL3("Anything leaving the front or back passage, sleep when not seated firmly, loss of mind, touching your private part with the inside of the hand, and skin touching skin with a non-mahram of the opposite sex.","മുൻഭാഗത്തോ പിൻഭാഗത്തോ കൂടി എന്തെങ്കിലും പുറത്തുവരുക, ഇരിപ്പ് ഉറപ്പിക്കാതെയുള്ള ഉറക്കം, ബോധം നഷ്ടപ്പെടുക, ഗുഹ്യഭാഗത്ത് കൈപ്പത്തിയുടെ ഉൾഭാഗം കൊണ്ട് തൊടുക, അന്യസ്ത്രീ/അന്യപുരുഷന്റെ ചർമം ചർമത്തിൽ തൊടുക എന്നിവ വുദൂഅ് മുറിക്കും.","ينتقض الوضوء بخروج شيء من القبل أو الدبر، والنوم غير الممكّن مقعده، وزوال العقل، ومس الفرج بباطن الكف، ولمس بشرة الأجنبي من الجنس الآخر.")}),
+c5_b2:XM(TL3("What breaks prayer","നമസ്കാരം മുറിക്കുന്നത്","مبطلات الصلاة"),{pose:"info",
+  b:TL3("Speaking on purpose, eating or drinking, three big movements in a row, turning away from the Qibla, uncovering the awrah, breaking wudu, laughing aloud, or intending to stop.","മനഃപൂർവം സംസാരിക്കുക, തിന്നുകയോ കുടിക്കുകയോ ചെയ്യുക, തുടർച്ചയായി മൂന്ന് വലിയ ചലനങ്ങൾ, ഖിബ്ലയിൽ നിന്ന് തിരിയുക, ഔറത്ത് വെളിവാകുക, വുദൂഅ് മുറിയുക, ഉറക്കെ ചിരിക്കുക, നമസ്കാരം നിർത്താൻ കരുതുക എന്നിവ നമസ്കാരം ബാത്വിലാക്കും.","يبطل الصلاة الكلام عمدًا، والأكل والشرب، وثلاث حركات كبيرة متوالية، والانحراف عن القبلة، وانكشاف العورة، والحدث، والضحك بصوت، ونية قطعها.")}),
+c5_q1:XM(TL3("Missed prayers","വിട്ടുപോയ നമസ്കാരങ്ങൾ","الصلوات الفائتة"),{pose:"info",
+  b:TL3("If you sleep through a prayer or forget it, pray it as soon as you remember; there is no sin. If you missed it without an excuse, you sinned and must make it up at once with repentance.","ഉറങ്ങിപ്പോയതോ മറന്നതോ ആയ നമസ്കാരം ഓർമ വന്ന ഉടൻ നമസ്കരിക്കുക; കുറ്റമില്ല. കാരണമില്ലാതെ ഒഴിവാക്കിയെങ്കിൽ കുറ്റമുണ്ട്; പശ്ചാത്തപിച്ച് ഉടൻ ഖദാഅ് വീട്ടണം.","من نام عن صلاة أو نسيها فليصلّها إذا ذكرها ولا إثم عليه. ومن تركها بلا عذر أثم ووجب عليه قضاؤها فورًا مع التوبة.")}),
+c5_q2:XM(TL3("How to make it up","എങ്ങനെ ഖദാഅ് വീട്ടണം","كيفية القضاء"),{pose:"info",
+  b:TL3("Intend the specific prayer as qada, for example the missed Fajr, and pray it as usual. If you missed several, pray them in order, starting with the earliest.","നിയ്യത്തിൽ ഖദാഅ് ആണെന്ന് ഉൾപ്പെടുത്തുക, ഉദാഹരണം: വിട്ടുപോയ സുബ്ഹ്. പതിവുപോലെ നമസ്കരിക്കുക. പലതും വിട്ടുപോയെങ്കിൽ ആദ്യം വിട്ടതിൽ നിന്ന് ക്രമത്തിൽ നമസ്കരിക്കുക.","انوِ الصلاة المعيّنة قضاءً كالفجر الفائتة وصلِّها كما تصلي. وإن فاتتك صلوات فصلّها مرتبة من الأولى فالتي تليها.")}),
+c5_i1:XM(TL3("When you cannot stand","നിൽക്കാൻ കഴിയാത്തപ്പോൾ","عند العجز عن القيام"),{pose:"info",
+  b:TL3("Pray standing if you can. If not, pray sitting; if not, lying on your right side facing the Qibla (or on your back with feet toward it). If you cannot move, pray with your eyes, then your heart. The prayer is not dropped while your mind is present.","കഴിയുമെങ്കിൽ നിന്ന് നമസ്കരിക്കുക. കഴിയില്ലെങ്കിൽ ഇരുന്ന്; അതിനും കഴിയില്ലെങ്കിൽ ഖിബ്ലക്ക് അഭിമുഖമായി വലതുവശം ചരിഞ്ഞ് (അല്ലെങ്കിൽ മലർന്ന് കാലുകൾ ഖിബ്ലയിലേക്ക് ആക്കി). അനങ്ങാൻ കഴിയില്ലെങ്കിൽ കണ്ണുകൊണ്ട്, പിന്നെ ഹൃദയം കൊണ്ട്. ബോധമുള്ളിടത്തോളം നമസ്കാരം ഒഴിവാകില്ല.","صلِّ قائمًا فإن عجزت فقاعدًا، فإن عجزت فعلى جنبك الأيمن مستقبل القبلة أو مستلقيًا ورجلاك إليها. فإن عجزت عن الحركة فأومئ بعينيك ثم بقلبك. ولا تسقط الصلاة ما دام عقلك ثابتًا.")}),
+c5_i2:XM(TL3("Bowing and prostrating","റുകൂഉം സുജൂദും","الركوع والسجود"),{pose:"info",
+  b:TL3("Sitting on a chair or the floor is fine. Bow by leaning forward and prostrate by leaning further, lower than the bow. Make wudu or tayammum if you can, and pray in time.","കസേരയിലോ നിലത്തോ ഇരുന്ന് നമസ്കരിക്കാം. റുകൂഇന് മുന്നോട്ട് കുനിയുക; സുജൂദിന് അതിലും കൂടുതൽ കുനിയുക. കഴിയുമെങ്കിൽ വുദൂഅ് അല്ലെങ്കിൽ തയമ്മും ചെയ്ത് സമയത്ത് നമസ്കരിക്കുക.","يجوز الجلوس على كرسي أو على الأرض. اركع بالانحناء واسجد بانحناء أكثر منه. وتوضأ أو تيمم إن أمكن، وصلِّ في وقتها.")}),
+c5_a1:XM(TL3("Adhan and iqamah","ബാങ്കും ഇഖാമത്തും","الأذان والإقامة"),{pose:"info",
+  b:TL3("The adhan calls people to each obligatory prayer; the iqamah announces that it is about to begin. The Fajr adhan adds “As-salaatu khayrun minan-nawm” after the second “Hayya ‘alal-falaah”.","ഓരോ ഫർള് നമസ്കാരത്തിനും ആളുകളെ വിളിക്കുന്നതാണ് ബാങ്ക്; നമസ്കാരം ആരംഭിക്കാറായി എന്ന് അറിയിക്കുന്നതാണ് ഇഖാമത്ത്. സുബ്ഹ് ബാങ്കിൽ രണ്ടാമത്തെ “ഹയ്യ അലൽ ഫലാഹ്” ശേഷം “അസ്സ്വലാതു ഖൈറും മിനന്നൗം” കൂടി ചൊല്ലും.","الأذان دعوة إلى كل فريضة، والإقامة إعلان بقرب قيامها. ويُزاد في أذان الفجر بعد الحيعلتين الثانيتين «الصلاة خير من النوم».")}),
+c5_a2:XM(TL3("Replying and the dua","മറുപടിയും ദുആയും","الإجابة والدعاء"),{pose:"info",
+  lines:[L1("اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ وَالصَّلَاةِ الْقَائِمَةِ آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ وَابْعَثْهُ مَقَامًا مَحْمُودًا الَّذِي وَعَدْتَهُ","Allaahumma rabba haadhihid-da’watit-taammah, was-salaatil-qaa’imah, aati muhammadanil-waseelata wal-fadeelah, wab’ath-hu maqaamam mahmoodanil-ladhee wa’adtah","അല്ലാഹുവേ, ഈ പൂർണമായ വിളിയുടെയും നിലനിൽക്കുന്ന നമസ്കാരത്തിന്റെയും നാഥാ, മുഹമ്മദ് നബിക്ക് വസീലയും ഫദീലയും നൽകേണമേ; നീ വാഗ്ദാനം ചെയ്ത പ്രശംസനീയ സ്ഥാനത്ത് അദ്ദേഹത്തെ ഉയർത്തേണമേ.","O Allah, Lord of this perfect call and established prayer, grant Muhammad the wasilah and the favour, and raise him to the praised station You promised.")],
+  b:TL3("Repeat what the muadhdhin says. At “Hayya ‘alas-salaah” and “Hayya ‘alal-falaah” say “Laa hawla wa laa quwwata illaa billaah”. Then send blessings on the Prophet ﷺ and say this dua.","മുഅദ്ദിൻ പറയുന്നത് ആവർത്തിക്കുക. “ഹയ്യ അലസ്സ്വലാഹ്”, “ഹയ്യ അലൽ ഫലാഹ്” എന്നിവയ്ക്ക് “ലാ ഹൗല വലാ ഖുവ്വത്ത ഇല്ലാ ബില്ലാഹ്” എന്ന് പറയുക. പിന്നെ നബി ﷺ യുടെ മേൽ സ്വലാത്ത് ചൊല്ലി ഈ ദുആ ചൊല്ലുക.","ردّد ما يقوله المؤذن، وعند «حي على الصلاة» و«حي على الفلاح» قل «لا حول ولا قوة إلا بالله». ثم صلِّ على النبي ﷺ وقل هذا الدعاء.")}),
+c5_k1:XM(TL3("When to do it","എപ്പോൾ ചെയ്യണം","متى يُشرع"),{pose:"info",
+  b:TL3("It is sunnah to prostrate when you recite or hear a verse of prostration, in or outside prayer. Outside prayer, be in wudu and face the Qibla; say Allahu akbar, prostrate, rise with takbir and give the salam.","സുജൂദിന്റെ ആയത്ത് ഓതുകയോ കേൾക്കുകയോ ചെയ്താൽ, നമസ്കാരത്തിലായാലും പുറത്തായാലും, സുജൂദ് ചെയ്യുന്നത് സുന്നത്താണ്. പുറത്താണെങ്കിൽ വുദൂഇൽ ഖിബ്ലക്ക് അഭിമുഖമായി “അല്ലാഹു അക്ബർ” പറഞ്ഞ് സുജൂദ് ചെയ്യുക; തക്ബീറോടെ ഉയർന്ന് സലാം വീട്ടുക.","يُسنّ السجود إذا قرأتَ آية سجدة أو سمعتَها، في الصلاة أو خارجها. وخارجها: كن على وضوء واستقبل القبلة وكبّر واسجد، ثم ارفع مكبّرًا وسلّم.")}),
+c5_k2:XM(TL3("The prostration","സുജൂദ്","السجدة"),{pose:"sujood",
+  lines:BASE.sujud.lines.concat([L1("سَجَدَ وَجْهِيَ لِلَّذِي خَلَقَهُ وَشَقَّ سَمْعَهُ وَبَصَرَهُ بِحَوْلِهِ وَقُوَّتِهِ","Sajada wajhiya lilladhee khalaqahu wa shaqqa sam’ahu wa basarahu bihawlihi wa quwwatih","എന്റെ മുഖം, അതിനെ സൃഷ്ടിക്കുകയും തന്റെ ശക്തിയും കഴിവും കൊണ്ട് അതിന്റെ കേൾവിയും കാഴ്ചയും രൂപപ്പെടുത്തുകയും ചെയ്തവന് സുജൂദ് ചെയ്തിരിക്കുന്നു.","My face prostrates to Him who created it and gave it hearing and sight by His power and strength.")]),
+  nt:TL3("Say the dua in the prostration. In prayer, say takbir going down and rising, with no salam.","സുജൂദിൽ ദുആ ചൊല്ലുക. നമസ്കാരത്തിലാണെങ്കിൽ താഴുമ്പോഴും ഉയരുമ്പോഴും തക്ബീർ പറയുക; സലാം വേണ്ട.","قل الدعاء في السجود. وفي الصلاة كبّر عند الهبوط والرفع ولا تسلّم.")})
+});
+Object.assign(GD,{
+  ghusl:{cat:"purification",n:0,nm:TL3("Ghusl (full bath)","ഗുസ്ൽ (കുളി)","الغسل"),
+    sum:{when:TL3("After intercourse, emission, menstruation or postnatal bleeding","ബന്ധത്തിനോ സ്ഖലനത്തിനോ ആർത്തവത്തിനോ പ്രസവരക്തത്തിനോ ശേഷം","بعد الجماع أو المني أو الحيض أو النفاس"),rak:TL3("Wash the whole body","ശരീരം മുഴുവൻ കഴുകുക","غسل البدن كله"),rule:TL3("Obligatory","നിർബന്ധം","فرض")},
+    build:()=>[{x:"c5_g1"},{x:"c5_g2"}]},
+  tayammum:{cat:"purification",n:0,nm:TL3("Tayammum","തയമ്മും","التيمم"),
+    sum:{when:TL3("When water is missing or harmful to use","വെള്ളം ഇല്ലാത്തപ്പോൾ, അല്ലെങ്കിൽ ഉപയോഗം ഹാനികരമാകുമ്പോൾ","عند فقد الماء أو تضرر استعماله"),rak:TL3("Two strikes on clean earth","ശുദ്ധമായ മണ്ണിൽ രണ്ട് അടി","ضربتان على تراب طاهر"),rule:TL3("Replaces wudu or ghusl","വുദൂഇനോ കുളിക്കോ പകരം","بدل عن الوضوء أو الغسل")},
+    build:()=>[{x:"c5_t1"},{x:"c5_t2"}]},
+  masah:{cat:"purification",n:0,nm:TL3("Wiping over socks","സോക്സിന് മുകളിൽ തടവൽ","المسح على الخفين"),
+    sum:{when:TL3("Instead of washing the feet in wudu","വുദൂഇൽ പാദം കഴുകുന്നതിന് പകരം","بدل غسل القدمين في الوضوء"),rak:TL3("1 day, or 3 when travelling","ഒരു ദിവസം, യാത്രയിൽ 3","يوم، وللمسافر ثلاثة"),rule:TL3("Concession","ഇളവ്","رخصة")},
+    build:()=>[{x:"c5_m1"},{x:"c5_m2"}]},
+  breakers:{cat:"purification",n:0,nm:TL3("What breaks wudu and prayer","വുദൂഉം നമസ്കാരവും മുറിക്കുന്നത്","نواقض الوضوء ومبطلات الصلاة"),
+    sum:{when:TL3("Quick reference","പെട്ടെന്നുള്ള റഫറൻസ്","مرجع سريع"),rak:TL3("Two lists","രണ്ട് പട്ടിക","قائمتان"),rule:TL3("Reference","റഫറൻസ്","مرجع")},
+    build:()=>[{x:"c5_b1"},{x:"c5_b2"}]},
+  adhan:{cat:"special",n:0,nm:TL3("Adhan and iqamah","ബാങ്കും ഇഖാമത്തും","الأذان والإقامة"),
+    sum:{when:TL3("Before each obligatory prayer","ഓരോ ഫർള് നമസ്കാരത്തിനും മുമ്പ്","قبل كل فريضة"),rak:TL3("Reply, then the dua","മറുപടി, പിന്നെ ദുആ","الإجابة ثم الدعاء"),rule:TL3("Sunnah","സുന്നത്ത്","سنة")},
+    build:()=>[{x:"c5_a1"},{x:"c5_a2"}]},
+  qada:{cat:"special",n:0,nm:TL3("Missed prayers (Qada)","വിട്ടുപോയ നമസ്കാരം (ഖദാഅ്)","قضاء الصلاة"),
+    sum:{when:TL3("When a prayer was missed or forgotten","ഒരു നമസ്കാരം വിട്ടുപോകുകയോ മറക്കുകയോ ചെയ്താൽ","عند فوات الصلاة أو نسيانها"),rak:TL3("Pray it as soon as you can","കഴിയുന്നതും വേഗം നമസ്കരിക്കുക","صلِّها في أقرب وقت"),rule:TL3("Obligatory","നിർബന്ധം","فرض")},
+    build:()=>[{x:"c5_q1"},{x:"c5_q2"}]},
+  sick:{cat:"special",n:0,nm:TL3("Prayer when unwell","രോഗസമയത്തെ നമസ്കാരം","الصلاة عند المرض"),
+    sum:{when:TL3("When you cannot stand, bow or prostrate","നിൽക്കാനോ കുനിയാനോ സുജൂദ് ചെയ്യാനോ കഴിയാത്തപ്പോൾ","عند العجز عن القيام أو الركوع أو السجود"),rak:TL3("Sit, lie down, or use gestures","ഇരിക്കുക, കിടക്കുക, അല്ലെങ്കിൽ ആംഗ്യം","قاعدًا أو مضطجعًا أو بالإيماء"),rule:TL3("Concession","ഇളവ്","رخصة")},
+    build:()=>[{x:"c5_i1"},{x:"c5_i2"}]},
+  tilawah:{cat:"occasion",n:0,nm:TL3("Prostration of recitation","തിലാവത്തിന്റെ സുജൂദ്","سجود التلاوة"),
+    sum:{when:TL3("On reciting or hearing a verse of prostration","സുജൂദിന്റെ ആയത്ത് ഓതുമ്പോഴോ കേൾക്കുമ്പോഴോ","عند قراءة آية سجدة أو سماعها"),rak:TL3("One prostration","ഒരു സുജൂദ്","سجدة واحدة"),rule:TL3("Sunnah","സുന്നത്ത്","سنة")},
+    build:()=>[{x:"c5_k1"},{x:"c5_k2"}]}
+});
+/* guides that are not about counting rak'ahs get a label that fits their second row */
+(()=>{const M=TL3("Method","രീതി","الكيفية"),PR=TL3("Prostrations","സുജൂദ്","السجود"),TM=TL3("Time limit","സമയപരിധി","المدة");
+  Object.entries({ghusl:M,tayammum:M,adhan:M,qada:M,sick:M,janazah:M,jamaah:M,vehicle:M,shukr:M,sujood_sahw:PR,tilawah:PR,masah:TM}).forEach(([k,v])=>{if(GD[k])GD[k].sum.lb=v});
+  if(GD.breakers)delete GD.breakers.sum.rak;
+})();
+GLIST.purification=["wudu","ghusl","tayammum","masah","breakers"];
+GLIST.special.push("adhan","qada","sick");
+GLIST.occasion=["istikhara","tawbah","shukr","sujood_sahw","tilawah","tahiyyat_masjid"];
+GCAT.splice(3,0,["occasion","Occasion"]);GCAT.splice(1,0,["purification","Purification"]);
 
 function buildSteps(p){
   const n=RAK[p],out=[],add=(k,r,x)=>out.push(Object.assign({k,r},x||{}));
@@ -1845,10 +2027,10 @@ function renderGuide(){
   if(st.first)note=tx("First tashahhud. Stand up for the next rak\u2019ah afterwards.");
   const body=c.b?c.b[LANG].split("\n\n").map(t=>`<p>${t}</p>`).join(""):"";
   const t1=c.t[LANG];
-  const sum=g?`<div class="card gsum g-sum"><div class="gs-r"><span>${tx("When")}</span><b>${g.sum.when[LANG]}</b></div><div class="gs-r"><span>${tx("Rak\u2019ahs")}</span><b>${g.sum.rak[LANG]}</b></div><div class="gs-r"><span>${tx("Ruling")}</span><b>${g.sum.rule[LANG]}</b></div>${g.win?`<div class="gs-r"><span>${tx("Time today")}</span><b class="num">${g.win(getEvents(Date.now()),Date.now())}</b></div>`:""}<div class="gs-tag">${tx("Pending scholar review")}</div></div>`:"";
+  const sum=g?`<div class="card gsum g-sum"><div class="gs-r"><span>${tx("When")}</span><b>${g.sum.when[LANG]}</b></div>${g.sum.rak?`<div class="gs-r"><span>${g.sum.lb?g.sum.lb[LANG]:tx("Rak\u2019ahs")}</span><b>${g.sum.rak[LANG]}</b></div>`:""}<div class="gs-r"><span>${tx("Ruling")}</span><b>${g.sum.rule[LANG]}</b></div>${g.win?`<div class="gs-r"><span>${tx("Time today")}</span><b class="num">${g.win(getEvents(Date.now()),Date.now())}</b></div>`:""}<div class="gs-tag">${tx("Pending scholar review")}</div></div>`:"";
   $("#s-guide").innerHTML=`
   <header class="g-head"><h1>${tx("Prayer guide")}</h1></header>
-  <div class="seg g-cat" role="group" aria-label="${tx("Choose a category")}">${GCAT.map(([k,lab])=>`<button aria-pressed="${cat===k}" data-act="gcat" data-v="${k}">${tx(lab)}</button>`).join("")}</div>
+  <div class="seg g-cat" role="group" aria-label="${tx("Choose a category")}">${GCAT.map(([k,lab])=>`<button aria-pressed="${cat===k}" data-act="gcat" data-v="${k}">${tx(lab)}<small>${GLIST[k].length}</small></button>`).join("")}</div>
   <div class="chips scroll g-chips" role="group" aria-label="${tx("Choose a prayer")}">${GLIST[cat].map(k=>`<button class="chip" aria-pressed="${k===id}" data-act="gprayer" data-v="${k}">${gname(k)}${cat==="daily"?`<small>${RAK[k]}</small>`:""}</button>`).join("")}</div>
   <div class="g-trans"><span>${tx("Translation")}</span><div class="seg" role="group" aria-label="${tx("Translation")}"><button aria-pressed="${mean==="en"}" data-act="gmean" data-v="en">English</button><button aria-pressed="${mean==="ml"}" data-act="gmean" data-v="ml">മലയാളം</button><button aria-pressed="${mean==="off"}" data-act="gmean" data-v="off">${tx("Off")}</button></div></div>
   ${sum}
@@ -1874,6 +2056,8 @@ function renderGuide(){
   <p class="fine g-fine" style="margin:14px 4px 0">${tx("Wording follows common Shafi\u2019i practice. Please confirm details with your ustad.")}</p>`;
   const cw=$("#s-guide .g-chips"),ce=cw&&$(".chip[aria-pressed=true]",cw);                 /* keep the chosen prayer in view */
   if(cw&&ce&&cw.offsetParent){const cr=cw.getBoundingClientRect(),er=ce.getBoundingClientRect();cw.scrollLeft+=(er.left+er.width/2)-(cr.left+cr.width/2)}
+  const tw=$("#s-guide .g-cat"),te=tw&&$("button[aria-pressed=true]",tw);
+  if(tw&&te&&tw.offsetParent){const tr=tw.getBoundingClientRect(),er=te.getBoundingClientRect();tw.scrollLeft+=(er.left+er.width/2)-(tr.left+tr.width/2)}
 }
 function openSteps(){
   const id=S.prayer,steps=gsteps(id),n=gcount(id);
@@ -2044,6 +2228,50 @@ let tt=null;
 function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),2600)}
 
 /* ---------- widgets ---------- */
+/* home-style widget: the sun crosses the semicircle from sunrise to sunset, the moon crosses it from sunset to sunrise */
+const WH={cx:150,cy:140,r:112};
+function whPos(f){const d=skDir(),a=Math.PI*Math.min(1,Math.max(0,f));return [WH.cx-d*WH.r*Math.cos(a),WH.cy-WH.r*Math.sin(a)]}
+function whState(E,now){
+  const t=E.today,D=864e5;
+  if(now>=t.sunrise&&now<t.maghrib)return {night:false,f:(now-t.sunrise)/(t.maghrib-t.sunrise)};
+  const ns=now>=t.maghrib?t.maghrib:t.maghrib-D,ne=ns+(t.sunrise+D-t.maghrib);
+  return {night:true,f:(now-ns)/(ne-ns)};
+}
+function whArc(f){const [x0,y0]=whPos(0),[x1,y1]=whPos(f),sw=skDir()===1?1:0;return `M${x0.toFixed(1)} ${y0.toFixed(1)} A${WH.r} ${WH.r} 0 0 ${sw} ${x1.toFixed(1)} ${y1.toFixed(1)}`}
+const WH_SUN='<circle r="13" fill="#FFD27A" opacity=".22"/><circle r="6.5" fill="#FFD27A"/><g stroke="#FFD27A" stroke-width="2" stroke-linecap="round"><path d="M0-10V-12.5M0 10V12.5M-10 0H-12.5M10 0H12.5M7-7L8.8-8.8M-7 7L-8.8 8.8M7 7L8.8 8.8M-7-7L-8.8-8.8"/></g>';
+const WH_MOON='<circle r="13" fill="#B9C8F5" opacity=".2"/><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" transform="translate(-9.6 -9.6) scale(.8)" fill="#E8EEFF"/>';
+function whSVG(E,now){
+  const st=whState(E,now),f=Math.min(1,Math.max(0,st.f)),[x,y]=whPos(f);
+  return `<svg viewBox="0 0 300 150" aria-hidden="true"><path d="${whArc(1)}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="6" stroke-linecap="round"/><path id="whp" d="${whArc(f)}" fill="none" stroke="${st.night?"#9FB4E8":"#E6C27F"}" stroke-width="6" stroke-linecap="round"/><g id="whi" data-k="${st.night?"m":"s"}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})">${st.night?WH_MOON:WH_SUN}</g></svg>`}
+function updateWHome(E,now){
+  const pp=$("#whp");if(!pp)return;
+  const st=whState(E,now),f=Math.min(1,Math.max(0,st.f)),[x,y]=whPos(f),g=$("#whi"),c=skCur(E,now),nx=$("#whnx"),ar=$("#wharn");
+  pp.setAttribute("d",whArc(f));pp.setAttribute("stroke",st.night?"#9FB4E8":"#E6C27F");
+  g.setAttribute("transform",`translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+  const want=st.night?"m":"s";if(g.dataset.k!==want){g.dataset.k=want;g.innerHTML=st.night?WH_MOON:WH_SUN}
+  const lb=tx(c.cur?"Now":"Next prayer");if(nx&&nx.textContent!==lb)nx.textContent=lb;
+  if(ar&&ar.textContent!==NAMES[c.k].ar)ar.textContent=NAMES[c.k].ar;
+}
+/* clock widget: sunrise at 9 o'clock, over the top to sunset at 3 o'clock (sun), then under the bottom back to sunrise (moon) */
+const WC={c:80,r:68};
+function wcPt(a){return [WC.c-WC.r*Math.cos(a),WC.c-WC.r*Math.sin(a)]}
+function wcArc(a0,a1){const [x0,y0]=wcPt(a0),[x1,y1]=wcPt(a1);return `M${x0.toFixed(1)} ${y0.toFixed(1)} A${WC.r} ${WC.r} 0 0 1 ${x1.toFixed(1)} ${y1.toFixed(1)}`}
+function wcPhi(E,t){const T=E.today,D=864e5;
+  if(t>=T.sunrise&&t<T.maghrib)return Math.PI*(t-T.sunrise)/(T.maghrib-T.sunrise);
+  const ns=t>=T.maghrib?T.maghrib:T.maghrib-D,ne=ns+(T.sunrise+D-T.maghrib);return Math.PI*(1+(t-ns)/(ne-ns))}
+function wcNow(E,now){const st=whState(E,now),f=Math.min(1,Math.max(0,st.f));return {night:st.night,phi:Math.PI*(st.night?1+f:f)}}
+function wcSVG(E,now){
+  const w=wcNow(E,now),[x,y]=wcPt(w.phi),PI=Math.PI;
+  const ticks=P.map(k=>{const [a,b]=wcPt(wcPhi(E,E.today[k]));return `<circle cx="${a.toFixed(1)}" cy="${b.toFixed(1)}" r="2.4" fill="rgba(255,255,255,.6)"/>`}).join("");
+  return `<svg viewBox="0 0 160 160" aria-hidden="true"><path d="${wcArc(0,PI)}" fill="none" stroke="#E6C27F" stroke-opacity=".2" stroke-width="5" stroke-linecap="round"/><path d="${wcArc(PI,2*PI-.001)}" fill="none" stroke="#9FB4E8" stroke-opacity=".2" stroke-width="5" stroke-linecap="round"/><path id="wcd" d="${wcArc(0,Math.min(w.phi,PI))}" fill="none" stroke="#E6C27F" stroke-width="5" stroke-linecap="round"/><path id="wcn" d="${w.phi>PI?wcArc(PI,w.phi):"M0 0"}" fill="none" stroke="#9FB4E8" stroke-width="5" stroke-linecap="round"/>${ticks}<g id="wci" data-k="${w.night?"m":"s"}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(.8)">${w.night?WH_MOON:WH_SUN}</g></svg>`}
+function updateWClock(E,now){
+  const t=$("#wcT");if(!t)return;
+  const w=wcNow(E,now),[x,y]=wcPt(w.phi),PI=Math.PI,g=$("#wci"),tm=fmtP(now);
+  if(t.textContent!==tm)t.textContent=tm;
+  $("#wcd").setAttribute("d",wcArc(0,Math.min(w.phi,PI)));$("#wcn").setAttribute("d",w.phi>PI?wcArc(PI,w.phi):"M0 0");
+  g.setAttribute("transform",`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(.8)`);
+  const want=w.night?"m":"s";if(g.dataset.k!==want){g.dataset.k=want;g.innerHTML=w.night?WH_MOON:WH_SUN}
+}
 function renderWidgets(E,now){
   const N=NAMES[E.next.key],dl=dateLines(now,E),hj=dl.hj,gdt=new Date(Date.UTC(E.Y,E.M-1,E.Dd));
   const cols=P.map(k=>{const isN=k===E.next.key&&E.next.o===0,past=E.today[k]<=now&&!isN;return `<div class="c ${isN?"n":""} ${past?"p":""}"><i>${NAMES[k].p}</i><b class="num">${fmt(E.today[k],false)}</b></div>`}).join("");
@@ -2057,12 +2285,15 @@ function renderWidgets(E,now){
       <div class="ws-date">${WD[gdt.getUTCDay()]} ${dl.hd} ${dl.hm} ${dl.hy} - ${gdt.getUTCDate()} ${GM[gdt.getUTCMonth()]}</div></div>
     <div class="wcap" style="margin-bottom:14px">4 \u00d7 1 \u00b7 ${tx("minimal")}</div>
     <div class="wgrid">
-      <div><div class="wg w22">${archSVG({sw:5,pattern:false,inner:false})}<div class="an">${N.ar}</div><div><div class="tm num">${fmt(E.next.ms,false)}</div><div class="in">${tx("{0} in {1}",N.p,`<span class="num b-short">${short(E.next.ms-now)}</span>`)}</div></div></div><div class="wcap">2 × 2</div></div>
-      <div><div class="wg w22" style="justify-content:center;gap:6px"><div class="in" style="margin:0;color:var(--mist)">${dl.hm}</div><div class="tm num" style="font-size:44px">${dl.hd}</div><div class="in">${dl.hy} ${tx("AH")}</div></div><div class="wcap">${tx("2 \u00d7 2 \u00b7 date")}</div></div>
+      <div><div class="wg ws ws22"><div class="ws-p"><b>${NAMES[E.prev.key].p}</b><span class="num">${fmtP(E.prev.ms)}</span></div><div class="ws-cd num b-cdh">${cdHTML(E.next.ms-now)}</div><div class="ws-p"><b>${N.p}</b><span class="num">${fmtP(E.next.ms)}</span></div><div class="ws-bar"><i class="b-bar2" style="width:0%"></i></div><div class="ws-date">${WD[gdt.getUTCDay()]} ${dl.hd} ${dl.hm}</div></div><div class="wcap">2 × 2</div></div>
+      <div class="wcell"><div class="wg wc">${wcSVG(E,now)}<div class="wc-in"><div class="wc-d">${dl.hd} ${dl.hm}</div><div class="wc-t num" id="wcT">${fmtP(now)}</div><div class="wc-n"><span>${N.p}</span> <span class="num">${fmtP(E.next.ms)}</span></div></div></div><div class="wcap">${tx("2 × 2 · clock")}</div></div>
     </div>
     <div class="wg w42"><div class="top"><b class="num">${hj}</b><span>${cn(E.L)}</span></div><div class="cols">${cols}</div>
       <div class="mbar"><i class="b-bar" style="width:0%"></i></div></div>
     <div class="wcap">4 × 2</div>
+    <div class="wg w42 wh"><div class="wh-dial">${whSVG(E,now)}<div class="wh-in"><div class="nx" id="whnx">${tx(skCur(E,now).cur?"Now":"Next prayer")}</div><div class="arn" id="wharn">${NAMES[skCur(E,now).k].ar}</div></div></div>
+      <div class="cols">${cols}</div></div>
+    <div class="wcap">${tx("4 × 3 · home")}</div>
     <div class="dock"><i></i><i></i><i></i><i></i></div>
   </div>
   <p class="fine" style="margin:14px 6px 0">${tx("Bar color shifts from green to red as the next prayer gets closer.")}</p>
@@ -2131,9 +2362,17 @@ function skyHTML(E,now,mask,resting){
     <g class="sk-orb"><g class="sun"><circle r="40" fill="url(#skSunG)"/><circle r="11.5" fill="url(#skSunC)"/></g><g class="moon" style="display:none"><circle r="32" fill="url(#skMoonG)"/><circle r="10.5" fill="#F3F6FF" mask="url(#skMoonM)"/></g></g>
     ${labels}
   </svg>
-  <div class="sk-in"><div class="nx">${tx("Next prayer")}</div><div class="arn">${NAMES[E.next.key].ar}</div></div></div>
+  <div class="sk-in"><div class="nx">${tx(skCur(E,now).cur?"Now":"Next prayer")}</div><div class="arn">${NAMES[skCur(E,now).k].ar}</div></div></div>
   <div class="sk-cd"><div class="cd num b-cd">${hms(E.next.ms-now)}</div><div class="at num">${tx("{0} at {1}",NAMES[E.next.key].p,fmt(E.next.ms))}</div></div>
   <div class="sk-loc"><button class="loc" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span>${cn(E.L)}</span>${IC.chev}</button><button class="qbtn qb-s" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}<span>${tx("Qibla")}</span></button></div>`;
+}
+/* centre of the semicircle: the prayer we are in now; Fajr ends at sunrise, then the next prayer (Dhuhr) shows until it starts */
+function skCur(E,now){const pk=E.prev.key;return (pk==="fajr"&&now>=E.today.sunrise)?{k:E.next.key,cur:false}:{k:pk,cur:true}}
+function updateSkyIn(E,now){
+  const el=$(".sk-in");if(!el)return;
+  const c=skCur(E,now),nx=$(".nx",el),ar=$(".arn",el),lb=tx(c.cur?"Now":"Next prayer");
+  if(nx&&nx.textContent!==lb)nx.textContent=lb;
+  if(ar&&ar.textContent!==NAMES[c.k].ar)ar.textContent=NAMES[c.k].ar;
 }
 function updateSky(E,now,p){
   const el=$(".sky");if(!el)return;
@@ -2309,7 +2548,7 @@ function tick(force){
   $$(".b-bar2").forEach(el=>{el.style.width=(p*100)+"%";el.style.background=urgency(rem)});
   $$(".b-cdh").forEach(el=>el.innerHTML=cdHTML(rem));
   $$("[data-arch]").forEach(svg=>setArch(svg,p));
-  updateSky(E,now,p);
+  updateSky(E,now,p);updateSkyIn(E,now);updateWHome(E,now);updateWClock(E,now);
   const sb=$("#sbtime");if(sb)sb.textContent=fmt(now,false);
   checkReminders(E,now);
 }
@@ -2366,7 +2605,7 @@ document.addEventListener("click",e=>{
     case"factory":openSheet(`<h2>${tx("Factory reset?")}</h2><p class="sub" style="margin:6px 0 18px">${tx("This erases your profile, settings, prayer log and streak from this device, then restarts the app. It can\u2019t be undone.")}</p><div style="display:flex;gap:10px"><button class="btn ghost" style="flex:1" data-act="close">${tx("Cancel")}</button><button class="btn gold" style="flex:1;background:var(--st-miss);color:#fff" data-act="factorydo">${tx("Erase everything")}</button></div>`);break;
     case"factorydo":try{localStorage.removeItem("mihrab-v1")}catch(e){}location.reload();break;
     case"dopen":if(+v===localDay())focusPrayerCard();else openDay(+v);break;
-    case"dall":{const nn=+v;touchDay(nn,d=>{P.forEach(k=>{if(dayLocked(nn,k))return;if(!d[k]||d[k].s==="x")d[k]={s:"o"}})});break}
+    case"dall":{const nn=+v;touchDay(nn,d=>{P.forEach(k=>{if(dayLocked(nn,k))return;if(!d[k]||d[k].s==="x")d[k]={s:"o"}})});const sh=$("#sheet"),toEnd=()=>sh.scrollTo({top:sh.scrollHeight,behavior:"instant"});toEnd();requestAnimationFrame(toEnd);break}   /* jump straight to the bottom so Done is fully visible */
     case"dclr":{const nn=+v;touchDay(nn,d=>{P.forEach(k=>{if(!dayLocked(nn,k))delete d[k]})});break}
     case"dst":{const [n,k,st]=v.split(":"),nn=+n;if(dayLocked(nn,k)){toast(tx("{0} can be ticked once its time begins",NP(k)));break}
       touchDay(nn,d=>{const old=d[k];if(old&&old.s===st)delete d[k];else{const r={s:st};if(st!=="m"&&old&&(old.s==="o"||old.s==="l")){if(old.j)r.j=1;if(old.f)r.f=1}d[k]=r}});break}
@@ -2588,11 +2827,13 @@ function encourage(now,E){
   }
   return out("ma",`${done} of 5 done, keep it up ${ad.en}. Next: ${NN.en} at ${nt}.`,`5-ൽ ${done} പൂർത്തിയായി, തുടരൂ ${ad.ml}. അടുത്തത് ${NN.ml} ${nt}-ന്.`,`${done} من 5 مكتملة، ${g2("واصل","واصلي")} يا ${ad.ar}. التالية: ${NN.ar} عند ${nt}.`);
 }
-function ringSVG(mask){
+function ringSVG(mask,n){
+  const dd=n==null?null:trkDay(n);                                   /* per-prayer status: on time = gold, late = blue, missed = red */
   const segs=[0,1,2,3,4].map(i=>{
+    const sx=dd&&dd[P[i]]&&dd[P[i]].s,col=sx==="o"?"var(--gold)":sx==="l"?"var(--st-late)":(mask&BIT[P[i]]?"var(--gold)":"var(--mist2)"),lit=sx==="o"||sx==="l"||(mask&BIT[P[i]]);
     const a0=(-90+i*72+7)*D2R,a1=(-90+i*72+65)*D2R;
     const f=v=>v.toFixed(2),x0=18+15*Math.cos(a0),y0=18+15*Math.sin(a0),x1=18+15*Math.cos(a1),y1=18+15*Math.sin(a1);
-    return `<path d="M${f(x0)} ${f(y0)}A15 15 0 0 1 ${f(x1)} ${f(y1)}" fill="none" stroke-width="3.2" stroke-linecap="round" style="stroke:${mask&BIT[P[i]]?"var(--gold)":"var(--mist2)"}" stroke-opacity="${mask&BIT[P[i]]?1:.3}"/>`;
+    return `<path d="M${f(x0)} ${f(y0)}A15 15 0 0 1 ${f(x1)} ${f(y1)}" fill="none" stroke-width="3.2" stroke-linecap="round" style="stroke:${col}" stroke-opacity="${lit?1:.3}"/>`;
   }).join("");
   return `<svg viewBox="0 0 36 36" aria-hidden="true">${segs}</svg>`;
 }
@@ -2603,7 +2844,7 @@ function streakHTML(now){
   let cells="";
   for(let i=0;i<wd;i++)cells+="<span></span>";
   for(let d=1;d<=len;d++){
-    const n=first+d-1,st=n<=today?dayState(n):"future",m=maskOf(n),ring=ringSVG(st==="rest"||st==="future"?0:m);
+    const n=first+d-1,st=n<=today?dayState(n):"future",m=maskOf(n),ring=ringSVG(st==="rest"||st==="future"?0:m,st==="rest"||st==="future"?null:n);
     const cls=`skd ${st==="rest"?"rest":""} ${st==="full"?"full":""} ${n===today?"today":""} ${st==="future"?"future":""}`;
     cells+=st==="future"?`<div class="mc"><div class="${cls}">${ring}<span class="num">${d}</span></div></div>`
       :`<button class="mc" data-act="dopen" data-v="${n}" aria-label="${tx("{0} {1}: {2} of 5 prayers",d,GM[g.m],cnt(m))}"><div class="${cls}">${ring}<span class="num">${d}</span></div></button>`;
@@ -2617,6 +2858,7 @@ function streakHTML(now){
     <div class="wdr">${WDL.map((w,i)=>`<span class="${i===5?"fri":""}">${w}</span>`).join("")}</div>
     <div class="skg">${cells}</div>
     <p class="fine" style="margin:12px 2px 0">${tx("Each ring has five parts, one for each prayer.")} ${tx("Tap a date to mark its prayers.")}</p>
+    ${(S.profile&&S.profile.g==="f"&&S.restA==null)?`<div class="restnote"><p dir="auto">${tx("If you’re on your period, you can pause the tracker. Your progress stays safe.")}</p><button class="lbtn" data-act="rest">${tx("Pause")}</button></div>`:""}
     <button class="btn ghost stk-more" data-act="tab" data-v="trk">${tx("View tracker")}</button>
   </div>`;
 }
@@ -2778,7 +3020,7 @@ if(CAN_PWA){
   window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;renderSettings()});
   window.addEventListener("appinstalled",()=>{deferredInstall=null;toast(tx("App installed"));renderSettings()});
   window.addEventListener("load",()=>{
-    navigator.serviceWorker.register("sw.js").then(reg=>{
+    navigator.serviceWorker.register("sw.js?v="+APP.version).then(reg=>{
       swReg=reg;
       if(reg.waiting&&navigator.serviceWorker.controller)showUpdate(reg);
       reg.addEventListener("updatefound",()=>{const nw=reg.installing;if(nw)nw.addEventListener("statechange",()=>{if(nw.state==="installed"&&navigator.serviceWorker.controller)showUpdate(reg)})});
