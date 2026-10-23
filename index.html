@@ -896,6 +896,18 @@ html[data-theme="day"] .ntf .ic svg{stroke:#6E4A0C}
 .gs-r span{overflow-wrap:anywhere}
 html[lang="ml"] .gs-r{gap:14px}
 html[lang="ml"] .gs-r span{width:104px}
+/* About: reference links */
+a.crow{color:inherit;text-decoration:none}
+a.crow:active{opacity:.7}
+a.crow span{direction:ltr;unicode-bidi:isolate}
+/* Tahajjud reminder time options */
+.tah-opts{padding:2px 0 14px}
+.tah-opts .chips{gap:8px}
+.tah-time{margin-top:12px}
+.tah-time input{width:100%;border:1px solid var(--line);background:var(--chip-bg);color:var(--ivory);border-radius:14px;padding:12px 14px;font:inherit;font-size:16px;color-scheme:light dark}
+.tah-time .fine{margin:8px 2px 0}
+/* iqama counter under the Arabic name in the home semicircle */
+.sk-in .iq{height:calc(4.6*var(--u));margin-top:calc(.6*var(--u));font-size:calc(3.3*var(--u));line-height:calc(4.6*var(--u));color:rgba(255,255,255,.82);font-variant-numeric:tabular-nums;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -965,7 +977,7 @@ const METHODS={
 };
 const KAABA={lat:21.4225,lon:39.8262};
 /* edit these before release */
-const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.33.7",build:"2026.10.22.62",year:2026};
+const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.37.0",build:"2026.10.22.68",year:2026};
 const CREDITS=[
   ["Design and development","Basil Melepat"],
   ["Religious content review","To be added before release"],
@@ -973,13 +985,13 @@ const CREDITS=[
   ["Hijri date","Umm al-Qura calendar"],
   ["Qibla bearing","Great-circle path to the Kaaba"]
 ];
-const FONTS=[["Amiri","SIL Open Font License"],["Google Sans","SIL Open Font License"],["Hanken Grotesk","SIL Open Font License"],["Noto Sans Malayalam","SIL Open Font License"]];
+const REFS=[["Prayer time calculation","praytimes.org","https://praytimes.org"],["Umm al-Qura calendar","webspace.science.uu.nl","https://webspace.science.uu.nl/~gent0113/islam/ummalqura_introduction.htm"],["Travel prayer (Qasr)","jibreel.app","https://www.jibreel.app/islamqa/hanafi-qasar-namaz-distance"],["Intention in prayer","prayerinislam.com","https://prayerinislam.com/verbal-intention-prayer-necessary/"],["Typefaces","fonts.google.com","https://fonts.google.com"]];
 
 /* ---------- state ---------- */
-const DEF={city:0,custom:null,method:"mwl",asr:"shafii",rem:{fajr:1,dhuhr:1,asr:1,maghrib:1,isha:1},lead:10,sound:"chime",glang:"ml",translit:true,prayer:"fajr",theme:"auto",lang:"en",wbg:"blur",gmean:null,profile:null,log:{},trk:{},since:null,restR:[],restA:null,hadj:0,cmode:"g",adj:{fajr:0,sunrise:0,dhuhr:0,asr:0,maghrib:0,isha:0}};
+const DEF={city:0,custom:null,method:"mwl",asr:"shafii",rem:{fajr:1,dhuhr:1,asr:1,maghrib:1,isha:1,tahajjud:0},lead:10,sound:"chime",glang:"ml",translit:true,prayer:"fajr",theme:"auto",lang:"en",wbg:"blur",gmean:null,profile:null,log:{},trk:{},since:null,restR:[],restA:null,hadj:0,cmode:"g",iq:{fajr:20,dhuhr:15,asr:15,maghrib:5,isha:15},adj:{fajr:0,sunrise:0,dhuhr:0,asr:0,maghrib:0,isha:0}};
 let S=Object.assign({},DEF);
 try{const raw=localStorage.getItem("mihrab-v1");if(raw)S=Object.assign({},DEF,JSON.parse(raw))}catch(e){}
-S.adj=Object.assign({},DEF.adj,S.adj||{});S.trk=S.trk||{};S.log=S.log||{};S.restR=S.restR||[];
+S.adj=Object.assign({},DEF.adj,S.adj||{});S.iq=Object.assign({},DEF.iq,S.iq||{});S.trk=S.trk||{};S.log=S.log||{};S.restR=S.restR||[];
 const save=()=>{try{localStorage.setItem("mihrab-v1",JSON.stringify(S))}catch(e){}};
 const loc=()=>S.city>=0?CITIES[S.city]||CITIES[0]:(S.custom||CITIES[0]);
 /* ---------- language ---------- */
@@ -993,7 +1005,7 @@ ml:{
 "How did it go?":"എങ്ങനെയായിരുന്നു?","Extras":"അധികം","Clear":"മായ്ക്കുക","Track options":"ട്രാക്ക് ഓപ്ഷനുകൾ","Marked automatically from the prayer time. Change it if needed.":"പ്രാർഥനാ സമയം നോക്കി സ്വയം രേഖപ്പെടുത്തി. ആവശ്യമെങ്കിൽ മാറ്റാം.","View tracker":"ട്രാക്കർ കാണുക",
 "On time means prayed before the next prayer begins.":"അടുത്ത നമസ്കാരം തുടങ്ങുന്നതിന് മുമ്പ് നമസ്കരിച്ചാൽ സമയത്ത് എന്ന് കണക്കാക്കും.","Prayers you don\u2019t mark once their time has passed count as missed.":"സമയം കഴിഞ്ഞിട്ടും രേഖപ്പെടുത്താത്ത നമസ്കാരങ്ങൾ നഷ്ടപ്പെട്ടതായി കണക്കാക്കും.","No prayers tracked yet.":"ഇതുവരെ നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തിയിട്ടില്ല.",
 "Rest days":"വിശ്രമ ദിനങ്ങൾ","Pause tracking and reminders":"ട്രാക്കിംഗും റിമൈൻഡറുകളും താൽക്കാലികമായി നിർത്തുക","On since {0}":"{0} മുതൽ ഓണാണ്","Start rest days":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങുക","End rest days":"വിശ്രമ ദിനങ്ങൾ അവസാനിപ്പിക്കുക","End":"അവസാനിപ്പിക്കുക",
-"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"ഈ ദിവസങ്ങൾ ശതമാനത്തിലോ തുടർച്ചയിലോ കണക്കാക്കില്ല, റിമൈൻഡറുകൾ ശബ്ദിക്കില്ല. ഇത് ഈ ഉപകരണത്തിൽ മാത്രം.","Rest days started":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങി","Rest days ended. Welcome back.":"വിശ്രമ ദിനങ്ങൾ അവസാനിച്ചു. വീണ്ടും സ്വാഗതം.","Week streak":"ആഴ്ച തുടർച്ച","Month streak":"മാസ തുടർച്ച","Each ring has five parts, one for each prayer.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്.","Translation":"പരിഭാഷ","Off":"ഓഫ്", "Install app":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക","Add it to your home screen for full-screen use and offline access.":"ഫുൾ സ്ക്രീനിലും ഓഫ്‌ലൈനിലും ഉപയോഗിക്കാൻ ഹോം സ്ക്രീനിൽ ചേർക്കുക.","Install {0}":"{0} ഇൻസ്റ്റാൾ ചെയ്യുക","Tap the Share button in Safari":"സഫാരിയിലെ ഷെയർ ബട്ടൺ തൊടുക","Choose Add to Home Screen":"“ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","Tap Add":"“ചേർക്കുക” തൊടുക","Open your browser menu":"ബ്രൗസർ മെനു തുറക്കുക","Choose Install app or Add to Home screen":"“ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക” അല്ലെങ്കിൽ “ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","App installed":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തു","A new version is ready.":"പുതിയ പതിപ്പ് തയ്യാറാണ്.","Refresh":"റിഫ്രഷ്","You\u2019re offline. Everything still works.":"നിങ്ങൾ ഓഫ്‌ലൈനാണ്. എല്ലാം പ്രവർത്തിക്കും.","Back online":"വീണ്ടും ഓൺലൈൻ","Transparent":"സുതാര്യം","Blur":"ബ്ലർ","Bar color shifts from green to red as the next prayer gets closer.":"അടുത്ത നമസ്കാരം അടുക്കുന്തോറും ബാർ പച്ചയിൽ നിന്ന് ചുവപ്പിലേക്ക് മാറുന്നു.","minimal":"മിനിമൽ","H":"മ","M":"മി","S":"സെ","Calendar":"കലണ്ടർ","Guide":"വഴികാട്ടി","Reminders":"റിമൈൻഡർ","Settings":"ക്രമീകരണം","Widgets":"വിജറ്റുകൾ","Qibla":"ഖിബ്‌ല",
+"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"ഈ ദിവസങ്ങൾ ശതമാനത്തിലോ തുടർച്ചയിലോ കണക്കാക്കില്ല, റിമൈൻഡറുകൾ ശബ്ദിക്കില്ല. ഇത് ഈ ഉപകരണത്തിൽ മാത്രം.","Rest days started":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങി","Rest days ended. Welcome back.":"വിശ്രമ ദിനങ്ങൾ അവസാനിച്ചു. വീണ്ടും സ്വാഗതം.","Week streak":"ആഴ്ച തുടർച്ച","Month streak":"മാസ തുടർച്ച","Each ring has five parts, one for each prayer.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്.","Translation":"പരിഭാഷ","Off":"ഓഫ്", "Install app":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക","Add it to your home screen for full-screen use and offline access.":"ഫുൾ സ്ക്രീനിലും ഓഫ്‌ലൈനിലും ഉപയോഗിക്കാൻ ഹോം സ്ക്രീനിൽ ചേർക്കുക.","Install {0}":"{0} ഇൻസ്റ്റാൾ ചെയ്യുക","Tap the Share button in Safari":"സഫാരിയിലെ ഷെയർ ബട്ടൺ തൊടുക","Choose Add to Home Screen":"“ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","Tap Add":"“ചേർക്കുക” തൊടുക","Open your browser menu":"ബ്രൗസർ മെനു തുറക്കുക","Choose Install app or Add to Home screen":"“ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക” അല്ലെങ്കിൽ “ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","App installed":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തു","A new version is ready.":"പുതിയ പതിപ്പ് തയ്യാറാണ്.","Refresh":"റിഫ്രഷ്","You\u2019re offline. Everything still works.":"നിങ്ങൾ ഓഫ്‌ലൈനാണ്. എല്ലാം പ്രവർത്തിക്കും.","Back online":"വീണ്ടും ഓൺലൈൻ","Transparent":"സുതാര്യം","Blur":"ബ്ലർ","Bar color shifts from green to red as the next prayer gets closer.":"അടുത്ത നമസ്കാരം അടുക്കുന്തോറും ബാർ പച്ചയിൽ നിന്ന് ചുവപ്പിലേക്ക് മാറുന്നു.","minimal":"മിനിമൽ","H":"മ","M":"മി","S":"സെ","Calendar":"കലണ്ടർ","Guide":"വഴികാട്ടി","Last third of the night":"രാത്രിയുടെ അവസാന മൂന്നിലൊന്ന്","Start of the last third":"അവസാന മൂന്നിലൊന്നിന്റെ തുടക്കം","2 hours before Fajr":"ഫജ്റിന് 2 മണിക്കൂർ മുമ്പ്","1 hour before Fajr":"ഫജ്റിന് 1 മണിക്കൂർ മുമ്പ്","30 minutes before Fajr":"ഫജ്റിന് 30 മിനിറ്റ് മുമ്പ്","Custom time":"ഇഷ്ടമുള്ള സമയം","Tahajjud reminder time":"തഹജ്ജുദ് ഓർമ്മപ്പെടുത്തൽ സമയം","That time is outside tonight’s night hours, so the last third is used instead.":"ഈ സമയം ഇന്നത്തെ രാത്രിക്ക് പുറത്താണ്, അതിനാൽ പകരം അവസാന മൂന്നിലൊന്ന് ഉപയോഗിക്കുന്നു.","Iqama times":"ഇഖാമത്ത് സമയം","Minutes after the adhan, for each prayer":"ഓരോ നമസ്കാരത്തിനും ബാങ്കിന് ശേഷമുള്ള മിനിറ്റ്","Set how many minutes after the adhan the iqama is. The home screen counts down to it.":"ബാങ്കിന് എത്ര മിനിറ്റ് കഴിഞ്ഞാണ് ഇഖാമത്ത് എന്ന് സജ്ജമാക്കുക. ഹോം സ്ക്രീൻ അതിലേക്കുള്ള കൗണ്ട്ഡൗൺ കാണിക്കും.","Iqama in {0}":"ഇഖാമത്തിന് {0}","Iqama times reset":"ഇഖാമത്ത് സമയങ്ങൾ പുനഃസജ്ജമാക്കി","Iqama at {0}":"ഇഖാമത്ത് {0}","Reminders":"റിമൈൻഡർ","Settings":"ക്രമീകരണം","Widgets":"വിജറ്റുകൾ","Qibla":"ഖിബ്‌ല",
 "Next prayer":"അടുത്ത നമസ്കാരം","Now":"ഇപ്പോൾ","Purification":"ശുദ്ധി","4 × 3 · home":"4 × 3 · ഹോം","2 × 2 · clock":"2 × 2 · ക്ലോക്ക്","If you’re on your period, you can pause the tracker. Your progress stays safe.":"ആർത്തവ സമയത്താണെങ്കിൽ ട്രാക്കർ താൽക്കാലികമായി നിർത്തിവെക്കാം. നിങ്ങളുടെ പുരോഗതി സുരക്ഷിതമായിരിക്കും.","Pause":"നിർത്തിവെക്കുക","{0} at {1}":"{0} {1}-ന്","day streak":"ദിവസ തുടർച്ച","Best":"മികച്ചത്","Full days":"പൂർണ ദിനങ്ങൾ",
 "Each ring has five parts, one for each prayer. Tap a day to update it.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്. പുതുക്കാൻ ഒരു ദിവസം തൊടുക.",
 "Tap the bell to set a reminder.":"റിമൈൻഡർ സജ്ജമാക്കാൻ മണി തൊടുക.","Asr: {0}":"അസ്ർ: {0}","{0} adjusted":"{0} ക്രമീകരിച്ചു","{0} prayed":"{0} നമസ്കരിച്ചു",
@@ -1039,7 +1051,7 @@ ml:{
 "Widgets refresh every minute and keep working when the app is closed.":"വിജറ്റുകൾ ഓരോ മിനിറ്റിലും പുതുക്കുന്നു, ആപ്പ് അടച്ചാലും പ്രവർത്തിക്കും.",
 "Adjust prayer times":"നമസ്കാര സമയം ക്രമീകരിക്കുക","Match your local mosque timetable. Reminders and widgets use the adjusted times.":"നിങ്ങളുടെ പ്രാദേശിക പള്ളിയിലെ സമയപ്പട്ടികയുമായി ഒത്തുനോക്കുക. റിമൈൻഡറുകളും വിജറ്റുകളും ക്രമീകരിച്ച സമയം ഉപയോഗിക്കുന്നു.",
 "Earlier by one minute for {0}":"{0}: ഒരു മിനിറ്റ് മുമ്പ്","Later by one minute for {0}":"{0}: ഒരു മിനിറ്റ് വൈകി","As calculated":"കണക്കാക്കിയത്","Each time can move up to {0} minutes either way.":"ഓരോ സമയവും ഇരുവശത്തേക്കും പരമാവധി {0} മിനിറ്റ് മാറ്റാം.","Reset all":"എല്ലാം റീസെറ്റ് ചെയ്യുക","Done":"പൂർത്തിയായി",
-"Version {0} \u00b7 build {1}":"പതിപ്പ് {0} \u00b7 ബിൽഡ് {1}","Credits":"ക്രെഡിറ്റുകൾ","Design and development":"ഡിസൈനും വികസനവും","Mihrab team":"മിഹ്റാബ് ടീം","Religious content review":"മതപരമായ ഉള്ളടക്ക പരിശോധന","To be added before release":"പുറത്തിറക്കുന്നതിന് മുമ്പ് ചേർക്കും",
+"Version {0} \u00b7 build {1}":"പതിപ്പ് {0} \u00b7 ബിൽഡ് {1}","Credits":"ക്രെഡിറ്റുകൾ","References":"ആധാരസ്രോതസ്സുകൾ","Prayer time calculation":"നമസ്കാര സമയ കണക്കുകൂട്ടൽ","Typefaces":"അക്ഷരരൂപങ്ങൾ","Travel prayer (Qasr)":"യാത്രാ നമസ്കാരം (ഖസ്ർ)","Intention in prayer":"നമസ്കാരത്തിലെ നിയ്യത്ത്","Design and development":"ഡിസൈനും വികസനവും","Mihrab team":"മിഹ്റാബ് ടീം","Religious content review":"മതപരമായ ഉള്ളടക്ക പരിശോധന","To be added before release":"പുറത്തിറക്കുന്നതിന് മുമ്പ് ചേർക്കും",
 "Prayer times":"നമസ്കാര സമയങ്ങൾ","PrayTimes.org method (MIT)":"PrayTimes.org രീതി (MIT)","Hijri date":"ഹിജ്റി തീയതി","Umm al-Qura calendar":"ഉമ്മുൽ ഖുറാ കലണ്ടർ","Qibla bearing":"ഖിബ്‌ല ദിശ","Great-circle path to the Kaaba":"കഅ്ബയിലേക്കുള്ള ഗ്രേറ്റ്-സർക്കിൾ പാത","Fonts":"ഫോണ്ടുകൾ",
 "Prayer times are calculated on your device. Your location is never sent anywhere.":"നമസ്കാര സമയങ്ങൾ നിങ്ങളുടെ ഉപകരണത്തിൽ തന്നെ കണക്കാക്കുന്നു. നിങ്ങളുടെ ലൊക്കേഷൻ ഒരിടത്തും അയയ്ക്കില്ല.","Copy app info":"ആപ്പ് വിവരം പകർത്തുക","\u00a9 {0} {1}. All rights reserved.":"\u00a9 {0} {1}. എല്ലാ അവകാശങ്ങളും നിക്ഷിപ്തം.",
 "About {0}":"{0}-നെ കുറിച്ച്","Version {0}, credits and licences":"പതിപ്പ് {0}, ക്രെഡിറ്റുകളും ലൈസൻസുകളും",
@@ -1056,7 +1068,7 @@ ar:{
 "How did it go?":"كيف كانت؟","Extras":"إضافات","Clear":"مسح","Track options":"خيارات التتبّع","Marked automatically from the prayer time. Change it if needed.":"تُسجَّل تلقائيًا بحسب الوقت. غيّرها إن لزم.","View tracker":"عرض المتتبّع",
 "On time means prayed before the next prayer begins.":"تُحتسب «في وقتها» إذا صُلّيت قبل دخول وقت الصلاة التالية.","Prayers you don\u2019t mark once their time has passed count as missed.":"الصلوات التي لا تُسجَّل بعد خروج وقتها تُحتسب فائتة.","No prayers tracked yet.":"لم تُسجَّل صلوات بعد.",
 "Rest days":"أيام الراحة","Pause tracking and reminders":"إيقاف التتبّع والتذكيرات مؤقتًا","On since {0}":"مفعّلة منذ {0}","Start rest days":"بدء أيام الراحة","End rest days":"إنهاء أيام الراحة","End":"إنهاء",
-"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"لا تُحتسب هذه الأيام في النسب أو السلسلة، وتصمت التذكيرات. يبقى هذا على جهازك فقط.","Rest days started":"بدأت أيام الراحة","Rest days ended. Welcome back.":"انتهت أيام الراحة. أهلًا بعودتك.","Week streak":"سلسلة أسبوعية","Month streak":"سلسلة شهرية","Each ring has five parts, one for each prayer.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة.","Translation":"الترجمة","Off":"إيقاف", "Install app":"تثبيت التطبيق","Add it to your home screen for full-screen use and offline access.":"أضِفه إلى شاشتك الرئيسية للاستخدام بملء الشاشة ودون اتصال.","Install {0}":"تثبيت {0}","Tap the Share button in Safari":"اضغط على زر المشاركة في سفاري","Choose Add to Home Screen":"اختر «إضافة إلى الشاشة الرئيسية»","Tap Add":"اضغط «إضافة»","Open your browser menu":"افتح قائمة المتصفح","Choose Install app or Add to Home screen":"اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»","App installed":"تم تثبيت التطبيق","A new version is ready.":"إصدار جديد جاهز.","Refresh":"تحديث","You\u2019re offline. Everything still works.":"أنت غير متصل. كل شيء يعمل.","Back online":"عدنا متصلين","Transparent":"شفاف","Blur":"ضبابي","Bar color shifts from green to red as the next prayer gets closer.":"يتحول لون الشريط من الأخضر إلى الأحمر كلما اقتربت الصلاة القادمة.","minimal":"مبسّط","H":"س","M":"د","S":"ث","Calendar":"التقويم","Guide":"الدليل","Reminders":"التذكيرات","Settings":"الإعدادات","Widgets":"الودجات","Qibla":"القبلة",
+"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"لا تُحتسب هذه الأيام في النسب أو السلسلة، وتصمت التذكيرات. يبقى هذا على جهازك فقط.","Rest days started":"بدأت أيام الراحة","Rest days ended. Welcome back.":"انتهت أيام الراحة. أهلًا بعودتك.","Week streak":"سلسلة أسبوعية","Month streak":"سلسلة شهرية","Each ring has five parts, one for each prayer.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة.","Translation":"الترجمة","Off":"إيقاف", "Install app":"تثبيت التطبيق","Add it to your home screen for full-screen use and offline access.":"أضِفه إلى شاشتك الرئيسية للاستخدام بملء الشاشة ودون اتصال.","Install {0}":"تثبيت {0}","Tap the Share button in Safari":"اضغط على زر المشاركة في سفاري","Choose Add to Home Screen":"اختر «إضافة إلى الشاشة الرئيسية»","Tap Add":"اضغط «إضافة»","Open your browser menu":"افتح قائمة المتصفح","Choose Install app or Add to Home screen":"اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»","App installed":"تم تثبيت التطبيق","A new version is ready.":"إصدار جديد جاهز.","Refresh":"تحديث","You\u2019re offline. Everything still works.":"أنت غير متصل. كل شيء يعمل.","Back online":"عدنا متصلين","Transparent":"شفاف","Blur":"ضبابي","Bar color shifts from green to red as the next prayer gets closer.":"يتحول لون الشريط من الأخضر إلى الأحمر كلما اقتربت الصلاة القادمة.","minimal":"مبسّط","H":"س","M":"د","S":"ث","Calendar":"التقويم","Guide":"الدليل","Last third of the night":"الثلث الأخير من الليل","Start of the last third":"بداية الثلث الأخير","2 hours before Fajr":"قبل الفجر بساعتين","1 hour before Fajr":"قبل الفجر بساعة","30 minutes before Fajr":"قبل الفجر بنصف ساعة","Custom time":"وقت مخصص","Tahajjud reminder time":"وقت تنبيه التهجد","That time is outside tonight’s night hours, so the last third is used instead.":"هذا الوقت خارج ساعات ليل الليلة، لذا يُستخدم الثلث الأخير بدلًا منه.","Iqama times":"أوقات الإقامة","Minutes after the adhan, for each prayer":"الدقائق بعد الأذان لكل صلاة","Set how many minutes after the adhan the iqama is. The home screen counts down to it.":"حدّد كم دقيقة بعد الأذان تُقام الصلاة. تعرض الشاشة الرئيسية العدّ التنازلي لها.","Iqama in {0}":"الإقامة بعد {0}","Iqama times reset":"أُعيد ضبط أوقات الإقامة","Iqama at {0}":"الإقامة {0}","Reminders":"التذكيرات","Settings":"الإعدادات","Widgets":"الودجات","Qibla":"القبلة",
 "Next prayer":"الصلاة القادمة","Now":"الآن","Purification":"الطهارة","4 × 3 · home":"4 × 3 · الرئيسية","2 × 2 · clock":"2 × 2 · ساعة","If you’re on your period, you can pause the tracker. Your progress stays safe.":"إذا كنتِ في فترة الحيض، يمكنكِ إيقاف المتتبّع مؤقتًا، وتقدّمكِ يبقى محفوظًا.","Pause":"إيقاف مؤقت","{0} at {1}":"{0} عند {1}","day streak":"أيام متتالية","Best":"الأفضل","Full days":"أيام كاملة",
 "Each ring has five parts, one for each prayer. Tap a day to update it.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة. اضغط على يوم لتحديثه.",
 "Tap the bell to set a reminder.":"اضغط على الجرس لضبط تذكير.","Asr: {0}":"العصر: {0}","{0} adjusted":"{0} معدّلة","{0} prayed":"تمت صلاة {0}",
@@ -1102,7 +1114,7 @@ ar:{
 "Widgets refresh every minute and keep working when the app is closed.":"تتحدّث الودجات كل دقيقة وتعمل حتى عند إغلاق التطبيق.",
 "Adjust prayer times":"ضبط أوقات الصلاة","Match your local mosque timetable. Reminders and widgets use the adjusted times.":"طابِق جدول مسجدك المحلي. تستخدم التذكيرات والودجات الأوقات المعدّلة.",
 "Earlier by one minute for {0}":"{0}: أبكر بدقيقة","Later by one minute for {0}":"{0}: أبطأ بدقيقة","As calculated":"كما هو محسوب","Each time can move up to {0} minutes either way.":"يمكن تحريك كل وقت حتى {0} دقيقة في أي اتجاه.","Reset all":"إعادة تعيين الكل","Done":"تم",
-"Version {0} \u00b7 build {1}":"الإصدار {0} \u00b7 البناء {1}","Credits":"الشكر والتقدير","Design and development":"التصميم والتطوير","Mihrab team":"فريق محراب","Religious content review":"مراجعة المحتوى الديني","To be added before release":"سيُضاف قبل الإصدار",
+"Version {0} \u00b7 build {1}":"الإصدار {0} \u00b7 البناء {1}","Credits":"الشكر والتقدير","References":"المراجع","Prayer time calculation":"حساب أوقات الصلاة","Typefaces":"الخطوط","Travel prayer (Qasr)":"صلاة المسافر (القصر)","Intention in prayer":"النية في الصلاة","Design and development":"التصميم والتطوير","Mihrab team":"فريق محراب","Religious content review":"مراجعة المحتوى الديني","To be added before release":"سيُضاف قبل الإصدار",
 "Prayer times":"أوقات الصلاة","PrayTimes.org method (MIT)":"طريقة PrayTimes.org (MIT)","Hijri date":"التاريخ الهجري","Umm al-Qura calendar":"تقويم أم القرى","Qibla bearing":"اتجاه القبلة","Great-circle path to the Kaaba":"المسار الدائري الأعظم إلى الكعبة","Fonts":"الخطوط",
 "Prayer times are calculated on your device. Your location is never sent anywhere.":"تُحسب أوقات الصلاة على جهازك. لا يُرسل موقعك إلى أي مكان.","Copy app info":"نسخ معلومات التطبيق","\u00a9 {0} {1}. All rights reserved.":"\u00a9 {0} {1}. جميع الحقوق محفوظة.",
 "About {0}":"عن {0}","Version {0}, credits and licences":"الإصدار {0}، الشكر والتراخيص",
@@ -1376,7 +1388,7 @@ function content(k,p){
       NTR[p]+" mustaqbilal-qiblati adaa\u2019an lillaahi ta\u2019aalaa",
       "ഖിബ്ലക്ക് അഭിമുഖമായി, അല്ലാഹുവിനു വേണ്ടി, "+nm.ml+" ഫർള് നമസ്കാരത്തിലെ "+MLC[n]+" റക്അത്ത് ഞാൻ നിർവഹിക്കുന്നു.",
       "I intend to pray the "+ENC[n]+" rak\u2019ahs of obligatory "+nm.en+", facing the Qibla, for the sake of Allah.")],
-      nEn:"The intention is made in the heart. Saying it quietly is also customary.",nMl:"നിയ്യത്ത് മനസ്സിലാണ് ഉറപ്പിക്കേണ്ടത്; പതുക്കെ ഉച്ചരിക്കുന്നതും സുന്നത്താണ്.",nAr:"تكون النية بالقلب، ويُستحب النطق بها سرًّا."};
+      nEn:"The intention is made in the heart. Saying it aloud is not required.",nMl:"നിയ്യത്ത് ഹൃദയത്തിലാണ് ഉറപ്പിക്കേണ്ടത്; ഉച്ചരിക്കേണ്ടതില്ല.",nAr:"تكون النية بالقلب، ولا يلزم النطق بها."};
   }
   if(k==="sujud1"||k==="sujud2"){const c=Object.assign({},BASE.sujud);if(k==="sujud2"){c.tEn="Second prostration";c.tMl="രണ്ടാം സുജൂദ്";c.tAr="السجدة الثانية"}return c}
   return BASE[k];
@@ -1480,14 +1492,14 @@ jm_4:XM(TL3("If you arrive late","تാമസിച്ച് എത്തിയ�
   b:TL3("Join the imam in whatever position he is in, saying the opening takbir while standing. You gain the rak\u2019ah if you reach the bowing with the imam and are calm in it. When the imam finishes with the salam, stand up and complete what you missed.","ഇമാം ഏത് അവസ്ഥയിലാണോ അതിൽ ചേരുക; നിന്നുകൊണ്ട് തക്ബീറത്തുൽ ഇഹ്റാം ചൊല്ലുക. ഇമാമിനൊപ്പം റുകൂഅ് ലഭിക്കുകയും അതിൽ ശാന്തത പാലിക്കുകയും ചെയ്താൽ ആ റക്അത്ത് ലഭിച്ചു. ഇമാം സലാം വീട്ടിയ ശേഷം എഴുന്നേറ്റ് നഷ്ടപ്പെട്ടത് പൂർത്തിയാക്കുക.","انضم إلى الإمام في أي حال كان، وكبّر تكبيرة الإحرام قائمًا. تُدرك الركعة إذا أدركت الركوع مع الإمام واطمأننت فيه. وإذا سلّم الإمام فقم وأتمّ ما فاتك.")}),
 /* ---- travel: qasr ---- */
 qs_1:XM(TL3("When may you shorten?","എപ്പോൾ ചുരുക്കാം?","متى يجوز القصر؟"),{pose:"info",
-  b:TL3("On a journey that is customarily called travel; many scholars take about 80 km as a guide. Begin shortening once you leave the boundary of your town. It applies to Dhuhr, Asr and Isha, which become two rak\u2019ahs; Fajr and Maghrib stay the same.",
-        "ഏകദേശം 81 കിലോമീറ്റർ (രണ്ട് മർഹല) അല്ലെങ്കിൽ കൂടുതലുള്ള അനുവദനീയമായ യാത്രയിൽ. നിങ്ങളുടെ നാടിന്റെ അതിർത്തി കടന്നാൽ ചുരുക്കി തുടങ്ങാം. ളുഹ്ർ, അസ്ർ, ഇശാ എന്നിവ രണ്ട് റക്അത്തായി മാറും; സുബ്ഹിയും മഗ്‌രിബും മാറ്റമില്ലാതെ തുടരും.",
-        "في سفر مباح مسافته نحو ٨١ كم (مرحلتان) فأكثر. تبدأ القصر إذا جاوزت حدود بلدك. ويشمل الظهر والعصر والعشاء فتصير ركعتين، أما الفجر والمغرب فلا تتغيران."),
-  nt:TL3("Scholars differ on the exact distance, so follow a scholar you trust.","ദൂരവും നിബന്ധനകളും മദ്ഹബുകൾക്കിടയിൽ അൽപം വ്യത്യാസപ്പെടും; ഇത് ശാഫിഈ അഭിപ്രായമനുസരിച്ചാണ്.","تختلف المسافة والشروط قليلًا بين المذاهب، وهذا وفق المذهب الشافعي.")}),
+  b:TL3("You are a traveller once you leave the boundary of your city on a journey of at least 48 miles (77 km), and you plan to stay at your destination for fewer than 15 full days. In that case Dhuhr, Asr and Isha are prayed as two rak’ahs; Fajr and Maghrib stay the same.",
+        "നിങ്ങളുടെ നഗരത്തിന്റെ അതിർത്തി കടന്ന്, കുറഞ്ഞത് 48 മൈൽ (77 കി.മീ.) ദൂരമുള്ള യാത്ര ഉദ്ദേശിക്കുകയും, എത്തുന്നിടത്ത് 15 പൂർണ ദിവസത്തിൽ കുറവ് താമസിക്കാൻ ഉദ്ദേശിക്കുകയും ചെയ്താൽ നിങ്ങൾ യാത്രക്കാരനാണ്. അപ്പോൾ ളുഹ്ർ, അസ്ർ, ഇശാ എന്നിവ രണ്ട് റക്അത്തായി നമസ്കരിക്കണം; സുബ്ഹിയും മഗ്‌രിബും മാറ്റമില്ലാതെ തുടരും.",
+        "تكون مسافرًا إذا خرجت من حدود مدينتك قاصدًا سفرًا لا يقل عن ٤٨ ميلًا (٧٧ كم)، ونويت الإقامة في وجهتك أقل من خمسة عشر يومًا كاملة. فتصلي الظهر والعصر والعشاء ركعتين، ولا يتغير الفجر والمغرب."),
+  nt:TL3("This follows the Hanafi view. Scholars differ on the exact distance, so follow a scholar you trust.","ഇത് ഹനഫീ അഭിപ്രായമനുസരിച്ചാണ്. ദൂരത്തിൽ പണ്ഡിതർക്കിടയിൽ വ്യത്യാസമുണ്ട്, അതിനാൽ നിങ്ങൾ വിശ്വസിക്കുന്ന പണ്ഡിതനെ പിന്തുടരുക.","هذا وفق المذهب الحنفي، وتختلف المسافة بين العلماء، فاتبع عالمًا تثق به.")}),
 qs_2:XM(TL3("How long?","എത്ര കാലം?","إلى متى؟"),{pose:"info",
-  b:TL3("You may shorten for as long as you are travelling. If you intend to stay four days or more in one place, not counting the days of arrival and departure, you pray in full.",
-        "യാത്രക്കാരനായിരിക്കുന്ന കാലമത്രയും ചുരുക്കാം. എത്തുന്ന ദിവസവും പുറപ്പെടുന്ന ദിവസവും ഒഴികെ ഒരിടത്ത് നാല് ദിവസമോ അതിൽ കൂടുതലോ താമസിക്കാൻ ഉദ്ദേശിച്ചാൽ പൂർണമായി നമസ്കരിക്കണം.",
-        "يجوز القصر ما دمت مسافرًا. فإذا نويت الإقامة أربعة أيام فأكثر في مكان واحد، دون حساب يومي الوصول والرحيل، أتممت الصلاة.")}),
+  b:TL3("Shorten for as long as you plan to stay at your destination for fewer than 15 full days. If you plan to stay 15 full days or more, pray in full there; on the journey itself you still shorten. Once you re-enter your own city boundary you are no longer a traveller, so pray in full.",
+        "ലക്ഷ്യസ്ഥാനത്ത് 15 പൂർണ ദിവസത്തിൽ കുറവ് താമസിക്കാനാണ് ഉദ്ദേശമെങ്കിൽ ചുരുക്കി നമസ്കരിക്കണം. 15 പൂർണ ദിവസമോ അതിൽ കൂടുതലോ താമസിക്കാൻ ഉദ്ദേശിച്ചാൽ അവിടെ പൂർണമായി നമസ്കരിക്കണം; യാത്രയ്ക്കിടയിൽ ചുരുക്കുക തന്നെ വേണം. സ്വന്തം നഗരത്തിന്റെ അതിർത്തിക്കുള്ളിൽ തിരിച്ചെത്തിയാൽ നിങ്ങൾ യാത്രക്കാരനല്ല; പൂർണമായി നമസ്കരിക്കണം.",
+        "اقصر ما دمت تنوي الإقامة في وجهتك أقل من خمسة عشر يومًا كاملة. فإن نويت إقامة خمسة عشر يومًا فأكثر أتممت هناك، وتقصر أثناء الطريق. وإذا دخلت حدود مدينتك لم تعد مسافرًا فصلِّ كاملة.")}),
 qs_3:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
   lines:[L1("أُصَلِّي فَرْضَ الظُّهْرِ رَكْعَتَيْنِ قَصْرًا مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى","Usallee fardaz-zuhri rak\u2019ataini qasran mustaqbilal-qiblati adaa\u2019an lillaahi ta\u2019aalaa","ഖിബ്ലക്ക് അഭിമുഖമായി, അല്ലാഹുവിനു വേണ്ടി, ളുഹ്ർ ഫർളിന്റെ രണ്ട് റക്അത്ത് ചുരുക്കി ഞാൻ നിർവഹിക്കുന്നു.","I intend to pray the two rak\u2019ahs of obligatory Dhuhr, shortened, facing the Qibla, for the sake of Allah."),
          L1("أُصَلِّي فَرْضَ الْعَصْرِ رَكْعَتَيْنِ قَصْرًا مُسْتَقْبِلَ الْقِبْلَةِ أَدَاءً لِلَّهِ تَعَالَى","Usallee fardal-asri rak\u2019ataini qasran mustaqbilal-qiblati adaa\u2019an lillaahi ta\u2019aalaa","ഖിബ്ലക്ക് അഭിമുഖമായി, അല്ലാഹുവിനു വേണ്ടി, അസ്ർ ഫർളിന്റെ രണ്ട് റക്അത്ത് ചുരുക്കി ഞാൻ നിർവഹിക്കുന്നു.","The same for Asr."),
@@ -1555,10 +1567,10 @@ rw_1:XM(TL3("The sunnah prayers","റവാത്തിബ് സുന്നത
   b:TL3("The rawatib are the sunnah rak\u2019ahs prayed before and after the five daily prayers, each as two rak\u2019ahs. The Prophet \uFDFA never left the Fajr sunnah, so it is the most important of them.",
         "അഞ്ച് നേരത്തെ നമസ്കാരങ്ങൾക്ക് മുമ്പും ശേഷവും നമസ്കരിക്കുന്ന സുന്നത്തുകളാണ് റവാത്തിബ്; ഓരോന്നും രണ്ട് റക്അത്ത് വീതം. നബി \uFDFA സുബ്ഹിയുടെ സുന്നത്ത് ഒരിക്കലും ഉപേക്ഷിച്ചില്ല, അതിനാൽ അവയിൽ ഏറ്റവും പ്രധാനം അതാണ്.",
         "الرواتب هي السنن التي تُصلّى قبل الصلوات الخمس وبعدها، وكل منها ركعتان. ولم يترك النبي \uFDFA سنة الفجر، فهي أهمها.")}),
-rw_2:XM(TL3("The twelve confirmed rak\u2019ahs","സ്ഥിരീകരിച്ച പത്ത് റക്അത്തുകൾ","الركعات العشر المؤكدة"),{pose:"info",
+rw_2:XM(TL3("The twelve confirmed rak\u2019ahs","സ്ഥിരീകരിച്ച പന്ത്രണ്ട് റക്അത്തുകൾ","الركعات الاثنتا عشرة المؤكدة"),{pose:"info",
   b:TL3("Two before Fajr, four before Dhuhr, two after Dhuhr, two after Maghrib and two after Isha. The Prophet \uFDFA said that whoever prays twelve rak'ahs a day has a house built for them in Paradise (Muslim).\n\nOther voluntary prayers are also recommended, such as four before Asr.",
-        "സുബ്ഹിക്ക് മുമ്പ് രണ്ട്. ളുഹ്റിന് മുമ്പ് രണ്ട്. ളുഹ്റിന് ശേഷം രണ്ട്. മഗ്‌രിബിന് ശേഷം രണ്ട്. ഇശായ്ക്ക് ശേഷം രണ്ട്.\n\nമറ്റ് സുന്നത്തുകളും ശുപാർശ ചെയ്യപ്പെടുന്നു: ളുഹ്റിന് മുമ്പ് രണ്ടും ശേഷം രണ്ടും കൂടി, അസ്റിന് മുമ്പ് നാല്, മഗ്‌രിബിന് മുമ്പ് രണ്ട്, ഇശായ്ക്ക് മുമ്പ് രണ്ട്.",
-        "ركعتان قبل الفجر. ركعتان قبل الظهر. ركعتان بعد الظهر. ركعتان بعد المغرب. ركعتان بعد العشاء.\n\nويُستحب غيرها: ركعتان أخريان قبل الظهر وركعتان بعده، وأربع قبل العصر، وركعتان قبل المغرب، وركعتان قبل العشاء.")}),
+        "സുബ്ഹിക്ക് മുമ്പ് രണ്ട്, ളുഹ്റിന് മുമ്പ് നാല്, ളുഹ്റിന് ശേഷം രണ്ട്, മഗ്‌രിബിന് ശേഷം രണ്ട്, ഇശായ്ക്ക് ശേഷം രണ്ട്. ഒരു ദിവസം പന്ത്രണ്ട് റക്അത്ത് നമസ്കരിക്കുന്നവർക്ക് സ്വർഗത്തിൽ ഒരു വീട് പണിയപ്പെടുമെന്ന് നബി ﷺ പറഞ്ഞു (മുസ്‌ലിം).\n\nമറ്റ് ഐച്ഛിക നമസ്കാരങ്ങളും ശുപാർശ ചെയ്യപ്പെടുന്നു, അസ്റിന് മുമ്പ് നാല് പോലുള്ളവ.",
+        "ركعتان قبل الفجر، وأربع قبل الظهر، وركعتان بعد الظهر، وركعتان بعد المغرب، وركعتان بعد العشاء. وقد قال النبي ﷺ: من صلّى اثنتي عشرة ركعة في اليوم بُني له بيت في الجنة (مسلم).\n\nويُستحب غيرها من النوافل كأربع قبل العصر.")}),
 rw_3:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
   lines:[L1("أُصَلِّي سُنَّةَ الصُّبْحِ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ لِلَّهِ تَعَالَى","Usallee sunnatas-subhi rak\u2019ataini mustaqbilal-qiblati lillaahi ta\u2019aalaa","ഖിബ്ലക്ക് അഭിമുഖമായി, അല്ലാഹുവിനു വേണ്ടി, സുബ്ഹിയുടെ രണ്ട് റക്അത്ത് സുന്നത്ത് ഞാൻ നിർവഹിക്കുന്നു.","I intend to pray the two rak\u2019ahs of the Fajr sunnah, facing the Qibla, for the sake of Allah."),
          L1("أُصَلِّي سُنَّةَ الظُّهْرِ رَكْعَتَيْنِ قَبْلِيَّةً مُسْتَقْبِلَ الْقِبْلَةِ لِلَّهِ تَعَالَى","Usallee sunnatadh-dhuhri rak\u2019ataini qabliyyatan mustaqbilal-qiblati lillaahi ta\u2019aalaa","ഖിബ്ലക്ക് അഭിമുഖമായി, അല്ലാഹുവിനു വേണ്ടി, ളുഹ്റിന് മുമ്പുള്ള രണ്ട് റക്അത്ത് സുന്നത്ത് ഞാൻ നിർവഹിക്കുന്നു.","The two rak\u2019ahs before Dhuhr."),
@@ -1597,9 +1609,9 @@ wt_after:XM(TL3("After witr","വിത്റിന് ശേഷം","بعد ا�
   nt:TL3("Say it three times, raising your voice on the third.","മൂന്ന് തവണ ചൊല്ലുക, മൂന്നാമത്തേതിൽ ശബ്ദം ഉയർത്തുക.","قلها ثلاث مرات، وارفع صوتك في الثالثة.")}),
 /* ---- Taraweeh ---- */
 tw_info:XM(TL3("About Taraweeh","തറാവീഹിനെക്കുറിച്ച്","عن التراويح"),{pose:"info",
-  b:TL3("Taraweeh is the Ramadan night prayer (qiyam), prayed after Isha. The Prophet \uFDFA prayed eleven rak\u2019ahs in pairs, each pair ending with a salam, then Witr (Bukhari and Muslim). There is no fixed limit, and more is permitted. It is best prayed in congregation.",
-        "റമദാൻ രാത്രികളിൽ ഇശായ്ക്ക് ശേഷം നമസ്കരിക്കുന്ന നമസ്കാരമാണ് തറാവീഹ്. ശാഫിഈ മദ്ഹബിൽ ഇത് ഇരുപത് റക്അത്താണ്, പത്ത് ജോഡിയായി, ഓരോ ജോഡിയും സലാമോടെ അവസാനിക്കും. ജമാഅത്തായി നമസ്കരിക്കുന്നതാണ് ഉത്തമം; അതിന് ശേഷം വിത്ർ നമസ്കരിക്കും.",
-        "التراويح صلاة ليالي رمضان بعد العشاء. وهي في المذهب الشافعي عشرون ركعة، عشر تسليمات، يُسلَّم من كل ركعتين. والأفضل أداؤها جماعة، ويليها الوتر.")}),
+  b:TL3("Taraweeh is the Ramadan night prayer (qiyam), prayed after Isha. The Prophet ﷺ prayed eleven rak’ahs at night in Ramadan and outside it, including Witr (Bukhari and Muslim). So Taraweeh is eight rak’ahs in pairs, with a salam after every two, followed by three of Witr. More is permitted. It is best prayed in congregation.",
+        "റമദാൻ രാത്രികളിൽ ഇശായ്ക്ക് ശേഷം നമസ്കരിക്കുന്ന നമസ്കാരമാണ് തറാവീഹ് (ഖിയാം). നബി ﷺ റമദാനിലും അല്ലാത്ത കാലത്തും വിത്ർ ഉൾപ്പെടെ രാത്രിയിൽ പതിനൊന്ന് റക്അത്ത് നമസ്കരിച്ചു (ബുഖാരി, മുസ്‌ലിം). അതിനാൽ തറാവീഹ് എട്ട് റക്അത്താണ്, ഓരോ രണ്ടിനും സലാം വീട്ടി ജോഡികളായി; അതിന് ശേഷം മൂന്ന് റക്അത്ത് വിത്ർ. കൂടുതൽ നമസ്കരിക്കാനും അനുവാദമുണ്ട്. ജമാഅത്തായി നമസ്കരിക്കുന്നതാണ് ഉത്തമം.",
+        "التراويح صلاة ليالي رمضان (القيام) بعد العشاء. وقد صلّى النبي ﷺ إحدى عشرة ركعة بالليل في رمضان وغيره بما فيها الوتر (البخاري ومسلم). فالتراويح ثماني ركعات مثنى مثنى، يُسلَّم من كل ركعتين، ثم ثلاث ركعات وتر. ويجوز الزيادة. والأفضل أداؤها جماعة.")}),
 tw_niy:XM(TL3("Intention","നിയ്യത്ത്","النية"),{
   lines:[L1("أُصَلِّي سُنَّةَ التَّرَاوِيحِ رَكْعَتَيْنِ مُسْتَقْبِلَ الْقِبْلَةِ لِلَّهِ تَعَالَى","Usallee sunnatat-taraaweehi rak\u2019ataini mustaqbilal-qiblati lillaahi ta\u2019aalaa","ഖിബ്ലക്ക് അഭിമുഖമായി, അല്ലാഹുവിനു വേണ്ടി, തറാവീഹിന്റെ രണ്ട് റക്അത്ത് സുന്നത്ത് ഞാൻ നിർവഹിക്കുന്നു.","I intend to pray two rak\u2019ahs of the Taraweeh sunnah, facing the Qibla, for the sake of Allah.")]}),
 tw_rep:XM(TL3("Repeat, then rest","ആവർത്തിക്കുക, പിന്നെ വിശ്രമം","كرّر ثم استرح"),{pose:"info",
@@ -1607,9 +1619,9 @@ tw_rep:XM(TL3("Repeat, then rest","ആവർത്തിക്കുക, പി�
      "Subhaana dhil-mulki wal-malakoot, subhaana dhil-izzati wal-azamati wal-haybati wal-qudrati wal-kibriyaa\u2019i wal-jabaroot, subhaanal-malikil-hayyil-ladhee laa yanaamu wa laa yamoot, subboohun quddoosun rabbunaa wa rabbul-malaa\u2019ikati war-rooh",
      "അധികാരത്തിന്റെയും ആധിപത്യത്തിന്റെയും ഉടമ പരിശുദ്ധൻ; പ്രതാപം, മഹത്വം, ഗാംഭീര്യം, കഴിവ്, മഹിമ, ശക്തി എന്നിവയുടെ ഉടമ പരിശുദ്ധൻ; ഉറങ്ങുകയോ മരിക്കുകയോ ചെയ്യാത്ത ജീവനുള്ള രാജാവ് പരിശുദ്ധൻ; ഞങ്ങളുടെ രക്ഷിതാവും മലക്കുകളുടെയും റൂഹിന്റെയും രക്ഷിതാവുമായവൻ അത്യന്തം പരിശുദ്ധൻ, ഏറ്റവും വിശുദ്ധൻ.",
      "Glory be to the Owner of dominion and sovereignty. Glory be to the Owner of might, greatness, awe, power, pride and majesty. Glory be to the Living King who neither sleeps nor dies. Most Holy, Most Pure, our Lord and Lord of the angels and the Spirit.")],
-  b:TL3("Repeat these two rak\u2019ahs ten times in all. After every four rak\u2019ahs, sit briefly and say the tasbih below, then continue. Finish with Witr; see the Witr guide.",
-        "ഈ രണ്ട് റക്അത്ത് ആകെ പത്ത് തവണ ആവർത്തിക്കുക. ഓരോ നാല് റക്അത്തിനും ശേഷം അൽപം ഇരുന്ന് താഴെയുള്ള തസ്ബീഹ് ചൊല്ലിയ ശേഷം തുടരുക. വിത്റോടെ അവസാനിപ്പിക്കുക; വിത്ർ ഗൈഡ് കാണുക.",
-        "كرّر هاتين الركعتين عشر مرات في المجموع. وبعد كل أربع ركعات اجلس قليلًا وقل التسبيح التالي ثم تابع. واختم بالوتر؛ راجع دليل الوتر."),
+  b:TL3("Repeat these two rak’ahs four times in all, eight rak’ahs. After every four rak’ahs, sit briefly and say the tasbih below, then continue. Finish with three rak’ahs of Witr, which makes eleven in all; see the Witr guide.",
+        "ഈ രണ്ട് റക്അത്ത് ആകെ നാല് തവണ ആവർത്തിക്കുക, ആകെ എട്ട് റക്അത്ത്. ഓരോ നാല് റക്അത്തിനും ശേഷം അൽപം ഇരുന്ന് താഴെയുള്ള തസ്ബീഹ് ചൊല്ലിയ ശേഷം തുടരുക. മൂന്ന് റക്അത്ത് വിത്റോടെ അവസാനിപ്പിക്കുക, അങ്ങനെ ആകെ പതിനൊന്ന്; വിത്ർ ഗൈഡ് കാണുക.",
+        "كرّر هاتين الركعتين أربع مرات في المجموع، أي ثماني ركعات. وبعد كل أربع ركعات اجلس قليلًا وقل التسبيح التالي ثم تابع. واختم بثلاث ركعات وتر فيكتمل العدد إحدى عشرة؛ راجع دليل الوتر."),
   nt:TL3("This tasbih is a long-standing custom, not a narrated text.","ഈ തസ്ബീഹ് പണ്ടുമുതലുള്ള ആചാരമാണ്, ഉദ്ധരിക്കപ്പെട്ട വചനമല്ല.","هذا التسبيح عادة قديمة وليس نصًّا مرويًّا.")}),
 /* ---- Tahajjud ---- */
 td_info:XM(TL3("About Tahajjud","തഹജ്ജുദിനെക്കുറിച്ച്","عن التهجد"),{pose:"info",
@@ -1667,7 +1679,7 @@ const GD={
     sum:{when:TL3("Any of the five daily prayers","അഞ്ച് നേരത്തെ ഏത് നമസ്കാരവും","أي صلاة من الخمس"),rak:TL3("As the imam prays","ഇമാം നമസ്കരിക്കുന്നതുപോലെ","كما يصلّي الإمام"),rule:TL3("Obligatory for men, in the mosque","സമൂഹത്തിന് ഫർള് കിഫായ; ഓരോ പുരുഷനും ശക്തമായി സുന്നത്ത്","فرض كفاية على المجتمع، وسنة مؤكدة لكل رجل")},
     build:()=>[{x:"jm_1"},{x:"jm_2"},{x:"jm_3"},{x:"jm_4"}]},
   qasr:{cat:"travel",n:2,nm:TL3("Qasr (shorten)","ഖസ്ർ (ചുരുക്കൽ)","القصر"),
-    sum:{when:TL3("On a journey of about 80 km or more","ഏകദേശം 81 കി.മീ. ഉള്ള അനുവദനീയമായ യാത്രയിൽ","في سفر مباح نحو ٨١ كم فأكثر"),rak:TL3("2 instead of 4 (Dhuhr, Asr, Isha)","4-ന് പകരം 2 (ളുഹ്ർ, അസ്ർ, ഇശാ)","٢ بدل ٤ (الظهر والعصر والعشاء)"),rule:TL3("A concession (rukhsah) for travellers","യാത്രക്കാർക്കുള്ള ഇളവ് (റുഖ്സ)","رخصة للمسافر")},
+    sum:{when:TL3("On a journey of 48 miles (77 km) or more","48 മൈൽ (77 കി.മീ.) അല്ലെങ്കിൽ കൂടുതലുള്ള യാത്രയിൽ","في سفر ٤٨ ميلًا (٧٧ كم) فأكثر"),rak:TL3("2 instead of 4 (Dhuhr, Asr, Isha)","4-ന് പകരം 2 (ളുഹ്ർ, അസ്ർ, ഇശാ)","٢ بدل ٤ (الظهر والعصر والعشاء)"),rule:TL3("Required for the traveller (Hanafi)","യാത്രക്കാരന് നിർബന്ധം (ഹനഫീ)","واجب على المسافر (حنفي)")},
     build:()=>[{x:"qs_1",lbl:["Conditions"]},{x:"qs_2",lbl:["Conditions"]},{x:"qs_3",r:1}].concat(std2(null))},
   jam_taqdim:{cat:"travel",n:0,nm:TL3("Jam\u2019 early","ജംഅ് തഖ്ദീം","جمع التقديم"),
     sum:{when:TL3("Asr with Dhuhr, or Isha with Maghrib, in the first prayer\u2019s time","ആദ്യ നമസ്കാരത്തിന്റെ സമയത്ത് ളുഹ്റിനൊപ്പം അസ്ർ, മഗ്‌രിബിനൊപ്പം ഇശാ","العصر مع الظهر أو العشاء مع المغرب في وقت الأولى"),rak:TL3("As each prayer","ഓരോ നമസ്കാരത്തിനും അതിന്റേത്","كما لكل صلاة"),rule:TL3("A concession while travelling","യാത്രയിലെ ഇളവ്","رخصة في السفر")},
@@ -1688,14 +1700,14 @@ function nightWin(E,now){
 const hmRange=(a,b)=>tx("{0} to {1}",fmt(a),fmt(b));
 Object.assign(GD,{
   rawatib:{cat:"sunnah",n:2,nm:TL3("Rawatib","റവാത്തിബ്","الرواتب"),
-    sum:{when:TL3("Before and after the five daily prayers","അഞ്ച് നേരത്തെ നമസ്കാരങ്ങൾക്ക് മുമ്പും ശേഷവും","قبل الصلوات الخمس وبعدها"),rak:TL3("12 confirmed, in pairs","10 സ്ഥിരീകരിച്ചത്, ജോഡികളായി","١٠ مؤكدة، مثنى مثنى"),rule:TL3("Sunnah mu\u2019akkadah","ശക്തമായ സുന്നത്ത്","سنة مؤكدة")},
+    sum:{when:TL3("Before and after the five daily prayers","അഞ്ച് നേരത്തെ നമസ്കാരങ്ങൾക്ക് മുമ്പും ശേഷവും","قبل الصلوات الخمس وبعدها"),rak:TL3("12 confirmed, in pairs","12 സ്ഥിരീകരിച്ചത്, ജോഡികളായി","١٢ مؤكدة، مثنى مثنى"),rule:TL3("Sunnah mu\u2019akkadah","ശക്തമായ സുന്നത്ത്","سنة مؤكدة")},
     build:()=>[{x:"rw_1"},{x:"rw_2"},{x:"rw_3",r:1}].concat(std2("sur_rw"))},
   witr:{cat:"sunnah",n:3,nm:TL3("Witr","വിത്ർ","الوتر"),
     sum:{when:TL3("After Isha until Fajr","ഇശായ്ക്ക് ശേഷം സുബ്ഹി വരെ","من بعد العشاء إلى الفجر"),rak:TL3("1 to 11 (commonly 3)","1 മുതൽ 11 വരെ (സാധാരണ 3)","من ١ إلى ١١ (غالبًا ٣)"),rule:TL3("Sunnah mu\u2019akkadah","ശക്തമായ സുന്നത്ത്","سنة مؤكدة")},
     win:(E,now)=>{const w=nightWin(E,now);return hmRange(w.i,w.f)},
     build:()=>[{x:"wt_info"},{x:"wt_niy2",r:1}].concat(std2("sur_wt")).concat([{x:"wt_niy1",r:3},{k:"takbir",r:3},{k:"iftitah",r:3},{k:"fatiha",r:3},{k:"ameen",r:3},{x:"sur_wt3",r:3},{k:"ruku",r:3},{k:"itidal",r:3},{x:"wt_qunut",r:3},{k:"sujud1",r:3},{k:"sit",r:3},{k:"sujud2",r:3},{k:"tashahhud",r:3},{k:"salawat",r:3},{k:"refuge",r:3},{k:"salam",r:3},{x:"wt_after",lbl:["After the prayer"]}])},
   taraweeh:{cat:"sunnah",n:2,nm:TL3("Taraweeh","തറാവീഹ്","التراويح"),
-    sum:{when:TL3("Ramadan nights, after Isha","റമദാൻ രാത്രികളിൽ, ഇശായ്ക്ക് ശേഷം","ليالي رمضان بعد العشاء"),rak:TL3("11 as the Prophet \uFDFA prayed; more is permitted","20, ജോഡികളായി","٢٠ مثنى مثنى"),rule:TL3("Sunnah mu\u2019akkadah, best in congregation","ശക്തമായ സുന്നത്ത്, ജമാഅത്തായി ഉത്തമം","سنة مؤكدة، والأفضل جماعة")},
+    sum:{when:TL3("Ramadan nights, after Isha","റമദാൻ രാത്രികളിൽ, ഇശായ്ക്ക് ശേഷം","ليالي رمضان بعد العشاء"),rak:TL3("11 as the Prophet \uFDFA prayed; more is permitted","11 (8 ജോഡികളായി + 3 വിത്ർ)","١١ (٨ مثنى مثنى + ٣ وتر)"),rule:TL3("Sunnah mu\u2019akkadah, best in congregation","ശക്തമായ സുന്നത്ത്, ജമാഅത്തായി ഉത്തമം","سنة مؤكدة، والأفضل جماعة")},
     win:(E,now)=>{if(hij(localDay()).m!==9)return tx("Ramadan nights only");const w=nightWin(E,now);return hmRange(w.i,w.f)},
     build:()=>[{x:"tw_info"},{x:"tw_niy",r:1}].concat(std2(null))},
   tahajjud:{cat:"sunnah",n:2,nm:TL3("Tahajjud","തഹജ്ജുദ്","التهجد"),
@@ -1881,11 +1893,10 @@ GLIST.special.push("kusuf","istisqa");
 /* ---- Wudu (making wudu + what follows it) and the forgetful prostration ---- */
 Object.assign(XC,{
 c4_w1:XM(TL3("Begin with intention","നിയ്യത്തോടെ ആരംഭിക്കുക","ابدأ بالنية"),{pose:"info",
-  lines:[L1("بِسْمِ اللَّهِ","Bismillaah","അല്ലാഹുവിന്റെ നാമത്തിൽ.","In the name of Allah."),
-    L1("نَوَيْتُ الْوُضُوءَ لِرَفْعِ الْحَدَثِ الْأَصْغَرِ فَرْضًا لِلَّهِ تَعَالَى","Nawaytul-wudoo’a li-raf’il-hadathil-asghari fardan lillaahi ta’aalaa","ചെറിയ അശുദ്ധി നീക്കാൻ, അല്ലാഹുവിനു വേണ്ടി, വുദൂഅ് ഞാൻ ഉദ്ദേശിക്കുന്നു.","I intend wudu to remove the minor impurity, as an obligation to Allah.")],
-  b:TL3("Say Bismillah, and intend wudu in your heart as you begin washing your face. The intention is obligatory; saying it aloud is sunnah. Do each step three times, right before left.",
-        "ബിസ്മില്ലാഹ് ചൊല്ലുക. മുഖം കഴുകാൻ തുടങ്ങുമ്പോൾ ഹൃദയത്തിൽ വുദൂഇന്റെ നിയ്യത്ത് ചെയ്യുക; നിയ്യത്ത് നിർബന്ധമാണ്, ഉച്ചരിക്കുന്നത് സുന്നത്ത്. ഓരോ ഭാഗവും മൂന്നു തവണ, വലതുഭാഗം ആദ്യം.",
-        "سمِّ الله، وانوِ الوضوء بقلبك عند غسل الوجه. النية واجبة والتلفظ بها سنة. اغسل كل عضو ثلاثًا، مقدِّمًا اليمنى على اليسرى.")}),
+  lines:[L1("بِسْمِ اللَّهِ","Bismillaah","അല്ലാഹുവിന്റെ നാമത്തിൽ.","In the name of Allah.")],
+  b:TL3("Say Bismillah, and intend wudu in your heart as you begin washing your face. The intention is obligatory and belongs in the heart; saying it aloud is not required. Do each step three times, right before left.",
+        "ബിസ്മില്ലാഹ് ചൊല്ലുക. മുഖം കഴുകാൻ തുടങ്ങുമ്പോൾ ഹൃദയത്തിൽ വുദൂഇന്റെ നിയ്യത്ത് ചെയ്യുക; നിയ്യത്ത് നിർബന്ധമാണ്, അത് ഹൃദയത്തിലാണ്; ഉച്ചരിക്കേണ്ടതില്ല. ഓരോ ഭാഗവും മൂന്നു തവണ, വലതുഭാഗം ആദ്യം.",
+        "سمِّ الله، وانوِ الوضوء بقلبك عند غسل الوجه. النية واجبة ومحلها القلب، ولا يلزم النطق بها. اغسل كل عضو ثلاثًا، مقدِّمًا اليمنى على اليسرى.")}),
 c4_w2:XM(TL3("Hands, mouth and nose","കൈകൾ, വായ, മൂക്ക്","اليدان والفم والأنف"),{pose:"info",
   b:TL3("Wash both hands up to the wrists, then rinse your mouth, sniff water into your nose and blow it out. These are sunnah. Use the siwak if you have one.",
         "രണ്ട് കൈകളും മണിബന്ധം വരെ കഴുകുക; പിന്നെ വായ കഴുകുക, മൂക്കിൽ വെള്ളം കയറ്റി ചീറ്റുക. ഇവ സുന്നത്താണ്. സിവാക്ക് ഉണ്ടെങ്കിൽ ഉപയോഗിക്കുക.",
@@ -1926,13 +1937,11 @@ Object.assign(XC,{
 c5_g1:XM(TL3("When it is required","എപ്പോൾ നിർബന്ധം","متى يجب"),{pose:"info",
   b:TL3("Ghusl is obligatory after sexual intercourse or emission, at the end of menstruation, and after postnatal bleeding. Ghusl on Fridays and Eids is sunnah.","ലൈംഗികബന്ധത്തിനോ സ്ഖലനത്തിനോ ശേഷവും, ആർത്തവം അവസാനിച്ചാലും, പ്രസവരക്തം നിലച്ചാലും കുളി നിർബന്ധമാണ്. വെള്ളിയാഴ്ചയും ഈദിനും കുളിക്കുന്നത് സുന്നത്താണ്.","يجب الغسل بعد الجماع أو خروج المني، وعند انقطاع الحيض، وبعد انقطاع دم النفاس. ويُسنّ الغسل للجمعة والعيدين.")}),
 c5_g2:XM(TL3("How to do it","എങ്ങനെ ചെയ്യണം","كيفيته"),{pose:"info",
-  lines:[L1("نَوَيْتُ الْغُسْلَ لِرَفْعِ الْحَدَثِ الْأَكْبَرِ لِلَّهِ تَعَالَى","Nawaytul-ghusla li-raf’il-hadathil-akbari lillaahi ta’aalaa","വലിയ അശുദ്ധി നീക്കാൻ അല്ലാഹുവിനു വേണ്ടി കുളി ഞാൻ ഉദ്ദേശിക്കുന്നു.","I intend ghusl to remove the major impurity, for Allah.")],
   b:TL3("Intend in your heart, wash away any impurity and make wudu. Pour water over your head three times, then over the right side, then the left, so water reaches the whole body including the hair roots. The intention and washing the whole body are obligatory.","ഹൃദയത്തിൽ നിയ്യത്ത് ചെയ്യുക; അശുദ്ധി ഉണ്ടെങ്കിൽ കഴുകി വുദൂഅ് എടുക്കുക. തലയിൽ മൂന്നു തവണ വെള്ളമൊഴിക്കുക, പിന്നെ വലതുഭാഗത്തും ഇടതുഭാഗത്തും. മുടിയുടെ വേരുകൾ ഉൾപ്പെടെ ശരീരം മുഴുവൻ വെള്ളം എത്തണം. നിയ്യത്തും ശരീരം മുഴുവൻ കഴുകലും നിർബന്ധമാണ്.","انوِ بقلبك، وأزل النجاسة وتوضأ. اسكب الماء على رأسك ثلاثًا، ثم على شقك الأيمن ثم الأيسر، حتى يعم الماء جميع البدن مع أصول الشعر. والنية وتعميم البدن بالماء فرضان.")}),
 c5_t1:XM(TL3("When it is allowed","എപ്പോൾ അനുവദനീയം","متى يجوز"),{pose:"info",
   b:TL3("Use tayammum when there is no water after searching, or when using water would harm you, such as in illness. The prayer time must have started.","തിരഞ്ഞിട്ടും വെള്ളം കിട്ടാത്തപ്പോൾ, അല്ലെങ്കിൽ രോഗം പോലെ വെള്ളം ഉപയോഗിക്കുന്നത് ഹാനികരമാകുമ്പോൾ തയമ്മും ചെയ്യാം. നമസ്കാരസമയം ആരംഭിച്ചിരിക്കണം.","يجوز التيمم عند عدم وجود الماء بعد طلبه، أو عند الضرر باستعماله كالمرض. ويشترط دخول وقت الصلاة.")}),
 c5_t2:XM(TL3("How to do it","എങ്ങനെ ചെയ്യണം","كيفيته"),{pose:"info",
-  lines:[L1("نَوَيْتُ التَّيَمُّمَ لِاسْتِبَاحَةِ فَرْضِ الصَّلَاةِ لِلَّهِ تَعَالَى","Nawaytut-tayammuma li-istibaahati fardis-salaati lillaahi ta’aalaa","നമസ്കാരം അനുവദനീയമാകാൻ അല്ലാഹുവിനു വേണ്ടി തയമ്മും ഞാൻ ഉദ്ദേശിക്കുന്നു.","I intend tayammum to make the obligatory prayer permissible, for Allah.")],
-  b:TL3("Intend and say Bismillah. Strike clean dust or earth with both palms and wipe your whole face. Strike again and wipe both arms up to the elbows. Make a new tayammum for each obligatory prayer.","നിയ്യത്ത് ചെയ്ത് ബിസ്മില്ലാഹ് ചൊല്ലുക. ശുദ്ധമായ മണ്ണിൽ രണ്ട് കൈപ്പത്തിയും അടിച്ച് മുഖം മുഴുവൻ തടവുക. വീണ്ടും അടിച്ച് കൈമുട്ട് വരെ രണ്ട് കൈകളും തടവുക. ഓരോ ഫർള് നമസ്കാരത്തിനും പുതിയ തയമ്മും വേണം.","انوِ وسمِّ الله، واضرب بكفيك على تراب طاهر وامسح وجهك كله، ثم اضرب ضربة ثانية وامسح يديك إلى المرفقين. ولكل فريضة تيمم جديد.")}),
+  b:TL3("Intend in your heart and say Bismillah. Strike clean dust or earth with both palms and wipe your whole face. Strike again and wipe both arms up to the elbows. Make a new tayammum for each obligatory prayer.","ഹൃദയത്തിൽ നിയ്യത്ത് ചെയ്ത് ബിസ്മില്ലാഹ് ചൊല്ലുക. ശുദ്ധമായ മണ്ണിൽ രണ്ട് കൈപ്പത്തിയും അടിച്ച് മുഖം മുഴുവൻ തടവുക. വീണ്ടും അടിച്ച് കൈമുട്ട് വരെ രണ്ട് കൈകളും തടവുക. ഓരോ ഫർള് നമസ്കാരത്തിനും പുതിയ തയമ്മും വേണം.","انوِ بقلبك وسمِّ الله، واضرب بكفيك على تراب طاهر وامسح وجهك كله، ثم اضرب ضربة ثانية وامسح يديك إلى المرفقين. ولكل فريضة تيمم جديد.")}),
 c5_m1:XM(TL3("Conditions and time","നിബന്ധനകളും സമയവും","الشروط والمدة"),{pose:"info",
   b:TL3("You may wipe over leather socks or thick socks worn after complete wudu that cover the ankles and are strong enough to walk in. The time is one day and night, or three days and nights when travelling, from your first wudu-break after putting them on.","പൂർണ വുദൂഇന് ശേഷം ധരിച്ച, കണങ്കാൽ മൂടുന്ന, നടക്കാൻ കരുത്തുള്ള തുകൽ മോസുകളുടെയോ കട്ടിയുള്ള സോക്സുകളുടെയോ മുകളിൽ തടവാം. ധരിച്ച ശേഷം ആദ്യം വുദൂഅ് മുറിഞ്ഞതു മുതൽ നാട്ടിൽ ഒരു രാപ്പകലും യാത്രയിൽ മൂന്ന് രാപ്പകലുമാണ് സമയം.","يجوز المسح على الخفين أو الجوربين الثخينين إذا لُبسا بعد وضوء كامل، وسترا الكعبين، وأمكن المشي فيهما. ومدته يوم وليلة للمقيم وثلاثة أيام بلياليها للمسافر، من أول حدث بعد اللبس.")}),
 c5_m2:XM(TL3("How to wipe","എങ്ങനെ തടവണം","كيفية المسح"),{pose:"info",
@@ -2027,7 +2036,7 @@ function renderGuide(){
   if(st.first)note=tx("First tashahhud. Stand up for the next rak\u2019ah afterwards.");
   const body=c.b?c.b[LANG].split("\n\n").map(t=>`<p>${t}</p>`).join(""):"";
   const t1=c.t[LANG];
-  const sum=g?`<div class="card gsum g-sum"><div class="gs-r"><span>${tx("When")}</span><b>${g.sum.when[LANG]}</b></div>${g.sum.rak?`<div class="gs-r"><span>${g.sum.lb?g.sum.lb[LANG]:tx("Rak\u2019ahs")}</span><b>${g.sum.rak[LANG]}</b></div>`:""}<div class="gs-r"><span>${tx("Ruling")}</span><b>${g.sum.rule[LANG]}</b></div>${g.win?`<div class="gs-r"><span>${tx("Time today")}</span><b class="num">${g.win(getEvents(Date.now()),Date.now())}</b></div>`:""}<div class="gs-tag">${tx("Pending scholar review")}</div></div>`:"";
+  const sum=g?`<div class="card gsum g-sum"><div class="gs-r"><span>${tx("When")}</span><b>${g.sum.when[LANG]}</b></div>${g.sum.rak?`<div class="gs-r"><span>${g.sum.lb?g.sum.lb[LANG]:tx("Rak\u2019ahs")}</span><b>${g.sum.rak[LANG]}</b></div>`:""}<div class="gs-r"><span>${tx("Ruling")}</span><b>${g.sum.rule[LANG]}</b></div>${g.win?`<div class="gs-r"><span>${tx("Time today")}</span><b class="num">${g.win(getEvents(Date.now()),Date.now())}</b></div>`:""}${id==="tahajjud"?`<div class="gs-r"><span>${tx("Reminders")}</span><b style="display:flex;align-items:center;justify-content:space-between;gap:10px">${tahLabel()} \u00b7 ${fmt(tahStart(getEvents(Date.now()),Date.now()))}<button class="sw" role="switch" aria-checked="${!!S.rem.tahajjud}" aria-label="${tx("Remind for {0}",tahName())}" data-act="bell" data-v="tahajjud"></button></b></div>`:""}<div class="gs-tag">${tx("Pending scholar review")}</div></div>`:"";
   $("#s-guide").innerHTML=`
   <header class="g-head"><h1>${tx("Prayer guide")}</h1></header>
   <div class="seg g-cat" role="group" aria-label="${tx("Choose a category")}">${GCAT.map(([k,lab])=>`<button aria-pressed="${cat===k}" data-act="gcat" data-v="${k}">${tx(lab)}<small>${GLIST[k].length}</small></button>`).join("")}</div>
@@ -2162,6 +2171,28 @@ function enableCompass(){
 
 /* ---------- reminders ---------- */
 let permState=()=>{try{return "Notification" in window?Notification.permission:"unsupported"}catch(e){return "unsupported"}};
+/* Tahajjud reminder time: start of the last third, N minutes before Fajr, or a custom clock time inside the night */
+const TAH_MODES=["third","120","60","30","custom"];
+const tahCfg=()=>Object.assign({m:"third",c:"03:30"},S.tah||{});
+function tahCalc(E,now){
+  const w=nightWin(E,now),third=w.f-(w.f-w.m)/3,c=tahCfg();
+  if(c.m==="third")return {ms:third,ok:true};
+  if(c.m==="custom"){
+    const [h,m]=c.c.split(":").map(Number),tz=loc().tz*3600e3,d=new Date(w.f+tz);
+    let t=Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())-tz+(h*60+m)*60000;if(t>=w.f)t-=864e5;
+    return (t>=w.m&&t<w.f-60000)?{ms:t,ok:true}:{ms:third,ok:false};
+  }
+  return {ms:w.f-(+c.m)*60000,ok:true};
+}
+const tahStart=(E,now)=>tahCalc(E,now).ms;
+const tahLbl=m=>tx(m==="third"?"Start of the last third":m==="120"?"2 hours before Fajr":m==="60"?"1 hour before Fajr":m==="30"?"30 minutes before Fajr":"Custom time");
+const tahLabel=()=>{const c=tahCfg();return c.m==="third"?tx("Last third of the night"):tahLbl(c.m)};
+const tahOpts=E=>{
+  if(!S.rem.tahajjud)return "";
+  const c=tahCfg(),k=tahCalc(E,Date.now());
+  return `<div class="tah-opts"><div class="chips" role="group" aria-label="${tx("Tahajjud reminder time")}">${TAH_MODES.map(m=>`<button class="chip" aria-pressed="${c.m===m}" data-act="tahm" data-v="${m}">${tahLbl(m)}</button>`).join("")}</div>${c.m==="custom"?`<div class="tah-time"><input type="time" id="tahc" value="${c.c}" aria-label="${tx("Custom time")}">${k.ok?"":`<p class="fine">${tx("That time is outside tonight’s night hours, so the last third is used instead.")}</p>`}</div>`:""}</div>`};
+const tahName=()=>GD.tahajjud.nm[LANG];
+const tahRow=E=>`<div class="setrow"><div class="t"><b>${tahName()}</b><span>${tahLabel()} \u00b7 <span class="num">${fmt(tahStart(E,Date.now()))}</span></span></div><button class="sw" role="switch" aria-checked="${!!S.rem.tahajjud}" aria-label="${tx("Remind for {0}",tahName())}" data-act="bell" data-v="tahajjud"></button></div>`;
 function renderReminders(E){
   const ps=permState();
   const permTxt=tx(ps==="granted"?"Allowed on this device":ps==="denied"?"Blocked in browser settings":ps==="unsupported"?"Not available in this preview":"Not allowed yet");
@@ -2174,7 +2205,7 @@ function renderReminders(E){
     <div class="setrow"><div class="t"><b>${tx("Notifications")}</b><span>${permTxt}</span></div><button class="btn gold" style="padding:9px 16px;font-size:13.5px" data-act="perm" ${ps==="granted"||ps==="unsupported"?"disabled":""}>${tx("Allow")}</button></div>
   </div>
   <div class="sec r-rem"><h3>${tx("Remind me for")}</h3>
-    <div class="card" style="padding:4px 16px">${P.map(k=>`<div class="setrow"><div class="t"><b>${NAMES[k].p}</b></div><button class="sw" role="switch" aria-checked="${!!S.rem[k]}" aria-label="${tx("Remind for {0}",NP(k))}" data-act="bell" data-v="${k}"></button></div>`).join("")}</div>
+    <div class="card" style="padding:4px 16px">${P.map(k=>`<div class="setrow"><div class="t"><b>${NAMES[k].p}</b></div><button class="sw" role="switch" aria-checked="${!!S.rem[k]}" aria-label="${tx("Remind for {0}",NP(k))}" data-act="bell" data-v="${k}"></button></div>`).join("")}${tahRow(E)}${tahOpts(E)}</div>
   </div>
   <div class="sec r-lead"><h3>${tx("How early")}</h3>
     <div class="chips" role="group" aria-label="${tx("Lead time")}">${[0,5,10,15,30].map(m=>`<button class="chip" aria-pressed="${S.lead===m}" data-act="lead" data-v="${m}">${m?tx("{0} min before",m):tx("At prayer time")}</button>`).join("")}</div>
@@ -2198,6 +2229,14 @@ function checkReminders(E,now){
     const at=ev.ms-S.lead*60000,id=ev.key+ev.ms;
     if(now>=at&&now-at<60000&&!fired.has(id)){fired.add(id);fire(ev.key,ev.ms,S.lead)}
   });
+  const ts=tahStart(E,now),tid="tah"+Math.round(ts/60000);
+  if(S.rem.tahajjud&&now>=ts&&now-ts<60000&&!fired.has(tid)){fired.add(tid);fireTah()}
+}
+document.addEventListener("change",e=>{const t=e.target;if(t&&t.id==="tahc"&&/^\d\d:\d\d$/.test(t.value)){S.tah=Object.assign(tahCfg(),{c:t.value});save();const E=getEvents(Date.now());renderReminders(E);renderGuide()}});
+function fireTah(){
+  const title=tx("It\u2019s time for {0}",tahName()),body=tahLabel();
+  showBanner(title,body);chime();
+  try{if("Notification" in window&&Notification.permission==="granted"){const o={body,icon:"icons/icon-192.png",badge:"icons/icon-192.png",tag:"mihrab-tahajjud"};if(swReg&&swReg.showNotification)swReg.showNotification(title,o);else new Notification(title,o)}}catch(e){}
 }
 function fire(k,ms,lead){
   const N=NAMES[k],title=lead?tx("{0} in {1} minutes",N.p,lead):tx("It\u2019s time for {0}",N.p),body=fmt(ms);
@@ -2249,7 +2288,7 @@ function updateWHome(E,now){
   pp.setAttribute("d",whArc(f));pp.setAttribute("stroke",st.night?"#9FB4E8":"#E6C27F");
   g.setAttribute("transform",`translate(${x.toFixed(1)} ${y.toFixed(1)})`);
   const want=st.night?"m":"s";if(g.dataset.k!==want){g.dataset.k=want;g.innerHTML=st.night?WH_MOON:WH_SUN}
-  const lb=tx(c.cur?"Now":"Next prayer");if(nx&&nx.textContent!==lb)nx.textContent=lb;
+  const lb=skLabel(E,now);if(nx&&nx.textContent!==lb)nx.textContent=lb;
   if(ar&&ar.textContent!==NAMES[c.k].ar)ar.textContent=NAMES[c.k].ar;
 }
 /* clock widget: sunrise at 9 o'clock, over the top to sunset at 3 o'clock (sun), then under the bottom back to sunrise (moon) */
@@ -2291,7 +2330,7 @@ function renderWidgets(E,now){
     <div class="wg w42"><div class="top"><b class="num">${hj}</b><span>${cn(E.L)}</span></div><div class="cols">${cols}</div>
       <div class="mbar"><i class="b-bar" style="width:0%"></i></div></div>
     <div class="wcap">4 × 2</div>
-    <div class="wg w42 wh"><div class="wh-dial">${whSVG(E,now)}<div class="wh-in"><div class="nx" id="whnx">${tx(skCur(E,now).cur?"Now":"Next prayer")}</div><div class="arn" id="wharn">${NAMES[skCur(E,now).k].ar}</div></div></div>
+    <div class="wg w42 wh"><div class="wh-dial">${whSVG(E,now)}<div class="wh-in"><div class="nx" id="whnx">${skLabel(E,now)}</div><div class="arn" id="wharn">${NAMES[skCur(E,now).k].ar}</div></div></div>
       <div class="cols">${cols}</div></div>
     <div class="wcap">${tx("4 × 3 · home")}</div>
     <div class="dock"><i></i><i></i><i></i><i></i></div>
@@ -2362,17 +2401,19 @@ function skyHTML(E,now,mask,resting){
     <g class="sk-orb"><g class="sun"><circle r="40" fill="url(#skSunG)"/><circle r="11.5" fill="url(#skSunC)"/></g><g class="moon" style="display:none"><circle r="32" fill="url(#skMoonG)"/><circle r="10.5" fill="#F3F6FF" mask="url(#skMoonM)"/></g></g>
     ${labels}
   </svg>
-  <div class="sk-in"><div class="nx">${tx(skCur(E,now).cur?"Now":"Next prayer")}</div><div class="arn">${NAMES[skCur(E,now).k].ar}</div></div></div>
+  <div class="sk-in"><div class="nx">${skLabel(E,now)}</div><div class="arn">${NAMES[skCur(E,now).k].ar}</div><div class="iq" id="skiq">${iqLeft(E,now)!=null?tx("Iqama in {0}",mmss(iqLeft(E,now))):""}</div></div></div>
   <div class="sk-cd"><div class="cd num b-cd">${hms(E.next.ms-now)}</div><div class="at num">${tx("{0} at {1}",NAMES[E.next.key].p,fmt(E.next.ms))}</div></div>
   <div class="sk-loc"><button class="loc" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span>${cn(E.L)}</span>${IC.chev}</button><button class="qbtn qb-s" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}<span>${tx("Qibla")}</span></button></div>`;
 }
 /* centre of the semicircle: the prayer we are in now; Fajr ends at sunrise, then the next prayer (Dhuhr) shows until it starts */
 function skCur(E,now){const pk=E.prev.key;return (pk==="fajr"&&now>=E.today.sunrise)?{k:E.next.key,cur:false}:{k:pk,cur:true}}
+const skLabel=(E,now)=>{const c=skCur(E,now);return `${tx(c.cur?"Now":"Next")}: ${NAMES[c.k].p}`};   /* e.g. "Now: Asr" */
 function updateSkyIn(E,now){
   const el=$(".sk-in");if(!el)return;
-  const c=skCur(E,now),nx=$(".nx",el),ar=$(".arn",el),lb=tx(c.cur?"Now":"Next prayer");
+  const c=skCur(E,now),nx=$(".nx",el),ar=$(".arn",el),lb=skLabel(E,now);
   if(nx&&nx.textContent!==lb)nx.textContent=lb;
   if(ar&&ar.textContent!==NAMES[c.k].ar)ar.textContent=NAMES[c.k].ar;
+  const iq=$("#skiq");if(iq){const l=iqLeft(E,now),tt=l!=null?tx("Iqama in {0}",mmss(l)):"";if(iq.textContent!==tt)iq.textContent=tt}
 }
 function updateSky(E,now,p){
   const el=$(".sky");if(!el)return;
@@ -2446,6 +2487,20 @@ function scheduleShooter(first){setTimeout(()=>{shootingStar();scheduleShooter(f
 /* ---------- sheet ---------- */
 function openSheet(html){$("#sheet").innerHTML='<div class="grab"></div>'+html;$("#sheet").classList.add("on");$("#shade").classList.add("on")}
 function closeSheet(){$("#sheet").classList.remove("on");$("#shade").classList.remove("on")}
+/* iqama: minutes after the adhan (prayer start), adjustable per prayer; the home screen counts down to it */
+const IQ_MAX=60,IQ_KEYS=["fajr","dhuhr","asr","maghrib","isha"];
+const mmss=ms=>{const t=Math.max(0,Math.ceil(ms/1000)),m=Math.floor(t/60),r=t%60;return String(m).padStart(2,"0")+":"+String(r).padStart(2,"0")};
+function iqLeft(E,now){const c=skCur(E,now);if(!c.cur)return null;const m=S.iq[c.k];if(!m)return null;const t=E.prev.ms+m*60000;return now<t?t-now:null}
+function openIqama(){
+  const L=loc(),lt=new Date(Date.now()+L.tz*3600e3);
+  const b=baseTimes(lt.getUTCFullYear(),lt.getUTCMonth()+1,lt.getUTCDate(),L);
+  const isDef=JSON.stringify(S.iq)===JSON.stringify(DEF.iq);
+  openSheet(`<h2>${tx("Iqama times")}</h2>
+  <p class="sub" style="margin-bottom:8px">${tx("Set how many minutes after the adhan the iqama is. The home screen counts down to it.")}</p>
+  ${IQ_KEYS.map(k=>{const v=S.iq[k],st=b[k]+(S.adj[k]||0)*60000;return `<div class="arow"><div class="t"><b>${NAMES[k].p}</b><span class="num">${fmt(st)}${v?` \u2192 <em>${fmt(st+v*60000)}</em>`:""}</span></div>
+    <div class="stp"><button data-act="iqa" data-v="${k}:-1" aria-label="${tx("Earlier by one minute for {0}",NP(k))}" ${v<=0?"disabled":""}>\u2212</button><b class="num ${v?"":"z"}">${v?v+" "+tx("min"):tx("Off")}</b><button data-act="iqa" data-v="${k}:1" aria-label="${tx("Later by one minute for {0}",NP(k))}" ${v>=IQ_MAX?"disabled":""}>+</button></div></div>`}).join("")}
+  <div style="display:flex;gap:10px;margin-top:18px"><button class="btn ghost" style="flex:1" data-act="iqareset" ${isDef?"disabled":""}>${tx("Reset all")}</button><button class="btn gold" style="flex:1" data-act="close">${tx("Done")}</button></div>`);
+}
 function openAdjust(){
   const L=loc(),lt=new Date(Date.now()+L.tz*3600e3);
   const b=baseTimes(lt.getUTCFullYear(),lt.getUTCMonth()+1,lt.getUTCDate(),L);
@@ -2464,8 +2519,8 @@ function openAbout(){
     <span class="vpill num">${tx("Version {0} \u00b7 build {1}",APP.version,APP.build)}</span>
     <h3>${tx("Credits")}</h3>
     ${CREDITS.map(([a,b])=>`<div class="crow ${/before release/.test(b)?"todo":""}">${tx(a)}<span>${tx(b)}</span></div>`).join("")}
-    <h3>${tx("Fonts")}</h3>
-    ${FONTS.map(([a,b])=>`<div class="crow">${a}<span>${b}</span></div>`).join("")}
+    <h3>${tx("References")}</h3>
+    ${REFS.map(([a,b,u])=>`<a class="crow" href="${u}" target="_blank" rel="noopener noreferrer">${tx(a)}<span>${b} \u2197</span></a>`).join("")}
     <p class="priv">${tx("Prayer times are calculated on your device. Your location is never sent anywhere.")}</p>
     <div class="copy"><button class="btn ghost" data-act="copyinfo">${tx("Copy app info")}</button></div>
     <p class="fine" style="margin:18px 0 18px">${tx("\u00a9 {0} {1}. All rights reserved.",APP.year,appn())}</p>
@@ -2512,7 +2567,7 @@ function renderSettings(){
   let body;
   if(SP==="times"){
     body=`<header class="st-head"><button class="backb" data-act="setpage" data-v="hub">${ARR()} ${tx("Settings")}</button><h1>${tx("Prayer times")}</h1></header>
-    <div class="card lc">${row("location",tx("Location"),cn(L))}${row("pick",tx("Calculation method"),tx(METHODS[S.method].n),"method")}${row("pick",tx("Asr calculation"),asrName(),"asr")}${row("adjust",tx("Adjust prayer times"),n?tx("{0} adjusted",n):tx("Match your local mosque timetable"))}</div>
+    <div class="card lc">${row("location",tx("Location"),cn(L))}${row("pick",tx("Calculation method"),tx(METHODS[S.method].n),"method")}${row("pick",tx("Asr calculation"),asrName(),"asr")}${row("adjust",tx("Adjust prayer times"),n?tx("{0} adjusted",n):tx("Match your local mosque timetable"))}${row("iqama",tx("Iqama times"),tx("Minutes after the adhan, for each prayer"))}</div>
     <div class="card lc">${row("pick",tx("Hijri date"),hadjName(),"hadj")}</div>`;
   }else if(SP==="you"){
     body=`<header class="st-head"><button class="backb" data-act="setpage" data-v="hub">${ARR()} ${tx("Settings")}</button><h1>${tx("Profile & data")}</h1></header>
@@ -2572,8 +2627,9 @@ document.addEventListener("click",e=>{
     case"close":closeSheet();break;
     case"location":openLocation();break;
     case"widgetscr":setTab("widgets");break;
-    case"bell":{S.rem[v]=S.rem[v]?0:1;save();const E=getEvents(Date.now());renderToday(E,Date.now());renderReminders(E);tick();toast(S.rem[v]?tx("{0} reminder on",NP(v)):tx("{0} reminder off",NP(v)));break}
+    case"bell":{S.rem[v]=S.rem[v]?0:1;save();const E=getEvents(Date.now());renderToday(E,Date.now());renderReminders(E);renderGuide();tick();{const nm=v==="tahajjud"?tahName():NP(v);toast(S.rem[v]?tx("{0} reminder on",nm):tx("{0} reminder off",nm))}break}
     case"lead":S.lead=+v;save();refreshAll();break;
+    case"tahm":S.tah=Object.assign(tahCfg(),{m:v});save();{const E=getEvents(Date.now());renderReminders(E);renderGuide()}break;
     case"sound":S.sound=v;save();refreshAll();if(v==="chime")chime();break;
     case"perm":try{Notification.requestPermission().then(()=>{refreshAll();toast(tx(permState()==="granted"?"Notifications allowed":"Notifications not allowed"))})}catch(err){toast(tx("Notifications are not available here"))}break;
     case"test":{const E=getEvents(Date.now());fire(E.next.key,E.next.ms,S.lead);break}
@@ -2636,6 +2692,9 @@ document.addEventListener("click",e=>{
     case"cgo":C.sel=+v;calCursorTo(C.sel);renderCal();$("#s-cal").scrollTop=0;break;
     case"hadj":closeSheet();S.hadj=+v;save();refreshAll();renderCal();toast(S.hadj?tx(S.hadj>0?"Hijri dates shifted later by a day":"Hijri dates shifted earlier by a day"):tx("Hijri dates as calculated"));break;
     case"adjust":openAdjust();break;
+    case"iqama":openIqama();break;
+    case"iqa":{const [k,d]=v.split(":");S.iq[k]=Math.max(0,Math.min(IQ_MAX,(S.iq[k]||0)+ +d));save();refreshAll();openIqama();break}
+    case"iqareset":S.iq=Object.assign({},DEF.iq);save();refreshAll();openIqama();toast(tx("Iqama times reset"));break;
     case"adj":{const [k,d]=v.split(":");S.adj[k]=Math.max(-ADJ_MAX,Math.min(ADJ_MAX,(S.adj[k]||0)+ +d));save();refreshAll();openAdjust();break}
     case"adjreset":S.adj=Object.assign({},DEF.adj);save();refreshAll();openAdjust();toast(tx("Times reset to calculated"));break;
     case"copyinfo":{const t=APP.name+" "+APP.version+" (build "+APP.build+")";try{navigator.clipboard.writeText(t).then(()=>toast(tx("App info copied")),()=>toast(t))}catch(err){toast(t)}break}
