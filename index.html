@@ -908,6 +908,43 @@ a.crow span{direction:ltr;unicode-bidi:isolate}
 .tah-time .fine{margin:8px 2px 0}
 /* iqama counter under the Arabic name in the home semicircle */
 .sk-in .iq{height:calc(4.6*var(--u));margin-top:calc(.6*var(--u));font-size:calc(3.3*var(--u));line-height:calc(4.6*var(--u));color:rgba(255,255,255,.82);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* reminders: "How early" sits inside the prayers card; Jumu’ah note */
+.r-early{padding:14px 0 16px;border-top:1px solid var(--line-soft)}
+.r-early>b{display:block;margin-bottom:10px;font-size:13.5px;font-weight:500;color:var(--mist)}
+.r-note{margin-top:12px;padding:14px 16px;border-radius:20px;background:var(--chip-bg)}
+.r-note h4{margin:0 0 6px;font-size:13.5px;font-weight:600}
+.r-note p{margin:0;font-size:12.5px;line-height:1.65;color:var(--mist)}
+/* home semicircle: text stays centred; it only shifts up while the iqama counter is showing */
+.sk-in .iq{height:auto;line-height:1.3;margin-top:calc(.8*var(--u))}
+.sk-in .iq:empty{display:none}
+/* smaller location and Qibla chips, plus the masjid icon */
+.hero-pin .loc,.hero-pin .qbtn,.hero-pin .qbtn.glass{min-height:34px;padding:6px 12px;font-size:12.5px;gap:6px}
+.hero-pin .loc svg,.hero-pin .qbtn svg{width:15px;height:15px}
+.hero-pin .loc svg:last-child{width:11px;height:11px}
+.sk-loc{flex-wrap:wrap;justify-content:center;row-gap:8px}
+html[lang="ml"] .hero-pin .loc,html[lang="ml"] .hero-pin .qbtn{font-size:12px}
+/* main counter: a bit smaller, with h m s */
+.sk-cd .cd{font-size:calc(10.8*var(--u));white-space:nowrap}
+.sk-cd .cd small{font-family:var(--body);font-size:.4em;letter-spacing:0;margin:0 .22em 0 .08em;opacity:.85}
+/* toggle switches: springy knob, colour fade and a press stretch (re-rendered switches replay it via .sw-on / .sw-off) */
+.sw{--sx:20px;transition:background .25s,box-shadow .25s}
+.sw::after{left:3px;transform:translateX(0);box-shadow:0 1px 3px rgba(0,0,0,.28);transition:transform .34s cubic-bezier(.34,1.56,.64,1),background .2s,width .15s}
+.sw[aria-checked=true]{box-shadow:0 4px 14px -6px var(--gold)}
+.sw[aria-checked=true]::after{left:3px;transform:translateX(var(--sx))}
+.sw:active::after{width:26px}
+.sw[aria-checked=true]:active::after{transform:translateX(calc(var(--sx) - 4px))}
+html[dir="rtl"] .sw{--sx:-20px}
+html[dir="rtl"] .sw::after{left:auto;right:3px;transform:translateX(0)}
+html[dir="rtl"] .sw[aria-checked=true]::after{left:auto;right:3px;transform:translateX(var(--sx))}
+html[dir="rtl"] .sw:active::after{width:22px}
+@keyframes swOn{from{transform:translateX(0)}to{transform:translateX(var(--sx))}}
+@keyframes swOff{from{transform:translateX(var(--sx))}to{transform:translateX(0)}}
+@keyframes swTrOn{from{background:var(--sw-off)}to{background:var(--gold)}}
+@keyframes swTrOff{from{background:var(--gold)}to{background:var(--sw-off)}}
+.sw.sw-on{animation:swTrOn .25s ease}
+.sw.sw-on::after{animation:swOn .34s cubic-bezier(.34,1.56,.64,1)}
+.sw.sw-off{animation:swTrOff .25s ease}
+.sw.sw-off::after{animation:swOff .34s cubic-bezier(.34,1.56,.64,1)}
 </style>
 </head>
 <body>
@@ -977,7 +1014,7 @@ const METHODS={
 };
 const KAABA={lat:21.4225,lon:39.8262};
 /* edit these before release */
-const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.37.0",build:"2026.10.22.68",year:2026};
+const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.39.5",build:"2026.10.22.76",year:2026};
 const CREDITS=[
   ["Design and development","Basil Melepat"],
   ["Religious content review","To be added before release"],
@@ -988,10 +1025,10 @@ const CREDITS=[
 const REFS=[["Prayer time calculation","praytimes.org","https://praytimes.org"],["Umm al-Qura calendar","webspace.science.uu.nl","https://webspace.science.uu.nl/~gent0113/islam/ummalqura_introduction.htm"],["Travel prayer (Qasr)","jibreel.app","https://www.jibreel.app/islamqa/hanafi-qasar-namaz-distance"],["Intention in prayer","prayerinislam.com","https://prayerinislam.com/verbal-intention-prayer-necessary/"],["Typefaces","fonts.google.com","https://fonts.google.com"]];
 
 /* ---------- state ---------- */
-const DEF={city:0,custom:null,method:"mwl",asr:"shafii",rem:{fajr:1,dhuhr:1,asr:1,maghrib:1,isha:1,tahajjud:0},lead:10,sound:"chime",glang:"ml",translit:true,prayer:"fajr",theme:"auto",lang:"en",wbg:"blur",gmean:null,profile:null,log:{},trk:{},since:null,restR:[],restA:null,hadj:0,cmode:"g",iq:{fajr:20,dhuhr:15,asr:15,maghrib:5,isha:15},adj:{fajr:0,sunrise:0,dhuhr:0,asr:0,maghrib:0,isha:0}};
+const DEF={city:0,custom:null,method:"mwl",asr:"shafii",rem:{fajr:1,dhuhr:1,asr:1,maghrib:1,isha:1,tahajjud:0},lead:10,sound:"chime",glang:"ml",translit:true,prayer:"fajr",theme:"auto",lang:"en",wbg:"blur",gmean:null,profile:null,log:{},trk:{},since:null,restR:[],restA:null,hadj:0,cmode:"g",trkOff:false,jum:{kahf:0,nails:0,ghusl:0,early:0,salawat:0},iq:{fajr:20,dhuhr:15,asr:15,maghrib:5,isha:15},adj:{fajr:0,sunrise:0,dhuhr:0,asr:0,maghrib:0,isha:0}};
 let S=Object.assign({},DEF);
 try{const raw=localStorage.getItem("mihrab-v1");if(raw)S=Object.assign({},DEF,JSON.parse(raw))}catch(e){}
-S.adj=Object.assign({},DEF.adj,S.adj||{});S.iq=Object.assign({},DEF.iq,S.iq||{});S.trk=S.trk||{};S.log=S.log||{};S.restR=S.restR||[];
+S.adj=Object.assign({},DEF.adj,S.adj||{});S.iq=Object.assign({},DEF.iq,S.iq||{});S.jum=Object.assign({},DEF.jum,S.jum||{});S.trkOff=!!S.trkOff;S.trk=S.trk||{};S.log=S.log||{};S.restR=S.restR||[];
 const save=()=>{try{localStorage.setItem("mihrab-v1",JSON.stringify(S))}catch(e){}};
 const loc=()=>S.city>=0?CITIES[S.city]||CITIES[0]:(S.custom||CITIES[0]);
 /* ---------- language ---------- */
@@ -1005,7 +1042,7 @@ ml:{
 "How did it go?":"എങ്ങനെയായിരുന്നു?","Extras":"അധികം","Clear":"മായ്ക്കുക","Track options":"ട്രാക്ക് ഓപ്ഷനുകൾ","Marked automatically from the prayer time. Change it if needed.":"പ്രാർഥനാ സമയം നോക്കി സ്വയം രേഖപ്പെടുത്തി. ആവശ്യമെങ്കിൽ മാറ്റാം.","View tracker":"ട്രാക്കർ കാണുക",
 "On time means prayed before the next prayer begins.":"അടുത്ത നമസ്കാരം തുടങ്ങുന്നതിന് മുമ്പ് നമസ്കരിച്ചാൽ സമയത്ത് എന്ന് കണക്കാക്കും.","Prayers you don\u2019t mark once their time has passed count as missed.":"സമയം കഴിഞ്ഞിട്ടും രേഖപ്പെടുത്താത്ത നമസ്കാരങ്ങൾ നഷ്ടപ്പെട്ടതായി കണക്കാക്കും.","No prayers tracked yet.":"ഇതുവരെ നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തിയിട്ടില്ല.",
 "Rest days":"വിശ്രമ ദിനങ്ങൾ","Pause tracking and reminders":"ട്രാക്കിംഗും റിമൈൻഡറുകളും താൽക്കാലികമായി നിർത്തുക","On since {0}":"{0} മുതൽ ഓണാണ്","Start rest days":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങുക","End rest days":"വിശ്രമ ദിനങ്ങൾ അവസാനിപ്പിക്കുക","End":"അവസാനിപ്പിക്കുക",
-"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"ഈ ദിവസങ്ങൾ ശതമാനത്തിലോ തുടർച്ചയിലോ കണക്കാക്കില്ല, റിമൈൻഡറുകൾ ശബ്ദിക്കില്ല. ഇത് ഈ ഉപകരണത്തിൽ മാത്രം.","Rest days started":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങി","Rest days ended. Welcome back.":"വിശ്രമ ദിനങ്ങൾ അവസാനിച്ചു. വീണ്ടും സ്വാഗതം.","Week streak":"ആഴ്ച തുടർച്ച","Month streak":"മാസ തുടർച്ച","Each ring has five parts, one for each prayer.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്.","Translation":"പരിഭാഷ","Off":"ഓഫ്", "Install app":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക","Add it to your home screen for full-screen use and offline access.":"ഫുൾ സ്ക്രീനിലും ഓഫ്‌ലൈനിലും ഉപയോഗിക്കാൻ ഹോം സ്ക്രീനിൽ ചേർക്കുക.","Install {0}":"{0} ഇൻസ്റ്റാൾ ചെയ്യുക","Tap the Share button in Safari":"സഫാരിയിലെ ഷെയർ ബട്ടൺ തൊടുക","Choose Add to Home Screen":"“ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","Tap Add":"“ചേർക്കുക” തൊടുക","Open your browser menu":"ബ്രൗസർ മെനു തുറക്കുക","Choose Install app or Add to Home screen":"“ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക” അല്ലെങ്കിൽ “ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","App installed":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തു","A new version is ready.":"പുതിയ പതിപ്പ് തയ്യാറാണ്.","Refresh":"റിഫ്രഷ്","You\u2019re offline. Everything still works.":"നിങ്ങൾ ഓഫ്‌ലൈനാണ്. എല്ലാം പ്രവർത്തിക്കും.","Back online":"വീണ്ടും ഓൺലൈൻ","Transparent":"സുതാര്യം","Blur":"ബ്ലർ","Bar color shifts from green to red as the next prayer gets closer.":"അടുത്ത നമസ്കാരം അടുക്കുന്തോറും ബാർ പച്ചയിൽ നിന്ന് ചുവപ്പിലേക്ക് മാറുന്നു.","minimal":"മിനിമൽ","H":"മ","M":"മി","S":"സെ","Calendar":"കലണ്ടർ","Guide":"വഴികാട്ടി","Last third of the night":"രാത്രിയുടെ അവസാന മൂന്നിലൊന്ന്","Start of the last third":"അവസാന മൂന്നിലൊന്നിന്റെ തുടക്കം","2 hours before Fajr":"ഫജ്റിന് 2 മണിക്കൂർ മുമ്പ്","1 hour before Fajr":"ഫജ്റിന് 1 മണിക്കൂർ മുമ്പ്","30 minutes before Fajr":"ഫജ്റിന് 30 മിനിറ്റ് മുമ്പ്","Custom time":"ഇഷ്ടമുള്ള സമയം","Tahajjud reminder time":"തഹജ്ജുദ് ഓർമ്മപ്പെടുത്തൽ സമയം","That time is outside tonight’s night hours, so the last third is used instead.":"ഈ സമയം ഇന്നത്തെ രാത്രിക്ക് പുറത്താണ്, അതിനാൽ പകരം അവസാന മൂന്നിലൊന്ന് ഉപയോഗിക്കുന്നു.","Iqama times":"ഇഖാമത്ത് സമയം","Minutes after the adhan, for each prayer":"ഓരോ നമസ്കാരത്തിനും ബാങ്കിന് ശേഷമുള്ള മിനിറ്റ്","Set how many minutes after the adhan the iqama is. The home screen counts down to it.":"ബാങ്കിന് എത്ര മിനിറ്റ് കഴിഞ്ഞാണ് ഇഖാമത്ത് എന്ന് സജ്ജമാക്കുക. ഹോം സ്ക്രീൻ അതിലേക്കുള്ള കൗണ്ട്ഡൗൺ കാണിക്കും.","Iqama in {0}":"ഇഖാമത്തിന് {0}","Iqama times reset":"ഇഖാമത്ത് സമയങ്ങൾ പുനഃസജ്ജമാക്കി","Iqama at {0}":"ഇഖാമത്ത് {0}","Reminders":"റിമൈൻഡർ","Settings":"ക്രമീകരണം","Widgets":"വിജറ്റുകൾ","Qibla":"ഖിബ്‌ല",
+"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"ഈ ദിവസങ്ങൾ ശതമാനത്തിലോ തുടർച്ചയിലോ കണക്കാക്കില്ല, റിമൈൻഡറുകൾ ശബ്ദിക്കില്ല. ഇത് ഈ ഉപകരണത്തിൽ മാത്രം.","Rest days started":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങി","Rest days ended. Welcome back.":"വിശ്രമ ദിനങ്ങൾ അവസാനിച്ചു. വീണ്ടും സ്വാഗതം.","Week streak":"ആഴ്ച തുടർച്ച","Month streak":"മാസ തുടർച്ച","Each ring has five parts, one for each prayer.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്.","Translation":"പരിഭാഷ","Off":"ഓഫ്", "Install app":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക","Add it to your home screen for full-screen use and offline access.":"ഫുൾ സ്ക്രീനിലും ഓഫ്‌ലൈനിലും ഉപയോഗിക്കാൻ ഹോം സ്ക്രീനിൽ ചേർക്കുക.","Install {0}":"{0} ഇൻസ്റ്റാൾ ചെയ്യുക","Tap the Share button in Safari":"സഫാരിയിലെ ഷെയർ ബട്ടൺ തൊടുക","Choose Add to Home Screen":"“ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","Tap Add":"“ചേർക്കുക” തൊടുക","Open your browser menu":"ബ്രൗസർ മെനു തുറക്കുക","Choose Install app or Add to Home screen":"“ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക” അല്ലെങ്കിൽ “ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","App installed":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തു","A new version is ready.":"പുതിയ പതിപ്പ് തയ്യാറാണ്.","Refresh":"റിഫ്രഷ്","You\u2019re offline. Everything still works.":"നിങ്ങൾ ഓഫ്‌ലൈനാണ്. എല്ലാം പ്രവർത്തിക്കും.","Back online":"വീണ്ടും ഓൺലൈൻ","Transparent":"സുതാര്യം","Blur":"ബ്ലർ","Bar color shifts from green to red as the next prayer gets closer.":"അടുത്ത നമസ്കാരം അടുക്കുന്തോറും ബാർ പച്ചയിൽ നിന്ന് ചുവപ്പിലേക്ക് മാറുന്നു.","minimal":"മിനിമൽ","H":"മ","M":"മി","S":"സെ","Calendar":"കലണ്ടർ","Guide":"വഴികാട്ടി","Last third of the night":"രാത്രിയുടെ അവസാന മൂന്നിലൊന്ന്","Start of the last third":"അവസാന മൂന്നിലൊന്നിന്റെ തുടക്കം","2 hours before Fajr":"ഫജ്റിന് 2 മണിക്കൂർ മുമ്പ്","1 hour before Fajr":"ഫജ്റിന് 1 മണിക്കൂർ മുമ്പ്","30 minutes before Fajr":"ഫജ്റിന് 30 മിനിറ്റ് മുമ്പ്","Custom time":"ഇഷ്ടമുള്ള സമയം","Tahajjud reminder time":"തഹജ്ജുദ് ഓർമ്മപ്പെടുത്തൽ സമയം","That time is outside tonight’s night hours, so the last third is used instead.":"ഈ സമയം ഇന്നത്തെ രാത്രിക്ക് പുറത്താണ്, അതിനാൽ പകരം അവസാന മൂന്നിലൊന്ന് ഉപയോഗിക്കുന്നു.","Iqama times":"ഇഖാമത്ത് സമയം","Minutes after the adhan, for each prayer":"ഓരോ നമസ്കാരത്തിനും ബാങ്കിന് ശേഷമുള്ള മിനിറ്റ്","Set how many minutes after the adhan the iqama is. The home screen counts down to it.":"ബാങ്കിന് എത്ര മിനിറ്റ് കഴിഞ്ഞാണ് ഇഖാമത്ത് എന്ന് സജ്ജമാക്കുക. ഹോം സ്ക്രീൻ അതിലേക്കുള്ള കൗണ്ട്ഡൗൺ കാണിക്കും.","Iqama in {0}":"ഇഖാമത്തിന് {0}","Iqama times reset":"ഇഖാമത്ത് സമയങ്ങൾ പുനഃസജ്ജമാക്കി","Iqama at {0}":"ഇഖാമത്ത് {0}","Jumu’ah reminders":"ജുമുഅ ഓർമ്മപ്പെടുത്തലുകൾ","Only on Fridays, using your local prayer times.":"വെള്ളിയാഴ്ചകളിൽ മാത്രം, നിങ്ങളുടെ പ്രാദേശിക നമസ്കാര സമയമനുസരിച്ച്.","Night prayer":"രാത്രി നമസ്കാരം","Preparing for Friday (Jumu’ah)":"വെള്ളിയാഴ്ചയ്ക്ക് ഒരുങ്ങാം (ജുമുഅ)","While the five core acts of fitrah can be done on any day of the week to stay within the 40-day limit, it is an established habit to do them on Friday morning. This fits the emphasis on cleanliness before the congregational Jumu’ah prayer, which includes taking a ritual bath (ghusl), brushing the teeth (miswak), putting on clean clothes and applying perfume.":"ഫിത്റത്തിന്റെ അഞ്ച് പ്രധാന കർമങ്ങൾ 40 ദിവസത്തെ പരിധിക്കുള്ളിൽ ആഴ്ചയിലെ ഏത് ദിവസവും ചെയ്യാമെങ്കിലും, വെള്ളിയാഴ്ച രാവിലെ അവ ചെയ്യുന്നത് സ്ഥിരമായ ഒരു ശീലമാണ്. ജമാഅത്തായുള്ള ജുമുഅ നമസ്കാരത്തിന് മുമ്പുള്ള ശുചിത്വത്തിന് നൽകുന്ന ഊന്നലിനോട് ഇത് ചേർന്നുനിൽക്കുന്നു; കുളിക്കുക (ഗുസ്ൽ), പല്ല് തേക്കുക (മിസ്‌വാക്), വൃത്തിയുള്ള വസ്ത്രം ധരിക്കുക, സുഗന്ധം പൂശുക എന്നിവ അതിൽ ഉൾപ്പെടുന്നു.","Nearest masjid":"അടുത്തുള്ള മസ്ജിദ്","Prayer tracker hidden":"പ്രാർഥനാ ട്രാക്കർ മറച്ചു","Prayer tracker shown":"പ്രാർഥനാ ട്രാക്കർ കാണിക്കുന്നു","Turn off to hide ticking, the streak card and the tracker.":"ടിക്ക് ചെയ്യൽ, സ്ട്രീക്ക് കാർഡ്, ട്രാക്കർ എന്നിവ മറയ്ക്കാൻ ഓഫ് ചെയ്യുക.","Masjid":"മസ്ജിദ്","Reminders":"റിമൈൻഡർ","Settings":"ക്രമീകരണം","Widgets":"വിജറ്റുകൾ","Qibla":"ഖിബ്‌ല",
 "Next prayer":"അടുത്ത നമസ്കാരം","Now":"ഇപ്പോൾ","Purification":"ശുദ്ധി","4 × 3 · home":"4 × 3 · ഹോം","2 × 2 · clock":"2 × 2 · ക്ലോക്ക്","If you’re on your period, you can pause the tracker. Your progress stays safe.":"ആർത്തവ സമയത്താണെങ്കിൽ ട്രാക്കർ താൽക്കാലികമായി നിർത്തിവെക്കാം. നിങ്ങളുടെ പുരോഗതി സുരക്ഷിതമായിരിക്കും.","Pause":"നിർത്തിവെക്കുക","{0} at {1}":"{0} {1}-ന്","day streak":"ദിവസ തുടർച്ച","Best":"മികച്ചത്","Full days":"പൂർണ ദിനങ്ങൾ",
 "Each ring has five parts, one for each prayer. Tap a day to update it.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്. പുതുക്കാൻ ഒരു ദിവസം തൊടുക.",
 "Tap the bell to set a reminder.":"റിമൈൻഡർ സജ്ജമാക്കാൻ മണി തൊടുക.","Asr: {0}":"അസ്ർ: {0}","{0} adjusted":"{0} ക്രമീകരിച്ചു","{0} prayed":"{0} നമസ്കരിച്ചു",
@@ -1068,7 +1105,7 @@ ar:{
 "How did it go?":"كيف كانت؟","Extras":"إضافات","Clear":"مسح","Track options":"خيارات التتبّع","Marked automatically from the prayer time. Change it if needed.":"تُسجَّل تلقائيًا بحسب الوقت. غيّرها إن لزم.","View tracker":"عرض المتتبّع",
 "On time means prayed before the next prayer begins.":"تُحتسب «في وقتها» إذا صُلّيت قبل دخول وقت الصلاة التالية.","Prayers you don\u2019t mark once their time has passed count as missed.":"الصلوات التي لا تُسجَّل بعد خروج وقتها تُحتسب فائتة.","No prayers tracked yet.":"لم تُسجَّل صلوات بعد.",
 "Rest days":"أيام الراحة","Pause tracking and reminders":"إيقاف التتبّع والتذكيرات مؤقتًا","On since {0}":"مفعّلة منذ {0}","Start rest days":"بدء أيام الراحة","End rest days":"إنهاء أيام الراحة","End":"إنهاء",
-"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"لا تُحتسب هذه الأيام في النسب أو السلسلة، وتصمت التذكيرات. يبقى هذا على جهازك فقط.","Rest days started":"بدأت أيام الراحة","Rest days ended. Welcome back.":"انتهت أيام الراحة. أهلًا بعودتك.","Week streak":"سلسلة أسبوعية","Month streak":"سلسلة شهرية","Each ring has five parts, one for each prayer.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة.","Translation":"الترجمة","Off":"إيقاف", "Install app":"تثبيت التطبيق","Add it to your home screen for full-screen use and offline access.":"أضِفه إلى شاشتك الرئيسية للاستخدام بملء الشاشة ودون اتصال.","Install {0}":"تثبيت {0}","Tap the Share button in Safari":"اضغط على زر المشاركة في سفاري","Choose Add to Home Screen":"اختر «إضافة إلى الشاشة الرئيسية»","Tap Add":"اضغط «إضافة»","Open your browser menu":"افتح قائمة المتصفح","Choose Install app or Add to Home screen":"اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»","App installed":"تم تثبيت التطبيق","A new version is ready.":"إصدار جديد جاهز.","Refresh":"تحديث","You\u2019re offline. Everything still works.":"أنت غير متصل. كل شيء يعمل.","Back online":"عدنا متصلين","Transparent":"شفاف","Blur":"ضبابي","Bar color shifts from green to red as the next prayer gets closer.":"يتحول لون الشريط من الأخضر إلى الأحمر كلما اقتربت الصلاة القادمة.","minimal":"مبسّط","H":"س","M":"د","S":"ث","Calendar":"التقويم","Guide":"الدليل","Last third of the night":"الثلث الأخير من الليل","Start of the last third":"بداية الثلث الأخير","2 hours before Fajr":"قبل الفجر بساعتين","1 hour before Fajr":"قبل الفجر بساعة","30 minutes before Fajr":"قبل الفجر بنصف ساعة","Custom time":"وقت مخصص","Tahajjud reminder time":"وقت تنبيه التهجد","That time is outside tonight’s night hours, so the last third is used instead.":"هذا الوقت خارج ساعات ليل الليلة، لذا يُستخدم الثلث الأخير بدلًا منه.","Iqama times":"أوقات الإقامة","Minutes after the adhan, for each prayer":"الدقائق بعد الأذان لكل صلاة","Set how many minutes after the adhan the iqama is. The home screen counts down to it.":"حدّد كم دقيقة بعد الأذان تُقام الصلاة. تعرض الشاشة الرئيسية العدّ التنازلي لها.","Iqama in {0}":"الإقامة بعد {0}","Iqama times reset":"أُعيد ضبط أوقات الإقامة","Iqama at {0}":"الإقامة {0}","Reminders":"التذكيرات","Settings":"الإعدادات","Widgets":"الودجات","Qibla":"القبلة",
+"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"لا تُحتسب هذه الأيام في النسب أو السلسلة، وتصمت التذكيرات. يبقى هذا على جهازك فقط.","Rest days started":"بدأت أيام الراحة","Rest days ended. Welcome back.":"انتهت أيام الراحة. أهلًا بعودتك.","Week streak":"سلسلة أسبوعية","Month streak":"سلسلة شهرية","Each ring has five parts, one for each prayer.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة.","Translation":"الترجمة","Off":"إيقاف", "Install app":"تثبيت التطبيق","Add it to your home screen for full-screen use and offline access.":"أضِفه إلى شاشتك الرئيسية للاستخدام بملء الشاشة ودون اتصال.","Install {0}":"تثبيت {0}","Tap the Share button in Safari":"اضغط على زر المشاركة في سفاري","Choose Add to Home Screen":"اختر «إضافة إلى الشاشة الرئيسية»","Tap Add":"اضغط «إضافة»","Open your browser menu":"افتح قائمة المتصفح","Choose Install app or Add to Home screen":"اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»","App installed":"تم تثبيت التطبيق","A new version is ready.":"إصدار جديد جاهز.","Refresh":"تحديث","You\u2019re offline. Everything still works.":"أنت غير متصل. كل شيء يعمل.","Back online":"عدنا متصلين","Transparent":"شفاف","Blur":"ضبابي","Bar color shifts from green to red as the next prayer gets closer.":"يتحول لون الشريط من الأخضر إلى الأحمر كلما اقتربت الصلاة القادمة.","minimal":"مبسّط","H":"س","M":"د","S":"ث","Calendar":"التقويم","Guide":"الدليل","Last third of the night":"الثلث الأخير من الليل","Start of the last third":"بداية الثلث الأخير","2 hours before Fajr":"قبل الفجر بساعتين","1 hour before Fajr":"قبل الفجر بساعة","30 minutes before Fajr":"قبل الفجر بنصف ساعة","Custom time":"وقت مخصص","Tahajjud reminder time":"وقت تنبيه التهجد","That time is outside tonight’s night hours, so the last third is used instead.":"هذا الوقت خارج ساعات ليل الليلة، لذا يُستخدم الثلث الأخير بدلًا منه.","Iqama times":"أوقات الإقامة","Minutes after the adhan, for each prayer":"الدقائق بعد الأذان لكل صلاة","Set how many minutes after the adhan the iqama is. The home screen counts down to it.":"حدّد كم دقيقة بعد الأذان تُقام الصلاة. تعرض الشاشة الرئيسية العدّ التنازلي لها.","Iqama in {0}":"الإقامة بعد {0}","Iqama times reset":"أُعيد ضبط أوقات الإقامة","Iqama at {0}":"الإقامة {0}","Jumu’ah reminders":"تنبيهات الجمعة","Only on Fridays, using your local prayer times.":"أيام الجمعة فقط، بحسب أوقات الصلاة في موقعك.","Night prayer":"صلاة الليل","Preparing for Friday (Jumu’ah)":"الاستعداد ليوم الجمعة","While the five core acts of fitrah can be done on any day of the week to stay within the 40-day limit, it is an established habit to do them on Friday morning. This fits the emphasis on cleanliness before the congregational Jumu’ah prayer, which includes taking a ritual bath (ghusl), brushing the teeth (miswak), putting on clean clothes and applying perfume.":"يمكن أداء خصال الفطرة الخمس الأساسية في أي يوم من الأسبوع بما لا يتجاوز مدة الأربعين يومًا، لكن من المعتاد أن تُؤدّى صباح الجمعة. وهذا يتفق مع الاهتمام بالنظافة قبل صلاة الجمعة جماعةً، ومن ذلك الاغتسال والسواك ولبس الثياب النظيفة والتطيّب.","Nearest masjid":"أقرب مسجد","Prayer tracker hidden":"تم إخفاء متتبّع الصلاة","Prayer tracker shown":"تم إظهار متتبّع الصلاة","Turn off to hide ticking, the streak card and the tracker.":"أوقِف التشغيل لإخفاء التأشير وبطاقة السلسلة والمتتبّع.","Masjid":"المسجد","Reminders":"التذكيرات","Settings":"الإعدادات","Widgets":"الودجات","Qibla":"القبلة",
 "Next prayer":"الصلاة القادمة","Now":"الآن","Purification":"الطهارة","4 × 3 · home":"4 × 3 · الرئيسية","2 × 2 · clock":"2 × 2 · ساعة","If you’re on your period, you can pause the tracker. Your progress stays safe.":"إذا كنتِ في فترة الحيض، يمكنكِ إيقاف المتتبّع مؤقتًا، وتقدّمكِ يبقى محفوظًا.","Pause":"إيقاف مؤقت","{0} at {1}":"{0} عند {1}","day streak":"أيام متتالية","Best":"الأفضل","Full days":"أيام كاملة",
 "Each ring has five parts, one for each prayer. Tap a day to update it.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة. اضغط على يوم لتحديثه.",
 "Tap the bell to set a reminder.":"اضغط على الجرس لضبط تذكير.","Asr: {0}":"العصر: {0}","{0} adjusted":"{0} معدّلة","{0} prayed":"تمت صلاة {0}",
@@ -1134,6 +1171,11 @@ const arDaysAfter=n=>n===1?"يوم":n===2?"يومين":n<=10?n+" أيام":n+" �
 /* prayer-name helpers: primary follows the app language, secondary is the other script */
 for(const k in NAMES){const o=NAMES[k];Object.defineProperty(o,"p",{get:()=>o[LANG]});Object.defineProperty(o,"s",{get:()=>LANG==="en"?o.ml:o.en})}
 const NP=k=>NAMES[k].p,NS=k=>NAMES[k].s;
+/* Fridays: Dhuhr is shown as Jumu’ah everywhere (names are read live from NAMES) */
+const DH_NAME={en:"Dhuhr",ar:"الظهر",ml:"ളുഹ്ർ"},JM_NAME={en:"Jumu’ah",ar:"الجمعة",ml:"ജുമുഅ"};
+const isFri=now=>new Date(now+loc().tz*3600e3).getUTCDay()===5;
+const jumWin=(E,now)=>{const wd=new Date(now+loc().tz*3600e3).getUTCDay();return (wd===4&&now>=E.today.maghrib)||(wd===5&&now<E.today.maghrib)};
+function applyFriday(now){const f=isFri(now),src=f?JM_NAME:DH_NAME;for(const l in src)NAMES.dhuhr[l]=src[l];return f}
 const cn=c=>(c.name==="My location")?tx("My location"):(LANG==="en"?c.name:(c[LANG]||c.name));
 const SEC=()=>LANG==="en"?"ml":"en";
 const ARR=()=>LANG==="ar"?"\u203A":"\u2039";
@@ -1205,6 +1247,7 @@ function cdHTML(rem){
 }
 /* green (90+ min away) -> yellow -> orange -> red (about to start) */
 function urgency(ms){const m=Math.max(0,ms)/60000,t=Math.min(1,m/90);return `hsl(${Math.round(150*t)} 72% 52%)`}
+const hmsU=ms=>{ms=Math.max(0,ms);const t=Math.floor(ms/1000),u=["H","M","S"].map(x=>LANG==="en"?x.toLowerCase():tx(x));return [Math.floor(t/3600),Math.floor(t%3600/60),t%60].map((n,i)=>String(n).padStart(2,"0")+"<small>"+u[i]+"</small>").join(" ")};
 const hms=ms=>{ms=Math.max(0,ms);const s=Math.floor(ms/1000);return [Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(n=>String(n).padStart(2,"0")).join(":")};
 const short=ms=>{const s=Math.max(0,Math.floor(ms/1000)),h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h>0?tx("{0}h {1}m",h,m):m>0?tx("{0}m",m):tx("{0}s",s)};
 const HMX={
@@ -1262,6 +1305,7 @@ const IC={
   today:'<svg viewBox="0 0 24 24"><path d="M5 21V11c0-4 5-5 7-9 2 4 7 5 7 9v10z"/><circle cx="12" cy="14.5" r="1.6"/></svg>',
   guide:'<svg viewBox="0 0 24 24"><path d="M3.5 5.5c3-1 6-.8 8.5 1 2.5-1.800 5.500-2 8.500-1v13c-3-1-6-.8-8.500 1-2.500-1.800-5.500-2-8.500-1z"/><path d="M12 6.500v13"/></svg>',
   qibla:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.600 8.400l-2.100 5.100-5.100 2.100 2.100-5.100z"/></svg>',
+  masjid:'<svg viewBox="0 0 24 24"><path d="M6 20v-5.500a6 6 0 0 1 12 0V20"/><path d="M12 8.500V6"/><path d="M10.800 6h2.400"/><path d="M2.500 20h19"/><path d="M10 20v-2.500a2 2 0 0 1 4 0V20"/><path d="M3.500 20v-8l1-1.500 1 1.500v8"/><path d="M18.500 20v-8l1-1.500 1 1.500v8"/></svg>',
   bell:'<svg viewBox="0 0 24 24"><path d="M6 9.500a6 6 0 1 1 12 0c0 4.500 2 5.800 2 6.800H4c0-1 2-2.300 2-6.800z"/><path d="M10 19.500a2 2 0 0 0 4 0"/></svg>',
   bellOff:'<svg viewBox="0 0 24 24"><path d="M6 9.500a6 6 0 1 1 12 0c0 4.500 2 5.800 2 6.800H4c0-1 2-2.300 2-6.800z"/><path d="M10 19.500a2 2 0 0 0 4 0"/></svg>',
   widgets:'<svg viewBox="0 0 24 24"><rect x="3.500" y="3.500" width="7.500" height="7.500" rx="2"/><rect x="13" y="3.500" width="7.500" height="7.500" rx="2"/><rect x="3.500" y="13" width="7.500" height="7.500" rx="2"/><rect x="13" y="13" width="7.500" height="7.500" rx="2"/></svg>',
@@ -1311,19 +1355,19 @@ function renderToday(E,now){
     const isNext=k===E.next.key&&E.next.o===0;
     const isCur=E.prev.o===0&&E.prev.key===k||(k==="isha"&&E.prev.o===-1&&E.prev.key==="isha");
     const cls=["row",k==="sunrise"?"sun":"",past&&!isCur?"past":"",isCur?"cur":"",isNext?"nxt":""].join(" ");
-    return `<div class="${cls}">${k==="sunrise"||resting?'<span class="dt"></span>':ckBtn(k,ms<=now,!!(mask&BIT[k]),(trkDay(localDay())[k]||{}).s==="m")}${(()=>{const inner=`<b>${NAMES[k].p}</b><span>${statusLabel(k)}${S.adj[k]?` <em class="adjb">${adjTxt(S.adj[k])}</em>`:""}</span>`;return (k==="sunrise"||resting||ms>now)?`<div class="nm">${inner}</div>`:`<button class="nm" data-act="pdetail" data-v="${k}" aria-label="${tx("Track options")}">${inner}</button>`})()}<span class="a">${LANG==="ar"?"":NAMES[k].ar}</span><time class="num">${fmtH(ms)}</time></div>`;
+    return `<div class="${cls}">${k==="sunrise"||resting||S.trkOff?'<span class="dt"></span>':ckBtn(k,ms<=now,!!(mask&BIT[k]),(trkDay(localDay())[k]||{}).s==="m")}${(()=>{const inner=`<b>${NAMES[k].p}</b><span>${statusLabel(k)}${S.adj[k]?` <em class="adjb">${adjTxt(S.adj[k])}</em>`:""}</span>`;return (k==="sunrise"||resting||ms>now)?`<div class="nm">${inner}</div>`:`<button class="nm" data-act="pdetail" data-v="${k}" aria-label="${tx("Track options")}">${inner}</button>`})()}<span class="a">${LANG==="ar"?"":NAMES[k].ar}</span><time class="num">${fmtH(ms)}</time></div>`;
   }).join("");
   $("#s-today").innerHTML=`
   <div class="hero-pin">
   <header class="th">
     <div class="greet"><div class="hi-h">${esc(msg.h[LANG])}</div>${resting?`<button class="hi-m" data-act="restend" dir="auto">${msg[LANG]}</button>`:`<p class="hi-m" dir="auto">${msg[LANG]}</p>`}</div>
-    <div class="th-r"><button class="loc loc-h" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span>${cn(E.L)}</span>${IC.chev}</button><button class="qbtn glass" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}<span>${tx("Qibla")}</span></button></div>
+    <div class="th-r"><button class="loc loc-h" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span>${cn(E.L)}</span>${IC.chev}</button><button class="qbtn glass" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}<span>${tx("Qibla")}</span></button><button class="qbtn glass mq" data-act="masjid" aria-label="${tx("Nearest masjid")}">${IC.masjid}<span>${tx("Masjid")}</span></button></div>
   </header>
   <div class="sky">${skyHTML(E,now,mask,resting)}</div>
   </div>
   <div class="cards">
   <div class="list">${rows}<div class="lfoot"><p class="fine">${tx(METHODS[S.method].n)} · ${tx("Asr: {0}",tx(S.asr==="hanafi"?"Hanafi":"Shafi\u2019i"))}${adjCount()?` · ${tx("{0} adjusted",adjCount())}`:""}</p><button class="lbtn" data-act="adjust" aria-label="${tx("Adjust prayer times")}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>${tx("Adjust times")}</button></div></div>
-  ${streakHTML(now)}
+  ${S.trkOff?"":streakHTML(now)}
   </div>`;
   heroP=-1;heroScroll();
 }
@@ -2193,6 +2237,14 @@ const tahOpts=E=>{
   return `<div class="tah-opts"><div class="chips" role="group" aria-label="${tx("Tahajjud reminder time")}">${TAH_MODES.map(m=>`<button class="chip" aria-pressed="${c.m===m}" data-act="tahm" data-v="${m}">${tahLbl(m)}</button>`).join("")}</div>${c.m==="custom"?`<div class="tah-time"><input type="time" id="tahc" value="${c.c}" aria-label="${tx("Custom time")}">${k.ok?"":`<p class="fine">${tx("That time is outside tonight’s night hours, so the last third is used instead.")}</p>`}</div>`:""}</div>`};
 const tahName=()=>GD.tahajjud.nm[LANG];
 const tahRow=E=>`<div class="setrow"><div class="t"><b>${tahName()}</b><span>${tahLabel()} \u00b7 <span class="num">${fmt(tahStart(E,Date.now()))}</span></span></div><button class="sw" role="switch" aria-checked="${!!S.rem.tahajjud}" aria-label="${tx("Remind for {0}",tahName())}" data-act="bell" data-v="tahajjud"></button></div>`;
+/* Jumu’ah reminders: fire on Fridays only, timed from that day's prayer times */
+const JUMR=[
+ {id:"kahf",t:TL3("Read Surah al-Kahf","സൂറത്തുൽ കഹ്ഫ് ഓതുക","اقرأ سورة الكهف"),b:TL3("It’s Jumu’ah. Take time to read Surah al-Kahf today.","ഇന്ന് ജുമുഅ ദിനമാണ്. ഇന്ന് സൂറത്തുൽ കഹ്ഫ് ഓതാൻ സമയം കണ്ടെത്തുക.","اليوم الجمعة. خصّص وقتًا لقراءة سورة الكهف."),r:TL3("30 min after sunrise","സൂര്യോദയത്തിന് 30 മിനിറ്റ് ശേഷം","بعد الشروق بـ ٣٠ دقيقة"),at:E=>E.today.sunrise+30*60000},
+ {id:"nails",t:TL3("Trim nails and tidy up","നഖം വെട്ടി വൃത്തിയാകുക","قصّ الأظافر والتنظّف"),b:TL3("Trim your nails and tidy yourself before Jumu’ah.","ജുമുഅയ്ക്ക് മുമ്പ് നഖം വെട്ടി വൃത്തിയാകുക.","قصّ أظافرك وتنظّف قبل الجمعة."),r:TL3("2 hours before Jumu’ah","ജുമുഅയ്ക്ക് 2 മണിക്കൂർ മുമ്പ്","قبل الجمعة بساعتين"),at:E=>E.today.dhuhr-120*60000},
+ {id:"ghusl",t:TL3("Ghusl and perfume","കുളിയും സുഗന്ധവും","الغسل والطيب"),b:TL3("Take a bath, wear clean clothes and perfume before Jumu’ah.","ജുമുഅയ്ക്ക് മുമ്പ് കുളിച്ച് വൃത്തിയുള്ള വസ്ത്രം ധരിച്ച് സുഗന്ധം പൂശുക.","اغتسل والبس ثيابًا نظيفة وتطيّب قبل الجمعة."),r:TL3("75 min before Jumu’ah","ജുമുഅയ്ക്ക് 75 മിനിറ്റ് മുമ്പ്","قبل الجمعة بـ ٧٥ دقيقة"),at:E=>E.today.dhuhr-75*60000},
+ {id:"early",t:TL3("Head to the mosque early","നേരത്തെ പള്ളിയിലേക്ക് പുറപ്പെടുക","بكّر إلى المسجد"),b:TL3("Jumu’ah is soon. Head to the mosque early.","ജുമുഅ അടുത്തെത്തി. നേരത്തെ പള്ളിയിലേക്ക് പുറപ്പെടുക.","اقتربت الجمعة. بكّر إلى المسجد."),r:TL3("30 min before Jumu’ah","ജുമുഅയ്ക്ക് 30 മിനിറ്റ് മുമ്പ്","قبل الجمعة بـ ٣٠ دقيقة"),at:E=>E.today.dhuhr-30*60000},
+ {id:"salawat",t:TL3("Salawat and dua","സ്വലാത്തും ദുആയും","الصلاة على النبي والدعاء"),b:TL3("Send blessings on the Prophet ﷺ and make dua in the last hours of Friday.","വെള്ളിയാഴ്ചയുടെ അവസാന മണിക്കൂറുകളിൽ നബി ﷺ യുടെ മേൽ സ്വലാത്ത് ചൊല്ലുകയും ദുആ ചെയ്യുകയും ചെയ്യുക.","أكثِر من الصلاة على النبي ﷺ والدعاء في آخر ساعات الجمعة."),r:TL3("30 min after Asr","അസ്റിന് 30 മിനിറ്റ് ശേഷം","بعد العصر بـ ٣٠ دقيقة"),at:E=>E.today.asr+30*60000}
+];
 function renderReminders(E){
   const ps=permState();
   const permTxt=tx(ps==="granted"?"Allowed on this device":ps==="denied"?"Blocked in browser settings":ps==="unsupported"?"Not available in this preview":"Not allowed yet");
@@ -2205,10 +2257,15 @@ function renderReminders(E){
     <div class="setrow"><div class="t"><b>${tx("Notifications")}</b><span>${permTxt}</span></div><button class="btn gold" style="padding:9px 16px;font-size:13.5px" data-act="perm" ${ps==="granted"||ps==="unsupported"?"disabled":""}>${tx("Allow")}</button></div>
   </div>
   <div class="sec r-rem"><h3>${tx("Remind me for")}</h3>
-    <div class="card" style="padding:4px 16px">${P.map(k=>`<div class="setrow"><div class="t"><b>${NAMES[k].p}</b></div><button class="sw" role="switch" aria-checked="${!!S.rem[k]}" aria-label="${tx("Remind for {0}",NP(k))}" data-act="bell" data-v="${k}"></button></div>`).join("")}${tahRow(E)}${tahOpts(E)}</div>
+    <div class="card" style="padding:4px 16px">${P.map(k=>`<div class="setrow"><div class="t"><b>${NAMES[k].p}</b></div><button class="sw" role="switch" aria-checked="${!!S.rem[k]}" aria-label="${tx("Remind for {0}",NP(k))}" data-act="bell" data-v="${k}"></button></div>`).join("")}<div class="r-early"><b>${tx("How early")}</b><div class="chips" role="group" aria-label="${tx("Lead time")}">${[0,5,10,15,30].map(m=>`<button class="chip" aria-pressed="${S.lead===m}" data-act="lead" data-v="${m}">${m?tx("{0} min before",m):tx("At prayer time")}</button>`).join("")}</div></div></div>
   </div>
-  <div class="sec r-lead"><h3>${tx("How early")}</h3>
-    <div class="chips" role="group" aria-label="${tx("Lead time")}">${[0,5,10,15,30].map(m=>`<button class="chip" aria-pressed="${S.lead===m}" data-act="lead" data-v="${m}">${m?tx("{0} min before",m):tx("At prayer time")}</button>`).join("")}</div>
+  <div class="sec r-night"><h3>${tx("Night prayer")}</h3>
+    <div class="card" style="padding:4px 16px">${tahRow(E)}${tahOpts(E)}</div>
+  </div>
+  <div class="sec r-jum"><h3>${tx("Jumu’ah reminders")}</h3>
+    <div class="card" style="padding:4px 16px">${JUMR.map(j=>`<div class="setrow"><div class="t"><b>${j.t[LANG]}</b><span>${j.r[LANG]}</span></div><button class="sw" role="switch" aria-checked="${!!S.jum[j.id]}" aria-label="${tx("Remind for {0}",j.t[LANG])}" data-act="jum" data-v="${j.id}"></button></div>`).join("")}</div>
+    <div class="r-note"><h4>${tx("Preparing for Friday (Jumu’ah)")}</h4><p>${tx("While the five core acts of fitrah can be done on any day of the week to stay within the 40-day limit, it is an established habit to do them on Friday morning. This fits the emphasis on cleanliness before the congregational Jumu’ah prayer, which includes taking a ritual bath (ghusl), brushing the teeth (miswak), putting on clean clothes and applying perfume.")}</p></div>
+    <p class="fine" style="margin:8px 4px 0">${tx("Only on Fridays, using your local prayer times.")}</p>
   </div>
   <div class="sec r-sound"><h3>${tx("Sound")}</h3>
     <div class="chips" role="group" aria-label="${tx("Sound")}">${[["chime","Soft chime"],["silent","Silent"]].map(([v,t])=>`<button class="chip" aria-pressed="${S.sound===v}" data-act="sound" data-v="${v}">${tx(t)}</button>`).join("")}</div>
@@ -2231,13 +2288,14 @@ function checkReminders(E,now){
   });
   const ts=tahStart(E,now),tid="tah"+Math.round(ts/60000);
   if(S.rem.tahajjud&&now>=ts&&now-ts<60000&&!fired.has(tid)){fired.add(tid);fireTah()}
+  if(isFri(now))JUMR.forEach(j=>{if(!S.jum[j.id])return;const at=j.at(E),id="jum"+j.id+Math.round(at/60000);if(now>=at&&now-at<60000&&!fired.has(id)){fired.add(id);fireNote("mihrab-jum-"+j.id,j.t[LANG],j.b[LANG])}});
 }
 document.addEventListener("change",e=>{const t=e.target;if(t&&t.id==="tahc"&&/^\d\d:\d\d$/.test(t.value)){S.tah=Object.assign(tahCfg(),{c:t.value});save();const E=getEvents(Date.now());renderReminders(E);renderGuide()}});
-function fireTah(){
-  const title=tx("It\u2019s time for {0}",tahName()),body=tahLabel();
+function fireNote(tag,title,body){
   showBanner(title,body);chime();
-  try{if("Notification" in window&&Notification.permission==="granted"){const o={body,icon:"icons/icon-192.png",badge:"icons/icon-192.png",tag:"mihrab-tahajjud"};if(swReg&&swReg.showNotification)swReg.showNotification(title,o);else new Notification(title,o)}}catch(e){}
+  try{if("Notification" in window&&Notification.permission==="granted"){const o={body,icon:"icons/icon-192.png",badge:"icons/icon-192.png",tag};if(swReg&&swReg.showNotification)swReg.showNotification(title,o);else new Notification(title,o)}}catch(e){}
 }
+function fireTah(){fireNote("mihrab-tahajjud",tx("It\u2019s time for {0}",tahName()),tahLabel())}
 function fire(k,ms,lead){
   const N=NAMES[k],title=lead?tx("{0} in {1} minutes",N.p,lead):tx("It\u2019s time for {0}",N.p),body=fmt(ms);
   showBanner(title,body,N.s);chime();
@@ -2402,8 +2460,8 @@ function skyHTML(E,now,mask,resting){
     ${labels}
   </svg>
   <div class="sk-in"><div class="nx">${skLabel(E,now)}</div><div class="arn">${NAMES[skCur(E,now).k].ar}</div><div class="iq" id="skiq">${iqLeft(E,now)!=null?tx("Iqama in {0}",mmss(iqLeft(E,now))):""}</div></div></div>
-  <div class="sk-cd"><div class="cd num b-cd">${hms(E.next.ms-now)}</div><div class="at num">${tx("{0} at {1}",NAMES[E.next.key].p,fmt(E.next.ms))}</div></div>
-  <div class="sk-loc"><button class="loc" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span>${cn(E.L)}</span>${IC.chev}</button><button class="qbtn qb-s" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}<span>${tx("Qibla")}</span></button></div>`;
+  <div class="sk-cd"><div class="cd num b-cd">${hmsU(E.next.ms-now)}</div><div class="at num">${tx("{0} at {1}",NAMES[E.next.key].p,fmt(E.next.ms))}</div></div>
+  <div class="sk-loc"><button class="loc" data-act="location" aria-label="${tx("Change location")}">${IC.pin}<span>${cn(E.L)}</span>${IC.chev}</button><button class="qbtn qb-s" data-act="tab" data-v="qibla" aria-label="${tx("Qibla direction")}">${IC.qibla}<span>${tx("Qibla")}</span></button><button class="qbtn qb-s mq" data-act="masjid" aria-label="${tx("Nearest masjid")}">${IC.masjid}<span>${tx("Masjid")}</span></button></div>`;
 }
 /* centre of the semicircle: the prayer we are in now; Fajr ends at sunrise, then the next prayer (Dhuhr) shows until it starts */
 function skCur(E,now){const pk=E.prev.key;return (pk==="fajr"&&now>=E.today.sunrise)?{k:E.next.key,cur:false}:{k:pk,cur:true}}
@@ -2571,7 +2629,8 @@ function renderSettings(){
     <div class="card lc">${row("pick",tx("Hijri date"),hadjName(),"hadj")}</div>`;
   }else if(SP==="you"){
     body=`<header class="st-head"><button class="backb" data-act="setpage" data-v="hub">${ARR()} ${tx("Settings")}</button><h1>${tx("Profile & data")}</h1></header>
-    <div class="card lc">${row("profile",tx("Profile"),prof)}${fem?row("rest",tx("Rest days"),S.restA!=null?tx("On since {0}",gparts(S.restA).d+" "+GM[gparts(S.restA).m]):tx("Pause tracking and reminders")):""}</div>
+    <div class="card lc"><div class="setrow"><div class="t"><b>${tx("Prayer tracker")}</b><span>${tx("Turn off to hide ticking, the streak card and the tracker.")}</span></div><button class="sw" role="switch" aria-checked="${!S.trkOff}" aria-label="${tx("Prayer tracker")}" data-act="trkoff"></button></div></div>
+    <div class="card lc">${row("profile",tx("Profile"),prof)}${fem&&!S.trkOff?row("rest",tx("Rest days"),S.restA!=null?tx("On since {0}",gparts(S.restA).d+" "+GM[gparts(S.restA).m]):tx("Pause tracking and reminders")):""}</div>
     <div class="card lc">${row("resetlog",tx("Reset prayer log"),tx("Clears ticks and streak"))}<button class="opt danger" data-act="factory"><span>${tx("Factory reset")}<small>${tx("Erase everything and start fresh")}</small></span>${CHEV}</button></div>`;
   }else{
     body=`<header class="st-head"><h1>${tx("Settings")}</h1></header>
@@ -2593,11 +2652,11 @@ function applyTheme(E,now){
 let lastSig="";
 function refreshAll(){lastSig="";tick(true)}
 function tick(force){
-  const now=Date.now(),E=getEvents(now),sig=E.next.ms+"|"+E.Dd+"|"+E.L.name;
+  const now=Date.now(),fri=applyFriday(now),E=getEvents(now),sig=E.next.ms+"|"+E.Dd+"|"+E.L.name+"|"+fri;
   applyTheme(E,now);
   if(force||sig!==lastSig){lastSig=sig;renderToday(E,now);renderWidgets(E,now);renderReminders(E);updateQibla();if(force){renderSettings();renderTracker()}}
   const rem=E.next.ms-now,p=Math.min(1,Math.max(0,(now-E.prev.ms)/(E.next.ms-E.prev.ms)));
-  $$(".b-cd").forEach(el=>el.textContent=hms(rem));
+  $$(".b-cd").forEach(el=>el.innerHTML=hmsU(rem));
   $$(".b-short").forEach(el=>el.textContent=short(rem));
   $$(".b-bar").forEach(el=>el.style.width=(p*100)+"%");
   $$(".b-bar2").forEach(el=>{el.style.width=(p*100)+"%";el.style.background=urgency(rem)});
@@ -2611,6 +2670,7 @@ function tick(force){
 /* ---------- events ---------- */
 let curTab="today";
 function setTab(id){
+  if(id==="trk"&&S.trkOff)id="today";
   const prevTab=curTab;curTab=id;
   if(id==="set"&&prevTab!=="set"&&prevTab!=="widgets"){SP=null;renderSettings()}
   $$(".screen").forEach(s=>s.classList.toggle("on",s.id==="s-"+id));
@@ -2620,6 +2680,11 @@ function setTab(id){
   if(id==="qibla"&&!sensorOn&&typeof DeviceOrientationEvent!=="undefined"&&typeof DeviceOrientationEvent.requestPermission!=="function")startSensor();
 }
 document.addEventListener("click",e=>{
+  const sw=e.target.closest&&e.target.closest(".sw");
+  if(sw){const was=sw.getAttribute("aria-checked")==="true",act=sw.dataset.act,v=sw.dataset.v;
+    setTimeout(()=>{const sel='.sw[data-act="'+act+'"]'+(v!=null?'[data-v="'+v+'"]':"");
+      document.querySelectorAll(sel).forEach(n=>{const on=n.getAttribute("aria-checked")==="true";if(on!==was){n.classList.remove("sw-on","sw-off");void n.offsetWidth;n.classList.add(on?"sw-on":"sw-off")}})},0)}
+
   const t=e.target.closest("[data-act]");if(!t)return;
   const a=t.dataset.act,v=t.dataset.v;
   switch(a){
@@ -2629,6 +2694,7 @@ document.addEventListener("click",e=>{
     case"widgetscr":setTab("widgets");break;
     case"bell":{S.rem[v]=S.rem[v]?0:1;save();const E=getEvents(Date.now());renderToday(E,Date.now());renderReminders(E);renderGuide();tick();{const nm=v==="tahajjud"?tahName():NP(v);toast(S.rem[v]?tx("{0} reminder on",nm):tx("{0} reminder off",nm))}break}
     case"lead":S.lead=+v;save();refreshAll();break;
+    case"jum":{S.jum[v]=S.jum[v]?0:1;save();renderReminders(getEvents(Date.now()));const j=JUMR.find(x=>x.id===v),nm=j.t[LANG];toast(S.jum[v]?tx("{0} reminder on",nm):tx("{0} reminder off",nm));break}
     case"tahm":S.tah=Object.assign(tahCfg(),{m:v});save();{const E=getEvents(Date.now());renderReminders(E);renderGuide()}break;
     case"sound":S.sound=v;save();refreshAll();if(v==="chime")chime();break;
     case"perm":try{Notification.requestPermission().then(()=>{refreshAll();toast(tx(permState()==="granted"?"Notifications allowed":"Notifications not allowed"))})}catch(err){toast(tx("Notifications are not available here"))}break;
@@ -2674,6 +2740,8 @@ document.addEventListener("click",e=>{
     case"ptag":{const [k,tg]=v.split(":"),now=Date.now(),E=getEvents(now),d=dayRec(),was=maskOf(localDay())===FULL;let r=d[k];if(!r||r.s==="m"||r.s==="x")r=d[k]={s:autoStatus(E,k,now)};if(r[tg])delete r[tg];else r[tg]=1;save();refreshHome();if(!was&&maskOf(localDay())===FULL)toast(tx("All five done. Alhamdulillah!"));openPrayer(k);break}
     case"pclear":{const d=dayRec();delete d[v];cleanDay();save();refreshHome();closeSheet();break}
     case"tper":TK.p=v;renderTracker();break;
+    case"masjid":openMasjid();break;
+    case"trkoff":S.trkOff=!S.trkOff;save();if(S.trkOff&&curTab==="trk")setTab("today");renderSettings();refreshAll();toast(S.trkOff?tx("Prayer tracker hidden"):tx("Prayer tracker shown"));break;
     case"rest":openRest();break;
     case"reststart":startRest();break;
     case"restend":endRest();break;
@@ -2855,14 +2923,19 @@ function encourage(now,E){
   const ad={en:f?"sister":"brother",ml:f?"സഹോദരീ":"സഹോദരാ",ar:f?"أختي":"أخي"};
   const g2=(m,w)=>f?w:m;
   const today=localDay(),mask=maskOf(today),streak=streakNow(today),done=cnt(mask);
-  const exc=k=>((trkDay(today)[k]||{}).s==="x"),arrived=P.filter(k=>E.today[k]<=now),pend=arrived.filter(k=>!(mask&BIT[k])&&!exc(k));
+  const exc=k=>{const st=(trkDay(today)[k]||{}).s;return st==="x"||st==="m"},arrived=P.filter(k=>E.today[k]<=now),pend=arrived.filter(k=>!(mask&BIT[k])&&!exc(k));
   const cur=E.prev.o===0&&P.includes(E.prev.key)?E.prev.key:null;
   const missed=pend.filter(k=>k!==cur),curP=cur&&pend.includes(cur);
   const nk=E.next.key,nt=fmt(E.next.ms),NN=NAMES[nk];
-  const W={as:{en:"Assalamu alaikum",ml:"അസ്സലാമു അലൈക്കും",ar:"السلام عليكم"},hm:{en:"Alhamdulillah",ml:"അൽഹംദുലില്ലാഹ്",ar:"الحمد لله"},ma:{en:"Masha Allah",ml:"മാശാ അല്ലാഹ്",ar:"ما شاء الله"}};
+  const W={as:{en:"Assalamu alaikum",ml:"അസ്സലാമു അലൈക്കും",ar:"السلام عليكم"},hm:{en:"Alhamdulillah",ml:"അൽഹംദുലില്ലാഹ്",ar:"الحمد لله"},ma:{en:"Masha Allah",ml:"മാശാ അല്ലാഹ്",ar:"ما شاء الله"},jm:{en:"Jumu’ah Mubarak",ml:"ജുമുഅ മുബാറക്",ar:"جمعة مباركة"}};
+  const fri=jumWin(E,now);   /* the Islamic Friday: Thursday Maghrib to Friday Maghrib */
   const H=w=>({en:W[w].en+", "+nm,ml:W[w].ml+", "+nm,ar:W[w].ar+"\u060C "+nm});
-  const out=(w,en,ml,ar)=>({h:H(w),en,ml,ar});
+  const out=(w,en,ml,ar)=>({h:H(fri&&w!=="hm"?"jm":w),en,ml,ar});
   const arStreak=n=>n===2?"يومان متتاليان":n<=10?n+" أيام متتالية":n+" يومًا متتاليًا";
+  if(S.trkOff){
+    if(fri&&nk==="dhuhr")return out("jm",`Jumu’ah is at ${nt}. Read Surah al-Kahf today, ${ad.en}.`,`ജുമുഅ ${nt}-ന്. ഇന്ന് സൂറത്തുൽ കഹ്ഫ് ഓതൂ ${ad.ml}.`,`الجمعة عند ${nt}. ${g2("اقرأ","اقرئي")} سورة الكهف اليوم يا ${ad.ar}.`);
+    return out("as",`Next prayer: ${NN.en} at ${nt}.`,`അടുത്ത നമസ്കാരം: ${NN.ml} ${nt}-ന്.`,`الصلاة القادمة: ${NN.ar} عند ${nt}.`);
+  }
   if(S.restA!=null)return out("as","Rest days are on. Your progress is safe. Tap to end.","വിശ്രമ ദിനങ്ങൾ ഓണാണ്. പുരോഗതി സുരക്ഷിതം. അവസാനിപ്പിക്കാൻ തൊടുക.","أيام الراحة مفعّلة. تقدّمك محفوظ. اضغط للإنهاء.");
   if(done===5)return out("hm",
     streak>=2?`All five done. ${streak} days in a row, ${ad.en}.`:"All five prayers done today. May Allah accept them.",
@@ -2873,9 +2946,10 @@ function encourage(now,E){
     streak?`സുബ്ഹി ${t}-ന്. ${streak} ദിവസത്തെ തുടർച്ച നിലനിർത്താം.`:`സുബ്ഹി ${t}-ന്. ദിവസം അതിൽ തുടങ്ങാം.`,
     streak?`الفجر عند ${t}. ${g2("حافظ","حافظي")} على سلسلتك البالغة ${arDays(streak)}.`:`الفجر عند ${t}. ${g2("ابدأ","ابدئي")} يومك بها.`)}
   if(missed.length){const M=NAMES[missed[0]];return out("as",
-    missed.length>1?`${missed.length} earlier prayers aren't marked. Mark their status.`:`${M.en} isn't marked yet. Mark its status.`,
-    missed.length>1?`${missed.length} നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തിയിട്ടില്ല. അവയുടെ സ്ഥിതി രേഖപ്പെടുത്തൂ.`:`${M.ml} രേഖപ്പെടുത്തിയിട്ടില്ല. അതിന്റെ സ്ഥിതി രേഖപ്പെടുത്തൂ.`,
-    missed.length>1?`هناك صلوات سابقة غير مسجّلة. ${g2("سجّل","سجّلي")} حالتها.`:`${M.ar} غير مسجّلة بعد. ${g2("سجّل","سجّلي")} حالتها.`)}
+    missed.length>1?`${missed.length} prayer times have passed. Mark their status.`:`${M.en} time has passed. Mark its status.`,
+    missed.length>1?`${missed.length} നമസ്കാര സമയങ്ങൾ കഴിഞ്ഞു. അവയുടെ സ്ഥിതി രേഖപ്പെടുത്തൂ.`:`${M.ml} സമയം കഴിഞ്ഞു. അതിന്റെ സ്ഥിതി രേഖപ്പെടുത്തൂ.`,
+    missed.length>1?`انتهت أوقات عدة صلوات. ${g2("سجّل","سجّلي")} حالتها.`:`انتهى وقت ${M.ar}. ${g2("سجّل","سجّلي")} حالتها.`)}
+  if(curP&&cur==="fajr"&&now>=E.today.sunrise)return out("as","Fajr time has passed. Mark its status.","സുബ്ഹിയുടെ സമയം കഴിഞ്ഞു. അതിന്റെ സ്ഥിതി രേഖപ്പെടുത്തൂ.",`انتهى وقت الفجر. ${g2("سجّل","سجّلي")} حالتها.`);
   if(curP){
     const C=NAMES[cur];
     if(cur==="isha"&&done===4)return out("as",
@@ -2884,6 +2958,9 @@ function encourage(now,E){
       streak?`بقيت العشاء فقط. ${g2("حافظ","حافظي")} على سلسلتك البالغة ${arDays(streak)}.`:"بقيت العشاء لإتمام اليوم.");
     return out("as",`It's ${C.en} time. Mark its status when you're done.`,`${C.ml} നമസ്കാരത്തിന്റെ സമയമായി. കഴിഞ്ഞാൽ സ്ഥിതി രേഖപ്പെടുത്തൂ.`,`حان وقت ${C.ar}. ${g2("سجّل","سجّلي")} حالتها بعد الانتهاء.`);
   }
+  const recM=arrived.filter(k=>(trkDay(today)[k]||{}).s==="m"&&k!==cur);
+  if(recM.length){const R=NAMES[recM[recM.length-1]];return out("as",`${R.en} was missed. Make it up when you can, and keep ${NN.en} on time.`,`${R.ml} നഷ്ടമായി. കഴിയുമ്പോൾ ഖദാഅ് വീട്ടൂ, ${NN.ml} സമയത്ത് നമസ്കരിക്കൂ.`,`فاتتك ${R.ar}. ${g2("اقضِها","اقضيها")} متى استطعت، و${g2("حافظ","حافظي")} على ${NN.ar} في وقتها.`)}
+  if(fri&&nk==="dhuhr")return out("jm",`Jumu’ah is at ${nt}. Read Surah al-Kahf today, ${ad.en}.`,`ജുമുഅ ${nt}-ന്. ഇന്ന് സൂറത്തുൽ കഹ്ഫ് ഓതൂ ${ad.ml}.`,`الجمعة عند ${nt}. ${g2("اقرأ","اقرئي")} سورة الكهف اليوم يا ${ad.ar}.`);
   return out("ma",`${done} of 5 done, keep it up ${ad.en}. Next: ${NN.en} at ${nt}.`,`5-ൽ ${done} പൂർത്തിയായി, തുടരൂ ${ad.ml}. അടുത്തത് ${NN.ml} ${nt}-ന്.`,`${done} من 5 مكتملة، ${g2("واصل","واصلي")} يا ${ad.ar}. التالية: ${NN.ar} عند ${nt}.`);
 }
 function ringSVG(mask,n){
@@ -2927,13 +3004,13 @@ const dayLocked=(n,k)=>n===localDay()&&getEvents(Date.now()).today[k]>Date.now()
 const IC_LATE='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.500V12l3 2"/></svg>';
 function openDay(n){
   const now=Date.now(),L=loc(),g=gparts(n),bt=baseTimes(g.y,g.m+1,g.d,L),d=trkDay(n),today=localDay();
-  const lab={o:"On time",l:"Late",m:"Missed"};
+  const lab={o:"On time",l:"Late",m:"Missed"},dn=k=>k==="dhuhr"?(g.w===5?JM_NAME:DH_NAME)[LANG]:NP(k);
   const vis=P.filter(k=>n!==today||bt[k]+(S.adj[k]||0)*60000<=now);       /* today: previous + current prayers only */
   const rows=vis.map(k=>{
     const t=bt[k]+(S.adj[k]||0)*60000,locked=false,r=d[k]&&d[k].s!=="x"?d[k]:null,st=r?r.s:null,tagsOk=st==="o"||st==="l";
     const btns=[["o",CHECK],["l",IC_LATE],["m",XMARK]].map(([v,svg])=>`<button class="stb ${v} ${st===v?"on":""}" data-act="dst" data-v="${n}:${k}:${v}" aria-pressed="${st===v}" aria-label="${tx(lab[v])}" ${locked?'aria-disabled="true"':""}>${svg}</button>`).join("");
     const extra=tagsOk?`<div class="dr-x">${[["j","Jama\u2019ah"],["f","First row"]].map(([tg,l])=>`<button class="dtag ${r[tg]?"on":""}" data-act="dtg" data-v="${n}:${k}:${tg}" aria-pressed="${!!r[tg]}">${tx(l)}</button>`).join("")}</div>`:"";
-    return `<div class="dr ${locked?"lock":""}"><div class="dr-main"><div class="dr-name"><b>${NP(k)}</b><span class="num">${fmt(t)}${locked?" \u00b7 "+tx("Not yet"):st?" \u00b7 "+tx(lab[st]):""}</span></div><div class="dr-ic" role="group" aria-label="${NP(k)}">${btns}</div></div>${extra}</div>`;
+    return `<div class="dr ${locked?"lock":""}"><div class="dr-main"><div class="dr-name"><b>${dn(k)}</b><span class="num">${fmt(t)}${locked?" \u00b7 "+tx("Not yet"):st?" \u00b7 "+tx(lab[st]):""}</span></div><div class="dr-ic" role="group" aria-label="${dn(k)}">${btns}</div></div>${extra}</div>`;
   }).join("");
   openSheet(`<div class="dsh-h"><div><h2>${WDF[g.w]}, ${g.d} ${GM[g.m]}</h2><p class="sub">${tx("Tap an icon to mark each prayer.")}</p></div><span class="dsh-n num">${cnt(maskOf(n))}<i>/${vis.length}</i></span></div>
   <div class="dleg"><span><i style="background:var(--gold)"></i>${tx("On time")}</span><span><i style="background:var(--st-late)"></i>${tx("Late")}</span><span><i style="background:var(--st-miss)"></i>${tx("Missed")}</span></div>
@@ -2963,6 +3040,12 @@ function openPrayer(k){
   <div class="slab" style="margin-top:16px">${tx("Extras")}</div>
   <div>${chk("j",tx("Prayed with Jama\u2019ah"))}${chk("f",tx("Prayed in the first row"))}</div>
   <div style="display:flex;gap:10px;margin-top:18px"><button class="btn ghost" style="flex:1" data-act="pclear" data-v="${k}" ${rec&&rec.s!=="x"?"":"disabled"}>${tx("Clear")}</button><button class="btn gold" style="flex:1" data-act="close">${tx("Done")}</button></div>`);
+}
+/* nearest masjid in Google Maps; women get a search for masjids with a women's prayer area */
+function openMasjid(){
+  const f=S.profile&&S.profile.g==="f",L=loc(),q=f?"masjid with women's prayer area near me":"masjid near me";
+  const at=(L&&L.lat!=null&&L.lon!=null)?`/@${L.lat},${L.lon},14z`:"";
+  window.open("https://www.google.com/maps/search/"+encodeURIComponent(q)+at,"_blank","noopener");
 }
 function openRest(){
   const on=S.restA!=null,g=on?gparts(S.restA):null;
