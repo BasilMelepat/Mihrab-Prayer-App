@@ -111,21 +111,6 @@ python3 -m http.server 8080
 
 Then open `http://localhost:3000` (or `:8080`).
 
-## Deploy
-
-The repo is connected to Vercel. Push to `main` and Vercel redeploys automatically. No build command or output directory is needed.
-
-## Releasing an update
-
-1. Edit `index.html`.
-2. Bump the version in the `APP` object near the top of the script:
-   ```js
-   version:"1.41.2", build:"2026.10.22.91"
-   ```
-3. Commit and push to `main`.
-
-The app registers its service worker as `sw.js?v=<version>`, so every version bump makes installed apps show **"A new version is ready" → Refresh**. You don't need to edit `sw.js` for normal updates. The version and build also appear in the footer of the home screen.
-
 ## Install
 
 - **Android (Chrome):** open the live app, then use the menu → **Install app**.
