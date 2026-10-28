@@ -1,11 +1,11 @@
-[README.md](https://github.com/user-attachments/files/34005424/README.md)
+[README.md](https://github.com/user-attachments/files/34070804/README.md)
 <div align="center">
 
 # Mihrab
 
 **A calm, installable prayer companion: prayer times, Qibla, reminders, a prayer tracker and a step-by-step guide.**
 
-Version 1.41.2 · build 2026.10.22.91
+Version 1.42.2 · build 2026.10.22.95
 
 [Live app](https://mihrab-prayer-app.vercel.app/)
 
@@ -22,11 +22,11 @@ It has no account, no backend and no build step. The whole app lives in one `ind
 ## Features
 
 ### Home
-- A live "sky" semicircle that follows the day, with the prayer name in Arabic inside it: **Now: Asr** during a prayer and **Next: Dhuhr** between sunrise and Dhuhr.
+- A live "sky" semicircle that follows the day, with the prayer name in Arabic inside it: **Now: Asr** during a prayer, **Next: Dhuhr** between sunrise and Dhuhr, and **Approaching** in the last 30 minutes before the next prayer.
 - A countdown to the next prayer in hours, minutes and seconds.
 - An **iqama counter** under the Arabic name, counting down to the iqama time you set. The text only shifts while the counter is showing.
 - Quick chips for your **location**, the **Qibla** direction and the **nearest masjid** (opens Google Maps; for female profiles the search is for masjids with a women's prayer area).
-- Messages that follow the time of day and your progress, including prompts when a prayer time has passed, a prayer was missed, or prayers were excused after rest days.
+- Messages that follow the time of day and your progress, including prompts when a prayer time has passed, a prayer was missed, the current prayer isn't marked as the next one approaches, or prayers were excused after rest days.
 - A footer with the logo, version, build and credit.
 - The semicircle switches to a quieter look (soft dots instead of checkmarks) when the tracker is hidden or rest days are on.
 
@@ -42,7 +42,7 @@ It has no account, no backend and no build step. The whole app lives in one `ind
 - Built-in cities with a custom-location option.
 
 ### Prayer tracker
-- Mark each prayer as **on time**, **late** or **missed**, with extras for Jama'ah and first row.
+- Mark each prayer as **on time**, **late** or **missed**, with extras for Jama'ah and first row. "Missed" is only offered once a prayer's time has ended.
 - Five-part rings per day (late shown in red; missed is not drawn), a streak card and a calendar view.
 - **Rest days** for female profiles, with a gentle prompt to pause tracking. When rest days end partway through the day, prayers whose time already passed are marked **Not required**: their checkbox is hidden and the messages adjust.
 - Can be **hidden completely** from Settings → Profile & data. The home screen, the desktop layout and the messages adapt, and your tracking data is kept.
@@ -69,7 +69,7 @@ Step-by-step guides in three languages, organised into categories:
 - **Widgets preview:** 4 × 1, 2 × 2 (next prayer), 4 × 2, 4 × 3 (home, with sun and moon on the arc) and 2 × 2 (clock with sun and moon around the ring).
 - **Themes:** night and day.
 - Animated toggle switches (respects "reduce motion").
-- Installable on Android and desktop; works offline.
+- Installable on Android, iPhone, iPad and desktop; works offline. On phones the app fills the whole screen, including under the status bar and home indicator.
 
 ## Tech
 
@@ -78,7 +78,6 @@ Step-by-step guides in three languages, organised into categories:
 | App | Vanilla HTML, CSS and JavaScript in a single `index.html` |
 | Offline / install | Service worker (`sw.js`) and web app manifest |
 | Storage | `localStorage` on the device |
-| Hosting | Vercel (static), deployed from this repo |
 | Fonts | Google Fonts |
 
 Prayer times and Qibla are calculated on the device from your location. Reminders use the browser's notifications and only fire while the browser allows the app to run.
@@ -110,6 +109,16 @@ python3 -m http.server 8080
 ```
 
 Then open `http://localhost:3000` (or `:8080`).
+
+## Versioning
+
+Bump the version in the `APP` object near the top of the script whenever you change the app:
+
+```js
+version:"1.42.2", build:"2026.10.22.95"
+```
+
+The app registers its service worker as `sw.js?v=<version>`, so every version bump makes installed apps show **"A new version is ready" → Refresh**. You don't need to edit `sw.js` for normal updates. The version and build also appear in the footer of the home screen.
 
 ## Install
 
