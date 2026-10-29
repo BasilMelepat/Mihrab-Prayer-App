@@ -860,13 +860,13 @@ html[lang="ml"] .restnote p{font-size:11.5px;line-height:1.7}
 html[data-theme="day"] .lock{background:linear-gradient(170deg,#BFD0EE 0%,#E6EEFA 75%);border-color:rgba(20,28,58,.14)}
 html[data-theme="day"] .lock .lt{color:#101830}
 html[data-theme="day"] .lock .ld{color:#33405F}
-html[data-theme="day"] .ntf{background:rgba(255,255,255,.94);border-color:rgba(20,28,58,.14);box-shadow:0 10px 22px -12px rgba(22,32,66,.4)}
-html[data-theme="day"] .ntf+.ntf{opacity:.92}
-html[data-theme="day"] .ntf b{color:#101830}
-html[data-theme="day"] .ntf .hd{color:#43506F}
-html[data-theme="day"] .ntf p{color:#33405F}
-html[data-theme="day"] .ntf .ic{background:linear-gradient(160deg,#FFF1CF,#EBC57C);border-color:rgba(20,28,58,.12)}
-html[data-theme="day"] .ntf .ic svg{stroke:#6E4A0C}
+html[data-theme="day"] .lock .ntf{background:rgba(255,255,255,.94);border-color:rgba(20,28,58,.14);box-shadow:0 10px 22px -12px rgba(22,32,66,.4)}
+html[data-theme="day"] .lock .ntf+.ntf{opacity:.92}
+html[data-theme="day"] .lock .ntf b{color:#101830}
+html[data-theme="day"] .lock .ntf .hd{color:#43506F}
+html[data-theme="day"] .lock .ntf p{color:#33405F}
+html[data-theme="day"] .lock .ntf .ic{background:linear-gradient(160deg,#FFF1CF,#EBC57C);border-color:rgba(20,28,58,.12)}
+html[data-theme="day"] .lock .ntf .ic svg{stroke:#6E4A0C}
 /* widgets: 2x2 = square version of the 4x1 design; new home-style widget */
 .ws22{aspect-ratio:1;padding:14px;display:flex;flex-direction:column;justify-content:space-between;margin-bottom:0}
 .ws22 .ws-p{display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-size:12.5px}
@@ -962,6 +962,16 @@ html[dir="rtl"] .sw:active::after{width:22px}
   .home-foot b{color:color-mix(in srgb,var(--goldhi) 80%,var(--mist))}
   .home-foot .foot-logo{opacity:1;filter:drop-shadow(0 1px 6px rgba(8,14,34,.2))}
 }
+/* in-app reminder banner: always dark glass with light text, in both themes */
+.banner .ntf{color:#F4F1E8}
+.banner .ntf .hd{color:rgba(244,241,232,.72)}
+.banner .ntf p{color:rgba(244,241,232,.86)}
+.banner .ntf .ic{background:linear-gradient(160deg,#16244B,#0A1022);border-color:rgba(214,178,110,.3)}
+.banner .ntf .ic svg{stroke:#E6C27F}
+/* a full day that includes a late prayer: still counted, tinted red */
+.skd.full.late{background:color-mix(in srgb,var(--st-late) 20%,transparent)}
+.skd.full.late .num{color:var(--st-late)}
+.gbtn:disabled{opacity:.4;pointer-events:none}
 </style>
 </head>
 <body>
@@ -1031,7 +1041,7 @@ const METHODS={
 };
 const KAABA={lat:21.4225,lon:39.8262};
 /* edit these before release */
-const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.42.2",build:"2026.10.22.94",year:2026};
+const APP={name:"Mihrab",ml:"മിഹ്റാബ്",version:"1.43.2",build:"2026.10.22.101",year:2026};
 const CREDITS=[
   ["Design and development","Basil Melepat"],
   ["Religious content review","To be added before release"],
@@ -1042,7 +1052,7 @@ const CREDITS=[
 const REFS=[["Prayer time calculation","praytimes.org","https://praytimes.org"],["Umm al-Qura calendar","webspace.science.uu.nl","https://webspace.science.uu.nl/~gent0113/islam/ummalqura_introduction.htm"],["Travel prayer (Qasr)","jibreel.app","https://www.jibreel.app/islamqa/hanafi-qasar-namaz-distance"],["Intention in prayer","prayerinislam.com","https://prayerinislam.com/verbal-intention-prayer-necessary/"],["Typefaces","fonts.google.com","https://fonts.google.com"]];
 
 /* ---------- state ---------- */
-const DEF={city:0,custom:null,method:"mwl",asr:"shafii",rem:{fajr:1,dhuhr:1,asr:1,maghrib:1,isha:1,tahajjud:0},lead:10,sound:"chime",glang:"ml",translit:true,prayer:"fajr",theme:"auto",lang:"en",wbg:"blur",gmean:null,profile:null,log:{},trk:{},since:null,restR:[],restA:null,hadj:0,cmode:"g",trkOff:false,jum:{kahf:0,nails:0,ghusl:0,early:0,salawat:0},iq:{fajr:20,dhuhr:15,asr:15,maghrib:5,isha:15},adj:{fajr:0,sunrise:0,dhuhr:0,asr:0,maghrib:0,isha:0}};
+const DEF={city:0,custom:null,method:"mwl",asr:"shafii",rem:{fajr:1,dhuhr:1,asr:1,maghrib:1,isha:1,tahajjud:0},lead:10,sound:"chime",glang:"ml",translit:true,prayer:"fajr",theme:"auto",lang:"en",wbg:"blur",gmean:null,profile:null,log:{},trk:{},since:null,restR:[],restA:null,hadj:0,cmode:"g",restT:null,trkOff:false,jum:{kahf:0,nails:0,ghusl:0,early:0,salawat:0},iq:{fajr:20,dhuhr:15,asr:15,maghrib:5,isha:15},adj:{fajr:0,sunrise:0,dhuhr:0,asr:0,maghrib:0,isha:0}};
 let S=Object.assign({},DEF);
 try{const raw=localStorage.getItem("mihrab-v1");if(raw)S=Object.assign({},DEF,JSON.parse(raw))}catch(e){}
 S.adj=Object.assign({},DEF.adj,S.adj||{});S.iq=Object.assign({},DEF.iq,S.iq||{});S.jum=Object.assign({},DEF.jum,S.jum||{});S.trkOff=!!S.trkOff;S.trk=S.trk||{};S.log=S.log||{};S.restR=S.restR||[];
@@ -1059,7 +1069,7 @@ ml:{
 "How did it go?":"എങ്ങനെയായിരുന്നു?","Extras":"അധികം","Clear":"മായ്ക്കുക","Track options":"ട്രാക്ക് ഓപ്ഷനുകൾ","Marked automatically from the prayer time. Change it if needed.":"പ്രാർഥനാ സമയം നോക്കി സ്വയം രേഖപ്പെടുത്തി. ആവശ്യമെങ്കിൽ മാറ്റാം.","View tracker":"ട്രാക്കർ കാണുക",
 "On time means prayed before the next prayer begins.":"അടുത്ത നമസ്കാരം തുടങ്ങുന്നതിന് മുമ്പ് നമസ്കരിച്ചാൽ സമയത്ത് എന്ന് കണക്കാക്കും.","Prayers you don\u2019t mark once their time has passed count as missed.":"സമയം കഴിഞ്ഞിട്ടും രേഖപ്പെടുത്താത്ത നമസ്കാരങ്ങൾ നഷ്ടപ്പെട്ടതായി കണക്കാക്കും.","No prayers tracked yet.":"ഇതുവരെ നമസ്കാരങ്ങൾ രേഖപ്പെടുത്തിയിട്ടില്ല.",
 "Rest days":"വിശ്രമ ദിനങ്ങൾ","Pause tracking and reminders":"ട്രാക്കിംഗും റിമൈൻഡറുകളും താൽക്കാലികമായി നിർത്തുക","On since {0}":"{0} മുതൽ ഓണാണ്","Start rest days":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങുക","End rest days":"വിശ്രമ ദിനങ്ങൾ അവസാനിപ്പിക്കുക","End":"അവസാനിപ്പിക്കുക",
-"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"ഈ ദിവസങ്ങൾ ശതമാനത്തിലോ തുടർച്ചയിലോ കണക്കാക്കില്ല, റിമൈൻഡറുകൾ ശബ്ദിക്കില്ല. ഇത് ഈ ഉപകരണത്തിൽ മാത്രം.","Rest days started":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങി","Rest days ended. Welcome back.":"വിശ്രമ ദിനങ്ങൾ അവസാനിച്ചു. വീണ്ടും സ്വാഗതം.","Week streak":"ആഴ്ച തുടർച്ച","Month streak":"മാസ തുടർച്ച","Each ring has five parts, one for each prayer.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്.","Translation":"പരിഭാഷ","Off":"ഓഫ്", "Install app":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക","Add it to your home screen for full-screen use and offline access.":"ഫുൾ സ്ക്രീനിലും ഓഫ്‌ലൈനിലും ഉപയോഗിക്കാൻ ഹോം സ്ക്രീനിൽ ചേർക്കുക.","Install {0}":"{0} ഇൻസ്റ്റാൾ ചെയ്യുക","Tap the Share button in Safari":"സഫാരിയിലെ ഷെയർ ബട്ടൺ തൊടുക","Choose Add to Home Screen":"“ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","Tap Add":"“ചേർക്കുക” തൊടുക","Open your browser menu":"ബ്രൗസർ മെനു തുറക്കുക","Choose Install app or Add to Home screen":"“ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക” അല്ലെങ്കിൽ “ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","App installed":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തു","A new version is ready.":"പുതിയ പതിപ്പ് തയ്യാറാണ്.","Refresh":"റിഫ്രഷ്","You\u2019re offline. Everything still works.":"നിങ്ങൾ ഓഫ്‌ലൈനാണ്. എല്ലാം പ്രവർത്തിക്കും.","Back online":"വീണ്ടും ഓൺലൈൻ","Transparent":"സുതാര്യം","Blur":"ബ്ലർ","Bar color shifts from green to red as the next prayer gets closer.":"അടുത്ത നമസ്കാരം അടുക്കുന്തോറും ബാർ പച്ചയിൽ നിന്ന് ചുവപ്പിലേക്ക് മാറുന്നു.","minimal":"മിനിമൽ","H":"മ","M":"മി","S":"സെ","Calendar":"കലണ്ടർ","Guide":"വഴികാട്ടി","Last third of the night":"രാത്രിയുടെ അവസാന മൂന്നിലൊന്ന്","Start of the last third":"അവസാന മൂന്നിലൊന്നിന്റെ തുടക്കം","2 hours before Fajr":"ഫജ്റിന് 2 മണിക്കൂർ മുമ്പ്","1 hour before Fajr":"ഫജ്റിന് 1 മണിക്കൂർ മുമ്പ്","30 minutes before Fajr":"ഫജ്റിന് 30 മിനിറ്റ് മുമ്പ്","Custom time":"ഇഷ്ടമുള്ള സമയം","Tahajjud reminder time":"തഹജ്ജുദ് ഓർമ്മപ്പെടുത്തൽ സമയം","That time is outside tonight’s night hours, so the last third is used instead.":"ഈ സമയം ഇന്നത്തെ രാത്രിക്ക് പുറത്താണ്, അതിനാൽ പകരം അവസാന മൂന്നിലൊന്ന് ഉപയോഗിക്കുന്നു.","Iqama times":"ഇഖാമത്ത് സമയം","Minutes after the adhan, for each prayer":"ഓരോ നമസ്കാരത്തിനും ബാങ്കിന് ശേഷമുള്ള മിനിറ്റ്","Set how many minutes after the adhan the iqama is. The home screen counts down to it.":"ബാങ്കിന് എത്ര മിനിറ്റ് കഴിഞ്ഞാണ് ഇഖാമത്ത് എന്ന് സജ്ജമാക്കുക. ഹോം സ്ക്രീൻ അതിലേക്കുള്ള കൗണ്ട്ഡൗൺ കാണിക്കും.","Iqama in {0}":"ഇഖാമത്തിന് {0}","Iqama times reset":"ഇഖാമത്ത് സമയങ്ങൾ പുനഃസജ്ജമാക്കി","Iqama at {0}":"ഇഖാമത്ത് {0}","Jumu’ah reminders":"ജുമുഅ ഓർമ്മപ്പെടുത്തലുകൾ","Only on Fridays, using your local prayer times.":"വെള്ളിയാഴ്ചകളിൽ മാത്രം, നിങ്ങളുടെ പ്രാദേശിക നമസ്കാര സമയമനുസരിച്ച്.","Night prayer":"രാത്രി നമസ്കാരം","Preparing for Friday (Jumu’ah)":"വെള്ളിയാഴ്ചയ്ക്ക് ഒരുങ്ങാം (ജുമുഅ)","While the five core acts of fitrah can be done on any day of the week to stay within the 40-day limit, it is an established habit to do them on Friday morning. This fits the emphasis on cleanliness before the congregational Jumu’ah prayer, which includes taking a ritual bath (ghusl), brushing the teeth (miswak), putting on clean clothes and applying perfume.":"ഫിത്റത്തിന്റെ അഞ്ച് പ്രധാന കർമങ്ങൾ 40 ദിവസത്തെ പരിധിക്കുള്ളിൽ ആഴ്ചയിലെ ഏത് ദിവസവും ചെയ്യാമെങ്കിലും, വെള്ളിയാഴ്ച രാവിലെ അവ ചെയ്യുന്നത് സ്ഥിരമായ ഒരു ശീലമാണ്. ജമാഅത്തായുള്ള ജുമുഅ നമസ്കാരത്തിന് മുമ്പുള്ള ശുചിത്വത്തിന് നൽകുന്ന ഊന്നലിനോട് ഇത് ചേർന്നുനിൽക്കുന്നു; കുളിക്കുക (ഗുസ്ൽ), പല്ല് തേക്കുക (മിസ്‌വാക്), വൃത്തിയുള്ള വസ്ത്രം ധരിക്കുക, സുഗന്ധം പൂശുക എന്നിവ അതിൽ ഉൾപ്പെടുന്നു.","Nearest masjid":"അടുത്തുള്ള മസ്ജിദ്","Prayer tracker hidden":"പ്രാർഥനാ ട്രാക്കർ മറച്ചു","Prayer tracker shown":"പ്രാർഥനാ ട്രാക്കർ കാണിക്കുന്നു","Turn off to hide ticking, the streak card and the tracker.":"ടിക്ക് ചെയ്യൽ, സ്ട്രീക്ക് കാർഡ്, ട്രാക്കർ എന്നിവ മറയ്ക്കാൻ ഓഫ് ചെയ്യുക.","Masjid":"മസ്ജിദ്","Version {0} · build {1}":"പതിപ്പ് {0} · ബിൽഡ് {1}","Design and cared by {0}.":"രൂപകൽപ്പനയും പരിപാലനവും: {0}.","Not required":"നിർബന്ധമല്ല","Attended Jumu’ah":"ജുമുഅയിൽ പങ്കെടുത്തു","Jumu’ah":"ജുമുഅ","Approaching":"അടുത്തുവരുന്നു","Reminders":"റിമൈൻഡർ","Settings":"ക്രമീകരണം","Widgets":"വിജറ്റുകൾ","Qibla":"ഖിബ്‌ല",
+"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"ഈ ദിവസങ്ങൾ ശതമാനത്തിലോ തുടർച്ചയിലോ കണക്കാക്കില്ല, റിമൈൻഡറുകൾ ശബ്ദിക്കില്ല. ഇത് ഈ ഉപകരണത്തിൽ മാത്രം.","Rest days started":"വിശ്രമ ദിനങ്ങൾ തുടങ്ങി","Rest days ended. Welcome back.":"വിശ്രമ ദിനങ്ങൾ അവസാനിച്ചു. വീണ്ടും സ്വാഗതം.","Week streak":"ആഴ്ച തുടർച്ച","Month streak":"മാസ തുടർച്ച","Each ring has five parts, one for each prayer.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്.","Translation":"പരിഭാഷ","Off":"ഓഫ്", "Install app":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക","Add it to your home screen for full-screen use and offline access.":"ഫുൾ സ്ക്രീനിലും ഓഫ്‌ലൈനിലും ഉപയോഗിക്കാൻ ഹോം സ്ക്രീനിൽ ചേർക്കുക.","Install {0}":"{0} ഇൻസ്റ്റാൾ ചെയ്യുക","Tap the Share button in Safari":"സഫാരിയിലെ ഷെയർ ബട്ടൺ തൊടുക","Choose Add to Home Screen":"“ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","Tap Add":"“ചേർക്കുക” തൊടുക","Open your browser menu":"ബ്രൗസർ മെനു തുറക്കുക","Choose Install app or Add to Home screen":"“ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക” അല്ലെങ്കിൽ “ഹോം സ്ക്രീനിൽ ചേർക്കുക” തിരഞ്ഞെടുക്കുക","App installed":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്തു","A new version is ready.":"പുതിയ പതിപ്പ് തയ്യാറാണ്.","Refresh":"റിഫ്രഷ്","You\u2019re offline. Everything still works.":"നിങ്ങൾ ഓഫ്‌ലൈനാണ്. എല്ലാം പ്രവർത്തിക്കും.","Back online":"വീണ്ടും ഓൺലൈൻ","Transparent":"സുതാര്യം","Blur":"ബ്ലർ","Bar color shifts from green to red as the next prayer gets closer.":"അടുത്ത നമസ്കാരം അടുക്കുന്തോറും ബാർ പച്ചയിൽ നിന്ന് ചുവപ്പിലേക്ക് മാറുന്നു.","minimal":"മിനിമൽ","H":"മ","M":"മി","S":"സെ","Calendar":"കലണ്ടർ","Guide":"വഴികാട്ടി","Last third of the night":"രാത്രിയുടെ അവസാന മൂന്നിലൊന്ന്","Start of the last third":"അവസാന മൂന്നിലൊന്നിന്റെ തുടക്കം","2 hours before Fajr":"ഫജ്റിന് 2 മണിക്കൂർ മുമ്പ്","1 hour before Fajr":"ഫജ്റിന് 1 മണിക്കൂർ മുമ്പ്","30 minutes before Fajr":"ഫജ്റിന് 30 മിനിറ്റ് മുമ്പ്","Custom time":"ഇഷ്ടമുള്ള സമയം","Tahajjud reminder time":"തഹജ്ജുദ് ഓർമ്മപ്പെടുത്തൽ സമയം","That time is outside tonight’s night hours, so the last third is used instead.":"ഈ സമയം ഇന്നത്തെ രാത്രിക്ക് പുറത്താണ്, അതിനാൽ പകരം അവസാന മൂന്നിലൊന്ന് ഉപയോഗിക്കുന്നു.","Iqama times":"ഇഖാമത്ത് സമയം","Minutes after the adhan, for each prayer":"ഓരോ നമസ്കാരത്തിനും ബാങ്കിന് ശേഷമുള്ള മിനിറ്റ്","Set how many minutes after the adhan the iqama is. The home screen counts down to it.":"ബാങ്കിന് എത്ര മിനിറ്റ് കഴിഞ്ഞാണ് ഇഖാമത്ത് എന്ന് സജ്ജമാക്കുക. ഹോം സ്ക്രീൻ അതിലേക്കുള്ള കൗണ്ട്ഡൗൺ കാണിക്കും.","Iqama in {0}":"ഇഖാമത്തിന് {0}","Iqama times reset":"ഇഖാമത്ത് സമയങ്ങൾ പുനഃസജ്ജമാക്കി","Iqama at {0}":"ഇഖാമത്ത് {0}","Jumu’ah reminders":"ജുമുഅ ഓർമ്മപ്പെടുത്തലുകൾ","Only on Fridays, using your local prayer times.":"വെള്ളിയാഴ്ചകളിൽ മാത്രം, നിങ്ങളുടെ പ്രാദേശിക നമസ്കാര സമയമനുസരിച്ച്.","Night prayer":"രാത്രി നമസ്കാരം","Preparing for Friday (Jumu’ah)":"വെള്ളിയാഴ്ചയ്ക്ക് ഒരുങ്ങാം (ജുമുഅ)","While the five core acts of fitrah can be done on any day of the week to stay within the 40-day limit, it is an established habit to do them on Friday morning. This fits the emphasis on cleanliness before the congregational Jumu’ah prayer, which includes taking a ritual bath (ghusl), brushing the teeth (miswak), putting on clean clothes and applying perfume.":"ഫിത്റത്തിന്റെ അഞ്ച് പ്രധാന കർമങ്ങൾ 40 ദിവസത്തെ പരിധിക്കുള്ളിൽ ആഴ്ചയിലെ ഏത് ദിവസവും ചെയ്യാമെങ്കിലും, വെള്ളിയാഴ്ച രാവിലെ അവ ചെയ്യുന്നത് സ്ഥിരമായ ഒരു ശീലമാണ്. ജമാഅത്തായുള്ള ജുമുഅ നമസ്കാരത്തിന് മുമ്പുള്ള ശുചിത്വത്തിന് നൽകുന്ന ഊന്നലിനോട് ഇത് ചേർന്നുനിൽക്കുന്നു; കുളിക്കുക (ഗുസ്ൽ), പല്ല് തേക്കുക (മിസ്‌വാക്), വൃത്തിയുള്ള വസ്ത്രം ധരിക്കുക, സുഗന്ധം പൂശുക എന്നിവ അതിൽ ഉൾപ്പെടുന്നു.","Nearest masjid":"അടുത്തുള്ള മസ്ജിദ്","Prayer tracker hidden":"പ്രാർഥനാ ട്രാക്കർ മറച്ചു","Prayer tracker shown":"പ്രാർഥനാ ട്രാക്കർ കാണിക്കുന്നു","Turn off to hide ticking, the streak card and the tracker.":"ടിക്ക് ചെയ്യൽ, സ്ട്രീക്ക് കാർഡ്, ട്രാക്കർ എന്നിവ മറയ്ക്കാൻ ഓഫ് ചെയ്യുക.","Masjid":"മസ്ജിദ്","Version {0} · build {1}":"പതിപ്പ് {0} · ബിൽഡ് {1}","Design and cared by {0}.":"രൂപകൽപ്പനയും പരിപാലനവും: {0}.","Not required":"നിർബന്ധമല്ല","Attended Jumu’ah":"ജുമുഅയിൽ പങ്കെടുത്തു","Jumu’ah":"ജുമുഅ","Approaching":"അടുത്തുവരുന്നു","On time means prayed before the last 30 minutes of its time. Late means in the last 30 minutes or after its time ends.":"സമയത്തിന്റെ അവസാന 30 മിനിറ്റിന് മുമ്പ് നമസ്കരിച്ചാൽ കൃത്യസമയം. അവസാന 30 മിനിറ്റിലോ സമയം കഴിഞ്ഞോ ആണെങ്കിൽ വൈകി.","Days with no marks aren\u2019t counted. Once you mark a prayer, the other prayers of that day whose time has passed count as missed.":"ഒന്നും രേഖപ്പെടുത്താത്ത ദിവസങ്ങൾ കണക്കിലെടുക്കില്ല. ഒരു ദിവസം ഒരു നമസ്കാരം രേഖപ്പെടുത്തിയാൽ, സമയം കഴിഞ്ഞ മറ്റു നമസ്കാരങ്ങൾ വിട്ടുപോയതായി കണക്കാക്കും.","Days with a late prayer still count and are tinted red.":"വൈകി നമസ്കരിച്ച ദിവസങ്ങളും കണക്കിൽപ്പെടും, അവ ചുവപ്പ് നിറത്തിൽ കാണിക്കും.","Some prayers are marked Not required":"ചില നമസ്കാരങ്ങൾ “നിർബന്ധമല്ല” എന്ന് രേഖപ്പെടുത്തിയിട്ടുണ്ട്","Do you want to include them too?":"അവയും ഉൾപ്പെടുത്തണോ?","Include them":"ഉൾപ്പെടുത്തുക","Keep them as they are":"അതുപോലെ നിലനിർത്തുക","End rest days first to change this.":"ഇത് മാറ്റുന്നതിന് മുമ്പ് വിശ്രമ ദിനങ്ങൾ അവസാനിപ്പിക്കുക.","Reminders":"റിമൈൻഡർ","Settings":"ക്രമീകരണം","Widgets":"വിജറ്റുകൾ","Qibla":"ഖിബ്‌ല",
 "Next prayer":"അടുത്ത നമസ്കാരം","Now":"ഇപ്പോൾ","Purification":"ശുദ്ധി","4 × 3 · home":"4 × 3 · ഹോം","2 × 2 · clock":"2 × 2 · ക്ലോക്ക്","If you’re on your period, you can pause the tracker. Your progress stays safe.":"ആർത്തവ സമയത്താണെങ്കിൽ ട്രാക്കർ താൽക്കാലികമായി നിർത്തിവെക്കാം. നിങ്ങളുടെ പുരോഗതി സുരക്ഷിതമായിരിക്കും.","Pause":"നിർത്തിവെക്കുക","{0} at {1}":"{0} {1}-ന്","day streak":"ദിവസ തുടർച്ച","Best":"മികച്ചത്","Full days":"പൂർണ ദിനങ്ങൾ",
 "Each ring has five parts, one for each prayer. Tap a day to update it.":"ഓരോ വൃത്തത്തിനും അഞ്ചു ഭാഗങ്ങളുണ്ട്, ഓരോ നമസ്കാരത്തിനും ഒന്ന്. പുതുക്കാൻ ഒരു ദിവസം തൊടുക.",
 "Tap the bell to set a reminder.":"റിമൈൻഡർ സജ്ജമാക്കാൻ മണി തൊടുക.","Asr: {0}":"അസ്ർ: {0}","{0} adjusted":"{0} ക്രമീകരിച്ചു","{0} prayed":"{0} നമസ്കരിച്ചു",
@@ -1122,7 +1132,7 @@ ar:{
 "How did it go?":"كيف كانت؟","Extras":"إضافات","Clear":"مسح","Track options":"خيارات التتبّع","Marked automatically from the prayer time. Change it if needed.":"تُسجَّل تلقائيًا بحسب الوقت. غيّرها إن لزم.","View tracker":"عرض المتتبّع",
 "On time means prayed before the next prayer begins.":"تُحتسب «في وقتها» إذا صُلّيت قبل دخول وقت الصلاة التالية.","Prayers you don\u2019t mark once their time has passed count as missed.":"الصلوات التي لا تُسجَّل بعد خروج وقتها تُحتسب فائتة.","No prayers tracked yet.":"لم تُسجَّل صلوات بعد.",
 "Rest days":"أيام الراحة","Pause tracking and reminders":"إيقاف التتبّع والتذكيرات مؤقتًا","On since {0}":"مفعّلة منذ {0}","Start rest days":"بدء أيام الراحة","End rest days":"إنهاء أيام الراحة","End":"إنهاء",
-"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"لا تُحتسب هذه الأيام في النسب أو السلسلة، وتصمت التذكيرات. يبقى هذا على جهازك فقط.","Rest days started":"بدأت أيام الراحة","Rest days ended. Welcome back.":"انتهت أيام الراحة. أهلًا بعودتك.","Week streak":"سلسلة أسبوعية","Month streak":"سلسلة شهرية","Each ring has five parts, one for each prayer.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة.","Translation":"الترجمة","Off":"إيقاف", "Install app":"تثبيت التطبيق","Add it to your home screen for full-screen use and offline access.":"أضِفه إلى شاشتك الرئيسية للاستخدام بملء الشاشة ودون اتصال.","Install {0}":"تثبيت {0}","Tap the Share button in Safari":"اضغط على زر المشاركة في سفاري","Choose Add to Home Screen":"اختر «إضافة إلى الشاشة الرئيسية»","Tap Add":"اضغط «إضافة»","Open your browser menu":"افتح قائمة المتصفح","Choose Install app or Add to Home screen":"اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»","App installed":"تم تثبيت التطبيق","A new version is ready.":"إصدار جديد جاهز.","Refresh":"تحديث","You\u2019re offline. Everything still works.":"أنت غير متصل. كل شيء يعمل.","Back online":"عدنا متصلين","Transparent":"شفاف","Blur":"ضبابي","Bar color shifts from green to red as the next prayer gets closer.":"يتحول لون الشريط من الأخضر إلى الأحمر كلما اقتربت الصلاة القادمة.","minimal":"مبسّط","H":"س","M":"د","S":"ث","Calendar":"التقويم","Guide":"الدليل","Last third of the night":"الثلث الأخير من الليل","Start of the last third":"بداية الثلث الأخير","2 hours before Fajr":"قبل الفجر بساعتين","1 hour before Fajr":"قبل الفجر بساعة","30 minutes before Fajr":"قبل الفجر بنصف ساعة","Custom time":"وقت مخصص","Tahajjud reminder time":"وقت تنبيه التهجد","That time is outside tonight’s night hours, so the last third is used instead.":"هذا الوقت خارج ساعات ليل الليلة، لذا يُستخدم الثلث الأخير بدلًا منه.","Iqama times":"أوقات الإقامة","Minutes after the adhan, for each prayer":"الدقائق بعد الأذان لكل صلاة","Set how many minutes after the adhan the iqama is. The home screen counts down to it.":"حدّد كم دقيقة بعد الأذان تُقام الصلاة. تعرض الشاشة الرئيسية العدّ التنازلي لها.","Iqama in {0}":"الإقامة بعد {0}","Iqama times reset":"أُعيد ضبط أوقات الإقامة","Iqama at {0}":"الإقامة {0}","Jumu’ah reminders":"تنبيهات الجمعة","Only on Fridays, using your local prayer times.":"أيام الجمعة فقط، بحسب أوقات الصلاة في موقعك.","Night prayer":"صلاة الليل","Preparing for Friday (Jumu’ah)":"الاستعداد ليوم الجمعة","While the five core acts of fitrah can be done on any day of the week to stay within the 40-day limit, it is an established habit to do them on Friday morning. This fits the emphasis on cleanliness before the congregational Jumu’ah prayer, which includes taking a ritual bath (ghusl), brushing the teeth (miswak), putting on clean clothes and applying perfume.":"يمكن أداء خصال الفطرة الخمس الأساسية في أي يوم من الأسبوع بما لا يتجاوز مدة الأربعين يومًا، لكن من المعتاد أن تُؤدّى صباح الجمعة. وهذا يتفق مع الاهتمام بالنظافة قبل صلاة الجمعة جماعةً، ومن ذلك الاغتسال والسواك ولبس الثياب النظيفة والتطيّب.","Nearest masjid":"أقرب مسجد","Prayer tracker hidden":"تم إخفاء متتبّع الصلاة","Prayer tracker shown":"تم إظهار متتبّع الصلاة","Turn off to hide ticking, the streak card and the tracker.":"أوقِف التشغيل لإخفاء التأشير وبطاقة السلسلة والمتتبّع.","Masjid":"المسجد","Version {0} · build {1}":"الإصدار {0} · البناء {1}","Design and cared by {0}.":"تصميم ورعاية: {0}.","Not required":"غير واجبة","Attended Jumu’ah":"حضرتُ صلاة الجمعة","Jumu’ah":"الجمعة","Approaching":"يقترب","Reminders":"التذكيرات","Settings":"الإعدادات","Widgets":"الودجات","Qibla":"القبلة",
+"These days don\u2019t count in your percentages or streak, and reminders stay quiet. It stays on this device.":"لا تُحتسب هذه الأيام في النسب أو السلسلة، وتصمت التذكيرات. يبقى هذا على جهازك فقط.","Rest days started":"بدأت أيام الراحة","Rest days ended. Welcome back.":"انتهت أيام الراحة. أهلًا بعودتك.","Week streak":"سلسلة أسبوعية","Month streak":"سلسلة شهرية","Each ring has five parts, one for each prayer.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة.","Translation":"الترجمة","Off":"إيقاف", "Install app":"تثبيت التطبيق","Add it to your home screen for full-screen use and offline access.":"أضِفه إلى شاشتك الرئيسية للاستخدام بملء الشاشة ودون اتصال.","Install {0}":"تثبيت {0}","Tap the Share button in Safari":"اضغط على زر المشاركة في سفاري","Choose Add to Home Screen":"اختر «إضافة إلى الشاشة الرئيسية»","Tap Add":"اضغط «إضافة»","Open your browser menu":"افتح قائمة المتصفح","Choose Install app or Add to Home screen":"اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»","App installed":"تم تثبيت التطبيق","A new version is ready.":"إصدار جديد جاهز.","Refresh":"تحديث","You\u2019re offline. Everything still works.":"أنت غير متصل. كل شيء يعمل.","Back online":"عدنا متصلين","Transparent":"شفاف","Blur":"ضبابي","Bar color shifts from green to red as the next prayer gets closer.":"يتحول لون الشريط من الأخضر إلى الأحمر كلما اقتربت الصلاة القادمة.","minimal":"مبسّط","H":"س","M":"د","S":"ث","Calendar":"التقويم","Guide":"الدليل","Last third of the night":"الثلث الأخير من الليل","Start of the last third":"بداية الثلث الأخير","2 hours before Fajr":"قبل الفجر بساعتين","1 hour before Fajr":"قبل الفجر بساعة","30 minutes before Fajr":"قبل الفجر بنصف ساعة","Custom time":"وقت مخصص","Tahajjud reminder time":"وقت تنبيه التهجد","That time is outside tonight’s night hours, so the last third is used instead.":"هذا الوقت خارج ساعات ليل الليلة، لذا يُستخدم الثلث الأخير بدلًا منه.","Iqama times":"أوقات الإقامة","Minutes after the adhan, for each prayer":"الدقائق بعد الأذان لكل صلاة","Set how many minutes after the adhan the iqama is. The home screen counts down to it.":"حدّد كم دقيقة بعد الأذان تُقام الصلاة. تعرض الشاشة الرئيسية العدّ التنازلي لها.","Iqama in {0}":"الإقامة بعد {0}","Iqama times reset":"أُعيد ضبط أوقات الإقامة","Iqama at {0}":"الإقامة {0}","Jumu’ah reminders":"تنبيهات الجمعة","Only on Fridays, using your local prayer times.":"أيام الجمعة فقط، بحسب أوقات الصلاة في موقعك.","Night prayer":"صلاة الليل","Preparing for Friday (Jumu’ah)":"الاستعداد ليوم الجمعة","While the five core acts of fitrah can be done on any day of the week to stay within the 40-day limit, it is an established habit to do them on Friday morning. This fits the emphasis on cleanliness before the congregational Jumu’ah prayer, which includes taking a ritual bath (ghusl), brushing the teeth (miswak), putting on clean clothes and applying perfume.":"يمكن أداء خصال الفطرة الخمس الأساسية في أي يوم من الأسبوع بما لا يتجاوز مدة الأربعين يومًا، لكن من المعتاد أن تُؤدّى صباح الجمعة. وهذا يتفق مع الاهتمام بالنظافة قبل صلاة الجمعة جماعةً، ومن ذلك الاغتسال والسواك ولبس الثياب النظيفة والتطيّب.","Nearest masjid":"أقرب مسجد","Prayer tracker hidden":"تم إخفاء متتبّع الصلاة","Prayer tracker shown":"تم إظهار متتبّع الصلاة","Turn off to hide ticking, the streak card and the tracker.":"أوقِف التشغيل لإخفاء التأشير وبطاقة السلسلة والمتتبّع.","Masjid":"المسجد","Version {0} · build {1}":"الإصدار {0} · البناء {1}","Design and cared by {0}.":"تصميم ورعاية: {0}.","Not required":"غير واجبة","Attended Jumu’ah":"حضرتُ صلاة الجمعة","Jumu’ah":"الجمعة","Approaching":"يقترب","On time means prayed before the last 30 minutes of its time. Late means in the last 30 minutes or after its time ends.":"في وقتها يعني قبل آخر ٣٠ دقيقة من وقتها. متأخرة تعني في آخر ٣٠ دقيقة أو بعد انتهاء الوقت.","Days with no marks aren\u2019t counted. Once you mark a prayer, the other prayers of that day whose time has passed count as missed.":"الأيام التي لا تسجّل فيها شيئًا لا تُحتسب. وإذا سجّلتَ صلاة في يوم ما، فالصلوات الأخرى التي انتهى وقتها تُحتسب فائتة.","Days with a late prayer still count and are tinted red.":"الأيام التي فيها صلاة متأخرة تُحتسب أيضًا وتظهر بلون أحمر.","Some prayers are marked Not required":"بعض الصلوات مسجّلة «غير واجبة»","Do you want to include them too?":"هل تريد تضمينها أيضًا؟","Include them":"تضمينها","Keep them as they are":"إبقاؤها كما هي","End rest days first to change this.":"أنهِ أيام الراحة أولًا لتغيير هذا.","Reminders":"التذكيرات","Settings":"الإعدادات","Widgets":"الودجات","Qibla":"القبلة",
 "Next prayer":"الصلاة القادمة","Now":"الآن","Purification":"الطهارة","4 × 3 · home":"4 × 3 · الرئيسية","2 × 2 · clock":"2 × 2 · ساعة","If you’re on your period, you can pause the tracker. Your progress stays safe.":"إذا كنتِ في فترة الحيض، يمكنكِ إيقاف المتتبّع مؤقتًا، وتقدّمكِ يبقى محفوظًا.","Pause":"إيقاف مؤقت","{0} at {1}":"{0} عند {1}","day streak":"أيام متتالية","Best":"الأفضل","Full days":"أيام كاملة",
 "Each ring has five parts, one for each prayer. Tap a day to update it.":"لكل حلقة خمسة أجزاء، جزء لكل صلاة. اضغط على يوم لتحديثه.",
 "Tap the bell to set a reminder.":"اضغط على الجرس لضبط تذكير.","Asr: {0}":"العصر: {0}","{0} adjusted":"{0} معدّلة","{0} prayed":"تمت صلاة {0}",
@@ -2738,7 +2748,7 @@ document.addEventListener("click",e=>{
     case"compass":enableCompass();break;
     case"about":openAbout();break;
     case"pray":openPrayer(v);break;
-    case"wgender":wst.g=v;$$(".gbtn",WL).forEach(b=>b.setAttribute("aria-checked",b.dataset.v===v));wCheck();break;
+    case"wgender":if(wst.edit&&restLock()&&v!=="f"){toast(tx("End rest days first to change this."));break}wst.g=v;$$(".gbtn",WL).forEach(b=>b.setAttribute("aria-checked",b.dataset.v===v));wCheck();break;
     case"wsave":saveWelcome();break;
     case"wcancel":WL.classList.remove("on");break;
     case"profile":openWelcome(true);break;
@@ -2748,14 +2758,16 @@ document.addEventListener("click",e=>{
     case"factory":openSheet(`<h2>${tx("Factory reset?")}</h2><p class="sub" style="margin:6px 0 18px">${tx("This erases your profile, settings, prayer log and streak from this device, then restarts the app. It can\u2019t be undone.")}</p><div style="display:flex;gap:10px"><button class="btn ghost" style="flex:1" data-act="close">${tx("Cancel")}</button><button class="btn gold" style="flex:1;background:var(--st-miss);color:#fff" data-act="factorydo">${tx("Erase everything")}</button></div>`);break;
     case"factorydo":try{localStorage.removeItem("mihrab-v1")}catch(e){}location.reload();break;
     case"dopen":if(+v===localDay())focusPrayerCard();else openDay(+v);break;
-    case"dall":{const nn=+v;touchDay(nn,d=>{P.forEach(k=>{if(dayLocked(nn,k))return;if(!d[k]||d[k].s==="x")d[k]={s:"o"}})});const sh=$("#sheet"),toEnd=()=>sh.scrollTo({top:sh.scrollHeight,behavior:"instant"});toEnd();requestAnimationFrame(toEnd);break}   /* jump straight to the bottom so Done is fully visible */
-    case"dclr":{const nn=+v;touchDay(nn,d=>{P.forEach(k=>{if(!dayLocked(nn,k))delete d[k]})});break}
+    case"dall":{const [a,mode]=v.split(":"),nn=+a;if(!mode&&P.some(k=>!dayLocked(nn,k)&&(trkDay(nn)[k]||{}).s==="x")){askExcused(nn,"dall");break}
+      touchDay(nn,d=>{P.forEach(k=>{if(dayLocked(nn,k))return;if(!d[k]||(d[k].s==="x"&&mode==="inc"))d[k]={s:"o"}})});const sh=$("#sheet"),toEnd=()=>sh.scrollTo({top:sh.scrollHeight,behavior:"instant"});toEnd();requestAnimationFrame(toEnd);break}   /* jump straight to the bottom so Done is fully visible */
+    case"dclr":{const [a,mode]=v.split(":"),nn=+a;if(!mode&&P.some(k=>!dayLocked(nn,k)&&(trkDay(nn)[k]||{}).s==="x")){askExcused(nn,"dclr");break}
+      touchDay(nn,d=>{P.forEach(k=>{if(!dayLocked(nn,k)&&(d[k]&&d[k].s!=="x"||mode==="inc"))delete d[k]})});break}
     case"dst":{const [n,k,st]=v.split(":"),nn=+n;if(dayLocked(nn,k)){toast(tx("{0} can be ticked once its time begins",NP(k)));break}
-      touchDay(nn,d=>{const old=d[k];if(old&&old.s===st)delete d[k];else{const r={s:st};if(st!=="m"&&old&&(old.s==="o"||old.s==="l")){if(old.j)r.j=1;if(old.f)r.f=1}d[k]=r}});break}
+      touchDay(nn,d=>{const old=d[k];if(old&&old.s===st)delete d[k];else{const r={s:st};if(st!=="m"&&old&&(old.s==="o"||old.s==="l")){if(old.j)r.j=1;if(old.f)r.f=1;if(old.ju)r.ju=1}d[k]=r}});break}
     case"dtg":{const [n,k,tg]=v.split(":"),nn=+n;if(dayLocked(nn,k)){toast(tx("{0} can be ticked once its time begins",NP(k)));break}
       touchDay(nn,d=>{let r=d[k];if(!r||r.s==="m"||r.s==="x")r=d[k]={s:nn<localDay()?"o":autoStatus(getEvents(Date.now()),k,Date.now())};if(r[tg])delete r[tg];else r[tg]=1});break}
     case"pdetail":openPrayer(v);break;
-    case"pst":{const [k,st]=v.split(":"),d=dayRec(),old=d[k],r={s:st},was=maskOf(localDay())===FULL,first=!old||old.s==="x";if(st!=="m"&&old&&old.s!=="m"&&old.s!=="x"){if(old.j)r.j=1;if(old.f)r.f=1}d[k]=r;save();refreshHome();if(navigator.vibrate){try{navigator.vibrate(12)}catch(e){}}
+    case"pst":{const [k,st]=v.split(":"),d=dayRec(),old=d[k],r={s:st},was=maskOf(localDay())===FULL,first=!old||old.s==="x";if(st!=="m"&&old&&old.s!=="m"&&old.s!=="x"){if(old.j)r.j=1;if(old.f)r.f=1;if(old.ju)r.ju=1}d[k]=r;save();refreshHome();if(navigator.vibrate){try{navigator.vibrate(12)}catch(e){}}
       if(!was&&maskOf(localDay())===FULL)toast(tx("All five done. Alhamdulillah!"));
       if(first){openPrayer(k);setTimeout(closeSheet,260)}else openPrayer(k);break}
     case"ptag":{const [k,tg]=v.split(":"),now=Date.now(),E=getEvents(now),d=dayRec(),was=maskOf(localDay())===FULL;let r=d[k];if(!r||r.s==="m"||r.s==="x")r=d[k]={s:autoStatus(E,k,now)};if(r[tg])delete r[tg];else r[tg]=1;save();refreshHome();if(!was&&maskOf(localDay())===FULL)toast(tx("All five done. Alhamdulillah!"));openPrayer(k);break}
@@ -2889,17 +2901,18 @@ function dayState(n){
 const isFull=n=>dayState(n)==="full";
 const cnt=m=>P.reduce((a,k)=>a+((m&BIT[k])?1:0),0);
 /* rest days neither add to nor break a streak; today only counts once it is complete */
-function streakNow(today){let n=today,c=0;for(let g=0;g<4000;g++,n--){const st=dayState(n);if(st==="rest")continue;if(st==="full"){c++;continue}if(n===today)continue;break}return c}
+const hasMiss=n=>P.some(k=>(trkDay(n)[k]||{}).s==="m"),hasLate=n=>P.some(k=>(trkDay(n)[k]||{}).s==="l");
+function streakNow(today){let n=today,c=0;for(let g=0;g<4000;g++,n--){const st=dayState(n);if(st==="rest")continue;if(st==="full"){c++;continue}if(hasMiss(n))break}return c}
 function bestStreak(){
   const keys=Object.keys(S.trk);if(!keys.length)return 0;
   const first=Math.min(...keys.map(k=>{const [y,m,d]=k.split("-").map(Number);return Date.UTC(y,m-1,d)/864e5})),today=localDay();
   let best=0,run=0;
-  for(let n=first;n<=today;n++){const st=dayState(n);if(st==="rest")continue;if(st==="full"){run++;if(run>best)best=run}else if(n!==today)run=0}
+  for(let n=first;n<=today;n++){const st=dayState(n);if(st==="rest")continue;if(st==="full"){run++;if(run>best)best=run}else if(hasMiss(n))run=0}
   return best;
 }
 /* a prayer's window runs until the next prayer begins (Fajr until sunrise, Isha until the next Fajr) */
 function windowEnd(E,k){const t=E.today;return k==="fajr"?t.sunrise:k==="dhuhr"?t.asr:k==="asr"?t.maghrib:k==="maghrib"?t.isha:((E.list.find(e=>e.o===1&&e.key==="fajr")||{}).ms||t.isha+6*3600e3)}
-const autoStatus=(E,k,now)=>now<windowEnd(E,k)?"o":"l";
+const autoStatus=(E,k,now)=>now<windowEnd(E,k)-30*60000?"o":"l";   /* on time until the last 30 minutes of the window */
 const dayRec=()=>{const key=dkey(localDay());return S.trk[key]||(S.trk[key]={})};
 const cleanDay=()=>{const key=dkey(localDay());if(S.trk[key]&&!Object.keys(S.trk[key]).length)delete S.trk[key]};
 const isX=k=>(trkDay(localDay())[k]||{}).s==="x";   /* excused: not required today (e.g. rest days ended after its time) */
@@ -2911,6 +2924,7 @@ function statsFor(period,now){
   let o=0,l=0,m=0,j=0,f=0,ju=0,tracked=0;
   for(let n=Math.max(start,since);n<=today;n++){
     if(isRest(n))continue;
+    if(!P.some(k=>trkDay(n)[k]))continue;                          /* a day with no marks at all is not counted */
     for(const k of P){
       const rec=trkDay(n)[k];let st;
       if(rec&&rec.s==="x")continue;
@@ -3008,7 +3022,7 @@ function streakHTML(now){
   for(let i=0;i<wd;i++)cells+="<span></span>";
   for(let d=1;d<=len;d++){
     const n=first+d-1,st=n<=today?dayState(n):"future",m=maskOf(n),ring=ringSVG(st==="rest"||st==="future"?0:m,st==="rest"||st==="future"?null:n);
-    const cls=`skd ${st==="rest"?"rest":""} ${st==="full"?"full":""} ${n===today?"today":""} ${st==="future"?"future":""}`;
+    const cls=`skd ${st==="rest"?"rest":""} ${st==="full"?"full":""} ${st==="full"&&hasLate(n)?"late":""} ${n===today?"today":""} ${st==="future"?"future":""}`;
     cells+=st==="future"?`<div class="mc"><div class="${cls}">${ring}<span class="num">${d}</span></div></div>`
       :`<button class="mc" data-act="dopen" data-v="${n}" aria-label="${tx("{0} {1}: {2} of 5 prayers",d,GM[g.m],cnt(m))}"><div class="${cls}">${ring}<span class="num">${d}</span></div></button>`;
   }
@@ -3020,7 +3034,7 @@ function streakHTML(now){
     <div class="stk-mo">${GM[g.m]} ${g.y}</div>
     <div class="wdr">${WDL.map((w,i)=>`<span class="${i===5?"fri":""}">${w}</span>`).join("")}</div>
     <div class="skg">${cells}</div>
-    <p class="fine" style="margin:12px 2px 0">${tx("Each ring has five parts, one for each prayer.")} ${tx("Tap a date to mark its prayers.")}</p>
+    <p class="fine" style="margin:12px 2px 0">${tx("Each ring has five parts, one for each prayer.")} ${tx("Tap a date to mark its prayers.")} ${tx("Days with a late prayer still count and are tinted red.")}</p>
     ${(S.profile&&S.profile.g==="f"&&S.restA==null)?`<div class="restnote"><p dir="auto">${tx("If you’re on your period, you can pause the tracker. Your progress stays safe.")}</p><button class="lbtn" data-act="rest">${tx("Pause")}</button></div>`:""}
     <button class="btn ghost stk-more" data-act="tab" data-v="trk">${tx("View tracker")}</button>
   </div>`;
@@ -3045,6 +3059,12 @@ function openDay(n){
   <div class="dft"><button class="btn ghost" data-act="dall" data-v="${n}">${tx("All on time")}</button><button class="btn ghost" data-act="dclr" data-v="${n}">${tx("Clear day")}</button></div>
   <button class="btn gold" style="width:100%;margin-top:10px" data-act="close">${tx("Done")}</button>`);
 }
+function askExcused(n,act){
+  openSheet(`<h2>${tx("Some prayers are marked Not required")}</h2><p class="sub" style="margin:6px 0 16px">${tx("Do you want to include them too?")}</p>
+  <button class="btn gold" style="width:100%" data-act="${act}" data-v="${n}:inc">${tx("Include them")}</button>
+  <button class="btn ghost" style="width:100%;margin-top:10px" data-act="${act}" data-v="${n}:keep">${tx("Keep them as they are")}</button>
+  <button class="btn ghost" style="width:100%;margin-top:10px" data-act="close">${tx("Cancel")}</button>`);
+}
 function touchDay(n,fn){
   const key=dkey(n),d=S.trk[key]||(S.trk[key]={}),was=maskOf(n)===FULL;
   fn(d);
@@ -3063,7 +3083,7 @@ function openPrayer(k){
   const chk=(t,lab)=>`<button class="opt" role="checkbox" aria-checked="${tagsOk&&!!rec[t]}" data-act="ptag" data-v="${k}:${t}"><span>${lab}</span><span class="ck ${tagsOk&&rec[t]?"on":""}">${CHECK}</span></button>`;
   openSheet(`<h2>${NP(k)} <span class="num" style="color:var(--mist);font-size:.7em">${fmt(E.today[k])}</span></h2>
   <p class="sub" style="margin-bottom:8px">${rec&&rec.s!=="x"?tx("Change it if needed."):tx("Suggested: {0}",tx(autoStatus(E,k,now)==="o"?"On time":"Late"))}</p>
-  <div role="radiogroup" aria-label="${tx("How did it go?")}">${rad("o",tx("On time"))}${rad("l",tx("Late"))}${windowEnd(E,k)>now&&st!=="m"?"":rad("m",tx("Missed"))}</div>
+  <div role="radiogroup" aria-label="${tx("How did it go?")}">${rad("o",tx("On time"))}${windowEnd(E,k)-now>30*60000&&st!=="l"?"":rad("l",tx("Late"))}${windowEnd(E,k)>now&&st!=="m"?"":rad("m",tx("Missed"))}</div>
   <div class="slab" style="margin-top:16px">${tx("Extras")}</div>
   <div>${chk("j",tx("Prayed with Jama\u2019ah"))}${chk("f",tx("Prayed in the first row"))}${k==="dhuhr"&&isFem()&&isFri(now)?chk("ju",tx("Attended Jumu\u2019ah")):""}</div>
   <div style="display:flex;gap:10px;margin-top:18px"><button class="btn ghost" style="flex:1" data-act="pclear" data-v="${k}" ${rec&&rec.s!=="x"?"":"disabled"}>${tx("Clear")}</button><button class="btn gold" style="flex:1" data-act="close">${tx("Done")}</button></div>`);
@@ -3081,13 +3101,14 @@ function openRest(){
   <button class="btn gold" style="width:100%" data-act="${on?"restend":"reststart"}">${on?tx("End rest days"):tx("Start rest days")}</button>
   <button class="btn ghost" style="width:100%;margin-top:10px" data-act="close">${tx("Cancel")}</button>`);
 }
-function startRest(){S.restA=localDay();save();closeSheet();refreshAll();toast(tx("Rest days started"))}
+function startRest(){S.restA=localDay();S.restT=Date.now();save();closeSheet();refreshAll();toast(tx("Rest days started"))}
 function endRest(){
   if(S.restA==null)return;
   const now=Date.now(),E=getEvents(now),n=localDay();
   if(S.restA<=n-1)S.restR.push([S.restA,n-1]);
-  const d=dayRec();P.forEach(k=>{if(!d[k]&&windowEnd(E,k)<=now)d[k]={s:"x"}});   /* prayers whose time already passed today are excused */
-  S.restA=null;cleanDay();save();closeSheet();refreshAll();toast(tx("Rest days ended. Welcome back."));
+  const d=dayRec(),rt=S.restT!=null&&S.restA===n?S.restT:0;   /* if rest began earlier today, only prayers that started after that moment can be excused */
+  P.forEach(k=>{if(!d[k]&&windowEnd(E,k)<=now&&E.today[k]>=rt)d[k]={s:"x"}});
+  S.restA=null;S.restT=null;cleanDay();save();closeSheet();refreshAll();toast(tx("Rest days ended. Welcome back."));
 }
 
 /* ---------- prayer tracker screen ---------- */
@@ -3112,7 +3133,7 @@ function renderTracker(){
   </div>
   ${tot?"":`<p class="fine" style="margin:14px 2px 0">${tx("No prayers tracked yet.")}</p>`}
   <div class="tbars">${bar(tx("Prayed with Jama\u2019ah"),st.j,"var(--goldhi)")}${bar(tx("Prayed in the first row"),st.f,"var(--goldlo)")}${fem?bar(tx("Attended Jumu\u2019ah"),st.ju,"var(--mist)"):""}${bar(tx("Prayed on time"),st.o,"var(--gold)")}${bar(tx("Prayed late"),st.l,"var(--st-late)")}${bar(tx("Missed prayers"),st.m,"var(--st-miss)")}</div>
-  <p class="fine" style="margin:18px 2px 0">${tx("On time means prayed before the next prayer begins.")} ${tx("Prayers you don\u2019t mark once their time has passed count as missed.")}</p>
+  <p class="fine" style="margin:18px 2px 0">${tx("On time means prayed before the last 30 minutes of its time. Late means in the last 30 minutes or after its time ends.")} ${tx("Days with no marks aren\u2019t counted. Once you mark a prayer, the other prayers of that day whose time has passed count as missed.")}</p>
   ${fem?`<div class="card lc" style="margin-top:20px"><button class="opt" data-act="rest"><span>${tx("Rest days")}<small>${S.restA!=null?tx("On since {0}",gparts(S.restA).d+" "+GM[gparts(S.restA).m]):tx("Pause tracking and reminders")}</small></span>${CHEV}</button></div>`:""}`;
 }
 
@@ -3131,9 +3152,9 @@ function openWelcome(edit,keep){
     <div class="fld"><label for="wname">${tx("Your name")}</label><input id="wname" type="text" maxlength="24" autocomplete="given-name" placeholder="${tx("Enter your name")}" value="${esc(wst.name)}"></div>
     <div class="fld"><div class="lbl" id="wgl">${tx("Gender")}</div>
       <div class="gq" role="radiogroup" aria-labelledby="wgl">
-        <button class="gbtn" role="radio" aria-checked="${wst.g==="m"}" data-act="wgender" data-v="m"><b>${tx("Male")}</b></button>
+        <button class="gbtn" role="radio" aria-checked="${wst.g==="m"}" data-act="wgender" data-v="m" ${edit&&restLock()?"disabled":""}><b>${tx("Male")}</b></button>
         <button class="gbtn" role="radio" aria-checked="${wst.g==="f"}" data-act="wgender" data-v="f"><b>${tx("Female")}</b></button>
-      </div></div>
+      </div>${edit&&restLock()?`<p class="fine" style="margin:8px 2px 0">${tx("End rest days first to change this.")}</p>`:""}</div>
     <button class="btn gold go" id="wgo" data-act="wsave">${edit?tx("Save"):tx("Continue")}</button>
     ${edit?`<button class="skip" data-act="wcancel">${tx("Cancel")}</button>`:`<p class="fine" style="margin-top:16px">${tx("Stored only on this device.")}</p>`}
   </div>`;
@@ -3143,10 +3164,12 @@ function openWelcome(edit,keep){
   inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&wOk())$("#wgo").click()});
   wCheck();if(!keep)setTimeout(()=>{try{inp.focus()}catch(e){}},80);
 }
+const restLock=()=>!!(S.profile&&S.profile.g==="f"&&S.restA!=null);   /* rest days on: the profile stays female until they are ended */
 const wOk=()=>wst.name.trim().length>0&&!!wst.g;
 function wCheck(){const b=$("#wgo");if(b)b.disabled=!wOk()}
 function saveWelcome(){
   if(!wOk())return;
+  if(restLock()&&wst.g!=="f"){toast(tx("End rest days first to change this."));return}
   S.profile={name:wst.name.trim().slice(0,24),g:wst.g};if(wst.g!=="f")S.restA=null;save();
   WL.classList.remove("on");refreshAll();
   toast(wst.edit?tx("Profile updated"):tx("Welcome, {0}",S.profile.name));
